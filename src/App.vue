@@ -11,11 +11,7 @@
         <button class="hover-item" @click="HandleClick('institution')">Établissements</button>
         <button class="hover-item" @click="HandleClick('restaurant')">Restaurants</button>
       </div>
-      <div>
-        <ol>
-          <li v-for="item in json[0].etablissements[0].restaurants[0].traiteursConfigs[0]" v-bind:key="item">{{item}}</li>
-        </ol>
-      </div>
+
     </header>
     <footer> <a href="https://www.linkedin.com/in/alo%C3%AFs-brengard/" target="_blank">Author: Aloïs BRENGARD</a></footer>
   </div>
@@ -35,10 +31,36 @@ export default defineComponent({
     const order = ref<OrderTerms>('society')
     const HandleClick = (term: OrderTerms) => {
       order.value = term;
+      let text = "<div>"
+      if (order.value === 'society') {
+        let ran =  json[0].etablissements[0].restaurants[0].traiteursConfigs[0];
+        for (let i in ran) {
+          text += i + ': <b>' + ran[i] + '</b><br>'
+        }
+        text += '</div>'
+        document.body.innerHTML = text
+      }
+      else if (order.value === 'institution') {
+        console.log("ko")
+      }
+      else {
+        console.log("kkoo")
+      }
+      console.log("OK")
     }
-    if (order.value == 'institution')
+    if (order.value === 'institution')
       alert(order.value + ' !')
     return {HandleClick, order, json};
   }
 });
 </script>
+
+
+
+
+<!--  <div>
+        <ol>
+          <li v-for="item in json[0].etablissements[0].restaurants[0].traiteursConfigs[0]" v-bind:key="item">{{item}}</li>
+        </ol>
+      </div>
+-->

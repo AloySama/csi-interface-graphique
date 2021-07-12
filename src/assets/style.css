@@ -6,6 +6,13 @@
 body {
     font-family: "Ubuntu", serif;
     background: #ece6d9;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+}
+
+.app {
+    padding: 10px;
+    border: black;
+    background-image: linear-gradient(to top right, mediumpurple, white);
 }
 
 header {
@@ -26,7 +33,7 @@ header img {
 }
 
 header img:hover {
-    transform: translate(0, -8px);
+    transform: translate(0, 8px);
     transition-duration: 0.3s;
 }
 
@@ -37,6 +44,7 @@ app {
     font-family: "Ubuntu", serif;
     text-align: center;
     display: flex;
+    background-image: linear-gradient(to bottom right, red, yellow);
 }
 button {
     margin: 0 10px;
@@ -52,6 +60,16 @@ button {
     display: flex;
     justify-content: center;
 }
+
+br {
+    overflow: auto;
+}
+
+b {
+    color: darkblue;
+    overflow: auto;
+}
+
 footer {
     position: absolute;
     bottom: 0;
