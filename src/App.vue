@@ -11,7 +11,6 @@
         <button class="hover-item" @click="HandleClick('institution')">Établissements</button>
         <button class="hover-item" @click="HandleClick('restaurant')">Restaurants</button>
       </div>
-
     </header>
     <footer> <a href="https://www.linkedin.com/in/alo%C3%AFs-brengard/" target="_blank">Author: Aloïs BRENGARD</a></footer>
   </div>
@@ -19,48 +18,33 @@
 
 <script lang="ts">
 import {defineComponent, ref} from 'vue';
+import json_list from './functions/json'
 import OrderTerms from "../src/types/Orderterms";
-import './components/societies'
 export default defineComponent({
   name: 'App',
   components: {
   },
   setup() {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const json = require('../../json_file/arcole.json')
-    const order = ref<OrderTerms>('society')
+    const json = require('../../json_file/arcole.json');
+    const order = ref<OrderTerms>('society');
     const HandleClick = (term: OrderTerms) => {
       order.value = term;
-      let text = "<div>"
+
       if (order.value === 'society') {
-        let ran =  json[0].etablissements[0].restaurants[0].traiteursConfigs[0];
-        for (let i in ran) {
-          text += i + ': <b>' + ran[i] + '</b><br>'
-        }
-        text += '</div>'
-        document.body.innerHTML = text
+        let app = document.querySelector('#app');
+        if (app == null) return;
+
+        app.appendChild(json_list(json));
       }
-      else if (order.value === 'institution') {
-        console.log("ko")
+      if (order.value === 'institution') {
+        console.log('ok')
       }
-      else {
-        console.log("kkoo")
+      if (order.value === 'restaurant') {
+        console.log('ok')
       }
-      console.log("OK")
     }
-    if (order.value === 'institution')
-      alert(order.value + ' !')
-    return {HandleClick, order, json};
+    return {HandleClick, order};
   }
 });
 </script>
-
-
-
-
-<!--  <div>
-        <ol>
-          <li v-for="item in json[0].etablissements[0].restaurants[0].traiteursConfigs[0]" v-bind:key="item">{{item}}</li>
-        </ol>
-      </div>
--->

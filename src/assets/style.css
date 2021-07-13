@@ -6,12 +6,13 @@
 body {
     font-family: "Ubuntu", serif;
     background: #ece6d9;
-    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+
 }
 
 .app {
     padding: 10px;
     border: black;
+    /*box-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;*/
     background-image: linear-gradient(to top right, mediumpurple, white);
 }
 
