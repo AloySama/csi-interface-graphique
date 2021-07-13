@@ -12,17 +12,17 @@ function createButtons(json: Array<any>) {
     }
 
     for (const i in buttons) {
-        TextButtons += '<button class="hover-item">'
+        TextButtons += '<button id="'+ buttons[i] +'" class="hover-item">'
         TextButtons += buttons[i]
         TextButtons += '</button>'
     }
-    TextButtons += '<button class="hover-item">Back</button>'
+    TextButtons += '<button id="back" class="hover-item">Back</button>'
     const bb =  document.querySelector('button');
     if (bb == null) return TextButtons;
     bb.disabled = true;
     return TextButtons;
 }
 
-module .exports = {
+module.exports = {
     createButtons
 }
