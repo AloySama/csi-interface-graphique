@@ -6,7 +6,7 @@
 body {
     font-family: "Ubuntu", serif;
     background: #ece6d9;
-
+    text-align: center;
 }
 
 .app {
@@ -31,6 +31,12 @@ header img {
 }
 .hover-item:hover {
     transform: translate(-3px, -5px);
+}
+.hover-item:disabled {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+    cursor: default;
 }
 
 header img:hover {

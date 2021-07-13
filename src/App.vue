@@ -27,6 +27,10 @@ export default defineComponent({
   setup() {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const json = require('../../json_file/arcole.json');
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const test = require('../../json_file/test_file.json')
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const _ = require('@/functions/buttons');
     const order = ref<OrderTerms>('society');
     const HandleClick = (term: OrderTerms) => {
       order.value = term;
@@ -35,7 +39,13 @@ export default defineComponent({
         let app = document.querySelector('#app');
         if (app == null) return;
 
-        app.appendChild(json_list(json));
+        //app.appendChild(json_list(Object.values(json)));
+        let text = "";
+        let b = _.createButtons(test)
+
+        const pElement = document.createElement('div');
+        pElement.innerHTML = b
+        app.appendChild(pElement);
       }
       if (order.value === 'institution') {
         console.log('ok')
