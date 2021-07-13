@@ -1,16 +1,17 @@
 # interface_web
 
-## Project setup
+###Le but du projet étant de créer une interface web qui permettra la facilité d'accès aux Json ARCOLE et de le modifier
+## / !\ AVANT TOUT exécuter cette commande
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Commande servant pour le développement
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Commande servant pour la production
 ```
 npm run build
 ```
@@ -20,5 +21,7 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Pour éditer la configuration
+Voir [Configuration Reference](https://cli.vuejs.org/config/).
+
+###### Toutes les commandes sont dans le fichier package.json
