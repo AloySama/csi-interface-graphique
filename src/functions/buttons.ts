@@ -16,7 +16,6 @@ function createButtons(json: Array<any>) {
         TextButtons += buttons[i]
         TextButtons += '</button>'
     }
-    TextButtons += '<button id="back" class="hover-item">Back</button>'
     const bb =  document.querySelector('button');
     if (bb == null) return TextButtons;
     bb.disabled = true;

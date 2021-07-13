@@ -7,23 +7,39 @@
         <h1>ARCOLE<br>export</h1>
       </div>
       <div class="order">
-        <button id="society" class="hover-item" @click="HandleClick('society')">Sociétés</button>
-        <button id="institution" class="hover-item" @click="HandleClick('institution')">Établissements</button>
-        <button id="restaurant" class="hover-item" @click="HandleClick('restaurant')">Restaurants</button>
+        <button id="edit" class="hover-item btn btn-cancel" @click="doEdit(true)">Éditer ficher ARCOLE</button>
+        <button class="hover-item" v-if="editing" @click="doEdit(false)">Retour</button>
       </div>
     </header>
     <footer> <a href="https://www.linkedin.com/in/alo%C3%AFs-brengard/" target="_blank">Author: Aloïs BRENGARD</a></footer>
   </div>
+  <test/>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from 'vue';
-import OrderTerms from "../src/types/Orderterms";
+import {defineComponent} from 'vue';
 export default defineComponent({
+  data() {
+    return {
+      editing: false
+    }
+  },
   name: 'App',
   components: {
+
   },
-  setup() {
+
+  methods: {
+    doEdit(editing: boolean) {
+      this.editing = editing;
+      document.querySelectorAll('button')[0].disabled = editing;
+    }
+  }
+});
+</script>
+
+<!--
+setup() {
     let SocietyClicked = [false, false, false];
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const json = require('../../json_file/arcole.json');
@@ -53,6 +69,6 @@ export default defineComponent({
       }
     }
     return {HandleClick, order};
-  }
-});
-</script>
+  },
+
+-->
