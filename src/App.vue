@@ -18,7 +18,6 @@
 
 <script lang="ts">
 import {defineComponent, ref} from 'vue';
-import json_list from './functions/json'
 import OrderTerms from "../src/types/Orderterms";
 export default defineComponent({
   name: 'App',
@@ -28,8 +27,6 @@ export default defineComponent({
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const json = require('../../json_file/arcole.json');
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const test = require('../../json_file/test_file.json')
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const _ = require('@/functions/buttons');
     const order = ref<OrderTerms>('society');
     const HandleClick = (term: OrderTerms) => {
@@ -38,20 +35,18 @@ export default defineComponent({
       if (order.value === 'society') {
         let app = document.querySelector('#app');
         if (app == null) return;
-
-        //app.appendChild(json_list(Object.values(json)));
         let text = "";
-        let b = _.createButtons(test)
+        let b = _.createButtons(json)
 
         const pElement = document.createElement('div');
         pElement.innerHTML = b
         app.appendChild(pElement);
       }
       if (order.value === 'institution') {
-        console.log('ok')
+         document.querySelectorAll('button')[1].disabled = true;
       }
       if (order.value === 'restaurant') {
-        console.log('ok')
+        document.querySelectorAll('button')[2].disabled = true;
       }
     }
     return {HandleClick, order};
