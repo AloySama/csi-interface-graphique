@@ -11,8 +11,7 @@ body {
 
 .app {
     padding: 10px;
-    border: black;
-    /*box-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;*/
+    border: 1px darkblue solid;
     background-image: linear-gradient(to top right, mediumpurple, white);
 }
 
@@ -38,10 +37,15 @@ header img {
     color: #666666;
     cursor: default;
 }
+.hover-item:active {
+    background-color: #ece6d9;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
 
 header img:hover {
     transform: translate(0, 8px);
-    transition-duration: 0.3s;
+    transition-duration: 0.5s;
 }
 
 header .order {
@@ -53,7 +57,7 @@ app {
     display: flex;
 }
 button {
-    margin: 0 10px 10px;
+    margin: 5px 15px 10px 10px;
     color: #860ace;
     cursor: pointer;
     padding: 8px 16px;

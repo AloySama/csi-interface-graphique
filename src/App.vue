@@ -7,33 +7,41 @@
         <h1>ARCOLE<br>export</h1>
       </div>
       <div class="order">
-        <button id="edit" class="hover-item btn btn-cancel" @click="doEdit(true)">Éditer ficher ARCOLE</button>
-        <button class="hover-item" v-if="editing" @click="doEdit(false)">Retour</button>
+        <button id="edit" :title="message['edit']" class="hover-item btn btn-cancel" @click="doEdit(true)">Éditer ficher ARCOLE</button>
+        <button id="retour" :title="message['retour']" class="hover-item" v-if="editing" @click="doEdit(false)">Retour</button>
       </div>
     </header>
-    <footer> <a href="https://www.linkedin.com/in/alo%C3%AFs-brengard/" target="_blank">Author: Aloïs BRENGARD</a></footer>
   </div>
-  <test/>
+  <template v-if="editing">
+    <button class="hover-item btn btn-cancel">Ajouter une société</button>
+    <button class="hover-item btn btn-cancel">Ajouter un établissement</button>
+    <button class="hover-item btn btn-cancel">Ajouter une restaurant</button>
+  </template>
+  <footer> <a href="https://www.linkedin.com/in/alo%C3%AFs-brengard/" target="_blank">Author: Aloïs BRENGARD</a></footer>
 </template>
 
 <script lang="ts">
+/*// eslint-disable-next-line @typescript-eslint/no-var-requires
+const json = require('../../json_file/arcole.json');*/
 import {defineComponent} from 'vue';
 export default defineComponent({
+  components: {},
   data() {
     return {
-      editing: false
+      editing: false,
+      message: {
+        'edit': 'Cliquer sur moi pour commencer à éditer le fichier.',
+        'retour': 'Sauvegarde et quitte l\'édition'
+      }
     }
   },
   name: 'App',
-  components: {
-
-  },
 
   methods: {
     doEdit(editing: boolean) {
       this.editing = editing;
       document.querySelectorAll('button')[0].disabled = editing;
-    }
+    },
   }
 });
 </script>
