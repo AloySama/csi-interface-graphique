@@ -36,6 +36,7 @@ header img {
     background-color: #cccccc;
     color: #666666;
     cursor: default;
+    pointer-events: none;
 }
 .hover-item:active {
     background-color: #ece6d9;
