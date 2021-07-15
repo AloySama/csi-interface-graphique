@@ -2,14 +2,25 @@
   <div>
     <form  @submit.prevent="HandleSubmit">
       <label>Code</label>
-      <input type="text" required v-model="code"> <br>
-      <label>id</label>
-      <input type="number" required v-model="id">
-      <label>Ajouter un Traiteur Config ?</label>
-      <input type="checkbox" required v-model="add_tdd">
-      <form v-if="add_tdd"><label>Code</label>
-        <input type="text" required v-model="code"></form>
-      <input type="submit">
+      <input type="text" required v-model="code" placeholder="Code de la société">
+      <label>Mettre un id personnalisé ?</label>
+      <input v-model="add_id" type="checkbox">
+      <div v-if="add_id">
+        <form>
+          <label>id</label>
+          <input type="number" >
+        </form>
+      </div>
+      <label>Ajouter un Traiteur config ?</label>
+      <input v-model="add_tdd" type="checkbox">
+      <div v-if="add_tdd">
+        <form v-for="(index, item) in tdd" :key="index">
+          {{item}}
+          <input type="number" v-if="ints.includes(item)">
+          <input v-else type="text">
+        </form>
+      </div>
+      <input type="submit" :disabled="!code">
     </form>
   </div>
 </template>
@@ -20,8 +31,18 @@ export default {
   data() {
     return {
       code: '',
+      add_id: false,
       add_tdd: false,
-      id : ''
+      tdd: {
+        "id": 1, "auxiliaire": null, "auxiliaireRestaurant": false, "auxiliaireVide": false, "auxilliaireCreditClient": false,
+        "codeJournal": 0, "compte": 0, "compteAnalytique1": null, "compteAnalytique1TVA": false, "compteAnalytique2": null,
+        "compteAnalytique3": null, "comptes": [], "direction": "DEBIT", "documents": [], "familles": [], "filtration": [],
+        "groupes": [], "libelle": "", "libelles": [], "localisations": [], "matriculeRestaurant": false, "modeER": true,
+        "numeros": [], "ordre": 0, "profits": [], "recuperation": "", "sousfamilles": [], "specialite": "", "tags": [],
+        "tax_code": null, "taxe": false, "transaction": "VI", "transactionVI": false, "tvas": [], "type": "1", "zeroExclus": false
+      },
+      ints: ['id', 'codeJournal', 'compte', 'ordre', 'matriculeRestaurant'],
+      add_etablissement: false,
     }
   },
   methods: {
@@ -31,9 +52,9 @@ export default {
   }
 }
 </script>
-
+<!--
 <style scoped>
-input[type=submit] {
+ input[type=submit] {
   width: 100%;
   background-color: #a100ff;
   color: white;
@@ -57,4 +78,4 @@ input[type=text], select {
   border-radius: 4px;
   box-sizing: border-box;
 }
-</style>
+</style>-->
