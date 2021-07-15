@@ -3,7 +3,7 @@
     <form  @submit.prevent="HandleSubmit">
       <label>Code</label>
       <input type="text" required v-model="code" placeholder="Code de la société">
-      <label>Mettre un id personnalisé ?</label>
+      <label>Ajouter un id personnalisé ?</label>
       <input v-model="add_id" type="checkbox">
       <div v-if="add_id">
         <form>
@@ -14,10 +14,19 @@
       <label>Ajouter un Traiteur config ?</label>
       <input v-model="add_tdd" type="checkbox">
       <div v-if="add_tdd">
+        <strong>Nombre : automatique si non renseigné ou 0 en fonction de la case. <br>
+        Sinon null, false ou tableau vide si non renseigné</strong>
         <form v-for="(index, item) in tdd" :key="index">
           {{item}}
-          <input type="number" v-if="ints.includes(item)">
-          <input v-else type="text">
+          <input type="number" v-if="ints.includes(item)" >
+          <input v-else type="text" >
+        </form>
+      </div>
+      <label>Ajouter un établissement ?</label>
+      <input v-model="add_eta" type="checkbox">
+      <div v-if="add_eta">
+        <form>
+
         </form>
       </div>
       <input type="submit" :disabled="!code">
@@ -42,7 +51,7 @@ export default {
         "tax_code": null, "taxe": false, "transaction": "VI", "transactionVI": false, "tvas": [], "type": "1", "zeroExclus": false
       },
       ints: ['id', 'codeJournal', 'compte', 'ordre', 'matriculeRestaurant'],
-      add_etablissement: false,
+      add_eta: false,
     }
   },
   methods: {
