@@ -1,8 +1,8 @@
-# interface_web
+# Export ARCOLE
 
-###Le but du projet étant de créer une interface web qui permettra la facilité d'accès aux Json ARCOLE et de le modifier
+##### Le but du projet étant de créer une interface web qui permettra la facilité d'accès aux Json ARCOLE et de le modifier;
 
-## / !\ AVANT TOUT exécuter cette commande
+##/ !\ AVANT TOUT exécuter cette commande
 ```
 npm install
 ```
