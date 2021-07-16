@@ -1,14 +1,19 @@
 <template>
-  <form @submit.prevent="">
-    <input id="fileUpload" type="file" hidden>
-    <button class="hover-item" @click="ChooseFiles">Parcourir ...</button>
-    <input type="submit" hidden>
-    <button class="hover-item" :disabled="!ChooseFiles">OK</button>
+  <form @submit.prevent="" class="upload" enctype="multipart/form-data">
+    <input id="fileUpload" type="file" required accept=".json">
+    <!--<button class="hover-item" @click="ChooseFiles">Parcourir ...</button>-->
+    <input type="submit">
+    <!--<button class="hover-item" disabled>OK</button> -->
   </form>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+    file: []
+    }
+  },
   name: "UploadFiles",
   methods: {
     ChooseFiles: function() {
