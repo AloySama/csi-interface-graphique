@@ -11,16 +11,23 @@
           <input type="number" >
         </form>
       </div>
-      <label>Ajouter un Traiteur config ?</label>
+      <label>Ajouter Traiteur config ?</label>
       <input v-model="add_tdd" type="checkbox">
       <div v-if="add_tdd">
         <strong>Nombre : automatique si non renseigné ou 0 en fonction de la case. <br>
         Sinon null, false ou tableau vide si non renseigné</strong>
-        <form v-for="(index, item) in tdd" :key="index">
-          {{item}}
-          <input type="number" v-if="ints.includes(item)" >
-          <input v-else type="text" >
-        </form>
+        <input v-model="tdd_nbr" type="number" min="1">
+        <div v-for="_ in tdd_nbr.toString()" :key="parseInt(_)"> <!--TODO: régler le fait qu'il compte la longueur du nombre et non le nombre lui même (du coup c'est cassé)-->
+          <ul>
+            <li v-for="(index, item) in tdd" :key="index">
+              <form >
+                {{item}}
+                <input type="number" v-if="ints.includes(item)">
+                <input v-else type="text">
+              </form>
+            </li>
+          </ul>
+        </div>
       </div>
       <label>Ajouter un établissement ?</label>
       <input v-model="add_eta" type="checkbox">
@@ -42,6 +49,7 @@ export default {
       code: '',
       add_id: false,
       add_tdd: false,
+      tdd_nbr: 0,
       tdd: {
         "id": 1, "auxiliaire": null, "auxiliaireRestaurant": false, "auxiliaireVide": false, "auxilliaireCreditClient": false,
         "codeJournal": 0, "compte": 0, "compteAnalytique1": null, "compteAnalytique1TVA": false, "compteAnalytique2": null,
