@@ -1,6 +1,6 @@
 <template>
-  <form @submit.prevent="" class="upload" enctype="multipart/form-data">
-    <input id="fileUpload" type="file" required accept=".json">
+  <form @submit.prevent="" class="form" id="MyForm">
+    <input id="fileUpload" type="file" required accept=".json" @change="OnFileSelected">
     <!--<button class="hover-item" @click="ChooseFiles">Parcourir ...</button>-->
     <input type="submit">
     <!--<button class="hover-item" disabled>OK</button> -->
@@ -11,19 +11,15 @@
 export default {
   data() {
     return {
-    file: []
+      file: null
     }
   },
   name: "UploadFiles",
   methods: {
-    ChooseFiles: function() {
-      let doc = document.getElementById("fileUpload");
-      if (doc == null) {
-        console.error('Une erreur est survenue.');
-        return false;
-      }
-      doc.click()
-      return true;
+    OnFileSelected(e) {
+      console.log(e);
+      this.file = e.target.files[0];
+      console.log(this.file);
     }
   }
 }
@@ -32,3 +28,5 @@ export default {
 <style scoped>
 
 </style>
+
+<!--TODO: Faire communiquer le front et le back pour pouvoir modifier par la suite le json uploadé -->
