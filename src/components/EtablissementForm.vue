@@ -5,7 +5,7 @@
       <li class="OneLine" v-for="(soc, index) in ParseSociete(json)" :key="index">
         <button :id="'ButtonEta' + index" class="hover-item" @click="DisabledButton(index, true)">{{soc}}</button>
       </li>
-        <button class="hover-item" @click="FillSociete(-1); App.methods.doEdit(false, false, 'AddEta'); $emit('edit_eta_value', false)">Retour</button>
+        <button class="hover-item" @click="FillSociete(-1); App.methods.doEdit(false, false, 'AddEta'); $emit('edit_value', false)">Retour</button>
     </ul>
   </div>
   <div v-if="FillTab >= 0">
@@ -29,7 +29,7 @@ import TddForm from "@/components/TddForm";
 
 export default {
   components: {TddForm},
-  emits : ['edit_eta_value'],
+  emits : ['edit_value'],
   name: "EtablissementForm",
   data() {
     return {

@@ -42,7 +42,7 @@
                                                                 doEdit(false, false, 'AddSoc');
                                                                 doEdit(false, false, 'AddEta')" >Retour</button></template>
   <SocieteForm v-if="edit_societe"/>
-  <EtablissementForm v-if="edit_eta" @edit_eta_value="SetEta" ></EtablissementForm>
+  <EtablissementForm v-if="edit_eta" @edit_value="SetEta" ></EtablissementForm>
   <div class="left">{{ date }}</div>
   <footer> <a href="https://www.linkedin.com/in/alo%C3%AFs-brengard/" target="_blank">Author: Aloïs BRENGARD</a></footer>
 </template>

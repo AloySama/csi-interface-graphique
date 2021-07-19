@@ -36,7 +36,7 @@ export default {
       code: '',
       add_id: false,
       add_tdd: false,
-      tdd_nbr: 0,
+      tdd_nbr: 1,
       add_eta: false,
     }
   },
