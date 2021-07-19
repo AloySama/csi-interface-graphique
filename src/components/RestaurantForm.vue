@@ -2,6 +2,7 @@
       et ensuite ajouter le formulaire -->
 
 <template>
+  ok
 </template>
 
 <script>
