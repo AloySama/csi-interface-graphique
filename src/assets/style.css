@@ -1,10 +1,5 @@
-@font-face {
-    font-family: "Ubuntu";
-    src: url(https://fonts.googleapis.com/css2?family=Ubuntu&display=swap) format("opentype");
-}
-
 body {
-    font-family: "Ubuntu", serif;
+    font-family: serif;
     background: #ece6d9;
     text-align: center;
 }

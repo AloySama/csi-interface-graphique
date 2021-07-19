@@ -18,13 +18,13 @@
         Sinon null, false ou tableau vide si non renseigné</strong>
         <input v-model="tdd_nbr" type="number" min="1" max="30">
         <div v-for="_ in parseInt(tdd_nbr)" :key="parseInt(_)">
+          <form >
           <li v-for="(index, item) in tdd" :key="index">
-            <form >
               {{item}}
               <input type="number" v-if="ints.includes(item)">
               <input v-else type="text">
-            </form>
           </li>
+          </form>
         </div>
       </div>
       <label>Ajouter un établissement ?</label>

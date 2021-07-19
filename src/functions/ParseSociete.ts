@@ -12,6 +12,5 @@ export default function ParseSociete(json: any) {
             return null;
         }
     }
-    console.log(list)
     return list;
 }
