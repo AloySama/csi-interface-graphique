@@ -16,17 +16,15 @@
       <div v-if="add_tdd">
         <strong>Nombre : automatique si non renseigné ou 0 en fonction de la case. <br>
         Sinon null, false ou tableau vide si non renseigné</strong>
-        <input v-model="tdd_nbr" type="number" min="1">
-        <div v-for="_ in tdd_nbr.toString()" :key="parseInt(_)"> <!--TODO: régler le fait qu'il compte la longueur du nombre et non le nombre lui même (du coup c'est cassé)-->
-          <ul>
-            <li v-for="(index, item) in tdd" :key="index">
-              <form >
-                {{item}}
-                <input type="number" v-if="ints.includes(item)">
-                <input v-else type="text">
-              </form>
-            </li>
-          </ul>
+        <input v-model="tdd_nbr" type="number" min="1" max="30">
+        <div v-for="_ in parseInt(tdd_nbr)" :key="parseInt(_)">
+          <li v-for="(index, item) in tdd" :key="index">
+            <form >
+              {{item}}
+              <input type="number" v-if="ints.includes(item)">
+              <input v-else type="text">
+            </form>
+          </li>
         </div>
       </div>
       <label>Ajouter un établissement ?</label>

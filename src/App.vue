@@ -7,8 +7,8 @@
         <h1>ARCOLE<br>export</h1>
       </div>
       <div class="order">
-        <button id="edit" :title="message['edit']" class="hover-item" @click="doEdit(true, true, 0)">Éditer ficher ARCOLE</button>
-          <button id="parcourir" :title="message['parcours']" class="hover-item" @click="ChooseFile = true; doEdit(false, true, 1)">Charger un fichier</button>
+        <button id="edit" :title="message['edit']" class="hover-item" @click="doEdit(true, true, 0); ChooseFile = false; doEdit(false, false, 1)">Éditer ficher ARCOLE</button>
+          <button id="parcourir" :title="message['parcours']" class="hover-item" @click="ChooseFile = true; doEdit(false, true, 1); editing = false; doEdit(true, false, 0)">Charger un fichier</button>
         <button id="retour" :title="message['retour']" class="hover-item" v-if="editing || ChooseFile" @click="doEdit(true, false, 0); doEdit(false, false, 1);
         edit_societe = false; edit_eta = false; ChooseFile = false">Retour</button>
       </div>
