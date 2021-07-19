@@ -1,5 +1,3 @@
-<!-- Afficher les différents sociétés pour que l'utilisateur choisisse puis faire le formulaire -->
-
 <template>
   <div>
     Choisissez à quelle société vous voulez ajouter l'établissement. <br>
@@ -8,14 +6,13 @@
         <button :id="'ButtonEta' + index" class="hover-item" @click="DisabledButton(index, true)">{{soc}}</button>
       </li>
       <li><br>
-        <button class="hover-item" @click="FillSociete(-1); App.methods.doEdit(false, false, 'AddEta'); App.data(undefined).edit_eta = true">Retour {{App.data(undefined).edit_eta}}</button>
+        <button class="hover-item" @click="FillSociete(-1); App.methods.doEdit(false, false, 'AddEta'); $emit('edit_eta_value', false)">Retour</button>
       </li>
     </ul>
   </div>
 </template>
-<!--TODO: Fixer le bouton retour qui ne fonctionne pas comme prévu -->
-<script>
 
+<script>
 import ParseSociete from "../functions/ParseSociete";
 import App from '../App'
 const FillTab = {societe: -1}
