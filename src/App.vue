@@ -8,30 +8,30 @@
       </div>
       <div class="order">
         <button id="edit" :title="message['edit']" class="hover-item"
-                @click="doEdit(true, true, 0);
+                @click="doEdit(true, true, 'edit');
                 ChooseFile = false;
-                doEdit(false, false, 1)">Éditer ficher ARCOLE</button>
+                doEdit(false, false, 'parcourir')">Éditer ficher ARCOLE</button>
         <button id="parcourir" :title="message['parcours']" class="hover-item"
                 @click="ChooseFile = true;
-                doEdit(false, true, 1);
+                doEdit(false, true, 'parcourir');
                 edit_societe = false;
                 edit_eta = false;
                 ParseRestaurant(json, 0, 0)
-                doEdit(true, false, 0)">Charger un fichier</button>
+                doEdit(true, false, 'edit')">Charger un fichier</button>
         <button id="retour" :title="message['retour']" class="hover-item" v-if="editing || ChooseFile"
-                @click="doEdit(true, false, 0);
-                doEdit(false, false, 1);
+                @click="doEdit(true, false, 'edit');
+                doEdit(false, false, 'parcourir');
                 edit_societe = false;
                 edit_eta = false;
                 ChooseFile = false">Retour</button></div></header></div>
   <UploadFiles v-if="ChooseFile"/>
   <template v-if="editing">
-    <button class="hover-item" @click="edit_societe = !edit_societe; doEdit(false, true, 3)">Ajouter une société</button>
-    <button class="hover-item" @click="edit_eta = !edit_eta">Ajouter un établissement</button>
-    <button class="hover-item">Ajouter une restaurant</button>
+    <button id="AddSoc" class="hover-item" @click="edit_societe = !edit_societe; doEdit(false, true, 'AddSoc')">Ajouter une société</button>
+    <button id="AddEta" class="hover-item" @click="edit_eta = !edit_eta">Ajouter un établissement</button>
+    <button id="AddRes" class="hover-item">Ajouter une restaurant</button>
     <button v-if="edit_societe || edit_eta" class="hover-item" @click="edit_societe = false;
                                                                 edit_eta = false;
-                                                                doEdit(false, false, 3)">Retour</button></template>
+                                                                doEdit(false, false, 'AddSoc')">Retour</button></template>
   <SocieteForm v-if="edit_societe"/>
   <EtablissementForm v-if="edit_eta"></EtablissementForm>
   <div class="left">{{ date }}</div>
@@ -68,10 +68,14 @@ export default defineComponent({
   },
   name: 'App',
   methods: {
-    doEdit(must_edit: boolean, editing: boolean, int: number) {
+    doEdit(must_edit: boolean, editing: boolean, id: string) {
       if (must_edit)
         this.editing = editing;
-      document.querySelectorAll('button')[int].disabled = editing;
+      const d = document.getElementById(id);
+      if (d == null)
+        return;
+      // @ts-ignore
+      d.disabled = editing;
     }
   }
 });
