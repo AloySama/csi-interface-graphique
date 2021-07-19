@@ -2,13 +2,13 @@
 
 <template>
   <div v-for="(soc, index) in ParseSociete(json)" :key="index">
-    <button class="hover-item" @click="FillSociete(index)">{{soc}}</button>
+    <button :id="'ButtonEta' + index" class="hover-item" @click="FillSociete(index); DisabledButton(index, true)">{{soc}}</button>
   </div>
 </template>
 
 <script>
 import ParseSociete from "../functions/ParseSociete";
-const FillTab = {societe: 0}
+const FillTab = {societe: -1}
 export default {
   name: "EtablissementForm",
   data() {
@@ -20,6 +20,9 @@ export default {
   methods: {
     FillSociete(s) {
       FillTab['societe'] = s;
+    },
+    DisabledButton(i, bool) {
+      document.getElementById("ButtonEta" + i).disabled = bool;
     }
   }
 }
