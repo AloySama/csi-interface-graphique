@@ -23,6 +23,10 @@ export default {
     },
     DisabledButton(i, bool) {
       document.getElementById("ButtonEta" + i).disabled = bool;
+      for(let j = 0; j < ParseSociete(this.json).length; j++) {
+          if (j === i) continue;
+          document.getElementById('ButtonEta' + j).disabled = false;
+      }
     }
   }
 }

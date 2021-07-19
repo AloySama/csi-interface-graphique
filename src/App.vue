@@ -26,12 +26,21 @@
                 ChooseFile = false">Retour</button></div></header></div>
   <UploadFiles v-if="ChooseFile"/>
   <template v-if="editing">
-    <button id="AddSoc" class="hover-item" @click="edit_societe = !edit_societe; doEdit(false, true, 'AddSoc')">Ajouter une société</button>
-    <button id="AddEta" class="hover-item" @click="edit_eta = !edit_eta">Ajouter un établissement</button>
+      <button id="AddSoc" class="hover-item"
+            @click="edit_societe = true;
+            edit_eta = false;
+            doEdit(false, true, 'AddSoc');
+            doEdit(false, false, 'AddEta')">Ajouter une société</button>
+    <button id="AddEta" class="hover-item"
+            @click="edit_eta = true;
+            edit_societe = false;
+            doEdit(false, true, 'AddEta');
+            doEdit(false, false, 'AddSoc')">Ajouter un établissement</button>
     <button id="AddRes" class="hover-item">Ajouter une restaurant</button>
     <button v-if="edit_societe || edit_eta" class="hover-item" @click="edit_societe = false;
                                                                 edit_eta = false;
-                                                                doEdit(false, false, 'AddSoc')">Retour</button></template>
+                                                                doEdit(false, false, 'AddSoc');
+                                                                doEdit(false, false, 'AddEta')">Retour</button></template>
   <SocieteForm v-if="edit_societe"/>
   <EtablissementForm v-if="edit_eta"></EtablissementForm>
   <div class="left">{{ date }}</div>
