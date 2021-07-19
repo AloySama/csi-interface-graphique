@@ -42,7 +42,7 @@
                                                                 doEdit(false, false, 'AddSoc');
                                                                 doEdit(false, false, 'AddEta')" >Retour</button></template>
   <SocieteForm v-if="edit_societe"/>
-  <EtablissementForm v-if="edit_eta" @edit_eta_value="SetValue" ></EtablissementForm>
+  <EtablissementForm v-if="edit_eta" @edit_eta_value="SetEta" ></EtablissementForm>
   <div class="left">{{ date }}</div>
   <footer> <a href="https://www.linkedin.com/in/alo%C3%AFs-brengard/" target="_blank">Author: Aloïs BRENGARD</a></footer>
 </template>
@@ -86,7 +86,7 @@ export default defineComponent({
       // @ts-ignore
       d.disabled = editing;
     },
-    SetValue(value: boolean) {
+    SetEta(value: boolean) {
       this.edit_eta = value;
     }
   }

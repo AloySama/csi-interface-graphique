@@ -8,25 +8,12 @@
       <div v-if="add_id">
         <form>
           <label>id</label>
-          <input type="number" >
+          <input type="number">
         </form>
       </div>
       <label>Ajouter Traiteur config ?</label>
       <input v-model="add_tdd" type="checkbox">
-      <div v-if="add_tdd">
-        <strong>Nombre : automatique si non renseigné ou 0 en fonction de la case. <br>
-        Sinon null, false ou tableau vide si non renseigné</strong>
-        <input v-model="tdd_nbr" type="number" min="1" max="30">
-        <div v-for="_ in parseInt(tdd_nbr)" :key="parseInt(_)">
-          <form >
-          <li v-for="(index, item) in tdd" :key="index">
-              {{item}}
-              <input type="number" v-if="ints.includes(item)">
-              <input v-else type="text">
-          </li>
-          </form>
-        </div>
-      </div>
+      <tdd-form v-if="add_tdd"/>
       <label>Ajouter un établissement ?</label>
       <input v-model="add_eta" type="checkbox">
       <div v-if="add_eta">
@@ -40,23 +27,16 @@
 </template>
 
 <script>
+import TddForm from "@/components/TddForm";
 export default {
   name: "SocieteForm",
+  components: {TddForm},
   data() {
     return {
       code: '',
       add_id: false,
       add_tdd: false,
       tdd_nbr: 0,
-      tdd: {
-        "id": 1, "auxiliaire": null, "auxiliaireRestaurant": false, "auxiliaireVide": false, "auxilliaireCreditClient": false,
-        "codeJournal": 0, "compte": 0, "compteAnalytique1": null, "compteAnalytique1TVA": false, "compteAnalytique2": null,
-        "compteAnalytique3": null, "comptes": [], "direction": "DEBIT", "documents": [], "familles": [], "filtration": [],
-        "groupes": [], "libelle": "", "libelles": [], "localisations": [], "matriculeRestaurant": false, "modeER": true,
-        "numeros": [], "ordre": 0, "profits": [], "recuperation": "", "sousfamilles": [], "specialite": "", "tags": [],
-        "tax_code": null, "taxe": false, "transaction": "VI", "transactionVI": false, "tvas": [], "type": "1", "zeroExclus": false
-      },
-      ints: ['id', 'codeJournal', 'compte', 'ordre', 'matriculeRestaurant'],
       add_eta: false,
     }
   },

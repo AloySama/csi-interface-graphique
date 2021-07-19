@@ -5,29 +5,45 @@
       <li class="OneLine" v-for="(soc, index) in ParseSociete(json)" :key="index">
         <button :id="'ButtonEta' + index" class="hover-item" @click="DisabledButton(index, true)">{{soc}}</button>
       </li>
-      <li><br>
         <button class="hover-item" @click="FillSociete(-1); App.methods.doEdit(false, false, 'AddEta'); $emit('edit_eta_value', false)">Retour</button>
-      </li>
     </ul>
+  </div>
+  <div v-if="FillTab >= 0">
+    <form>
+      <label>Id personnalisé ?</label>
+      <input type="checkbox" v-model="add_id">
+      <input v-if="add_id" placeholder="id">
+      <label>Code</label>
+      <input type="text" required>
+      <label>Ajouter Traiteur config ?</label>
+      <input v-model="add_tdd" type="checkbox">
+      <tdd-form v-if="add_tdd"/>
+    </form>
   </div>
 </template>
 
 <script>
 import ParseSociete from "../functions/ParseSociete";
 import App from '../App'
-const FillTab = {societe: -1}
+import TddForm from "@/components/TddForm";
+
 export default {
+  components: {TddForm},
+  emits : ['edit_eta_value'],
   name: "EtablissementForm",
   data() {
     return {
       ParseSociete,
       json: require('../../../json_file/test_file.json'),
-      App
+      App,
+      FillTab : -1,
+      add_id: false,
+      add_tdd: false
     }
   },
   methods: {
     FillSociete(s) {
-      FillTab['societe'] = s;
+      this.FillTab = s;
     },
     DisabledButton(i, bool) {
       this.FillSociete(i);
@@ -36,9 +52,9 @@ export default {
           if (j === i) continue;
           document.getElementById('ButtonEta' + j).disabled = false;
       }
-      console.log(FillTab)
+      console.log(this.FillTab)
     }
-  }
+  },
 }
 </script>
 
