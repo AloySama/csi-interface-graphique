@@ -1,16 +1,20 @@
 <template>
   <div>
-    <strong>Nombre : automatique si non renseigné ou 0 en fonction de la case. <br>
-      Sinon null, false ou tableau vide si non renseigné</strong>
+    <strong>Nombre : automatique si non renseigné ou 0 en fonction de la case.
+      Sinon null, false ou tableau vide si non renseigné</strong><br>
     <input v-model="tdd_nbr" type="number" min="1" max="30">
     <div v-if="tdd_nbr > 0">
       <div v-for="_ in parseInt(tdd_nbr)" :key="parseInt(_)">
         <form>
           <ol>
             <li v-for="(index, item) in tdd" :key="index">
-              {{item}}
-              <input type="number" v-if="ints.includes(item)">
-              <input v-else type="text">
+              <div class="col-25">
+                {{item}}
+              </div>
+              <div class="col-75">
+                <input type="number" v-if="ints.includes(item)">
+                <input v-else type="text">
+              </div>
             </li>
           </ol>
         </form>
@@ -41,4 +45,7 @@ export default {
 
 <style scoped>
 
+ol {
+  list-style: none;
+}
 </style>
