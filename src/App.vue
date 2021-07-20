@@ -99,32 +99,24 @@ export default defineComponent({
     DisabledButtons(str: Terms) {
       const List = {'edit_eta': 'AddEta', 'edit_societe': 'AddSoc', 'edit_res': 'AddRes'};
       let count = 0;
-      for (const T in List) {
-        if (str === T) {
-          console.log(str + ': ' + List[T]);
+      for (const listKey in List) {
+        if (str === listKey) {
           // @ts-ignore
-          document.getElementById(List[T]).disabled = true;
-          if (count === 0) {
-            this.edit_eta = true;
-            this.edit_res = false;
-            this.edit_societe = false
-          }
-          else if (count === 1) {
-            this.edit_eta = false;
-            this.edit_res = false;
-            this.edit_societe = true;
-          }
-          else {
-            this.edit_res = true;
-            this.edit_societe = false;
-            this.edit_eta = false;
-          }
+          document.getElementById(List[listKey]).disabled = true;
+          if (count === 0) this.UpdateButtons(true, false, false)
+          else if (count === 1) this.UpdateButtons(false, false, true)
+          else this.UpdateButtons(false, true, false)
           continue;
         }
         // @ts-ignore
-        document.getElementById(List[T]).disabled = false;
+        document.getElementById(List[listKey]).disabled = false;
         count++;
       }
+    },
+    UpdateButtons(eta: boolean, res: boolean, soc: boolean) {
+      this.edit_eta = eta;
+      this.edit_res = res;
+      this.edit_societe = soc;
     }
   }
 });
