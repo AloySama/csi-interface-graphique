@@ -7,7 +7,7 @@
     Choisissez à quelle société vous voulez ajouter l'établissement. <br>
     <ul>
       <li class="OneLine" v-for="(soc, index) in ParseSociete(json)" :key="index">
-        <button :id="'ButtonEta' + index" class="hover-item" @click="DisabledButton(index, true)">{{soc}}</button>
+        <button :id="'ButtonEta' + index" class="hover-item" @click="DisabledButton(index, true); HasChanged(index); FillSociete(index);">{{soc}}</button>
       </li>
       <button class="hover-item" @click="FillSociete(-1); App.methods.doEdit(false, false, 'AddRes'); $emit('edit_value', false)">Retour</button>
     </ul>
@@ -15,7 +15,7 @@
   <div v-if="FillTab['societe'] >= 0">
     <ul>
       <li class="OneLine" v-for="(etab, index) in ParseRestaurant(json, FillTab['societe'])" :key="index">
-        <button class="hover-item" :id="'ButtonRes' + index">{{etab}}</button>
+        <button class="hover-item" @click="DisabledButton(index, true); FillEtab(index)" :id="'ButtonRes' + index">{{etab}}</button>
       </li>
     </ul>
   </div>
@@ -43,20 +43,22 @@ export default {
   methods: {
     FillSociete(societe) {
       this.FillTab['societe'] = societe;
-      return 0;
     },
     FillEtab(etablissement) {
       this.FillTab['etablissement'] = etablissement;
-      return 0;
+      console.log(this.FillTab);
     },
     DisabledButton(i, bool) {
-      this.FillSociete(i);
       document.getElementById("ButtonEta" + i).disabled = bool;
       for(let j = 0; j < ParseSociete(this.json).length; j++) {
         if (j === i) continue;
         document.getElementById('ButtonEta' + j).disabled = false;
       }
       console.log(this.FillTab)
+    },
+    HasChanged(index) {
+      if (!(this.FillTab['societe'] === index))
+        this.FillTab['etablissement'] = -1;
     }
   }
 }
