@@ -3,16 +3,18 @@
     <strong>Nombre : automatique si non renseigné ou 0 en fonction de la case. <br>
       Sinon null, false ou tableau vide si non renseigné</strong>
     <input v-model="tdd_nbr" type="number" min="1" max="30">
-    <div v-for="_ in parseInt(tdd_nbr)" :key="parseInt(_)">
-      <form>
-        <ol>
-          <li v-for="(index, item) in tdd" :key="index">
-            {{item}}
-            <input type="number" v-if="ints.includes(item)">
-            <input v-else type="text">
-          </li>
-        </ol>
-      </form>
+    <div v-if="tdd_nbr > 0">
+      <div v-for="_ in parseInt(tdd_nbr)" :key="parseInt(_)">
+        <form>
+          <ol>
+            <li v-for="(index, item) in tdd" :key="index">
+              {{item}}
+              <input type="number" v-if="ints.includes(item)">
+              <input v-else type="text">
+            </li>
+          </ol>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -22,7 +24,7 @@ export default {
   name: "TddForm",
   data() {
     return {
-      tdd_nbr: false,
+      tdd_nbr: 1,
       tdd: {
         "id": 1, "auxiliaire": null, "auxiliaireRestaurant": false, "auxiliaireVide": false, "auxilliaireCreditClient": false,
         "codeJournal": 0, "compte": 0, "compteAnalytique1": null, "compteAnalytique1TVA": false, "compteAnalytique2": null,
@@ -40,5 +42,3 @@ export default {
 <style scoped>
 
 </style>
-
-<!-- TODO: corriger les warnings -->
