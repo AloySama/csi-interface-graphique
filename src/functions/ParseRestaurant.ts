@@ -1,10 +1,14 @@
-export default function ParseRestaurant(json: any, societe: number, etablissement: number) {
+export default function ParseRestaurant(json: any, societe: number) {
     const list = [];
     if (json.length === 0) return null;
 
-    try {    console.log(json[societe].etablissements[etablissement].restaurants[0])
+    for (const index in json[societe].etablissements) {
+        try {
+            list.push(json[societe].etablissements[index].code)
+        }
+        catch (e) {
+            console.error("Erreur : une erreur est survenue lors du parsing du Json.")
+        }
     }
-    catch (e) {
-        console.error("Erreur : societe ou etablissement invalide. \n" + e)
-    }
+    return list;
 }

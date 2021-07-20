@@ -7,9 +7,9 @@ export default function ParseSociete(json: any) {
     if (json.length === 0) {
         return null;
     }
-    for (const societe in json) {
+    for (const index in json) {
         try {
-            list.push(json[societe].code)
+            list.push(json[index].code)
         }
         catch (e) {
             console.error(e)

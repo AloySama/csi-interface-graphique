@@ -16,15 +16,13 @@
                 doEdit(false, true, 'parcourir');
                 edit_societe = false;
                 edit_eta = false;
-                ParseRestaurant(json, 0, 0)
                 doEdit(true, false, 'edit')">Charger un fichier</button>
         <button id="retour" :title="message['retour']" class="hover-item" v-if="editing || ChooseFile"
                 @click="doEdit(true, false, 'edit');
                 doEdit(false, false, 'parcourir');
                 edit_societe = false;
                 edit_eta = false;
-                ChooseFile = false;
-                DisabledButtons('edit_eta')">Retour</button></div></header></div>
+                ChooseFile = false;">Retour</button></div></header></div>
   <UploadFiles v-if="ChooseFile"/>
   <template v-if="editing">
       <button id="AddSoc" class="hover-item"
@@ -43,8 +41,8 @@
                                                                 doEdit(false, false, 'AddRes');
                                                                 doEdit(false, false, 'AddEta');">Retour</button></template>
   <SocieteForm v-if="edit_societe"/>
-  <EtablissementForm v-if="edit_eta" @edit_value="SetEta" ></EtablissementForm>
-  <RestaurantForm v-if="edit_res"/>
+  <EtablissementForm v-if="edit_eta" @edit_value="SetEta"></EtablissementForm>
+  <RestaurantForm v-if="edit_res" @edit_value="SetRes"/>
   <div class="left">{{ date }}</div>
   <footer> <a href="https://www.linkedin.com/in/alo%C3%AFs-brengard/" target="_blank">Author: Aloïs BRENGARD</a></footer>
 </template>
@@ -63,7 +61,7 @@ export default defineComponent({
   components: {RestaurantForm, UploadFiles, EtablissementForm, SocieteForm},
   data() {
     return {
-      json: require('../../json_file/arcole.json'),
+      json: require('../../json_file/test_file.json'),
       ChooseFile: false,
       edit_eta: false,
       edit_societe: false,
@@ -93,6 +91,9 @@ export default defineComponent({
     },
     SetEta(value: boolean) {
       this.edit_eta = value;
+    },
+    SetRes(value: boolean) {
+      this.edit_res = value;
     },
     DisabledButtons(str: Terms) {
       const List = {'edit_eta': 'AddEta', 'edit_societe': 'AddSoc', 'edit_res': 'AddRes'};
@@ -136,3 +137,4 @@ export default defineComponent({
   font-size: 12px;
 }
 </style>
+<!--TODO: revoir la fonction DisabledButton en vue de l'améliorer -->
