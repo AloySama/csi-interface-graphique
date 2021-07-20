@@ -2,7 +2,7 @@
   <div class="app">
     <header>
       <div class="title">
-        <a href="https://www.cashsystemes.eu/"><img src="../../images/csi.png" alt="logo CSI"
+        <a href="https://www.cashsystemes.eu/"><img :src="img" alt="logo CSI"
                                                     title="https://www.cashsystemes.eu/"></a>
         <h1>ARCOLE<br>export</h1>
       </div>
@@ -61,6 +61,7 @@ export default defineComponent({
   components: {RestaurantForm, UploadFiles, EtablissementForm, SocieteForm},
   data() {
     return {
+      img: require('@/assets/images/csi.png'),
       json: require('../../json_file/test_file.json'),
       ChooseFile: false,
       edit_eta: false,
