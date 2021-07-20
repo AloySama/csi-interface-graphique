@@ -6,10 +6,12 @@
 <!--TODO: Trouver comment mettre le Json dans la balise <p> + mettre des couleurs pour une meilleure lisibilité.-->
 <script>
 
+import App from "../App";
+
 export default {
   data() {
     return {
-      json: require('../../../json_file/arcole.json'),
+      json: App.data().json,
     }
   },
   name: "PrintJson",

@@ -130,4 +130,3 @@ export default defineComponent({
   font-size: 12px;
 }
 </style>
-<!--TODO: revoir la fonction DisabledButton en vue de l'améliorer -->
