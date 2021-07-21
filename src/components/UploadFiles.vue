@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <div class="row">
     <form @submit.prevent="" class="form" id="MyForm">
       <input name="UploadFile" id="UploadFiles" type="file" required accept=".json" @change="loadTextFromFile">
+      <input type="submit" @click="upload">
     </form>
   </div>
   <div id="container" style="height: 500px; min-width: 500px"></div>
+
 </template>
 
 <script>
@@ -19,11 +21,16 @@ export default {
 
       const file = ev.target.files[0];
       const reader = new FileReader();
+      let value;
 
       reader.onload = function (e) {
-        document.getElementById('container').innerHTML=e.target.result;
+        document.getElementById('container').innerHTML = e.target.result;
       }
       reader.readAsText(file, 'utf-8');
+    },
+    upload() {
+      let value = document.getElementById('container');
+      console.log(value.innerText)
     }
   }
 }
