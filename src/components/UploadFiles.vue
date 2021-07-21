@@ -1,19 +1,27 @@
 <template>
-  <div class="row">
+  <strong>Cliquer bien sur 'envoyer', ou le fichier ne sera pas enregistrer</strong>
     <form @submit.prevent="" class="form" id="MyForm">
-      <input name="UploadFile" id="UploadFiles" type="file" required accept=".json" @change="loadTextFromFile">
-      <input type="submit" @click="upload">
+      <div class="fileUpload">
+        <input name="UploadFile" id="UploadFiles" type="file" class="" required accept=".json" @change="loadTextFromFile">
+        <label class="label-upload" for="UploadFiles">Choisir un fichier</label> &nbsp;
+      </div>
+      <button class="hover-item" @click="upload">envoyer</button>
     </form>
-  </div>
-  <div id="container" style="height: 500px; min-width: 500px"></div>
+
+  <div  class="overflow" id="container" style="height: 500px; min-width: 500px"></div>
 
 </template>
 
 <script>
 export default {
-  data: () => ({ text: "" }),
-    components: {
-      FileReader
+  emits: ['upload-json'] ,
+  data() {
+    return {
+      json: null
+    }
+  },
+  components: {
+    FileReader
   },
   name: "UploadFiles",
   methods: {
@@ -21,16 +29,15 @@ export default {
 
       const file = ev.target.files[0];
       const reader = new FileReader();
-      let value;
 
       reader.onload = function (e) {
-        document.getElementById('container').innerHTML = e.target.result;
+        document.getElementById('container').textContent = e.target.result;
       }
       reader.readAsText(file, 'utf-8');
     },
     upload() {
-      let value = document.getElementById('container');
-      console.log(value.innerText)
+      this.json = document.getElementById('container').innerText;
+      this.$emit('upload-json', this.json);
     }
   }
 }
@@ -44,7 +51,6 @@ export default {
   overflow: hidden;
   display: inline-block;
 
-  /* Fancy button style 😎 */
   border: 2px solid black;
   border-radius: 5px;
   padding: 8px 12px;

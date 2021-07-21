@@ -23,26 +23,26 @@
                 edit_societe = false;
                 edit_eta = false;
                 ChooseFile = false;">Retour</button></div></header></div>
-  <UploadFiles v-if="ChooseFile"/>
   <template v-if="editing">
-      <button id="AddSoc" class="hover-item"
+    <button id="AddSoc" class="hover-item"
             @click="
             doEdit(false, true, 'AddSoc');
-            doEdit(false, false, 'AddEta'); DisabledButtons('edit_societe')">Ajouter une société</button>
+    doEdit(false, false, 'AddEta'); DisabledButtons('edit_societe')">Ajouter une société</button>
     <button id="AddEta" class="hover-item"
             @click="
             doEdit(false, true, 'AddEta');
-            doEdit(false, false, 'AddSoc'); DisabledButtons('edit_eta')">Ajouter un établissement</button>
+    doEdit(false, false, 'AddSoc'); DisabledButtons('edit_eta')">Ajouter un établissement</button>
     <button id="AddRes" class="hover-item" @click="edit_res = true; doEdit(false, true, 'AddRes'); DisabledButtons('edit_res')">Ajouter une restaurant</button>
     <button v-if="edit_societe || edit_eta || edit_res" class="hover-item" @click="edit_societe = false;
                                                                 edit_eta = false;
                                                                 edit_res = false;
                                                                 doEdit(false, false, 'AddSoc');
                                                                 doEdit(false, false, 'AddRes');
-                                                                doEdit(false, false, 'AddEta');">Retour</button></template>
+    doEdit(false, false, 'AddEta');">Retour</button></template>
   <SocieteForm v-if="edit_societe"/>
   <EtablissementForm v-if="edit_eta" @edit_value="SetEta"></EtablissementForm>
   <RestaurantForm v-if="edit_res" @edit_value="SetRes"/>
+  <UploadFiles v-if="ChooseFile" @upload-json="SetJson"/>
   <div class="left">{{ date }}</div>
   <footer> <a href="https://www.linkedin.com/in/alo%C3%AFs-brengard/" target="_blank">Author: Aloïs BRENGARD</a></footer>
 </template>
@@ -62,7 +62,7 @@ export default defineComponent({
   data() {
     return {
       img: require('@/assets/images/csi.png'),
-      json: require('../../json_file/test_file.json'),
+      json: "",
       ChooseFile: false,
       edit_eta: false,
       edit_societe: false,
@@ -95,6 +95,14 @@ export default defineComponent({
     },
     SetRes(value: boolean) {
       this.edit_res = value;
+    },
+    SetJson(json: string) {
+      if (json != null) {
+        this.json = JSON.parse(json);
+        console.log(json)
+      }
+      else
+        alert("JSON NULL !");
     },
     DisabledButtons(str: Terms) {
       const List = {'edit_eta': 'AddEta', 'edit_societe': 'AddSoc', 'edit_res': 'AddRes'};

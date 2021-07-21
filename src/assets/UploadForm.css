@@ -1,0 +1,56 @@
+.fileUpload {
+    background: mediumpurple;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    color: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    margin: 1.25em auto;
+    overflow: hidden;
+    padding: 0.875em;
+    position: relative;
+    text-align: center;
+    width: 120px;
+    cursor: pointer;
+}
+.fileUpload:hover, .fileUpload:active, .fileUpload:focus {
+    background: rebeccapurple;
+    cursor: pointer;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    width: 148px;
+    height: 46px;
+}
+
+input[type="file"] {
+    position: fixed;
+    right: 100%;
+    bottom: 100%;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.overflow {
+    background: lightgray;
+    border: 1px solid #ccc;
+    width: 97%;
+    height: 50%;
+    align-items: center;
+    margin: 0 auto;
+
+    overflow: scroll;
+}

@@ -56,8 +56,9 @@ button {
     cursor: pointer;
     padding: 8px 16px;
     border: 3px solid #860ace;
-    border-radius: 4px;
+    border-radius: 15px;
     font-weight: bold;
+    font-size: 17px;
     background: white;
 }
 .title {

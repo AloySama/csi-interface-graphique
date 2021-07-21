@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       ParseSociete,
-      json: require('../../../json_file/test_file.json'),
+      json: App.data().json,
       App,
       FillTab : -1,
       add_id: false,
