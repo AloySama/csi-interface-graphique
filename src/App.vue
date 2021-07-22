@@ -7,6 +7,7 @@
         <h1>ARCOLE<br>export</h1>
       </div>
       <div class="order">
+        <button class="hover-item" @click="download(json, 'arcole.json')">Enregistrer</button>
         <button id="edit" :title="message['edit']" class="hover-item"
                 @click="doEdit(true, true, 'edit');
                 ChooseFile = false;
@@ -27,6 +28,7 @@
                 edit_res = false;
                 ChooseFile = false;">Retour</button></div></header></div>
   <template v-if="editing">
+    {{json}}
     <button id="AddSoc" class="hover-item"
             @click="
             doEdit(false, true, 'AddSoc');
@@ -61,6 +63,8 @@ import EtablissementForm from "@/components/EtablissementForm.vue";
 import UploadFiles from "@/components/UploadFiles.vue";
 import RestaurantForm from "@/components/RestaurantForm.vue";
 import Terms from "@/functions/Terms";
+import download from '@/functions/Savedata'
+
 export default defineComponent({
   components: {RestaurantForm, UploadFiles, EtablissementForm, SocieteForm},
   data() {
@@ -80,7 +84,8 @@ export default defineComponent({
       date: 'Vous avez affiché cette page le ' + new Date().toLocaleString(),
       EditSociete,
       ParseSociete,
-      ParseRestaurant
+      ParseRestaurant,
+      download
     }
   },
   name: 'App',
