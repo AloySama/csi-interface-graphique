@@ -1,8 +1,9 @@
 export default function download(jsonData: any, filename: string) {
-    const blob = new Blob([jsonData], { type: 'text/plain;charset=utf-8;' })
+    const blob = new Blob([JSON.stringify(jsonData, undefined, 2)], { type: 'text/plain;charset=utf-8;' })
     if (navigator.msSaveBlob) {
         navigator.msSaveBlob(blob, filename)
-    } else {
+    }
+    else {
         const link = document.createElement('a')
         if (link.download !== undefined) {
             const url = URL.createObjectURL(blob)
