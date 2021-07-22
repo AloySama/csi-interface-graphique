@@ -8,16 +8,35 @@
         <button class="hover-item" @click="FillSociete(-1); App.methods.doEdit(false, false, 'AddEta'); $emit('edit_value', false)">Retour</button>
     </ul>
   </div>
-  <div v-if="FillTab >= 0">
-    <form>
-      <label>Id personnalisé ?</label>
-      <input type="checkbox" v-model="add_id">
-      <input v-if="add_id" placeholder="id">
-      <label>Code</label>
-      <input type="text" required>
-      <label>Ajouter Traiteur config ?</label>
-      <input v-model="add_tdd" type="checkbox">
-      <tdd-form v-if="add_tdd"/>
+  <div v-if="FillTab >= 0" class="container">
+    <form @submit.prevent="">
+      <div class="row">
+        <div class="col-25">
+          <label>Id personnalisé ?</label>
+        </div>
+        <div class="col-75">
+          <input type="checkbox" v-model="add_id">
+          <input v-if="add_id" placeholder="id">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label>Code</label>
+        </div>
+        <div class="col-75">
+          <input type="text" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label>Ajouter Traiteur config ?</label>
+        </div>
+        <div class="col-75">
+          <input v-model="add_tdd" type="checkbox">
+        </div>
+        <tdd-form v-if="add_tdd"/>
+        <input type="submit">
+      </div>
     </form>
   </div>
 </template>

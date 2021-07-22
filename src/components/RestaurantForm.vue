@@ -18,18 +18,37 @@
       </li>
     </ul>
   </div>
-  <div v-if="FillTab['societe'] >= 0 && FillTab['etablissement'] >= 0">
+  <div v-if="FillTab['societe'] >= 0 && FillTab['etablissement'] >= 0" class="container">
     <strong>Attention : le matricule d'un restaurant est unique dans tout le fichier json</strong>
-    <form>
-      <label>Matricule personnalisé ?</label>
-      <input v-model="AddMatricule" type="checkbox">
-      <input v-if="AddMatricule" type="number" min="0">
-      <label>RestaurantId personnalisé ?</label>
-      <input v-model="AddId" type="checkbox">
-      <input v-if="AddId" type="number">
-      <label>Ajouter Traiteur Configs ?</label>
-      <input v-model="AddTdd" type="checkbox">
-      <tdd-form v-if="AddTdd"/>
+    <form @submit.prevent="">
+      <div class="row">
+        <div class="col-25">
+        <label>Matricule personnalisé ?</label>
+        </div>
+        <div class="col-75">
+          <input v-model="AddMatricule" type="checkbox">
+          <input v-if="AddMatricule" type="number" min="0">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label>RestaurantId personnalisé ?</label>
+        </div>
+        <div class="col-75">
+          <input v-model="AddId" type="checkbox">
+          <input v-if="AddId" type="number">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label>Ajouter Traiteur Configs ?</label>
+        </div>
+        <div class="col-75">
+          <input v-model="AddTdd" type="checkbox">
+        </div>
+        <tdd-form v-if="AddTdd"/>
+        <input type="submit">
+      </div>
     </form>
   </div>
 </template>
