@@ -37,9 +37,10 @@ export default {
     },
     upload() {
       let doc = document.getElementById('container').innerText;
-      if (!(doc.length === 0))
-        this.json = doc
-      this.$emit('upload-json', this.json);
+      if (!(doc.length === 0)) {
+        this.json = doc;
+        this.$emit('upload-json', this.json);
+      }
     }
   }
 }
