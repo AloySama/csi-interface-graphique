@@ -1,6 +1,6 @@
 <template>
   <div>
-    Choisissez à quelle société vous voulez ajouter l'établissement. <br>
+    Choisissez à quelle société vous voulez ajouter l'établissement.<br>
     <ul>
       <li class="OneLine" v-for="(soc, index) in ParseSociete(json)" :key="index">
         <button :id="'ButtonEta' + index" class="hover-item" @click="DisabledButton(index, true)">{{soc}}</button>
@@ -28,13 +28,19 @@ import App from '../App'
 import TddForm from "@/components/TddForm";
 
 export default {
+  props: {
+    jsonFile: {
+      default: null,
+      required: true
+    }
+  },
   components: {TddForm},
   emits : ['edit_value'],
   name: "EtablissementForm",
   data() {
     return {
       ParseSociete,
-      json: App.data().json,
+      json: this.jsonFile,
       App,
       FillTab : -1,
       add_id: false,

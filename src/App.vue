@@ -27,7 +27,7 @@
     <button id="AddSoc" class="hover-item"
             @click="
             doEdit(false, true, 'AddSoc');
-    doEdit(false, false, 'AddEta'); DisabledButtons('edit_societe')">Ajouter une société</button>
+    doEdit(false, false, 'AddEta'); DisabledButtons('edit_societe');">Ajouter une société</button>
     <button id="AddEta" class="hover-item"
             @click="
             doEdit(false, true, 'AddEta');
@@ -40,7 +40,7 @@
                                                                 doEdit(false, false, 'AddRes');
     doEdit(false, false, 'AddEta');">Retour</button></template>
   <SocieteForm v-if="edit_societe"/>
-  <EtablissementForm v-if="edit_eta" @edit_value="SetEta"></EtablissementForm>
+  <EtablissementForm :json-file="json" v-if="edit_eta" @edit_value="SetEta"></EtablissementForm>
   <RestaurantForm v-if="edit_res" @edit_value="SetRes"/>
   <UploadFiles v-if="ChooseFile" @upload-json="SetJson"/>
   <div class="left">{{ date }}</div>
@@ -99,7 +99,6 @@ export default defineComponent({
     SetJson(json: string) {
       if (json != null) {
         this.json = JSON.parse(json);
-        console.log(json)
       }
       else
         alert("JSON NULL !");
