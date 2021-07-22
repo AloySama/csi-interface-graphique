@@ -10,18 +10,21 @@
         <button id="edit" :title="message['edit']" class="hover-item"
                 @click="doEdit(true, true, 'edit');
                 ChooseFile = false;
-                doEdit(false, false, 'parcourir')">Éditer ficher ARCOLE</button>
+                doEdit(false, false, 'parcourir')" :disabled="json == null">Éditer ficher ARCOLE</button>
         <button id="parcourir" :title="message['parcours']" class="hover-item"
                 @click="ChooseFile = true;
                 doEdit(false, true, 'parcourir');
+                doEdit(true, false, 'edit')
                 edit_societe = false;
                 edit_eta = false;
-                doEdit(true, false, 'edit')">Charger un fichier</button>
+                edit_res = false;
+                ">Charger un fichier</button>
         <button id="retour" :title="message['retour']" class="hover-item" v-if="editing || ChooseFile"
                 @click="doEdit(true, false, 'edit');
                 doEdit(false, false, 'parcourir');
                 edit_societe = false;
                 edit_eta = false;
+                edit_res = false;
                 ChooseFile = false;">Retour</button></div></header></div>
   <template v-if="editing">
     <button id="AddSoc" class="hover-item"
@@ -38,6 +41,7 @@
                                                                 edit_res = false;
                                                                 doEdit(false, false, 'AddSoc');
                                                                 doEdit(false, false, 'AddRes');
+                                                                doEdit(false, false, 'AddEta');
     doEdit(false, false, 'AddEta');">Retour</button></template>
   <SocieteForm v-if="edit_societe"/>
   <EtablissementForm :json-file="json" v-if="edit_eta" @edit_value="SetEta"></EtablissementForm>
@@ -62,7 +66,7 @@ export default defineComponent({
   data() {
     return {
       img: require('@/assets/images/csi.png'),
-      json: "",
+      json: null,
       ChooseFile: false,
       edit_eta: false,
       edit_societe: false,
@@ -82,8 +86,8 @@ export default defineComponent({
   name: 'App',
   methods: {
     doEdit(must_edit: boolean, editing: boolean, id: string) {
-      if (must_edit)
-        this.editing = editing;
+      if (must_edit) this.editing = editing;
+      if (this.json == null) return;
       const d = document.getElementById(id);
       if (d == null)
         return;
@@ -91,9 +95,11 @@ export default defineComponent({
       d.disabled = editing;
     },
     SetEta(value: boolean) {
+      this.doEdit(false, value, 'AddEta');
       this.edit_eta = value;
     },
     SetRes(value: boolean) {
+      this.doEdit(false, value, 'AddRes');
       this.edit_res = value;
     },
     SetJson(json: string) {
