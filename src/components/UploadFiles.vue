@@ -36,7 +36,9 @@ export default {
       reader.readAsText(file, 'utf-8');
     },
     upload() {
-      this.json = document.getElementById('container').innerText;
+      let doc = document.getElementById('container').innerText;
+      if (!(doc.length === 0))
+        this.json = doc
       this.$emit('upload-json', this.json);
     }
   }
