@@ -56,7 +56,6 @@
 import {defineComponent} from "vue";
 import ParseSociete from "@/functions/ParseSociete";
 import ParseRestaurant from "@/functions/ParseRestaurant";
-import EditSociete from "@/functions/edit_json";
 import SocieteForm from "@/components/SocieteForm.vue";
 import EtablissementForm from "@/components/EtablissementForm.vue";
 import UploadFiles from "@/components/UploadFiles.vue";
@@ -81,7 +80,6 @@ export default defineComponent({
         'parcours': 'Parcourir un fichier sur le pc.'
       },
       date: 'Vous avez affiché cette page le ' + new Date().toLocaleString(),
-      EditSociete,
       ParseSociete,
       ParseRestaurant,
       download
