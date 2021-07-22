@@ -50,7 +50,7 @@ input[type="file"] {
     width: 97%;
     height: 50%;
     align-items: center;
-    margin: 0 auto;
+    margin: -7px auto;
 
     overflow: scroll;
 }
