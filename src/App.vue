@@ -28,7 +28,6 @@
                 edit_res = false;
                 ChooseFile = false;">Retour</button></div></header></div>
   <template v-if="editing">
-    {{json}}
     <button id="AddSoc" class="hover-item"
             @click="
             doEdit(false, true, 'AddSoc');

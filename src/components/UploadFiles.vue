@@ -38,7 +38,7 @@ export default {
     upload() {
       let doc = document.getElementById('container').innerText;
       if (!(doc.length === 0)) {
-        this.json = JSON.stringify(doc, undefined, 2);
+        this.json = doc;
         this.$emit('upload-json', this.json);
       }
     }
