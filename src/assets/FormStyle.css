@@ -2,6 +2,11 @@
     box-sizing: border-box;
 }
 
+input, select, textarea{
+    color: darkgreen;
+}
+
+
 input[type=text], input[type=number],select, textarea {
     width: 80%;
     padding: 10px;
@@ -38,15 +43,18 @@ input[type=submit]:hover {
 }
 
 .col-25 {
+    display: inline-block;
     float: left;
     width: 25%;
-    margin-top: 6px;
+    margin-top: 5px;
 }
 
 .col-75 {
+
+
     float: left;
-    width: 75%;
-    margin-top: 6px;
+    width: 20%;
+
 }
 
 /* Clear floats after the columns */
@@ -54,4 +62,9 @@ input[type=submit]:hover {
     content: "";
     display: table;
     clear: both;
+}
+
+label {
+    display: inline-block;
+    text-align: right;
 }

@@ -48,8 +48,8 @@
   <EtablissementForm :json-file="json" v-if="edit_eta" @edit_value="SetEta"></EtablissementForm>
   <RestaurantForm :json-file="json" v-if="edit_res" @edit_value="SetRes"/>
   <UploadFiles v-if="ChooseFile" @upload-json="SetJson"/>
-  <div class="left">{{ date }}</div>
-  <footer> <a href="https://www.linkedin.com/in/alo%C3%AFs-brengard/" target="_blank">Author: Aloïs BRENGARD</a></footer>
+
+  <footer><div class="left">{{ date }}</div> <a href="https://www.linkedin.com/in/alo%C3%AFs-brengard/" target="_blank">Author: Aloïs BRENGARD</a></footer>
 </template>
 
 <script lang="ts">
@@ -118,7 +118,7 @@ export default defineComponent({
         }
       }
       else
-        alert("JSON NULL !");
+        alert("Le json est null !");
     },
     DisabledButtons(str: Terms) {
       const List = {'edit_eta': 'AddEta', 'edit_societe': 'AddSoc', 'edit_res': 'AddRes'};
@@ -148,8 +148,7 @@ export default defineComponent({
 
 <style scoped>
 .left {
-  position: absolute;
-  bottom: 0;
+  position: fixed;
   left: 10px;
   font-size: 12px;
 }

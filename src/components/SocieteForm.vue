@@ -24,7 +24,7 @@
               <label >id</label>
             </div>
             <div class="col-75">
-              <input type="number">
+              <input type="number" min="0">
             </div>
           </form>
         </div>
@@ -33,28 +33,35 @@
         <div class="col-25">
           <label >Ajouter Traiteur config ?</label>
         </div>
-        <div>
+        <div class="col-75">
           <input v-model="add_tdd" type="checkbox">
-          <tdd-form v-if="add_tdd" class="tdd"/>
         </div>
+        <tdd-form v-if="add_tdd" class="tdd"/>
       </div>
-      <label>Ajouter un établissement ?</label>
-      <input v-model="add_eta" type="checkbox">
-      <div v-if="add_eta">
-        <form>
-          work in progress ...
-        </form>
+      <div class="row">
+        <div class="col-25">
+        <label>Ajouter un établissement ?</label>
+        </div>
+        <div class="col-75">
+          <input v-model="add_eta" type="checkbox">
+          <div v-if="add_eta">
+            <form>
+              Work in progress ...
+            </form>
+        </div>
+        </div>
+        <input type="submit" :disabled="!code">
       </div>
-      <input type="submit" :disabled="!code">
     </form>
   </div>
 </template>
 
 <script>
 import TddForm from "@/components/TddForm";
+import EtablissementForm from "@/components/EtablissementForm";
 export default {
   name: "SocieteForm",
-  components: {TddForm},
+  components: {EtablissementForm, TddForm},
   data() {
     return {
       code: '',
@@ -73,6 +80,7 @@ export default {
 </script>
 
 <style scoped>
+
 .container {
   border-radius: 5px;
   background-color: #f2f2f2;

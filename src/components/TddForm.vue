@@ -9,14 +9,15 @@
           <ol>
             <li v-for="(index, item) in tdd" :key="index">
               <div class="col-25">
-                {{item}}
+                <label>{{item}}</label>
               </div>
               <div class="col-75">
-                <input type="number" v-if="ints.includes(item)">
+                <input type="number" v-if="ints.includes(item)" min="0">
                 <input v-else type="text">
               </div>
             </li>
           </ol>
+          <br>
         </form>
       </div>
     </div>

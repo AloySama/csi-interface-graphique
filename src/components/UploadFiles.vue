@@ -3,12 +3,12 @@
     <form @submit.prevent="" class="form" id="MyForm">
       <div class="fileUpload">
         <input name="UploadFile" id="UploadFiles" type="file" class="" required accept=".json" @change="loadTextFromFile">
-        <label class="label-upload" for="UploadFiles">Choisir un fichier</label> &nbsp;
+        <label class="label-upload" for="UploadFiles">Parcourir ...</label> &nbsp;
       </div>
-      <button class="hover-item" @click="upload">envoyer</button>
     </form>
 
   <div  class="overflow" id="container" style="height: 500px; min-width: 500px"></div>
+  <button class="hover-item" @click="upload">envoyer</button>
 
 </template>
 
