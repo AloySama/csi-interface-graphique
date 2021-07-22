@@ -43,6 +43,12 @@ import TddForm from "@/components/TddForm";
 
 export default {
   name: "RestaurantForm",
+  props : {
+    jsonFile: {
+      default: null,
+      required: true
+    }
+  },
   components: {TddForm},
   emits: ['edit_value'],
   data() {
@@ -51,7 +57,7 @@ export default {
       ParseRestaurant,
       Etablissement,
       App,
-      json: App.data().json,
+      json: this.jsonFile,
       FillTab: {'societe': -1, 'etablissement': -1},
       AddMatricule: false,
       AddId: false,

@@ -41,7 +41,7 @@
     doEdit(false, false, 'AddEta');">Retour</button></template>
   <SocieteForm v-if="edit_societe"/>
   <EtablissementForm :json-file="json" v-if="edit_eta" @edit_value="SetEta"></EtablissementForm>
-  <RestaurantForm v-if="edit_res" @edit_value="SetRes"/>
+  <RestaurantForm :json-file="json" v-if="edit_res" @edit_value="SetRes"/>
   <UploadFiles v-if="ChooseFile" @upload-json="SetJson"/>
   <div class="left">{{ date }}</div>
   <footer> <a href="https://www.linkedin.com/in/alo%C3%AFs-brengard/" target="_blank">Author: Aloïs BRENGARD</a></footer>
