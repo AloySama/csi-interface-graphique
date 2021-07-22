@@ -91,8 +91,7 @@ export default defineComponent({
       if (must_edit) this.editing = editing;
       if (this.json == null) return;
       const d = document.getElementById(id);
-      if (d == null)
-        return;
+      if (d == null) return;
       // @ts-ignore
       d.disabled = editing;
     },
@@ -115,8 +114,7 @@ export default defineComponent({
           this.json = null;
         }
       }
-      else
-        alert("Le json est null !");
+      else alert("Le json est null !");
     },
     DisabledButtons(str: Terms) {
       const List = {'edit_eta': 'AddEta', 'edit_societe': 'AddSoc', 'edit_res': 'AddRes'};

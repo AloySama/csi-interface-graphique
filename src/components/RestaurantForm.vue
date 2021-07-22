@@ -6,7 +6,7 @@
     Choisissez à quelle société vous voulez ajouter l'établissement. <br>
     <ul>
       <li class="OneLine" v-for="(soc, index_soc) in ParseSociete(json)" :key="index_soc">
-        <button :id="'ButtonEta' + index_soc" class="hover-item" @click="DisabledButton('ButtonEta', index_soc, true); HasChanged(index_soc); FillSociete(index_soc); current = index_soc">{{soc}}</button>
+        <button :id="'ButtonEta' + index_soc" class="hover-item" @click="DisabledButton('ButtonEta', index_soc, true); HasChanged(index_soc); FillSociete(index_soc)">{{soc}}</button>
       </li>
       <button class="hover-item" @click="FillSociete(-1); App.methods.doEdit(false, false, 'AddRes'); $emit('edit_value', false)">Retour</button>
     </ul>
@@ -14,7 +14,7 @@
   <div v-if="FillTab['societe'] >= 0">
     <ul>
       <li class="OneLine" v-for="(etab, index_eta) in ParseRestaurant(json, FillTab['societe'])" :key="index_eta">
-        <button class="hover-item" :id="'ButtonRes' + FillTab['societe'] + index_eta" @click="FillEtab(index_eta);">{{etab}}</button>
+        <button class="hover-item" :id="'ButtonRes' + FillTab['societe'] + index_eta" @click="FillEtab(index_eta); DisabledButtonRes('' + FillTab['societe'] +index_eta)">{{etab}}</button>
       </li>
     </ul>
   </div>
@@ -81,7 +81,7 @@ export default {
       AddMatricule: false,
       AddId: false,
       AddTdd: false,
-      current: -1
+      old: null
     }
   },
   methods: {
@@ -104,13 +104,17 @@ export default {
         }
       }
     },
-    DisabledButtonRes(IdButtonClicked) { //TODO: revoir cette fonction pour désactiver les boutons
-      console.log('ButtonRes' + IdButtonClicked);
-      document.getElementById('ButtonRes' + IdButtonClicked).disabled = true;
-      for (let j  = 0; j < this.CountSociete; j++) {
-        for (let i = 0; i < this.CountRes(j, i); i++) {
-          document.getElementById('ButtonRes' + j + i).disabled = false;
-        }
+    DisabledButtonRes(IdButtonClicked) { //TODO: revoir cette fonction pour désactiver les boutons (il se passe des dingueries)
+      const current = 'ButtonRes' + IdButtonClicked;
+      console.log("CURRENT => " + current);
+      if (this.old == null) {
+        this.old = current;
+        document.getElementById(this.old).disabled = true;
+      }
+      else {
+        this.old = current;
+        document.getElementById(this.old).disabled = false;
+        document.getElementById(current).disabled = true;
       }
     },
     HasChanged(index) {

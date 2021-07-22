@@ -1,15 +1,13 @@
 <template>
-  <strong>Cliquer bien sur 'envoyer', ou le fichier ne sera pas enregistrer</strong>
+  <strong>Cliquer bien sur <u>'envoyer'</u>, ou le fichier ne sera pas enregistrer</strong>
     <form @submit.prevent="" class="form" id="MyForm">
       <div class="fileUpload">
         <input name="UploadFile" id="UploadFiles" type="file" class="" required accept=".json" @change="loadTextFromFile">
         <label class="label-upload" for="UploadFiles">Parcourir ...</label> &nbsp;
       </div>
     </form>
-
-  <div  class="overflow" id="container" style="height: 500px; min-width: 500px"></div>
+  <div class="overflow" id="container" style="height: 500px; min-width: 500px"></div>
   <button class="hover-item" @click="upload">envoyer</button>
-
 </template>
 
 <script>
@@ -47,19 +45,8 @@ export default {
 
 </script>
 
-
 <style>
-.text-reader {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-
-  border: 2px solid black;
-  border-radius: 5px;
-  padding: 8px 12px;
-  cursor: pointer;
-}
-.text-reader input {
+input {
   position: absolute;
   top: 0;
   left: 0;
@@ -67,5 +54,4 @@ export default {
   opacity: 0;
 }
 </style>
-
-<!--TODO: Faire communiquer le front et le back pour pouvoir modifier par la suite le json uploadé -->
+<!-- TODO: Faire communiquer le front et le back pour pouvoir modifier par la suite le json uploadé -->
