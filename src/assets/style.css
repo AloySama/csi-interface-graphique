@@ -5,7 +5,7 @@
 
 body {
     font-family: 'Lato', sans-serif;
-    background: #ece6d9;
+    background: black;
     text-align: center;
 }
 .app {
@@ -79,13 +79,35 @@ b {
 }
 footer {
     margin: -1px 0 0 auto;
-    background-color: lightgray;
     width: 100%;
     position: fixed;
     bottom: 5px;
-    padding: 10px;
     height:20px;
     text-align: right;
     font-size: 10px;
     text-decoration: underline #860ace;
+}
+
+body > #bg {
+    height: 100%;
+    width: 100%;
+    background-color: rebeccapurple;
+    clip-path: polygon(0 0, 100% 0%, 34% 100%, 0 100%);
+    position: absolute;
+    z-index: -1;
+}
+
+body > #bg2 {
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    clip-path: polygon(30% 100%, 100% 0%, 100% 100%, 30% 100%);
+    position: absolute;
+    z-index: -1;
+}
+
+.white {
+    color: whitesmoke;
+    font-weight: bold;
+    font-size: 20px;
 }

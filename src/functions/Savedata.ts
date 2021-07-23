@@ -15,4 +15,5 @@ export default function download(jsonData: any, filename: string) {
             document.body.removeChild(link)
         }
     }
+    return true;
 }

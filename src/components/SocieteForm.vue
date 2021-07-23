@@ -3,7 +3,7 @@
     <form @submit.prevent="HandleSubmit" >
       <div class="row">
         <div class="col-25">
-          <label >Code</label>
+          <label>Code</label>
         </div>
         <div class="col-75">
           <input type="text" required v-model="form.code" placeholder="Code de la société">
@@ -105,6 +105,8 @@ export default {
 }
 
 .error-message {
+  font-size: 20px;
+  font-weight: bold;
   color: red;
 }
 </style>
