@@ -6,7 +6,7 @@
         <label class="label-upload" for="UploadFiles">Parcourir ...</label> &nbsp;
       </div>
     </form>
-  <div class="overflow" id="container" style="height: 500px; min-width: 500px"></div>
+  <div class="overflow" id="container" style="height: 500px; min-width: 500px">Aperçu du fichier json ici</div>
   <button class="hover-item" @click="upload">envoyer</button>
 </template>
 
