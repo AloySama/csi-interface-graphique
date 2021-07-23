@@ -105,7 +105,7 @@ export default {
 }
 
 .error-message {
-  font-size: 20px;
+  font-size: 17px;
   font-weight: bold;
   color: red;
 }
