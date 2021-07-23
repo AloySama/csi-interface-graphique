@@ -7,7 +7,7 @@
         <h1>ARCOLE<br>export</h1>
       </div>
       <div class="order">
-        <button class="hover-item" @click="download(json, 'arcole.json')">Enregistrer</button>
+        <button class="hover-item" @click="download(json, 'arcole.json')" :disabled="json == null">Enregistrer</button>
         <button id="edit" :title="message['edit']" class="hover-item"
                 @click="doEdit(true, true, 'edit');
                 ChooseFile = false;
@@ -16,30 +16,23 @@
                 @click="ChooseFile = true;
                 doEdit(false, true, 'parcourir');
                 doEdit(true, false, 'edit')
-                edit_societe = false;
-                edit_eta = false;
-                edit_res = false;
+                UpdateButtons(false, false, false)
                 ">Charger un fichier</button>
         <button id="retour" :title="message['retour']" class="hover-item" v-if="editing || ChooseFile"
                 @click="doEdit(true, false, 'edit');
                 doEdit(false, false, 'parcourir');
-                edit_societe = false;
-                edit_eta = false;
-                edit_res = false;
+                UpdateButtons(false, false, false)
                 ChooseFile = false;">Retour</button></div></header></div>
   <template v-if="editing">
     <button id="AddSoc" class="hover-item"
-            @click="
-            doEdit(false, true, 'AddSoc');
-    doEdit(false, false, 'AddEta'); DisabledButtons('edit_societe');">Ajouter une société</button>
+            @click="edit_societe = true; DisabledButtons('AddSoc')
+            ">Ajouter une société</button>
     <button id="AddEta" class="hover-item"
-            @click="
-            doEdit(false, true, 'AddEta');
-    doEdit(false, false, 'AddSoc'); DisabledButtons('edit_eta')">Ajouter un établissement</button>
-    <button id="AddRes" class="hover-item" @click="edit_res = true; doEdit(false, true, 'AddRes'); DisabledButtons('edit_res')">Ajouter une restaurant</button>
-    <button v-if="edit_societe || edit_eta || edit_res" class="hover-item" @click="edit_societe = false;
-                                                                edit_eta = false;
-                                                                edit_res = false;
+            @click="edit_eta = true; DisabledButtons('AddEta')
+            ">Ajouter un établissement</button>
+    <button id="AddRes" class="hover-item" @click="edit_res = true;  DisabledButtons('AddRes')">Ajouter une restaurant</button>
+    <button v-if="edit_societe || edit_eta || edit_res" class="hover-item" @click="
+                                                                UpdateButtons(false, false, false)
                                                                 doEdit(false, false, 'AddSoc');
                                                                 doEdit(false, false, 'AddRes');
                                                                 doEdit(false, false, 'AddEta');
@@ -48,7 +41,6 @@
   <EtablissementForm :json-file="json" v-if="edit_eta" @edit_value="SetEta"></EtablissementForm>
   <RestaurantForm :json-file="json" v-if="edit_res" @edit_value="SetRes"/>
   <UploadFiles v-if="ChooseFile" @upload-json="SetJson"/>
-
   <footer><div class="left">{{ date }}</div> <a href="https://www.linkedin.com/in/alo%C3%AFs-brengard/" target="_blank">Author: Aloïs BRENGARD</a></footer>
 </template>
 
@@ -60,7 +52,6 @@ import SocieteForm from "@/components/SocieteForm.vue";
 import EtablissementForm from "@/components/EtablissementForm.vue";
 import UploadFiles from "@/components/UploadFiles.vue";
 import RestaurantForm from "@/components/RestaurantForm.vue";
-import Terms from "@/functions/Terms";
 import download from '@/functions/Savedata'
 
 export default defineComponent({
@@ -74,6 +65,7 @@ export default defineComponent({
       edit_societe: false,
       edit_res: false,
       editing: false,
+      tab: {old: ""},
       message: {
         'edit': 'Cliquer sur moi pour commencer à éditer le fichier.',
         'retour': 'Sauvegarde et quitte l\'édition',
@@ -87,14 +79,6 @@ export default defineComponent({
   },
   name: 'App',
   methods: {
-    doEdit(must_edit: boolean, editing: boolean, id: string) {
-      if (must_edit) this.editing = editing;
-      if (this.json == null) return;
-      const d = document.getElementById(id);
-      if (d == null) return;
-      // @ts-ignore
-      d.disabled = editing;
-    },
     SetEta(value: boolean) {
       this.doEdit(false, value, 'AddEta');
       this.edit_eta = value;
@@ -116,21 +100,37 @@ export default defineComponent({
       }
       else alert("Le json est null !");
     },
-    DisabledButtons(str: Terms) {
-      const List = {'edit_eta': 'AddEta', 'edit_societe': 'AddSoc', 'edit_res': 'AddRes'};
-      let count = 0;
-      for (const listKey in List) {
-        if (str === listKey) {
+    doEdit(must_edit: boolean, editing: boolean, id: string) {
+      if (must_edit) this.editing = editing;
+      if (this.json == null) return;
+      const d = document.getElementById(id);
+      if (d == null) return;
+      // @ts-ignore
+      d.disabled = editing;
+    },
+    DisabledButtons(str: string) {
+      const current = str;
+      console.log("CURRENT => " + current);
+      console.log("OLD => " + this.tab['old']);
+      if (this.tab['old'].length === 0) {
+          this.tab['old'] = current;
+          const doc = document.getElementById(this.tab['old']);
+          if (doc == null) return;
+          console.log(doc);
           // @ts-ignore
-          document.getElementById(List[listKey]).disabled = true;
-          if (count === 0) this.UpdateButtons(true, false, false)
-          else if (count === 1) this.UpdateButtons(false, false, true)
-          else this.UpdateButtons(false, true, false)
-          continue;
-        }
-        // @ts-ignore
-        document.getElementById(List[listKey]).disabled = false;
-        count++;
+          doc.disabled = true;
+      }
+      else {
+          const doc_old = document.getElementById(this.tab['old']);
+          this.tab['old'] = current;
+          const doc_current = document.getElementById(current);
+          if (doc_old == null || doc_current == null) {
+            console.error('ERROR!!!!!!')
+            return;
+          }
+          // @ts-ignore
+          doc_old.disabled = false; doc_current.disabled = true;
+          this.UpdateButtons('AddEta' === current, 'AddRes' === current, 'AddSoc' === current);
       }
     },
     UpdateButtons(eta: boolean, res: boolean, soc: boolean) {
