@@ -39,6 +39,11 @@ export default {
         "tax_code": null, "taxe": false, "transaction": "VI", "transactionVI": false, "tvas": [], "type": "1", "zeroExclus": false
       },
       ints: ['id', 'codeJournal', 'compte', 'ordre', 'matriculeRestaurant'],
+      FormTdd: [ //peut être mauvais, à corriger si c'est le cas
+        {
+          tdd: this.tdd
+        }
+      ]
     }
   }
 }

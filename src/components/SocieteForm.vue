@@ -6,7 +6,8 @@
           <label >Code</label>
         </div>
         <div class="col-75">
-          <input type="text" required v-model="code" placeholder="Code de la société">
+          <input type="text" required v-model="form.code" placeholder="Code de la société">
+          <p v-if="!CodeIsValid" class="error-message">Le code est requit</p>
         </div>
       </div>
       <div class="row">
@@ -50,7 +51,7 @@
             </form>
         </div>
         </div>
-        <input type="submit" :disabled="!code">
+        <input class="hover-item" type="submit" :disabled="!form.code">
       </div>
     </form>
   </div>
@@ -59,12 +60,21 @@
 <script>
 import TddForm from "@/components/TddForm";
 import EtablissementForm from "@/components/EtablissementForm";
+
 export default {
   name: "SocieteForm",
   components: {EtablissementForm, TddForm},
+  computed: {
+    CodeIsValid() {
+      return !!this.form.code;
+    }
+  },
   data() {
     return {
-      code: '',
+      form : {
+        code: null,
+        array: []
+      },
       add_id: false,
       add_tdd: false,
       tdd_nbr: 1,
@@ -73,7 +83,14 @@ export default {
   },
   methods: {
     HandleSubmit() {
-      console.log('Formulaire soumit')
+      const IsValidForm = this.CodeIsValid;
+      if (IsValidForm) {
+        console.log('Formulaire soumit')
+        console.log(this.form.array)
+      }
+      else {
+        console.log('Formulaire invalide')
+      }
     }
   }
 }
@@ -85,5 +102,9 @@ export default {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
+}
+
+.error-message {
+  color: red;
 }
 </style>

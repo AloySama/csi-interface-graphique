@@ -14,7 +14,7 @@
   <div v-if="FillTab['societe'] >= 0">
     <ul>
       <li class="OneLine" v-for="(etab, index_eta) in ParseRestaurant(json, FillTab['societe'])" :key="index_eta">
-        <button class="hover-item" :id="'ButtonRes' + FillTab['societe'] + index_eta" @click="FillEtab(index_eta); DisabledButtonRes('' + FillTab['societe'] +index_eta)">{{etab}}</button>
+        <button class="hover-item" :id="'ButtonRes' + FillTab['societe'] + index_eta" @click="FillEtab(index_eta); DisabledButtonRes(FillTab['societe'], index_eta)">{{etab}}</button>
       </li>
     </ul>
   </div>
@@ -104,17 +104,29 @@ export default {
         }
       }
     },
-    DisabledButtonRes(IdButtonClicked) { //TODO: revoir cette fonction pour désactiver les boutons (il se passe des dingueries)
-      const current = 'ButtonRes' + IdButtonClicked;
+    DisabledButtonRes(IdSoc, IdRes) { //TODO: revoir cette fonction pour désactiver les boutons (il se passe des dingueries)
+      const current = 'ButtonRes' + IdSoc + IdRes;
       console.log("CURRENT => " + current);
       if (this.old == null) {
         this.old = current;
-        document.getElementById(this.old).disabled = true;
+        const doc = document.getElementById(this.old);
+        if (doc == null) {
+          console.error("doc est null.")
+        }
+        doc.disabled = true;
       }
       else {
+        const doc_old = document.getElementById(this.old);
         this.old = current;
-        document.getElementById(this.old).disabled = false;
-        document.getElementById(current).disabled = true;
+        const doc_current = document.getElementById(current);
+        if (doc_old == null || doc_current == null) {
+          console.error('l\'un des doc est null');
+          this.FillTab['societe'] = -1;
+          this.FillTab['etablissement'] = -1;
+          return;
+        }
+        doc_old.disabled = false;
+        doc_current.disabled = true;
       }
     },
     HasChanged(index) {
@@ -123,9 +135,6 @@ export default {
     },
     CountSociete() {
       return this.json.length
-    },
-    CountRes(soc, eta) {
-      return this.json[soc].etablissements[eta].length;
     }
   }
 }
@@ -140,5 +149,3 @@ ul {
   display: inline;
 }
 </style>
-
-<!-- DisabledButton('ButtonRes' + FillTab['societe'], index,true) -->

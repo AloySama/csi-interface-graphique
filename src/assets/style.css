@@ -36,7 +36,7 @@ header img {
     pointer-events: none;
 }
 .hover-item:active {
-    background-color: #ece6d9;
+    background-color: darkred;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
 }
