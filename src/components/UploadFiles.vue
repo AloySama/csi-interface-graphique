@@ -46,12 +46,6 @@ export default {
 </script>
 
 <style>
-input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  opacity: 0;
-}
+
 </style>
 <!-- TODO: Faire communiquer le front et le back pour pouvoir modifier par la suite le json uploadé -->
