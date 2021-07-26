@@ -6,7 +6,7 @@
           <label>Code</label>
         </div>
         <div class="col-75">
-          <input type="text" required v-model="form.code" placeholder="Code de la société">
+          <input type="text" required v-model="to_complete.code" placeholder="Code de la société">
           <p v-if="!CodeIsValid" class="error-message">Le code est requit</p>
         </div>
       </div>
@@ -51,7 +51,7 @@
             </form>
         </div>
         </div>
-        <input class="hover-item" type="submit" :disabled="!form.code">
+        <input class="hover-item" type="submit" :disabled="!to_complete.code" @click="isSubmitted">
       </div>
     </form>
   </div>
@@ -60,25 +60,36 @@
 <script>
 import TddForm from "@/components/TddForm";
 import EtablissementForm from "@/components/EtablissementForm";
+import editSociete from "@/functions/Addsociete";
+let i = 0;
 
 export default {
   name: "SocieteForm",
+  props: {
+    jsonFile: {
+      default: null,
+      required: true
+    }
+  },
   components: {EtablissementForm, TddForm},
   computed: {
     CodeIsValid() {
-      return !!this.form.code;
+      return !!this.to_complete.code;
     }
   },
   data() {
     return {
-      form : {
-        code: null,
+      to_complete: {
+        id: 0,
+        code: '',
         array: []
       },
+      form : [],
       add_id: false,
       add_tdd: false,
       tdd_nbr: 1,
       add_eta: false,
+      json: this.jsonFile
     }
   },
   methods: {
@@ -86,11 +97,20 @@ export default {
       const IsValidForm = this.CodeIsValid;
       if (IsValidForm) {
         console.log('Formulaire soumit')
-        console.log(this.form.array)
       }
       else {
         console.log('Formulaire invalide')
       }
+    },
+    isSubmitted() {
+      let new_array = {};
+      new_array = this.to_complete;
+      this.form.push(new_array);
+      this.json = editSociete(this.json, this.form[i]);
+      this.$emit('json_value', this.json);
+      this.to_complete.id = i++;
+      //this.to_complete.code = ''
+      console.log(this.form);
     }
   }
 }

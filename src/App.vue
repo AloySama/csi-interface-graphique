@@ -22,7 +22,10 @@
                 @click="doEdit(true, false, 'edit');
                 doEdit(false, false, 'parcourir');
                 UpdateButtons(false, false, false)
-                ChooseFile = false;">Retour</button></div></header></div>
+                ChooseFile = false;">Retour</button>
+      </div>
+    </header>
+  </div>
   <template v-if="editing">
     <button id="AddSoc" class="hover-item"
             @click="edit_societe = true; DisabledButtons('AddSoc')
@@ -37,7 +40,7 @@
                                                                 doEdit(false, false, 'AddRes');
                                                                 doEdit(false, false, 'AddEta');
     doEdit(false, false, 'AddEta');">Retour</button></template>
-  <SocieteForm v-if="edit_societe"/>
+  <SocieteForm :json-file="json" v-if="edit_societe" @json_value="SetJson"/>
   <EtablissementForm :json-file="json" v-if="edit_eta" @edit_value="SetEta"></EtablissementForm>
   <RestaurantForm :json-file="json" v-if="edit_res" @edit_value="SetRes"/>
   <UploadFiles v-if="ChooseFile" @upload-json="SetJson"/>
@@ -88,13 +91,19 @@ export default defineComponent({
       this.edit_res = value;
     },
     SetJson(json: string) {
+      console.log('Tentative de sauvegarde...');
       if (json != null) {
         try {
-          this.json = JSON.parse(json);
+          if (typeof json != 'object')
+            this.json = JSON.parse(json);
+        else {
+            console.log("json est un object !!")
+            this.json = json;
+          }
         }
         catch (error) {
           alert('Erreur sur le Json !')
-          console.error("Erreur: le ficher json envoyé n'est pas bien structuré : json mis à null")
+          console.error("Erreur: le ficher json envoyé n'est pas bien structuré : json mit à null")
           this.json = null;
         }
       }
