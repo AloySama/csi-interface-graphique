@@ -17,6 +17,6 @@ module.exports = {
     "vue/no-unused-components": "off",
     "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/ban-ts-comment": "off",
-    "@typescript-eslint/no-var-requires'": 0
+    "@typescript-eslint/no-var-requires'": 0,
   }
 }
