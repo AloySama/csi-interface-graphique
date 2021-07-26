@@ -44,7 +44,8 @@
   <EtablissementForm :json-file="json" v-if="edit_eta" @edit_value="SetEta"></EtablissementForm>
   <RestaurantForm :json-file="json" v-if="edit_res" @edit_value="SetRes"/>
   <UploadFiles v-if="ChooseFile" @upload-json="SetJson"/>
-  <footer><div class="left">{{ date }}</div> <a href="https://www.linkedin.com/in/alo%C3%AFs-brengard/" target="_blank">Author: Aloïs BRENGARD</a></footer>
+  <!--  -->
+  <Footer></Footer>
 </template>
 
 <script lang="ts">
@@ -56,9 +57,10 @@ import EtablissementForm from "@/components/EtablissementForm.vue";
 import UploadFiles from "@/components/UploadFiles.vue";
 import RestaurantForm from "@/components/RestaurantForm.vue";
 import download from '@/functions/Savedata'
+import Footer from "@/components/footer.vue";
 
 export default defineComponent({
-  components: {RestaurantForm, UploadFiles, EtablissementForm, SocieteForm},
+  components: {Footer, RestaurantForm, UploadFiles, EtablissementForm, SocieteForm},
   data() {
     return {
       img: require('@/assets/images/csi.png'),
@@ -74,7 +76,6 @@ export default defineComponent({
         'retour': 'Sauvegarde et quitte l\'édition',
         'parcours': 'Parcourir un fichier sur le pc.'
       },
-      date: 'Vous avez affiché cette page le ' + new Date().toLocaleString(),
       ParseSociete,
       ParseRestaurant,
       download

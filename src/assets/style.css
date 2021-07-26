@@ -3,10 +3,18 @@
     box-sizing: border-box;
 }
 
+html {
+    overflow-x: hidden;
+    height: 100%;
+}
+
 body {
     font-family: 'Lato', sans-serif;
     background: black;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 body::-webkit-scrollbar {
     width: 10px
@@ -87,20 +95,10 @@ b {
     color: darkblue;
     overflow: auto;
 }
-footer {
-    margin: -1px 0 0 auto;
-    width: 100%;
-    position: fixed;
-    bottom: 5px;
-    height:20px;
-    text-align: right;
-    font-size: 10px;
-    text-decoration: underline #860ace;
-}
 
 body > #bg {
-    height: 99.5%;
-    width: 99.5%;
+    height: 100%;
+    width: 100%;
     background-color: rebeccapurple;
     clip-path: polygon(0 0, 100% 0%, 34% 100%, 0 100%);
     position: absolute;
@@ -108,8 +106,8 @@ body > #bg {
 }
 
 body > #bg2 {
-    height: 99.5%;
-    width: 99.5%;
+    height: 100%;
+    width: 100%;
     background-color: white;
     clip-path: polygon(30% 100%, 100% 0%, 100% 100%, 30% 100%);
     position: absolute;
