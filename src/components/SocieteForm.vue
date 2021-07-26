@@ -103,13 +103,13 @@ export default {
       }
     },
     isSubmitted() {
-      let new_array = {};
-      new_array = this.to_complete;
+      let new_array = [{}];
+      new_array = {id: this.to_complete.id, code: this.to_complete.code, array: this.to_complete.array};
       this.form.push(new_array);
-      this.json = editSociete(this.json, this.form[i]);
+      console.log(this.json)
+      this.json = editSociete(this.json, new_array);
       this.$emit('json_value', this.json);
       this.to_complete.id = i++;
-      //this.to_complete.code = ''
       console.log(this.form);
     }
   }
