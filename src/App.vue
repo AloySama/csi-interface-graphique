@@ -1,5 +1,8 @@
 <template>
   <div class="app">
+    <font-awesome-icon :icon="['fab', 'font-awesome']" />
+
+
     <header>
       <div class="title">
         <a href="https://www.cashsystemes.eu/"><img :src="img" alt="logo CSI"
