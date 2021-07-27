@@ -24,7 +24,7 @@ export default {
     return {
       industrie : 'Cash Systemes Industrie',
       phone : '04.98.11.45.90',
-      mention : new Date().getFullYear() +' | mentions légales',
+      mention : new Date().getFullYear() +' | author: Aloïs BRENGARD',
       date: 'Vous avez affiché cette page le ' + new Date().toLocaleString(),
     }
   }
