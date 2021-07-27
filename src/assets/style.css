@@ -135,3 +135,9 @@ a:hover {
 a:active {
     color: whitesmoke;
 }
+
+.error-message {
+    font-size: 17px;
+    font-weight: bold;
+    color: red;
+}

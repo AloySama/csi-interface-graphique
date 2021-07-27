@@ -122,10 +122,4 @@ export default {
   background-color: #f2f2f2;
   padding: 20px;
 }
-
-.error-message {
-  font-size: 17px;
-  font-weight: bold;
-  color: red;
-}
 </style>

@@ -9,7 +9,7 @@
         <h1>ARCOLE<br>export</h1>
       </div>
       <div class="order">
-        <button class="hover-item" @click="download(json, 'arcole.json')" :disabled="json == null">Enregistrer</button>
+        <button class="hover-item" @click="download(json, 'arcole.json')" :disabled="json == null" :title="message['save']">Enregistrer</button>
         <button id="edit" :title="message['edit']" class="hover-item"
                 @click="doEdit(true, true, 'edit');
                 ChooseFile = false;
@@ -76,7 +76,8 @@ export default defineComponent({
       message: {
         'edit': 'Cliquer sur moi pour commencer à éditer le fichier.',
         'retour': 'Sauvegarde et quitte l\'édition',
-        'parcours': 'Parcourir un fichier sur le pc.'
+        'parcours': 'Parcourir un fichier sur le pc.',
+        'save': 'Enregistrer le fichier sur votre pc.'
       },
       ParseSociete,
       ParseRestaurant,

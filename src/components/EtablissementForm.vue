@@ -24,7 +24,8 @@
           <label>Code</label>
         </div>
         <div class="col-75">
-          <input type="text" required>
+          <input type="text" required v-model="to_complete.code">
+          <p v-if="!CodeIsValid" class="error-message">Le code est requit</p>
         </div>
       </div>
       <div class="row">
@@ -53,6 +54,11 @@ export default {
       required: true
     }
   },
+  computed: {
+    CodeIsValid() {
+      return !!this.to_complete.code;
+    }
+  },
   components: {TddForm},
   emits : ['edit_value'],
   name: "EtablissementForm",
@@ -63,7 +69,13 @@ export default {
       App,
       FillTab : -1,
       add_id: false,
-      add_tdd: false
+      add_tdd: false,
+      to_complete: {
+        id: null,
+        code: '',
+        traiteursConfigs: [],
+        etablissements: []
+      }
     }
   },
   methods: {
@@ -77,7 +89,6 @@ export default {
           if (j === i) continue;
           document.getElementById('ButtonEta' + j).disabled = false;
       }
-      console.log(this.FillTab)
     }
   },
 }
