@@ -14,7 +14,7 @@
   <div v-if="FillTab['societe'] >= 0">
     <ul>
       <li class="OneLine" v-for="(etab, index_eta) in ParseRestaurant(json, FillTab['societe'])" :key="index_eta">
-        <button class="hover-item" :id="'ButtonRes' + FillTab['societe'] + index_eta" @click="FillEtab(index_eta); DisabledButtonRes(FillTab['societe'], index_eta)">{{etab}}</button>
+        <button class="hover-item" :id="'ButtonRes' + FillTab['societe'] + index_eta" @click="FillEtab(index_eta);">{{etab}}</button>
       </li>
     </ul>
   </div>

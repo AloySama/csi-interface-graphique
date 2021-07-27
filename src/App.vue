@@ -1,6 +1,5 @@
 <template>
   <div class="app">
-    <font-awesome-icon :icon="['fab', 'font-awesome']" />
 
 
     <header>
