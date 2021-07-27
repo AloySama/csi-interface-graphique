@@ -37,22 +37,9 @@
         <div class="col-75">
           <input v-model="add_tdd" type="checkbox">
         </div>
-        <tdd-form v-if="add_tdd" class="tdd"/>
+        <tdd-form v-if="add_tdd" class="tdd" @tdd_form="CompleteTDD"/>
       </div>
-      <div class="row">
-        <div class="col-25">
-        <label>Ajouter un établissement ?</label>
-        </div>
-        <div class="col-75">
-          <input v-model="add_eta" type="checkbox">
-          <div v-if="add_eta">
-            <form>
-              Work in progress ...
-            </form>
-        </div>
-        </div>
-        <input class="hover-item" type="submit" :disabled="!to_complete.code" @click="isSubmitted">
-      </div>
+      <input class="hover-item" type="submit" :disabled="!to_complete.code" @click="isSubmitted">
     </form>
   </div>
   <button class="hover-item" @click="Reinitialize(json)">Réinitialise les ID</button>
@@ -82,9 +69,10 @@ export default {
   data() {
     return {
       to_complete: {
-        id: -1,
+        id: null,
         code: '',
-        array: []
+        traiteursConfigs: [],
+        etablissements: []
       },
       form : [],
       add_id: false,
@@ -106,17 +94,22 @@ export default {
       }
     },
     isSubmitted() {
-      console.log(checkID(this.json, 5));
-      console.log(FindAnID(this.json));
-
-
       let new_array = [{}];
-      new_array = { id: this.to_complete.id!==-1?this.to_complete.id:FindAnID(this.json), code: this.to_complete.code,
-                    array: this.to_complete.array};
+      new_array = { id: this.to_complete.id!==null?this.to_complete.id:FindAnID(this.json), code: this.to_complete.code,
+        traiteursConfigs: this.to_complete.traiteursConfigs, etablissements: this.to_complete.etablissements};
       this.form.push(new_array);
       this.json = editSociete(this.json, new_array);
       this.$emit('json_value', this.json);
-      this.to_complete.code = ''
+      this.AllNull();
+    },
+    AllNull() {
+      this.to_complete.id = '';
+      this.to_complete.code = null;
+      this.to_complete.etablissements = [];
+      this.to_complete.traiteursConfigs = [];
+    },
+    CompleteTDD(tdd) {
+      this.to_complete.traiteursConfigs = tdd;
     }
   }
 }
