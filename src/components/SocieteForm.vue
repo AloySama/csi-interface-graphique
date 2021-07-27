@@ -25,7 +25,7 @@
               <label >id</label>
             </div>
             <div class="col-75">
-              <input type="number" min="0">
+              <input type="number" min="0" v-model.number="to_complete.id">
             </div>
           </form>
         </div>
@@ -55,15 +55,17 @@
       </div>
     </form>
   </div>
+  <button class="hover-item" @click="Reinitialize(json)">Réinitialise les ID</button>
 </template>
 
 <script>
 import TddForm from "@/components/TddForm";
 import EtablissementForm from "@/components/EtablissementForm";
 import editSociete from "@/functions/Addsociete";
-let i = 0;
+import {checkID, FindAnID, Reinitialize} from '@/functions/CheckID'
 
 export default {
+  emits: ['json_value'],
   name: "SocieteForm",
   props: {
     jsonFile: {
@@ -80,7 +82,7 @@ export default {
   data() {
     return {
       to_complete: {
-        id: 0,
+        id: -1,
         code: '',
         array: []
       },
@@ -89,7 +91,8 @@ export default {
       add_tdd: false,
       tdd_nbr: 1,
       add_eta: false,
-      json: this.jsonFile
+      json: this.jsonFile,
+      Reinitialize
     }
   },
   methods: {
@@ -103,14 +106,17 @@ export default {
       }
     },
     isSubmitted() {
+      console.log(checkID(this.json, 5));
+      console.log(FindAnID(this.json));
+
+
       let new_array = [{}];
-      new_array = {id: this.to_complete.id, code: this.to_complete.code, array: this.to_complete.array};
+      new_array = { id: this.to_complete.id!==-1?this.to_complete.id:FindAnID(this.json), code: this.to_complete.code,
+                    array: this.to_complete.array};
       this.form.push(new_array);
-      console.log(this.json)
       this.json = editSociete(this.json, new_array);
       this.$emit('json_value', this.json);
-      this.to_complete.id = i++;
-      console.log(this.form);
+      this.to_complete.code = ''
     }
   }
 }
