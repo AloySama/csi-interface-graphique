@@ -5,11 +5,10 @@
         <p>{{industrie}}</p>
         <p>{{phone}}</p>
       </div>
-      <div id="contacts--social">
-        <div class="black"><font-awesome-icon :icon="['fas', 'twitter']"/>
-        </div>
-        <div></div>
-        <div></div>
+      <div id="contacts--social" class="black" >
+        <div class="black"><font-awesome-icon :icon="['fab', 'twitter']"/></div>
+        <div><font-awesome-icon :icon="['fab', 'facebook']" /></div>
+        <div><font-awesome-icon :icon="['fab', 'linkedin']" /></div>
       </div>
     </div>
     <div id="mentions">
@@ -20,7 +19,7 @@
 
 <script>
 export default {
-  name: "footer",
+  name: "FooterPage",
     data() {
     return {
       industrie : 'Cash Systemes Industrie',
@@ -77,19 +76,4 @@ export default {
   margin-top: 58vh;
 }
 
-
 </style>
-
-<!-- footer {
-  margin: -1px 0 0 auto;
-  width: 100%;
-  position: fixed;
-  bottom: 5px;
-  height:20px;
-  text-align: right;
-  font-size: 10px;
-  text-decoration: underline #860ace;
-
-    <footer><div class="left">{{ date }}</div> <a href="https://www.linkedin.com/in/alo%C3%AFs-brengard/" target="_blank">Author: Aloïs BRENGARD</a></footer>
-
-} -->l
