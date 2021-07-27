@@ -53,16 +53,6 @@ export default {
     SubmitForm() {
       this.FormTdd.tdd = this.to_complete;
       this.$emit('tdd_form', this.FormTdd);
-      this.Reinitialize()
-    },
-    Reinitialize() {
-      for (const index of this.to_complete) {
-        if (this.ints.includes(index))
-          this.to_complete[index] = null;
-        else if (this.bools.includes(index))
-          this.to_complete[index] = false;
-        else this.to_complete[index] = "";
-      }
     }
   }
 }
