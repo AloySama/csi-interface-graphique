@@ -119,3 +119,19 @@ body > #bg2 {
     font-weight: bold;
     font-size: 20px;
 }
+
+a:link {
+    color: dodgerblue;
+}
+
+a:visited {
+    color: mediumpurple;
+}
+
+a:hover {
+    color: hotpink;
+}
+
+a:active {
+    color: whitesmoke;
+}

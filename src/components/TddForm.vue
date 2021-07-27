@@ -7,19 +7,16 @@
       <div v-for="number in parseInt(tdd_nbr)" :key="parseInt(number)">
         <form @submit.prevent="">
           <ol>
-            <li v-for="(index, item) in tdd" :key="index">
-              <div class="col-25">
-                <label>{{item}}</label>
-              </div>
+            <li v-for="(index, item) in to_complete" :key="index">
+              <div class="col-25"><label>{{item}}</label></div>
               <div class="col-75">
-                <input type="number" v-if="ints.includes(item)" min="0" v-model="tdd[item]">
-                <input class="test" type="checkbox" v-else-if="bools.includes(item)" v-model="tdd[item]">
-                <input v-else type="text" v-model="tdd[item]">
+                <input type="number" v-if="ints.includes(item)" min="0" v-model="to_complete[item]">
+                <input class="test" type="checkbox" v-else-if="bools.includes(item)"  v-model="to_complete[item]">
+                <input v-else type="text"  v-model="to_complete[item]">
               </div>
             </li>
           </ol>
-          <br>
-          <button class="hover-item" @click="Debug">Valider TDD</button>
+          <button class="hover-item" @click="SubmitForm">Valider TDD</button>
         </form>
       </div>
     </div>
@@ -33,7 +30,7 @@ export default {
   data() {
     return {
       tdd_nbr: 1,
-      tdd: {
+      to_complete: {
         "id": 1, "auxiliaire": null, "codeJournal": 0, "compte": 0, "compteAnalytique1": null, "compteAnalytique2": null,
         "compteAnalytique3": null, "comptes": [], "direction": "DEBIT", "documents": [], "familles": [], "filtration": [],
         "groupes": [], "libelle": "", "libelles": [], "localisations": [], "tvas": [], "type": "1", "numeros": [], "ordre": 0,
@@ -42,21 +39,30 @@ export default {
         "auxiliaireVide": false, "auxilliaireCreditClient": false,"transactionVI": false,"auxiliaireRestaurant": false,
         "zeroExclus": false
       },
+      tdd: [],
       ints: ['id', 'codeJournal', 'compte', 'ordre'],
       bools: ['auxiliaireRestaurant', 'auxiliaireVide', 'matriculeRestaurant', 'auxilliaireCreditClient',
         'compteAnalytique1TVA', 'matriculeRestaurant', 'modeER', 'taxe', 'transactionVI', 'zeroExclus'],
-      FormTdd://peut être mauvais, à corriger si c'est le cas
+      FormTdd:
         {
           tdd: []
         }
     }
   },
   methods: {
-    Debug() {
-      console.log('============ DEBUG MODE ============')
-      this.FormTdd.tdd = this.tdd;
+    SubmitForm() {
+      this.FormTdd.tdd = this.to_complete;
       this.$emit('tdd_form', this.FormTdd);
-      console.log(this.FormTdd)
+      this.Reinitialize()
+    },
+    Reinitialize() {
+      for (const index of this.to_complete) {
+        if (this.ints.includes(index))
+          this.to_complete[index] = null;
+        else if (this.bools.includes(index))
+          this.to_complete[index] = false;
+        else this.to_complete[index] = "";
+      }
     }
   }
 }

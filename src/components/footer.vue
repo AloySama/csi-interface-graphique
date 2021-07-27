@@ -12,7 +12,7 @@
       </div>
     </div>
     <div id="mentions">
-      <p>{{ mention }}</p>
+      <p>{{ mention }} <a href="~">Aloïs BRENGARD</a></p>
     </div>
   </div>
 </template>
@@ -24,7 +24,7 @@ export default {
     return {
       industrie : 'Cash Systemes Industrie',
       phone : '04.98.11.45.90',
-      mention : new Date().getFullYear() +' | author: Aloïs BRENGARD',
+      mention : new Date().getFullYear() +' | ',
       date: 'Vous avez affiché cette page le ' + new Date().toLocaleString(),
     }
   }

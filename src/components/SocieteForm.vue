@@ -94,7 +94,7 @@ export default {
       }
     },
     isSubmitted() {
-      let new_array = [{}];
+      let new_array = [];
       new_array = { id: this.to_complete.id!==null?this.to_complete.id:FindAnID(this.json), code: this.to_complete.code,
         traiteursConfigs: this.to_complete.traiteursConfigs, etablissements: this.to_complete.etablissements};
       this.form.push(new_array);
