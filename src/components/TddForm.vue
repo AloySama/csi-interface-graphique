@@ -11,7 +11,7 @@
               <div class="col-25"><label>{{item}}</label></div>
               <div class="col-75">
                 <input type="number" v-if="ints.includes(item)" min="0" v-model="to_complete[item]">
-                <input class="test" type="checkbox" v-else-if="bools.includes(item)"  v-model="to_complete[item]">
+                <input class="place-icons" type="checkbox" v-else-if="bools.includes(item)" v-model="to_complete[item]">
                 <input v-else type="text"  v-model="to_complete[item]">
               </div>
             </li>
@@ -70,7 +70,7 @@ export default {
 
 <style scoped>
 
-.test {
+.place-icons {
   margin-top: 10px;
   float: left;
 }

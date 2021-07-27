@@ -95,15 +95,10 @@ export default defineComponent({
       this.edit_res = value;
     },
     SetJson(json: string) {
-      console.log('Tentative de sauvegarde...');
       if (json != null) {
         try {
-          if (typeof json != 'object')
-            this.json = JSON.parse(json);
-        else {
-            console.log("json est un object !!")
-            this.json = json;
-          }
+          if (typeof json != 'object') this.json = JSON.parse(json);
+        else this.json = json;
         }
         catch (error) {
           alert('Erreur sur le Json !')
@@ -123,13 +118,10 @@ export default defineComponent({
     },
     DisabledButtons(str: string) {
       const current = str;
-      console.log("CURRENT => " + current);
-      console.log("OLD => " + this.tab['old']);
       if (this.tab['old'].length === 0) {
           this.tab['old'] = current;
           const doc = document.getElementById(this.tab['old']);
           if (doc == null) return;
-          console.log(doc);
           // @ts-ignore
           doc.disabled = true;
       }
@@ -138,7 +130,7 @@ export default defineComponent({
           this.tab['old'] = current;
           const doc_current = document.getElementById(current);
           if (doc_old == null || doc_current == null) {
-            console.error('ERROR!!!!!!')
+            console.error('Une erreur est survenue.')
             return;
           }
           // @ts-ignore
@@ -154,11 +146,3 @@ export default defineComponent({
   }
 });
 </script>
-
-<style scoped>
-.left {
-  position: fixed;
-  left: 10px;
-  font-size: 12px;
-}
-</style>

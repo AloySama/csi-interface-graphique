@@ -14,7 +14,6 @@ body {
     text-align: center;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
 }
 body::-webkit-scrollbar {
     width: 10px
@@ -120,19 +119,24 @@ body > #bg2 {
     font-size: 20px;
 }
 
-a:link {
+.link:link {
     color: dodgerblue;
 }
 
-a:visited {
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.link:visited {
     color: mediumpurple;
 }
 
-a:hover {
+.link:hover {
     color: hotpink;
 }
 
-a:active {
+.link:active {
     color: whitesmoke;
 }
 

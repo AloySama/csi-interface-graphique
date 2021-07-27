@@ -5,14 +5,14 @@
         <p>{{industrie}}</p>
         <p>{{phone}}</p>
       </div>
-      <div id="contacts--social" class="black" >
-        <div class="black"><font-awesome-icon :icon="['fab', 'twitter']"/></div>
-        <div><font-awesome-icon :icon="['fab', 'facebook']" /></div>
-        <div><font-awesome-icon :icon="['fab', 'linkedin']" /></div>
+      <div id="contacts--social">
+        <div id="twitter"><a :href="twitter" target="_blank"><font-awesome-icon :icon="['fab', 'twitter']" class="place-icons"/></a></div>
+        <div id="facebook"><a :href="facebook" target="_blank"><font-awesome-icon :icon="['fab', 'facebook']" class="place-icons"/></a></div>
+        <div id="linkedin"><a :href="linkedin" target="_blank"><font-awesome-icon :icon="['fab', 'linkedin']" class="place-icons"/></a></div>
       </div>
     </div>
     <div id="mentions">
-      <p>{{ mention }} <a href="~">Aloïs BRENGARD</a></p>
+      <p>{{ mention }} <a class="link" href="~">Auteur: Aloïs BRENGARD</a></p>
     </div>
   </div>
 </template>
@@ -26,6 +26,9 @@ export default {
       phone : '04.98.11.45.90',
       mention : new Date().getFullYear() +' | ',
       date: 'Vous avez affiché cette page le ' + new Date().toLocaleString(),
+      twitter: 'https://twitter.com/cashsystemes',
+      facebook: 'https://www.facebook.com/cashsystemes/',
+      linkedin: 'https://www.linkedin.com/company/cashsystemesindustrie?trk=public_profile_topcard_current_company&originalSubdomain=fr',
     }
   }
 }
@@ -33,8 +36,20 @@ export default {
 
 <style scoped>
 
-.black {
-  color: black;
+.place-icons {
+  margin-top: 7px;
+}
+
+#twitter {
+  color: #007BB5;
+}
+
+#linkedin {
+  color: #007BB5;
+}
+
+#facebook {
+  color: #3b5998;
 }
 
 #container-bis{
@@ -73,6 +88,7 @@ export default {
 .sticky-footer {
   position: sticky;
   top: 100%;
+  margin-bottom: -50px;
   margin-top: 58vh;
 }
 
