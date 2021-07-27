@@ -7,7 +7,7 @@
     font-size: 1em;
     font-weight: bold;
     margin: 1.25em auto;
-    padding: 0.875em;
+    padding: .5em;
     position: relative;
     text-align: center;
     width: 120px;
@@ -33,8 +33,8 @@
 
 input[type="file"] {
     position: fixed;
-    right: 100%;
-    bottom: 100%;
+    right: 200%;
+    bottom: 200%;
 }
 .custom-file-upload {
     border: 1px solid #ccc;

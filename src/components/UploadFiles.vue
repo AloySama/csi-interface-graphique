@@ -42,10 +42,4 @@ export default {
     }
   }
 }
-
 </script>
-
-<style>
-
-</style>
-<!-- TODO: Faire communiquer le front et le back pour pouvoir modifier par la suite le json uploadé -->

@@ -49,7 +49,7 @@
         <tdd-form v-if="AddTdd"/>
       </div>
     </form>
-    <input type="submit">
+    <input class="hover-item" type="submit">
   </div>
 </template>
 
