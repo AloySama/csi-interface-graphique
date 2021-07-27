@@ -36,8 +36,8 @@
           <input v-model="add_tdd" type="checkbox">
         </div>
         <tdd-form v-if="add_tdd"/>
-        <input type="submit">
       </div>
+      <input class="hover-item" type="submit" :disabled="!to_complete.code">
     </form>
   </div>
 </template>
@@ -74,7 +74,7 @@ export default {
         id: null,
         code: '',
         traiteursConfigs: [],
-        etablissements: []
+        restaurants: []
       }
     }
   },

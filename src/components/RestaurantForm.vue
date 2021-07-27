@@ -47,9 +47,9 @@
           <input v-model="AddTdd" type="checkbox">
         </div>
         <tdd-form v-if="AddTdd"/>
-        <input type="submit">
       </div>
     </form>
+    <input type="submit">
   </div>
 </template>
 

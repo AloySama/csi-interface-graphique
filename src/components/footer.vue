@@ -37,7 +37,9 @@ export default {
 <style scoped>
 
 .place-icons {
-  margin-top: 7px;
+  margin-top: 8px;
+  margin-left: 1px;
+  font-size: 35px;
 }
 
 #twitter {
@@ -76,13 +78,13 @@ export default {
   justify-content : space-between;
 }
 #contacts--social div{
-  height:30px;
-  width:30px;
+  height:50px;
+  width:50px;
   background-color:white;
   border-radius:50%;
 }
 #mentions p {
-  font-size:0.5em;
+  font-size:.75em;
 }
 
 .sticky-footer {

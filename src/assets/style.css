@@ -34,8 +34,8 @@ header {
     text-align: center;
 }
 header img {
-    height:100px;
-    width:100px;
+    height:125px;
+    width:125px;
     margin-right: 10px;
     transition-duration: 1s;
 }
@@ -80,7 +80,7 @@ button {
     border: 3px solid #be1aff;
     border-radius: 15px;
     font-weight: bold;
-    font-size: 17px;
+    font-size: 20px;
     background: white;
 }
 .title {
