@@ -101,7 +101,7 @@ body > #bg {
     width: 100%;
     background-color: rebeccapurple;
     clip-path: polygon(0 0, 100% 0%, 34% 100%, 0 100%);
-    position: absolute;
+    position: fixed;
     z-index: -1;
 }
 
@@ -110,7 +110,7 @@ body > #bg2 {
     width: 100%;
     background-color: white;
     clip-path: polygon(30% 100%, 100% 0%, 100% 100%, 30% 100%);
-    position: absolute;
+    position: fixed;
     z-index: -1;
 }
 
