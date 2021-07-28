@@ -145,7 +145,7 @@ export default {
     },
     IsSubmitted() {
       const new_array = {
-        matricule: this.to_complete.matricule !==null?isIDCorrectRes(this.json, this.to_complete.matricule): FindIDRes(this.json),
+        matricule: this.to_complete.matricule !==null?isIDCorrectRes(this.json, this.to_complete.matricule): FindIDRes(this.json, false, 0),
         restaurantId: this.to_complete.restaurantId,
         traiteursConfigs: this.to_complete.traiteursConfigs};
       this.json = EditRestaurant(this.json, new_array, this.FillTab);

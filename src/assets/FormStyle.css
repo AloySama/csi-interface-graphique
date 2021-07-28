@@ -47,10 +47,16 @@ input[type=submit]:hover {
 .col-75 {
     float: left;
     width: 20%;
-
 }
 
-/* Clear floats after the columns */
+#zeroExclus {
+    width: 28.55%;
+    text-align: center;
+    margin-left: 750px;
+    left: 100px;
+    height: 100%;
+}
+
 .row:after {
     content: "";
     display: table;

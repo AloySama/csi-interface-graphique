@@ -35,25 +35,20 @@ export function isIDCorrect(json: Record<string, any>, id: number) {
     }
     return id;
 }
-
+//TODO: revoir cette fonction car problème d'id
 export function FindIDRes(json: Record<string, any>, bool: boolean, _id: number) {
-    // @ts-ignore
     let id = 0;
     for (const i in json) {
         for (const j in json[i].etablissements) {
             for (const k in json[i].etablissements[j].restaurants) {
-                if (bool) {
-                    if (_id === json[i].etablissements[j].restaurants[k].matricule)
-                        return true
-                }
-                else {
-                    if (id ===  json[i].etablissements[j].restaurants[k].matricule) {
+                console.log(json[i].etablissements[j].restaurants[k].matricule)
+                    if (_id === json[i].etablissements[j].restaurants[k].matricule) {
+                        if (bool) return true
                         id++;
                     }
                 }
             }
         }
-    }
     if (bool) return false
     return id;
 }

@@ -8,17 +8,17 @@
         <form @submit.prevent="">
           <ol>
             <li v-for="(_, item) in to_complete" :key="item">
-              <div class="col-25"><label>{{item}}</label></div>
+              <div :id="item"  class="col-25"><label>{{item}}</label></div>
               <div class="col-75">
                 <input type="number" v-if="ints.includes(item)" min="0" v-model.number="to_complete[item]">
                 <input class="place-icons" type="checkbox" v-else-if="bools.includes(item)" v-model="to_complete[item]">
-                <input v-else type="text"  v-model="to_complete[item]">
+                <input v-else type="text" v-model="to_complete[item]">
               </div>
             </li>
           </ol>
-          <button class="hover-item" @click="SubmitForm">Valider TDD</button>
         </form>
       </div>
+      <button class="hover-item" @click="SubmitForm">Valider TDD</button>
     </div>
   </div>
 </template>
@@ -29,8 +29,25 @@ export default {
   name: "TddForm",
   data() {
     return {
+      old_tdd : -1,
       tdd_nbr: 1,
-      to_complete: {
+      to_complete: this.ToComplete(),
+      tdd: [],
+      ints: ['id', 'codeJournal', 'compte', 'ordre'],
+      bools: ['auxiliaireRestaurant', 'auxiliaireVide', 'matriculeRestaurant', 'auxilliaireCreditClient',
+        'compteAnalytique1TVA', 'matriculeRestaurant', 'modeER', 'taxe', 'transactionVI', 'zeroExclus'],
+      array: ['comptes', 'documents', 'familles', 'filtration', 'groupes', 'libelle', 'libelles', 'localisations',
+        'tvas', 'numeros', 'profits', 'sousfamilles', 'tags'],
+      FormTdd: {tdd:[]}
+    }
+  },
+  methods: {
+    SubmitForm() {
+      this.FormTdd.tdd = this.to_complete;
+      this.$emit('tdd_form', this.FormTdd);
+    },
+    ToComplete() {
+      return {
         "id": 1, "auxiliaire": null, "codeJournal": 0, "compte": 0, "compteAnalytique1": null, "compteAnalytique2": null,
         "compteAnalytique3": null, "comptes": [], "direction": "DEBIT", "documents": [], "familles": [], "filtration": [],
         "groupes": [], "libelle": "", "libelles": [], "localisations": [], "tvas": [], "type": "1", "numeros": [], "ordre": 0,
@@ -38,21 +55,7 @@ export default {
         "transaction": "VI",  "taxe": false,"matriculeRestaurant": false, "modeER": true,"compteAnalytique1TVA": false,
         "auxiliaireVide": false, "auxilliaireCreditClient": false,"transactionVI": false,"auxiliaireRestaurant": false,
         "zeroExclus": false
-      },
-      tdd: [],
-      ints: ['id', 'codeJournal', 'compte', 'ordre'],
-      bools: ['auxiliaireRestaurant', 'auxiliaireVide', 'matriculeRestaurant', 'auxilliaireCreditClient',
-        'compteAnalytique1TVA', 'matriculeRestaurant', 'modeER', 'taxe', 'transactionVI', 'zeroExclus'],
-      FormTdd:
-        {
-          tdd: []
-        }
-    }
-  },
-  methods: {
-    SubmitForm() {
-      this.FormTdd.tdd = this.to_complete;
-      this.$emit('tdd_form', this.FormTdd);
+      }
     }
   }
 }
