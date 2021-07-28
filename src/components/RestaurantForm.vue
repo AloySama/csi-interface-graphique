@@ -59,7 +59,7 @@ import App from "@/App";
 import ParseSociete from "../functions/ParseSociete";
 import ParseRestaurant from "@/functions/ParseRestaurant";
 import TddForm from "@/components/TddForm";
-import {EditRestaurant} from "@/functions/Addsociete";
+import {EditRestaurant} from "@/functions/EditElements";
 
 export default {
   name: "RestaurantForm",

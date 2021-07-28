@@ -48,7 +48,7 @@
 <script>
 import TddForm from "@/components/TddForm";
 import EtablissementForm from "@/components/EtablissementForm";
-import EditSociete from "@/functions/Addsociete";
+import EditSociete from "@/functions/EditElements";
 import {checkID, FindAnID, Reinitialize} from '@/functions/CheckID'
 
 export default {

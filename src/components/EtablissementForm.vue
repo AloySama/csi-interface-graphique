@@ -46,7 +46,7 @@
 import ParseSociete from "../functions/ParseSociete";
 import App from '../App'
 import TddForm from "@/components/TddForm";
-import {EditEtab} from "@/functions/Addsociete";
+import {EditEtab} from "@/functions/EditElements";
 
 export default {
   props: {
