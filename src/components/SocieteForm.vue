@@ -49,7 +49,7 @@
 import TddForm from "@/components/TddForm";
 import EtablissementForm from "@/components/EtablissementForm";
 import EditSociete from "@/functions/EditElements";
-import {checkID, FindAnID, Reinitialize} from '@/functions/CheckID'
+import {FindAnID, Reinitialize, isIDCorrect} from '@/functions/CheckID'
 
 export default {
   emits: ['json_value'],
@@ -94,7 +94,7 @@ export default {
       }
     },
     isSubmitted() {
-      const new_array = { id: this.to_complete.id!==null?this.to_complete.id:FindAnID(this.json), code: this.to_complete.code,
+      const new_array = { id: this.to_complete.id!==null?isIDCorrect(this.json, this.to_complete.id):FindAnID(this.json), code: this.to_complete.code,
         traiteursConfigs: this.to_complete.traiteursConfigs, etablissements: this.to_complete.etablissements};
       this.form.push(new_array);
       this.json = EditSociete(this.json, new_array);

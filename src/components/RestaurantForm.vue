@@ -3,7 +3,7 @@
 
 <template>
  <div>
-    Choisissez à quelle société vous voulez ajouter l'établissement. <br>
+   <div class="white"> Choisissez à quelle société vous voulez ajouter l'établissement.</div><br>
     <ul>
       <li class="OneLine" v-for="(soc, index_soc) in ParseSociete(json)" :key="index_soc">
         <button :id="'ButtonEta' + index_soc" class="hover-item" @click="DisabledButton('ButtonEta', index_soc, true); HasChanged(index_soc); FillSociete(index_soc)">{{soc}}</button>
@@ -27,7 +27,7 @@
         </div>
         <div class="col-75">
           <input v-model="AddMatricule" type="checkbox">
-          <input v-if="AddMatricule" type="number" min="0" v-model="to_complete.matricule">
+          <input v-if="AddMatricule" type="number" min="0" v-model.number="to_complete.matricule">
         </div>
       </div>
       <div class="row">
@@ -60,6 +60,7 @@ import ParseSociete from "../functions/ParseSociete";
 import ParseRestaurant from "@/functions/ParseRestaurant";
 import TddForm from "@/components/TddForm";
 import {EditRestaurant} from "@/functions/EditElements";
+import {FindIDRes, isIDCorrectRes} from "@/functions/CheckID";
 
 export default {
   name: "RestaurantForm",
@@ -143,8 +144,13 @@ export default {
       return this.json.length
     },
     IsSubmitted() {
-      this.json = EditRestaurant(this.json, this.to_complete, this.FillTab);
-    }
+      const new_array = {
+        matricule: this.to_complete.matricule !==null?isIDCorrectRes(this.json, this.to_complete.matricule): FindIDRes(this.json),
+        restaurantId: this.to_complete.restaurantId,
+        traiteursConfigs: this.to_complete.traiteursConfigs};
+      this.json = EditRestaurant(this.json, new_array, this.FillTab);
+    },
+
   }
 }
 </script>

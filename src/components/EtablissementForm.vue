@@ -25,7 +25,7 @@
         </div>
         <div class="col-75">
           <input type="checkbox" v-model="add_id">
-          <input v-if="add_id" placeholder="id" v-model="to_complete.id">
+          <input v-if="add_id" placeholder="id" v-model.number="to_complete.id">
         </div>
       </div>
       <div class="row">
@@ -47,6 +47,7 @@ import ParseSociete from "../functions/ParseSociete";
 import App from '../App'
 import TddForm from "@/components/TddForm";
 import {EditEtab} from "@/functions/EditElements";
+import {FindAnID, isIDCorrect} from "@/functions/CheckID";
 
 export default {
   props: {
@@ -92,7 +93,11 @@ export default {
       }
     },
     IsSubmitted() {
-      const new_array = {id: this.to_complete.id, code: this.to_complete.code, traiteursConfigs: this.to_complete.traiteursConfigs, restaurants: this.to_complete.restaurants};
+      const new_array = {
+        id: this.to_complete.id!==null?isIDCorrect(this.json[this.societe].etablissements, this.to_complete.id):FindAnID(this.json[this.societe].etablissements),
+        code: this.to_complete.code,
+        traiteursConfigs: this.to_complete.traiteursConfigs,
+        restaurants: this.to_complete.restaurants};
 
       this.json = EditEtab(this.json, new_array, this.societe);
       this.$emit('json_value', this.json);
