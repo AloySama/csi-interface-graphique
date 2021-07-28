@@ -25,7 +25,8 @@
               <label >id</label>
             </div>
             <div class="col-75">
-              <input type="number" min="0" v-model.number="to_complete.id">
+              <input  type="number" min="0" v-model.number="to_complete.id">
+              <p class="error-message" v-if="to_complete.id < 0">L'id ne peut être strictement positif.</p>
             </div>
           </form>
         </div>
