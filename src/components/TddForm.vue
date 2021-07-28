@@ -7,10 +7,10 @@
       <div v-for="number in parseInt(tdd_nbr)" :key="parseInt(number)">
         <form @submit.prevent="">
           <ol>
-            <li v-for="(index, item) in to_complete" :key="index">
+            <li v-for="(_, item) in to_complete" :key="item">
               <div class="col-25"><label>{{item}}</label></div>
               <div class="col-75">
-                <input type="number" v-if="ints.includes(item)" min="0" v-model="to_complete[item]">
+                <input type="number" v-if="ints.includes(item)" min="0" v-model.number="to_complete[item]">
                 <input class="place-icons" type="checkbox" v-else-if="bools.includes(item)" v-model="to_complete[item]">
                 <input v-else type="text"  v-model="to_complete[item]">
               </div>
