@@ -2,8 +2,9 @@
   <div>
     <strong>Nombre : automatique si non renseigné ou 0 en fonction de la case.
       Sinon null, false ou tableau vide si non renseigné</strong><br>
-    <input v-model="tdd_nbr" type="number" min="1" max="30">
-    <div v-if="tdd_nbr > 0">
+    <p v-if="tdd_nbr <= min || tdd_nbr > max" class="error-message">Le nombre doit être compris entre {{min}} et {{max}}</p>
+    <input v-model="tdd_nbr" type="number" :min="min" :max="max" placeholder="Entrer un nombre ici">
+    <div v-if="tdd_nbr > min && tdd_nbr <= max">
       <div v-for="number in parseInt(tdd_nbr)" :key="parseInt(number)">
         <form @submit.prevent="">
           <ol>
@@ -29,6 +30,8 @@ export default {
   name: "TddForm",
   data() {
     return {
+      min: 1,
+      max: 15,
       old_tdd : -1,
       tdd_nbr: 1,
       to_complete: this.ToComplete(),
