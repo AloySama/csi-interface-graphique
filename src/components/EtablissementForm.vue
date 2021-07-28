@@ -1,6 +1,6 @@
 <template>
   <div>
-    Choisissez à quelle société vous voulez ajouter l'établissement.<br>
+    <div class="white"> Choisissez à quelle société vous voulez ajouter l'établissement.<br></div>
     <ul>
       <li class="OneLine" v-for="(soc, index) in ParseSociete(json)" :key="index">
         <button :id="'ButtonEta' + index" class="hover-item" @click="DisabledButton(index, true)">{{soc}}</button>
@@ -8,17 +8,8 @@
         <button class="hover-item" @click="FillSociete(-1); App.methods.doEdit(false, false, 'AddEta'); $emit('edit_value', false)">Retour</button>
     </ul>
   </div>
-  <div v-if="FillTab >= 0" class="container">
+  <div v-if="societe >= 0" class="container">
     <form @submit.prevent="">
-      <div class="row">
-        <div class="col-25">
-          <label>Id personnalisé ?</label>
-        </div>
-        <div class="col-75">
-          <input type="checkbox" v-model="add_id">
-          <input v-if="add_id" placeholder="id">
-        </div>
-      </div>
       <div class="row">
         <div class="col-25">
           <label>Code</label>
@@ -30,6 +21,15 @@
       </div>
       <div class="row">
         <div class="col-25">
+          <label>Id personnalisé ?</label>
+        </div>
+        <div class="col-75">
+          <input type="checkbox" v-model="add_id">
+          <input v-if="add_id" placeholder="id" v-model="to_complete.id">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
           <label>Ajouter Traiteur config ?</label>
         </div>
         <div class="col-75">
@@ -37,7 +37,7 @@
         </div>
         <tdd-form v-if="add_tdd"/>
       </div>
-      <input class="hover-item" type="submit" :disabled="!to_complete.code">
+      <input class="hover-item" type="submit" :disabled="!to_complete.code" @click="IsSubmitted">
     </form>
   </div>
 </template>
@@ -46,6 +46,7 @@
 import ParseSociete from "../functions/ParseSociete";
 import App from '../App'
 import TddForm from "@/components/TddForm";
+import {EditEtab} from "@/functions/Addsociete";
 
 export default {
   props: {
@@ -60,14 +61,14 @@ export default {
     }
   },
   components: {TddForm},
-  emits : ['edit_value'],
+  emits : ['edit_value', 'json_value'],
   name: "EtablissementForm",
   data() {
     return {
+      App,
       ParseSociete,
       json: this.jsonFile,
-      App,
-      FillTab : -1,
+      societe : -1,
       add_id: false,
       add_tdd: false,
       to_complete: {
@@ -80,7 +81,7 @@ export default {
   },
   methods: {
     FillSociete(s) {
-      this.FillTab = s;
+      this.societe = s;
     },
     DisabledButton(i, bool) {
       this.FillSociete(i);
@@ -89,8 +90,21 @@ export default {
           if (j === i) continue;
           document.getElementById('ButtonEta' + j).disabled = false;
       }
+    },
+    IsSubmitted() {
+      const new_array = {id: this.to_complete.id, code: this.to_complete.code, traiteursConfigs: this.to_complete.traiteursConfigs, restaurants: this.to_complete.restaurants};
+
+      this.json = EditEtab(this.json, new_array, this.societe);
+      this.$emit('json_value', this.json);
+      this.AllNull();
+    },
+    AllNull() {
+      this.to_complete.id = '';
+      this.to_complete.code = null;
+      this.to_complete.restaurants = [];
+      this.to_complete.traiteursConfigs = [];
     }
-  },
+  }
 }
 </script>
 

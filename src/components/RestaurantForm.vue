@@ -27,7 +27,7 @@
         </div>
         <div class="col-75">
           <input v-model="AddMatricule" type="checkbox">
-          <input v-if="AddMatricule" type="number" min="0">
+          <input v-if="AddMatricule" type="number" min="0" v-model="to_complete.matricule">
         </div>
       </div>
       <div class="row">
@@ -36,7 +36,7 @@
         </div>
         <div class="col-75">
           <input v-model="AddId" type="checkbox">
-          <input v-if="AddId" type="number">
+          <input v-if="AddId" type="number" v-model="to_complete.restaurantId">
         </div>
       </div>
       <div class="row">
@@ -46,10 +46,10 @@
         <div class="col-75">
           <input v-model="AddTdd" type="checkbox">
         </div>
-        <tdd-form v-if="AddTdd"/>
+        <tdd-form v-if="AddTdd" v-model="to_complete.traiteursConfigs"/>
       </div>
     </form>
-    <input class="hover-item" type="submit">
+    <input class="hover-item" type="submit" @click="IsSubmitted">
   </div>
 </template>
 
@@ -59,6 +59,7 @@ import App from "@/App";
 import ParseSociete from "../functions/ParseSociete";
 import ParseRestaurant from "@/functions/ParseRestaurant";
 import TddForm from "@/components/TddForm";
+import {EditRestaurant} from "@/functions/Addsociete";
 
 export default {
   name: "RestaurantForm",
@@ -81,7 +82,12 @@ export default {
       AddMatricule: false,
       AddId: false,
       AddTdd: false,
-      old: null
+      old: null,
+      to_complete: {
+        "matricule": null,
+        "restaurantId": null,
+        "traiteursConfigs": []
+      }
     }
   },
   methods: {
@@ -135,6 +141,9 @@ export default {
     },
     CountSociete() {
       return this.json.length
+    },
+    IsSubmitted() {
+      this.json = EditRestaurant(this.json, this.to_complete, this.FillTab);
     }
   }
 }

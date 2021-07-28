@@ -43,7 +43,7 @@
                                                                 doEdit(false, false, 'AddEta');
     doEdit(false, false, 'AddEta');">Retour</button></template>
   <SocieteForm :json-file="json" v-if="edit_societe" @json_value="SetJson"/>
-  <EtablissementForm :json-file="json" v-if="edit_eta" @edit_value="SetEta"></EtablissementForm>
+  <EtablissementForm :json-file="json" v-if="edit_eta" @edit_value="SetEta" @json_value="SetJson"></EtablissementForm>
   <RestaurantForm :json-file="json" v-if="edit_res" @edit_value="SetRes"/>
   <UploadFiles v-if="ChooseFile" @upload-json="SetJson"/>
   <!--  -->
