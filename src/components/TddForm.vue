@@ -14,11 +14,12 @@
                 <input type="number" v-if="ints.includes(item)" min="0" v-model.number="to_complete[item]">
                 <input class="place-icons" type="checkbox" v-else-if="bools.includes(item)" v-model="to_complete[item]">
                 <div v-else-if="Object.keys(array).includes(item)">
-                  <label for="select">Choisir</label>
                   <div>
-                    <select id="select" v-model="to_complete[item]" multiple>
+                    <b><label v-if="to_complete[item].length > 0" for="select">Choisir</label></b>
+                    <select id="select" v-model="to_complete[item]" multiple v-if="to_complete[item].length > 0">
                       <option :value="object" v-for="object in array[item]" :key="object">{{object}}</option>
                     </select>
+                    <input v-else type="text">
                   </div>
                 </div>
                 <input v-else type="text" v-model="to_complete[item]">
