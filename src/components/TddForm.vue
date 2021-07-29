@@ -13,6 +13,14 @@
               <div class="col-75">
                 <input type="number" v-if="ints.includes(item)" min="0" v-model.number="to_complete[item]">
                 <input class="place-icons" type="checkbox" v-else-if="bools.includes(item)" v-model="to_complete[item]">
+                <div v-else-if="Object.keys(array).includes(item)">
+                  <label for="select">Choisir</label>
+                  <div>
+                    <select id="select" v-model="to_complete[item]" multiple>
+                      <option :value="object" v-for="object in array[item]" :key="object">{{object}}</option>
+                    </select>
+                  </div>
+                </div>
                 <input v-else type="text" v-model="to_complete[item]">
               </div>
             </li>
@@ -39,8 +47,23 @@ export default {
       ints: ['id', 'codeJournal', 'compte', 'ordre'],
       bools: ['auxiliaireRestaurant', 'auxiliaireVide', 'matriculeRestaurant', 'auxilliaireCreditClient',
         'compteAnalytique1TVA', 'matriculeRestaurant', 'modeER', 'taxe', 'transactionVI', 'zeroExclus'],
-      array: ['comptes', 'documents', 'familles', 'filtration', 'groupes', 'libelle', 'libelles', 'localisations',
-        'tvas', 'numeros', 'profits', 'sousfamilles', 'tags'],
+      array: {'comptes': [],
+        'documents': [],
+        'familles': [],
+        'filtration': ['FAMILLE', 'GROUPE', 'SOUSFAMILLE', 'NUMERO', 'LIBELLE', 'TAG_CONTAINS', 'TVAS', 'DOCUMENT', 'LOCALISATION', 'PROFIT', 'COMPTE', 'RULES'],
+        'groupes': [],
+        'libelle': [],
+        'libelles': [],
+        'localisations': [],
+        'tvas': [],
+        'numeros': [],
+        'profits': [],
+        'sousfamilles': [],
+        'tags': [],
+        'direction': ['DEBIT', 'CREDIT'],
+        'recuperation': ['QUANTITE', 'UNITAIRE', 'TOTAL', 'HT', 'TVA', 'SERVICE', 'REEL', 'THEORIQUE', 'DELTA', 'MONTANT0', 'MONTANT1', 'MONTANT2'],
+        'specialite': ['ARTICLE', 'TVA', 'STATISTIQUE', 'OFFERT', 'TIROIR_PRELEVEMENT', 'REGLEMENT', 'TIROIR_REGLEMENT', 'RECU', 'DESACTIVE', 'TICKET', 'TIROIR_REMISE']
+      },
       FormTdd: {tdd:[]}
     }
   },
@@ -52,9 +75,9 @@ export default {
     ToComplete() {
       return {
         "id": 1, "auxiliaire": null, "codeJournal": 0, "compte": 0, "compteAnalytique1": null, "compteAnalytique2": null,
-        "compteAnalytique3": null, "comptes": [], "direction": "DEBIT", "documents": [], "familles": [], "filtration": [],
+        "compteAnalytique3": null, "comptes": [], "direction": [], "documents": [], "familles": [], "filtration": [],
         "groupes": [], "libelle": "", "libelles": [], "localisations": [], "tvas": [], "type": "1", "numeros": [], "ordre": 0,
-        "profits": [], "recuperation": "", "sousfamilles": [], "specialite": "", "tags": [], "tax_code": null,
+        "profits": [], "recuperation": [], "sousfamilles": [], "specialite": [""], "tags": [], "tax_code": null,
         "transaction": "VI",  "taxe": false,"matriculeRestaurant": false, "modeER": true,"compteAnalytique1TVA": false,
         "auxiliaireVide": false, "auxilliaireCreditClient": false,"transactionVI": false,"auxiliaireRestaurant": false,
         "zeroExclus": false
