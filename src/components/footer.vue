@@ -5,7 +5,7 @@
       <div id="contacts--contact">
         <p>{{industrie}}</p>
         <p>{{phone}}</p>
-        <div class="gear"><a @click="OnClickButton"> <font-awesome-icon :icon="['fas', 'cog']"/></a></div>
+        <div :class="{gear: true, test: settings_}"><a @click="OnClickButton"> <font-awesome-icon :icon="['fas', 'cog']"/></a></div>
       </div>
       <div id="contacts--social">
         <div id="twitter"><a :href="twitter" target="_blank"><font-awesome-icon :icon="['fab', 'twitter']" class="place-icons"/></a></div>

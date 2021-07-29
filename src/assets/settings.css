@@ -3,12 +3,19 @@
 }
 
 .gear {
-    transition: .2s;
+    transition: .5s;
+    cursor: pointer;
+    position: absolute;
+}
+
+.test {
+    color: darkred;
+    transform:translateX(2px) scale(0.95) rotate(180deg);
+
 }
 
 .gear:hover {
-    transform:translateX(2px) scale(0.95);
-    transform-origin: center;
+    transform:translateX(2px) scale(0.95) rotate(180deg);
 
     color: grey;
 }

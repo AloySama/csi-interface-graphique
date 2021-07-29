@@ -1,11 +1,8 @@
 export default function download(jsonData: any, filename: string, settings: Record<string, unknown>) {
     let space;
     if (typeof settings['name'] !== 'undefined' && typeof settings['space'] !== 'undefined') {
-        if (settings['space'] != null) {
-            space = settings['space'];
-        } else {
-            space = 2;
-        }
+        if (settings['space'] != null) space = settings['space'];
+        else space = 2;
         //@ts-ignore
         if (settings['name'].length != 0) {
             // @ts-ignore
