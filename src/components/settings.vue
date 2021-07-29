@@ -29,8 +29,8 @@ export default {
   data() {
     return {
       settings: {
-        name: '',
-        space: null
+        name: 'arcole.json',
+        space: 2
       }
     }
   }

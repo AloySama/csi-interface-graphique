@@ -1,4 +1,3 @@
-
 <template>
   <settings v-if="settings_" @settings_value="SetSettings">{{settings_}}</settings>
   <div id="container-bis" class="sticky-footer">
@@ -40,8 +39,8 @@ export default {
   },
   methods: {
     SetSettings(setting) {
-      this.settings_ = false;
       this.$emit('setting_value', setting);
+      this.settings_ = false;
     },
     OnClickButton() {
       this.settings_ = !this.settings_
