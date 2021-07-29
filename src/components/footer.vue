@@ -4,6 +4,7 @@
       <div id="contacts--contact">
         <p>{{industrie}}</p>
         <p>{{phone}}</p>
+        <font-awesome-icon :icon="['fas', 'cog']" />
       </div>
       <div id="contacts--social">
         <div id="twitter"><a :href="twitter" target="_blank"><font-awesome-icon :icon="['fab', 'twitter']" class="place-icons"/></a></div>
