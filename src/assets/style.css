@@ -40,7 +40,7 @@ header img {
     transition-duration: 1s;
 }
 .hover-item {
-    transition: 0.25s;
+    transition: .25s;
 }
 .hover-item:hover {
     transform: translate(-3px, -5px);
@@ -124,6 +124,7 @@ body > #bg2 {
 }
 
 a {
+    cursor: pointer;
     color: inherit;
     text-decoration: inherit;
 }

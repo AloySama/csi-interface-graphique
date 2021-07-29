@@ -1,10 +1,12 @@
+
 <template>
+  <settings v-if="settings_" @settings_value="SetSettings">{{settings_}}</settings>
   <div id="container-bis" class="sticky-footer">
     <div id="contacts">
       <div id="contacts--contact">
         <p>{{industrie}}</p>
         <p>{{phone}}</p>
-        <font-awesome-icon :icon="['fas', 'cog']" />
+        <div class="gear"><a @click="OnClickButton"> <font-awesome-icon :icon="['fas', 'cog']"/></a></div>
       </div>
       <div id="contacts--social">
         <div id="twitter"><a :href="twitter" target="_blank"><font-awesome-icon :icon="['fab', 'twitter']" class="place-icons"/></a></div>
@@ -19,10 +21,14 @@
 </template>
 
 <script>
+import Settings from "@/components/settings";
 export default {
   name: "FooterPage",
-    data() {
+  emits: ['setting_value'],
+  components: {Settings},
+  data() {
     return {
+      settings_: false,
       industrie : 'Cash Systemes Industrie',
       phone : '04.98.11.45.90',
       mention : new Date().getFullYear() +' | ',
@@ -30,6 +36,15 @@ export default {
       twitter: 'https://twitter.com/cashsystemes',
       facebook: 'https://www.facebook.com/cashsystemes/',
       linkedin: 'https://www.linkedin.com/company/cashsystemesindustrie?trk=public_profile_topcard_current_company&originalSubdomain=fr',
+    }
+  },
+  methods: {
+    SetSettings(setting) {
+      this.settings_ = false;
+      this.$emit('setting_value', setting);
+    },
+    OnClickButton() {
+      this.settings_ = !this.settings_
     }
   }
 }

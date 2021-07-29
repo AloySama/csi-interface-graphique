@@ -1,0 +1,14 @@
+.settings {
+    transition: 1s ease-in-out;
+}
+
+.gear {
+    transition: .2s;
+}
+
+.gear:hover {
+    transform:translateX(2px) scale(0.95);
+    transform-origin: center;
+
+    color: grey;
+}

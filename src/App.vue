@@ -9,7 +9,7 @@
         <h1>ARCOLE<br>export</h1>
       </div>
       <div class="order">
-        <button class="hover-item" @click="download(json, 'arcole.json')" :disabled="json == null" :title="message['save']">Enregistrer</button>
+        <button class="hover-item" @click="DownloadFile" :disabled="json == null" :title="message['save']">Enregistrer</button>
         <button id="edit" :title="message['edit']" class="hover-item"
                 @click="doEdit(true, true, 'edit');
                 ChooseFile = false;
@@ -47,7 +47,7 @@
   <RestaurantForm :json-file="json" v-if="edit_res" @edit_value="SetRes"/>
   <UploadFiles v-if="ChooseFile" @upload-json="SetJson"/>
   <!--  -->
-  <Footer></Footer>
+  <Footer @setting_value="SetSettings"></Footer>
 </template>
 
 <script lang="ts">
@@ -65,6 +65,7 @@ export default defineComponent({
   components: {Footer, RestaurantForm, UploadFiles, EtablissementForm, SocieteForm},
   data() {
     return {
+      setting_tab: {},
       img: require('@/assets/images/csi.png'),
       json: null,
       ChooseFile: false,
@@ -86,6 +87,12 @@ export default defineComponent({
   },
   name: 'App',
   methods: {
+    SetSettings(setting: []) {
+      this.setting_tab = setting
+    },
+    DownloadFile() {
+      download(this.json, 'arcole.json', this.setting_tab)
+    },
     SetEta(value: boolean) {
       this.doEdit(false, value, 'AddEta');
       this.edit_eta = value;

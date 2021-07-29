@@ -3,11 +3,12 @@ import App from './App.vue';
 import './assets/style.css';
 import './assets/FormStyle.css';
 import './assets/UploadForm.css';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import './assets/settings.css';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {library} from "@fortawesome/fontawesome-svg-core";
-import {fas} from '@fortawesome/free-solid-svg-icons'
-import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faFontAwesome } from '@fortawesome/free-brands-svg-icons'
+import {fas} from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { faFontAwesome } from '@fortawesome/free-brands-svg-icons';
 
 library.add(fas);
 library.add(fab);
