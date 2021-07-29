@@ -35,7 +35,7 @@
         <div class="col-75">
           <input v-model="add_tdd" type="checkbox">
         </div>
-        <tdd-form v-if="add_tdd"/>
+        <tdd-form v-if="add_tdd" @tdd_form="CompleteTDD"/>
       </div>
       <input class="hover-item" type="submit" :disabled="!to_complete.code" @click="IsSubmitted">
     </form>
@@ -81,6 +81,9 @@ export default {
     }
   },
   methods: {
+    CompleteTDD(tdd) {
+      this.to_complete.traiteursConfigs = tdd;
+    },
     FillSociete(s) {
       this.societe = s;
     },

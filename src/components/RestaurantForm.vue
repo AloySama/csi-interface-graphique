@@ -23,20 +23,20 @@
     <form @submit.prevent="">
       <div class="row">
         <div class="col-25">
-        <label>Matricule personnalisé ?</label>
+          <label>Code Restaurant</label>
         </div>
         <div class="col-75">
-          <input v-model="AddMatricule" type="checkbox">
-          <input v-if="AddMatricule" type="number" min="0" v-model.number="to_complete.matricule">
+          <input type="text" required v-model="to_complete.etab_code">
+          <p class="error-message" v-if="!to_complete.etab_code"> Le code de la société est requit</p>
         </div>
       </div>
       <div class="row">
         <div class="col-25">
-          <label>RestaurantId personnalisé ?</label>
+        <label>Matricule personnalisé ?</label>
         </div>
         <div class="col-75">
-          <input v-model="AddId" type="checkbox">
-          <input v-if="AddId" type="number" v-model="to_complete.restaurantId">
+          <input v-model="AddMatricule" type="checkbox">
+          <input v-if="AddMatricule" type="number" min="0" v-model.number="to_complete.matricule" required>
         </div>
       </div>
       <div class="row">
@@ -46,10 +46,10 @@
         <div class="col-75">
           <input v-model="AddTdd" type="checkbox">
         </div>
-        <tdd-form v-if="AddTdd" v-model="to_complete.traiteursConfigs"/>
+        <tdd-form v-if="AddTdd" v-model="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
       </div>
     </form>
-    <input class="hover-item" type="submit" @click="IsSubmitted">
+    <input class="hover-item" type="submit" @click="IsSubmitted" :disabled="!to_complete.etab_code">
   </div>
 </template>
 
@@ -85,6 +85,10 @@ export default {
       AddTdd: false,
       old: null,
       to_complete: {
+        "code_societe": '',
+        "compteAuxiliaire": '',
+        "etab_code": '',
+        "reference_config_compensation": 0,
         "matricule": null,
         "restaurantId": null,
         "traiteursConfigs": []
@@ -92,6 +96,16 @@ export default {
     }
   },
   methods: {
+    CompleteTDD(tdd) {
+      this.to_complete.traiteursConfigs.push(tdd);
+    },
+    setAuxiliaire(prefix, IDRes) {
+      if (IDRes < 10)
+        return prefix + '00' + IDRes;
+      else if (IDRes < 100)
+        return  prefix + '0' + IDRes;
+      return prefix + IDRes;
+    },
     FillSociete(societe) {
       this.FillTab['societe'] = societe;
     },
@@ -144,12 +158,28 @@ export default {
       return this.json.length
     },
     IsSubmitted() {
+      const matricule = this.to_complete.matricule !==null?isIDCorrectRes(this.json, this.to_complete.matricule): FindIDRes(this.json, false, 0)
       const new_array = {
-        matricule: this.to_complete.matricule !==null?isIDCorrectRes(this.json, this.to_complete.matricule): FindIDRes(this.json, false, 0),
-        restaurantId: this.to_complete.restaurantId,
-        traiteursConfigs: this.to_complete.traiteursConfigs};
+        matricule: matricule,
+        auxiliaireCreditClient: this.setAuxiliaire('C950', matricule),
+        restaurantId: matricule,
+        traiteursConfigs: this.to_complete.traiteursConfigs,
+        code_societe: this.to_complete.code_societe,
+        compteAuxiliaire: this.setAuxiliaire('REST', matricule),
+        etab_code: this.to_complete.etab_code,
+        reference_config_compensation: this.to_complete.reference_config_compensation,
+      };
       this.json = EditRestaurant(this.json, new_array, this.FillTab);
+      this.AllNull()
     },
+    AllNull() {
+      this.to_complete.code_societe = '';
+      this.to_complete.matricule = null;
+      this.to_complete.compteAuxiliaire = '';
+      this.to_complete.etab_code = ''
+      this.to_complete.reference_config_compensation = null;
+      this.to_complete.restaurantId = null;
+    }
 
   }
 }

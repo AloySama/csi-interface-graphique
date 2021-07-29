@@ -12,7 +12,7 @@
       </div>
     </div>
     <div id="mentions">
-      <p>{{ mention }} <a class="link" href="~">Auteur: Aloïs BRENGARD</a></p>
+      <p>{{ mention }} Auteur: <a class="link" href="~">Aloïs BRENGARD</a></p>
     </div>
   </div>
 </template>
