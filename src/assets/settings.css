@@ -3,12 +3,12 @@
 }
 
 .gear {
-    transition: .5s;
+    transition: .35s;
     cursor: pointer;
     position: absolute;
 }
 
-.test {
+.red-gear {
     color: darkred;
     transform:translateX(2px) scale(0.95) rotate(180deg);
 
