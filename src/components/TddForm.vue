@@ -8,24 +8,34 @@
       <div v-for="number in parseInt(tdd_nbr)" :key="parseInt(number)">
         <form @submit.prevent="">
           <ol>
-            <li v-for="(_, item) in to_complete" :key="item">
+            <li v-for="item in ints" :key="item">
               <div :id="item"  class="col-25"><label>{{item}}</label></div>
               <div class="col-75">
-                <input type="number" v-if="ints.includes(item)" min="0" v-model.number="to_complete[item]">
-                <input class="place-icons" type="checkbox" v-else-if="bools.includes(item)" v-model="to_complete[item]">
-                <div v-else-if="Object.keys(array).includes(item)">
-                  <div>
-                    <b><label v-if="to_complete[item].length > 0" for="select">Choisir</label></b>
-                    <select id="select" v-model="to_complete[item]" multiple v-if="to_complete[item].length > 0">
-                      <option :value="object" v-for="object in array[item]" :key="object">{{object}}</option>
-                    </select>
-                    <input v-else type="text">
-                  </div>
-                </div>
-                <input v-else type="text" v-model="to_complete[item]">
+                <input type="number" min="0" v-model.number="to_complete[item]">
               </div>
             </li>
           </ol>
+          <ol>
+            <li v-for="item in string" :key="item">
+              <div :id="item" class="col-25"><label>{{item}}</label></div>
+              <div class="col-75">
+                <input type="text" v-model="to_complete[item]">
+              </div>
+            </li>
+          </ol>
+          <ol>
+            <li v-for="item in bools" :key="item">
+              <div class="col-25">{{item}}</div>
+              <div class="col-75">
+                <input class="place-icons" type="checkbox" v-model="to_complete[item]">
+              </div>
+            </li>
+          </ol>
+          <div>
+            <select v-model="select" multiple>
+              <option :value="item" v-for="item in array['filtration']" :key="item">{{item}}</option>
+            </select>
+          </div>
         </form>
       </div>
       <button class="hover-item" @click="SubmitForm">Valider TDD</button>
@@ -41,17 +51,29 @@ export default {
     return {
       min: 1,
       max: 15,
-      old_tdd : -1,
       tdd_nbr: 1,
-      to_complete: this.ToComplete(),
       tdd: [],
+      select: [],
       ints: ['id', 'codeJournal', 'compte', 'ordre'],
-      bools: ['auxiliaireRestaurant', 'auxiliaireVide', 'matriculeRestaurant', 'auxilliaireCreditClient',
+      bools: ['auxiliaireRestaurant', 'auxiliaireVide', 'auxilliaireCreditClient',
         'compteAnalytique1TVA', 'matriculeRestaurant', 'modeER', 'taxe', 'transactionVI', 'zeroExclus'],
       array: {'comptes': [],
+        'filtration': [
+          'FAMILLE',
+          'GROUPE',
+          'SOUSFAMILLE',
+          'NUMERO' ,
+          'LIBELLE',
+          'TAG_CONTAINS',
+          'TVAS',
+          'DOCUMENT',
+          'LOCALISATION',
+          'PROFIT',
+          'COMPTE',
+          'RULES']
+        ,
         'documents': [],
         'familles': [],
-        'filtration': ['FAMILLE', 'GROUPE', 'SOUSFAMILLE', 'NUMERO', 'LIBELLE', 'TAG_CONTAINS', 'TVAS', 'DOCUMENT', 'LOCALISATION', 'PROFIT', 'COMPTE', 'RULES'],
         'groupes': [],
         'libelle': [],
         'libelles': [],
@@ -63,7 +85,46 @@ export default {
         'tags': [],
         'direction': ['DEBIT', 'CREDIT'],
         'recuperation': ['QUANTITE', 'UNITAIRE', 'TOTAL', 'HT', 'TVA', 'SERVICE', 'REEL', 'THEORIQUE', 'DELTA', 'MONTANT0', 'MONTANT1', 'MONTANT2'],
-        'specialite': ['ARTICLE', 'TVA', 'STATISTIQUE', 'OFFERT', 'TIROIR_PRELEVEMENT', 'REGLEMENT', 'TIROIR_REGLEMENT', 'RECU', 'DESACTIVE', 'TICKET', 'TIROIR_REMISE']
+        'specialite': ['ARTICLE', 'TVA', 'STATISTIQUE', 'OFFERT', 'TIROIR_PREFERMENT', 'REGLEMENT', 'TIROIR_REGLEMENT', 'RECU', 'DESACTIVE', 'TICKET', 'TIROIR_REMISE']
+      },
+      string: ["auxiliaire", "compteAnalytique1", "compteAnalytique2", "compteAnalytique3", "tax_code", "transaction"],
+      to_complete: {
+        "auxiliaire": null,
+        "compteAnalytique1": null,
+        "compteAnalytique2": null,
+        "compteAnalytique3": null,
+        "tax_code": null,
+        "id": 1,
+        "ordre": 0,
+        "codeJournal": 0,
+        "compte": 0,
+        "comptes": [],
+        "direction": [],
+        "documents": [],
+        "familles": [],
+        "filtration": [],
+        "groupes": [],
+        "libelles": [],
+        "localisations": [],
+        "tvas": [],
+        "numeros": [],
+        "profits": [],
+        "recuperation": [],
+        "sousfamilles": [],
+        "specialite": [],
+        "tags": [],
+        "type": "1",
+        "libelle": "",
+        "transaction": "VI",
+        "taxe": false,
+        "matriculeRestaurant": false,
+        "modeER": true,
+        "compteAnalytique1TVA": false,
+        "auxiliaireVide": false,
+        "auxilliaireCreditClient": false,
+        "transactionVI": false,
+        "auxiliaireRestaurant": false,
+        "zeroExclus": false
       },
       FormTdd: {tdd:[]}
     }
@@ -72,17 +133,6 @@ export default {
     SubmitForm() {
       this.FormTdd.tdd = this.to_complete;
       this.$emit('tdd_form', this.FormTdd);
-    },
-    ToComplete() {
-      return {
-        "id": 1, "auxiliaire": null, "codeJournal": 0, "compte": 0, "compteAnalytique1": null, "compteAnalytique2": null,
-        "compteAnalytique3": null, "comptes": [], "direction": [], "documents": [], "familles": [], "filtration": [],
-        "groupes": [], "libelle": "", "libelles": [], "localisations": [], "tvas": [], "type": "1", "numeros": [], "ordre": 0,
-        "profits": [], "recuperation": [], "sousfamilles": [], "specialite": [""], "tags": [], "tax_code": null,
-        "transaction": "VI",  "taxe": false,"matriculeRestaurant": false, "modeER": true,"compteAnalytique1TVA": false,
-        "auxiliaireVide": false, "auxilliaireCreditClient": false,"transactionVI": false,"auxiliaireRestaurant": false,
-        "zeroExclus": false
-      }
     }
   }
 }
