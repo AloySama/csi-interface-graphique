@@ -33,9 +33,18 @@
           </ol>
           <div>
             <select v-model="select" multiple>
-              <option :value="item" v-for="item in array['filtration']" :key="item">{{item}}</option>
+              <option :value="_" v-for="(_, item) in array['filtration']" :key="item">{{item}}</option>
             </select>
           </div>
+          <ol>
+            <li v-for="item in select" :key="item">
+              <div class="col-25">{{item}}</div>
+              <div class="col-75">
+                <input type="text" v-model="to_complete[item]"> <!-- TODO: créer un bouton pour chaque input qui permettra de push l'input dans l'array | Créer un tableau qui aura tous les inputs de chaque élément. -->
+                <button class="hover-item" @click="AddElement(item)">Push</button>
+              </div>
+            </li>
+          </ol>
         </form>
       </div>
       <button class="hover-item" @click="SubmitForm">Valider TDD</button>
@@ -57,21 +66,22 @@ export default {
       ints: ['id', 'codeJournal', 'compte', 'ordre'],
       bools: ['auxiliaireRestaurant', 'auxiliaireVide', 'auxilliaireCreditClient',
         'compteAnalytique1TVA', 'matriculeRestaurant', 'modeER', 'taxe', 'transactionVI', 'zeroExclus'],
-      array: {'comptes': [],
-        'filtration': [
-          'FAMILLE',
-          'GROUPE',
-          'SOUSFAMILLE',
-          'NUMERO' ,
-          'LIBELLE',
-          'TAG_CONTAINS',
-          'TVAS',
-          'DOCUMENT',
-          'LOCALISATION',
-          'PROFIT',
-          'COMPTE',
-          'RULES']
-        ,
+      array: {
+        'filtration': {
+          'FAMILLE': 'familles',
+          'GROUPE': 'groupes',
+          'SOUSFAMILLE': 'sousfamilles',
+          'NUMERO': 'numeros',
+          'LIBELLE': 'libelle',
+          'TAG_CONTAINS': 'tags',
+          'TVAS': 'tvas',
+          'DOCUMENT': 'documents',
+          'LOCALISATION': 'localisations',
+          'PROFIT': 'profits',
+          'COMPTE': 'comptes',
+          'RULES': '?????' //TODO: VERIFIER ICI A QUOI CORRESPOND RULES
+        },
+        'comptes': [],
         'documents': [],
         'familles': [],
         'groupes': [],
@@ -133,6 +143,9 @@ export default {
     SubmitForm() {
       this.FormTdd.tdd = this.to_complete;
       this.$emit('tdd_form', this.FormTdd);
+    },
+    AddElement(arr, text) {
+      this.to_complete[arr].push(text);
     }
   }
 }

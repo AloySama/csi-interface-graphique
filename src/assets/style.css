@@ -40,6 +40,7 @@ header img {
     transition-duration: 1s;
 }
 .hover-item {
+    margin-top: 5px;
     transition: .25s;
 }
 .hover-item:hover {
