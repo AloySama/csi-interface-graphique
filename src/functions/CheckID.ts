@@ -44,10 +44,10 @@ export function FindIDRes(json: Record<string, any>, bool: boolean, _id: number)
             for (let k of j.restaurants) {
                 if (bool && k.matricule === _id) return true;
                 else if (k.matricule === id) {
-                    id++;
-                    i = 0
-                    j = 0
-                    k = 0
+                    ++id;
+                    i = 0;
+                    j = 0;
+                    k = 0;
                 }
             }
         }
@@ -59,7 +59,7 @@ export function FindIDRes(json: Record<string, any>, bool: boolean, _id: number)
 export function isIDCorrectRes(json: Record<string, any>, id: number) {
     // @ts-ignore
     if (FindIDRes(json, true, id)) {
-        alert('L\'id existe déjà, nombre automatique attribué')
+        alert("L'id existe déjà, nombre automatique attribué")
         return FindIDRes(json, false, 0)
     }
     return id;
