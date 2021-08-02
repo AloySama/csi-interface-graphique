@@ -125,31 +125,6 @@ export default {
         }
       }
     },
-    DisabledButtonRes(IdSoc, IdRes) { //TODO: revoir cette fonction pour désactiver les boutons (il se passe des dingueries)
-      const current = 'ButtonRes' + IdSoc + IdRes;
-      console.log("CURRENT => " + current);
-      if (this.old == null) {
-        this.old = current;
-        const doc = document.getElementById(this.old);
-        if (doc == null) {
-          console.error("doc est null.")
-        }
-        doc.disabled = true;
-      }
-      else {
-        const doc_old = document.getElementById(this.old);
-        this.old = current;
-        const doc_current = document.getElementById(current);
-        if (doc_old == null || doc_current == null) {
-          console.error('l\'un des doc est null');
-          this.FillTab['societe'] = -1;
-          this.FillTab['etablissement'] = -1;
-          return;
-        }
-        doc_old.disabled = false;
-        doc_current.disabled = true;
-      }
-    },
     HasChanged(index) {
       if (!(this.FillTab['societe'] === index))
         this.FillTab['etablissement'] = -1;
