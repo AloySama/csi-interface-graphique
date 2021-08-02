@@ -2,9 +2,9 @@
   <div>
     <strong>Nombre : automatique si non renseigné ou 0 en fonction de la case.
       Sinon null, false ou tableau vide si non renseigné</strong><br>
-    <p v-if="tdd_nbr < min || tdd_nbr > max" class="error-message">Le nombre doit être compris entre {{min}} et {{max}}</p>
-    <input v-model="tdd_nbr" type="number" :min="min" :max="max" placeholder="Entrer un nombre ici">
-    <div v-if="tdd_nbr >= min && tdd_nbr <= max">
+    <p v-if="tdd_nbr < values.min || tdd_nbr > values.max" class="error-message">Le nombre doit être compris entre {{values.min}} et {{values.max}}</p>
+    <input v-model="tdd_nbr" type="number" :min="values.min" :max="values.max" placeholder="Entrer un nombre ici">
+    <div v-if="tdd_nbr >= values.min && tdd_nbr <= values.max">
       <div v-for="number in parseInt(tdd_nbr)" :key="parseInt(number)">
         <form @submit.prevent="">
           <ol>
@@ -31,23 +31,37 @@
               </div>
             </li>
           </ol>
+          <div v-for="item in rsd" :key="item">
+            <div class="col-25"><label :for="item"><b>{{item}}</b></label></div>
+            <div><select :id="item" v-model="to_complete[item]">
+              <option :value="values" v-for="values in array[item]" :key="values">{{values}}</option>
+            </select></div>
+          </div>
           <div>
-            <select v-model="select" multiple>
-              <option :value="_" v-for="(_, item) in array['filtration']" :key="item">{{item}}</option>
+            <label for="select" class="col-25">Choisir</label>
+            <select id="select" v-model="select" multiple>
+              <option :value="value" v-for="(value, item) in array['filtration']" :key="item">{{item}}</option>
             </select>
           </div>
           <ol>
             <li v-for="item in select" :key="item">
               <div class="col-25">{{item}}</div>
               <div class="col-75">
-                <input type="text" v-model="to_push[item]"> <!-- TODO: créer un bouton pour chaque input qui permettra de push l'input dans l'array | Créer un tableau qui aura tous les inputs de chaque élément. -->
-                <button class="hover-item" @click="AddElement(item, to_push[item])" :disabled="to_push[item].length < 1">Ajouter</button>
+                <div v-if="item === 'localisations'">
+                  <select v-model="to_complete[item]" multiple>
+                    <option :value="e" v-for="e in LOCALISATION" :key="e">{{e}}</option>
+                  </select>
+                </div>
+                <div v-else>
+                  <input type="text" v-model="to_push[item]">
+                  <button class="hover-item" @click="AddElement(item, to_push[item])" :disabled="to_push[item].length < 1">Ajouter</button>
+                </div>
               </div>
             </li>
           </ol>
         </form>
       </div>
-      <button class="hover-item" @click="SubmitForm" >Valider TDD</button>
+      <button class="hover-item" @click="SubmitForm" >Valider TraiteurConfig</button>
     </div>
   </div>
 </template>
@@ -58,26 +72,14 @@ export default {
   name: "TddForm",
   data() {
     return {
-      min: 1,
-      max: 15,
+      values: {min: 1, max: 15,},
       tdd_nbr: 1,
       tdd: [],
+      rsd : ['recuperation', 'specialite', 'direction'],
       select: [],
       ints: ['id', 'codeJournal', 'compte', 'ordre'],
-      bools: ['auxiliaireRestaurant', 'auxiliaireVide', 'auxilliaireCreditClient',
-        'compteAnalytique1TVA', 'matriculeRestaurant', 'modeER', 'taxe', 'transactionVI', 'zeroExclus'],
-      to_push: {
-        familles: '',
-        groupes: '',
-        sousfamilles: '',
-        numeros: '',
-        libelle: '',
-        tags: '',
-        documents: '',
-        localisations: '',
-        profits: '',
-        comptes: ''
-      },
+      bools: ['auxiliaireRestaurant', 'auxiliaireVide', 'auxilliaireCreditClient', 'compteAnalytique1TVA', 'matriculeRestaurant', 'modeER', 'taxe', 'transactionVI', 'zeroExclus'],
+      to_push: {familles: '', groupes: '', sousfamilles: '', numeros: '', libelle: '', tags: '', documents: '', localisations: '', profits: '', comptes: ''},
       array: {
         'filtration': {
           'FAMILLE': 'familles',
@@ -121,7 +123,6 @@ export default {
         "codeJournal": 0,
         "compte": 0,
         "comptes": [],
-        "direction": [],
         "documents": [],
         "familles": [],
         "filtration": [],
@@ -131,10 +132,11 @@ export default {
         "tvas": [],
         "numeros": [],
         "profits": [],
-        "recuperation": [],
         "sousfamilles": [],
-        "specialite": [],
         "tags": [],
+        "recuperation": '',
+        "specialite": '',
+        "direction": '',
         "type": "1",
         "libelle": "",
         "transaction": "VI",
@@ -148,6 +150,7 @@ export default {
         "auxiliaireRestaurant": false,
         "zeroExclus": false
       },
+      LOCALISATION : ['EAT_IN', 'TAKE_OUT', 'DRIVE_THROUGH', 'DELIVERY', 'PICKUP', 'KIOSK_EAT_IN', 'KIOSK_TAKE_OUT', 'SALLE', 'SALLE_EAT_IN', 'SALLE_TAKE_OUT', 'EXTERIEUR', 'PARKING'],
       FormTdd: {tdd:[]}
     }
   },
@@ -162,7 +165,7 @@ export default {
         this.to_push[index] = ''
       }
     }
-  }
+  },
 }
 </script>
 
