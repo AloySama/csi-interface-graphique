@@ -149,7 +149,10 @@ a {
     color: red;
 }
 
-
 #recuperation {
     margin-top: 50px;
+}
+
+#localisation {
+    height: 125px;
 }
