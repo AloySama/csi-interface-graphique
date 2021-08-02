@@ -44,6 +44,7 @@ header img {
     transition: .25s;
 }
 .hover-item:hover {
+    text-decoration: underline black;
     transform: translate(-3px, -5px);
 }
 .hover-item:disabled {

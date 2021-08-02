@@ -99,7 +99,6 @@ export default {
         'documents': [],
         'familles': [],
         'groupes': [],
-        'libelle': [],
         'libelles': [],
         'localisations': [],
         'tvas': [],
@@ -111,7 +110,7 @@ export default {
         'recuperation': ['QUANTITE', 'UNITAIRE', 'TOTAL', 'HT', 'TVA', 'SERVICE', 'REEL', 'THEORIQUE', 'DELTA', 'MONTANT0', 'MONTANT1', 'MONTANT2'],
         'specialite': ['ARTICLE', 'TVA', 'STATISTIQUE', 'OFFERT', 'TIROIR_PREFERMENT', 'REGLEMENT', 'TIROIR_REGLEMENT', 'RECU', 'DESACTIVE', 'TICKET', 'TIROIR_REMISE']
       },
-      string: ["auxiliaire", "compteAnalytique1", "compteAnalytique2", "compteAnalytique3", "tax_code", "transaction"],
+      string: ["auxiliaire", "compteAnalytique1", "compteAnalytique2", "compteAnalytique3", "tax_code", "transaction", 'libelle'],
       to_complete: {
         "auxiliaire": null,
         "compteAnalytique1": null,
@@ -137,8 +136,8 @@ export default {
         "recuperation": '',
         "specialite": '',
         "direction": '',
-        "type": "1",
-        "libelle": "",
+        "type": '1',
+        "libelle": '',
         "transaction": "VI",
         "taxe": false,
         "matriculeRestaurant": false,
@@ -160,7 +159,7 @@ export default {
       this.$emit('tdd_form', this.FormTdd);
     },
     AddElement(index, text) {
-      if (this.to_push[index].length !== 0) {
+      if (this.to_push[index].length > 0) {
         this.to_complete[index].push(text);
         this.to_push[index] = ''
       }
