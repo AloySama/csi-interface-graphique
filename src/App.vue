@@ -43,7 +43,7 @@
   <EtablissementForm :json-file="json" v-if="edit_eta" @edit_value="SetEta" @json_value="SetJson"></EtablissementForm>
   <RestaurantForm :json-file="json" v-if="edit_res" @edit_value="SetRes"/>
   <UploadFiles v-if="ChooseFile" @upload-json="SetJson"/>
-  <RemoveElements v-if="RemoveElement"></RemoveElements>
+  <RemoveElements v-if="RemoveElement" :json-file="json"></RemoveElements>
   <Footer @setting_value="SetSettings"></Footer>
 </template>
 

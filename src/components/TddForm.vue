@@ -41,7 +41,7 @@
             <li v-for="item in select" :key="item">
               <div class="col-25">{{item}}</div>
               <div class="col-75">
-                <div v-if="item === 'localisations'">
+                <div id="localisation" v-if="item === 'localisations'">
                   <select v-model="to_complete[item]" multiple>
                     <option :value="e" v-for="e in LOCALISATION" :key="e">{{e}}</option>
                   </select>
@@ -66,7 +66,7 @@ export default {
   name: "TddForm",
   data() {
     return {
-      values: {min: 1, max: 15,},
+      values: {min: 1, max: 15},
       tdd_nbr: 1,
       tdd: [],
       rsd : ['recuperation', 'specialite', 'direction'],
@@ -132,6 +132,7 @@ export default {
 </script>
 
 <style scoped>
+
 
 .place-icons {
   margin-top: 10px;
