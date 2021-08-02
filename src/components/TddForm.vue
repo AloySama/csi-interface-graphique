@@ -10,25 +10,19 @@
           <ol>
             <li v-for="item in ints" :key="item">
               <div :id="item"  class="col-25"><label>{{item}}</label></div>
-              <div class="col-75">
-                <input type="number" min="0" v-model.number="to_complete[item]">
-              </div>
+              <div class="col-75"><input type="number" min="0" v-model.number="to_complete[item]"></div>
             </li>
           </ol>
           <ol>
             <li v-for="item in string" :key="item">
               <div :id="item" class="col-25"><label>{{item}}</label></div>
-              <div class="col-75">
-                <input type="text" v-model="to_complete[item]">
-              </div>
+              <div class="col-75"><input type="text" v-model="to_complete[item]"></div>
             </li>
           </ol>
           <ol>
             <li v-for="item in bools" :key="item">
               <div class="col-25">{{item}}</div>
-              <div class="col-75">
-                <input class="place-icons" type="checkbox" v-model="to_complete[item]">
-              </div>
+              <div class="col-75"><input class="place-icons" type="checkbox" v-model="to_complete[item]"></div>
             </li>
           </ol>
           <div v-for="item in rsd" :key="item">
@@ -79,14 +73,14 @@ export default {
       select: [],
       ints: ['id', 'codeJournal', 'compte', 'ordre'],
       bools: ['auxiliaireRestaurant', 'auxiliaireVide', 'auxilliaireCreditClient', 'compteAnalytique1TVA', 'matriculeRestaurant', 'modeER', 'taxe', 'transactionVI', 'zeroExclus'],
-      to_push: {familles: '', groupes: '', sousfamilles: '', numeros: '', libelle: '', tags: '', documents: '', localisations: '', profits: '', comptes: ''},
+      to_push: {familles: '', groupes: '', sousfamilles: '', numeros: '', libelles: '', tags: '', documents: '', localisations: '', profits: '', comptes: ''},
       array: {
         'filtration': {
           'FAMILLE': 'familles',
           'GROUPE': 'groupes',
           'SOUSFAMILLE': 'sousfamilles',
           'NUMERO': 'numeros',
-          'LIBELLE': 'libelle',
+          'LIBELLE': 'libelles',
           'TAG_CONTAINS': 'tags',
           'TVAS': 'tvas',
           'DOCUMENT': 'documents',
@@ -111,45 +105,14 @@ export default {
         'specialite': ['ARTICLE', 'TVA', 'STATISTIQUE', 'OFFERT', 'TIROIR_PREFERMENT', 'REGLEMENT', 'TIROIR_REGLEMENT', 'RECU', 'DESACTIVE', 'TICKET', 'TIROIR_REMISE']
       },
       string: ["auxiliaire", "compteAnalytique1", "compteAnalytique2", "compteAnalytique3", "tax_code", "transaction", 'libelle'],
-      to_complete: {
-        "auxiliaire": null,
-        "compteAnalytique1": null,
-        "compteAnalytique2": null,
-        "compteAnalytique3": null,
-        "tax_code": null,
-        "id": 1,
-        "ordre": 0,
-        "codeJournal": 0,
-        "compte": 0,
-        "comptes": [],
-        "documents": [],
-        "familles": [],
-        "filtration": [],
-        "groupes": [],
-        "libelles": [],
-        "localisations": [],
-        "tvas": [],
-        "numeros": [],
-        "profits": [],
-        "sousfamilles": [],
-        "tags": [],
-        "recuperation": '',
-        "specialite": '',
-        "direction": '',
-        "type": '1',
-        "libelle": '',
-        "transaction": "VI",
-        "taxe": false,
-        "matriculeRestaurant": false,
-        "modeER": true,
-        "compteAnalytique1TVA": false,
-        "auxiliaireVide": false,
-        "auxilliaireCreditClient": false,
-        "transactionVI": false,
-        "auxiliaireRestaurant": false,
-        "zeroExclus": false
-      },
-      LOCALISATION : ['EAT_IN', 'TAKE_OUT', 'DRIVE_THROUGH', 'DELIVERY', 'PICKUP', 'KIOSK_EAT_IN', 'KIOSK_TAKE_OUT', 'SALLE', 'SALLE_EAT_IN', 'SALLE_TAKE_OUT', 'EXTERIEUR', 'PARKING'],
+      to_complete: {"auxiliaire": null, "compteAnalytique1": null, "compteAnalytique2": null, "compteAnalytique3": null,
+        "tax_code": null, "id": 1, "ordre": 0, "codeJournal": 0, "compte": 0, "comptes": [], "documents": [],
+        "familles": [], "filtration": [], "groupes": [], "libelles": [], "localisations": [], "tvas": [], "numeros": [],
+        "profits": [], "sousfamilles": [], "tags": [], "recuperation": '', "specialite": '', "direction": '', "type": '1',
+        "libelle": '', "transaction": "VI", "taxe": false, "matriculeRestaurant": false, "modeER": true,
+        "compteAnalytique1TVA": false, "auxiliaireVide": false, "auxilliaireCreditClient": false,
+        "transactionVI": false, "auxiliaireRestaurant": false, "zeroExclus": false},
+      LOCALISATION: ['EAT_IN', 'TAKE_OUT', 'DRIVE_THROUGH', 'DELIVERY', 'PICKUP', 'KIOSK_EAT_IN', 'KIOSK_TAKE_OUT', 'SALLE', 'SALLE_EAT_IN', 'SALLE_TAKE_OUT', 'EXTERIEUR', 'PARKING'],
       FormTdd: {tdd:[]}
     }
   },
@@ -164,7 +127,7 @@ export default {
         this.to_push[index] = ''
       }
     }
-  },
+  }
 }
 </script>
 
