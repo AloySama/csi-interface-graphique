@@ -40,14 +40,14 @@
             <li v-for="item in select" :key="item">
               <div class="col-25">{{item}}</div>
               <div class="col-75">
-                <input type="text" v-model="to_complete[item]"> <!-- TODO: créer un bouton pour chaque input qui permettra de push l'input dans l'array | Créer un tableau qui aura tous les inputs de chaque élément. -->
-                <button class="hover-item" @click="AddElement(item)">Push</button>
+                <input type="text" v-model="to_push[item]"> <!-- TODO: créer un bouton pour chaque input qui permettra de push l'input dans l'array | Créer un tableau qui aura tous les inputs de chaque élément. -->
+                <button class="hover-item" @click="AddElement(item, to_push[item])" :disabled="to_push[item].length < 1">Ajouter</button>
               </div>
             </li>
           </ol>
         </form>
       </div>
-      <button class="hover-item" @click="SubmitForm">Valider TDD</button>
+      <button class="hover-item" @click="SubmitForm" >Valider TDD</button>
     </div>
   </div>
 </template>
@@ -66,6 +66,18 @@ export default {
       ints: ['id', 'codeJournal', 'compte', 'ordre'],
       bools: ['auxiliaireRestaurant', 'auxiliaireVide', 'auxilliaireCreditClient',
         'compteAnalytique1TVA', 'matriculeRestaurant', 'modeER', 'taxe', 'transactionVI', 'zeroExclus'],
+      to_push: {
+        familles: '',
+        groupes: '',
+        sousfamilles: '',
+        numeros: '',
+        libelle: '',
+        tags: '',
+        documents: '',
+        localisations: '',
+        profits: '',
+        comptes: ''
+      },
       array: {
         'filtration': {
           'FAMILLE': 'familles',
@@ -144,8 +156,11 @@ export default {
       this.FormTdd.tdd = this.to_complete;
       this.$emit('tdd_form', this.FormTdd);
     },
-    AddElement(arr, text) {
-      this.to_complete[arr].push(text);
+    AddElement(index, text) {
+      if (this.to_push[index].length !== 0) {
+        this.to_complete[index].push(text);
+        this.to_push[index] = ''
+      }
     }
   }
 }
