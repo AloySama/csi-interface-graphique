@@ -2,12 +2,14 @@
   <button class="hover-item" @click="RemoveSociete = !RemoveSociete">Supprimez société</button>
   <button class="hover-item" @click="RemoveEtab = !RemoveEtab">Supprimez établissement</button>
   <button class="hover-item" @click="RemoveRest = !RemoveRest">Supprimez restaurant</button>
-  <ul v-if="RemoveSociete">
-    <li class="OneLine" v-for="(soc, index) in ParseSociete(json)" :key="index">
-      <button :id="'ButtonRem' + index" class="hover-item" @click="DisabledButton('ButtonRem', index, true); tab.societe = index">{{soc}}</button>
+  <div>
+    <ul v-if="RemoveSociete" >
+      <li class="OneLine" v-for="(soc, index) in ParseSociete(json)" :key="index">
+        <button :id="'ButtonRem' + index" class="hover-item" @click="DisabledButton('ButtonRem', index, true); tab.societe = index">{{soc}}</button>
+      </li>
       <button class="hover-item" @click="RemoveObjSociete(tab.societe)">Valider</button>
-    </li>
-  </ul>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -32,9 +34,9 @@ export default {
       DisabledButton: Restaurant.methods.DisabledButton
     }
   },
-  methods: { // todo: revoir ces méthodes
+  methods:{
     RemoveObjSociete(key) {
-      delete this.json[key];
+      this.json.splice(key, 1);
     }
   }
 }

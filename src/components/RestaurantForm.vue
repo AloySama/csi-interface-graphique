@@ -158,9 +158,6 @@ export default {
 </script>
 
 <style scoped>
-.OneLine {
-  display: inline;
-}
 ul {
   list-style-type: none;
   display: inline;
