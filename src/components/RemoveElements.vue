@@ -18,8 +18,10 @@
     </ul>
     <button class="hover-item" @click="RemoveObjEtab(tab.etab)">Valider</button>
   </div>
-  <div v-if="RemoveRest">
-
+  <div>
+    <ul v-if="RemoveRest && tab.societe !== -1 && tab.etab !== -1">
+      oui
+    </ul>
   </div>
 </template>
 
@@ -57,7 +59,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>
