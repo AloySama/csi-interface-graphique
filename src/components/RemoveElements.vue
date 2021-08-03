@@ -12,7 +12,7 @@
   </div>
   <div>
     <ul v-if="(RemoveEtab || RemoveRest) && tab.societe !== -1">
-      <li class="OneLine" v-for="(etab, index_eta) in ParseRestaurant(json, tab.societe)" :key="index_eta">
+      <li class="OneLine" v-for="(etab, index_eta) in ParseEtablissement(json, tab.societe)" :key="index_eta">
         <button class="hover-item" @click="tab.etab = index_eta">{{etab}}</button>
       </li>
     </ul>
@@ -20,13 +20,16 @@
   </div>
   <div>
     <ul v-if="RemoveRest && tab.societe !== -1 && tab.etab !== -1">
-      oui
+      <li class="OneLine" v-for="(rest, index) in ParseRestaurant(json, tab.societe, tab.etab)" :key="rest">
+        {{rest}} {{index}}
+      </li>
     </ul>
   </div>
 </template>
 
 <script>
 import ParseEtablissement from "@/functions/ParseEtablissement";
+import ParseRestaurant from "@/functions/ParseRestaurant";
 import ParseSociete from "../functions/ParseSociete";
 import Restaurant from "@/components/RestaurantForm";
 
@@ -46,7 +49,8 @@ export default {
       RemoveEtab: false,
       RemoveRest: false,
       DisabledButton: Restaurant.methods.DisabledButton,
-      ParseRestaurant: ParseEtablissement
+      ParseEtablissement,
+      ParseRestaurant
     }
   },
   methods:{

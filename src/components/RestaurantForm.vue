@@ -10,7 +10,7 @@
   </div>
   <div v-if="FillTab['societe'] >= 0"> <div class="white">Choisir l'établissement</div>
     <ul>
-      <li class="OneLine" v-for="(etab, index_eta) in ParseRestaurant(json, FillTab['societe'])" :key="index_eta">
+      <li class="OneLine" v-for="(etab, index_eta) in ParseEtablissement(json, FillTab['societe'])" :key="index_eta">
         <button class="hover-item" :id="'ButtonRes' + FillTab['societe'] + index_eta" @click="FillEtab(index_eta);">{{etab}}</button>
       </li>
     </ul>
@@ -72,7 +72,7 @@ export default {
   data() {
     return {
       ParseSociete,
-      ParseRestaurant: ParseEtablissement,
+      ParseEtablissement,
       Etablissement,
       App,
       json: this.jsonFile,

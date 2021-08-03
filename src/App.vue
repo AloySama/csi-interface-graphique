@@ -74,7 +74,7 @@ export default defineComponent({
       tab: {old: "", old_edit: ""},
       message: {
         'edit': 'Cliquer sur moi pour commencer à éditer le fichier.',
-        'retour': 'Sauvegarde et quitte l\'édition',
+        'retour': 'Quitte l\'édition',
         'parcours': 'Parcourir un fichier sur le pc.',
         'save': 'Enregistrer le fichier sur votre pc.',
         'remove': 'Supprimer un élément dans le fichier'
