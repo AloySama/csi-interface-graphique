@@ -1,9 +1,6 @@
-<!--  Dans la même logique que établissement : demander d'abord la société, puis l'établissement
-      et ensuite ajouter le formulaire -->
-
 <template>
  <div>
-   <div class="white"> Choisissez à quelle société vous voulez ajouter l'établissement.</div><br>
+   <div class="white"> Choisir société</div><br>
     <ul>
       <li class="OneLine" v-for="(soc, index_soc) in ParseSociete(json)" :key="index_soc">
         <button :id="'ButtonEta' + index_soc" class="hover-item" @click="DisabledButton('ButtonEta', index_soc, true); HasChanged(index_soc); FillSociete(index_soc)">{{soc}}</button>
@@ -11,7 +8,7 @@
       <button class="hover-item" @click="FillSociete(-1); App.methods.doEdit(false, false, 'AddRes'); $emit('edit_value', false)">Retour</button>
     </ul>
   </div>
-  <div v-if="FillTab['societe'] >= 0">
+  <div v-if="FillTab['societe'] >= 0"> <div class="white">Choisir l'établissement</div>
     <ul>
       <li class="OneLine" v-for="(etab, index_eta) in ParseRestaurant(json, FillTab['societe'])" :key="index_eta">
         <button class="hover-item" :id="'ButtonRes' + FillTab['societe'] + index_eta" @click="FillEtab(index_eta);">{{etab}}</button>
