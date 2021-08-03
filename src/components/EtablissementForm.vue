@@ -3,7 +3,7 @@
     <div class="white"> Choisissez à quelle société vous voulez ajouter l'établissement.<br></div>
     <ul>
       <li class="OneLine" v-for="(soc, index) in ParseSociete(json)" :key="index">
-        <button :id="'ButtonEta' + index" class="hover-item" @click="DisabledButton(index, true)">{{soc}}</button>
+        <button :id="'ButtonEta' + index" class="hover-item" @click="DisabledButton(index, true, 'ButtonEta')">{{soc}}</button>
       </li>
         <button class="hover-item" @click="FillSociete(-1); App.methods.doEdit(false, false, 'AddEta'); $emit('edit_value', false)">Retour</button>
     </ul>
@@ -87,12 +87,12 @@ export default {
     FillSociete(s) {
       this.societe = s;
     },
-    DisabledButton(i, bool) {
+    DisabledButton(i, bool, id) {
       this.FillSociete(i);
-      document.getElementById("ButtonEta" + i).disabled = bool;
+      document.getElementById(id + i).disabled = bool;
       for(let j = 0; j < ParseSociete(this.json).length; j++) {
           if (j === i) continue;
-          document.getElementById('ButtonEta' + j).disabled = false;
+          document.getElementById(id + j).disabled = false;
       }
     },
     IsSubmitted() {
@@ -118,10 +118,6 @@ export default {
 
 <style scoped>
 .OneLine {
-  display: inline;
-}
-ul {
-  list-style-type: none;
   display: inline;
 }
 </style>

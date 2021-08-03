@@ -1,10 +1,19 @@
 <template>
-  <button class="hover-item">Supprimez société</button>
-  <button class="hover-item">Supprimez établissement</button>
-  <button class="hover-item">Supprimez restaurant</button>
+  <button class="hover-item" @click="RemoveSociete = !RemoveSociete">Supprimez société</button>
+  <button class="hover-item" @click="RemoveEtab = !RemoveEtab">Supprimez établissement</button>
+  <button class="hover-item" @click="RemoveRest = !RemoveRest">Supprimez restaurant</button>
+  <ul v-if="RemoveSociete">
+    <li class="OneLine" v-for="(soc, index) in ParseSociete(json)" :key="index">
+      <button :id="'ButtonRem' + index" class="hover-item" @click="DisabledButton('ButtonRem', index, true); tab.societe = index">{{soc}}</button>
+      <button class="hover-item" @click="RemoveObjSociete(tab.societe)">Valider</button>
+    </li>
+  </ul>
 </template>
 
 <script>
+import ParseSociete from "../functions/ParseSociete";
+import Restaurant from "@/components/RestaurantForm";
+
 export default {
   props: {
     jsonFile: {
@@ -14,11 +23,17 @@ export default {
   name: "RemoveElements",
   data() {
     return {
-      json: this.jsonFile
+      tab: {societe: -1, etab: -1, rest: -1},
+      json: this.jsonFile,
+      ParseSociete,
+      RemoveSociete: false,
+      RemoveEtab: false,
+      RemoveRest: false,
+      DisabledButton: Restaurant.methods.DisabledButton
     }
   },
-  methods: {
-    RemoveObj(key) {
+  methods: { // todo: revoir ces méthodes
+    RemoveObjSociete(key) {
       delete this.json[key];
     }
   }

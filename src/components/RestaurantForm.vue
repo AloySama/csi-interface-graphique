@@ -115,7 +115,7 @@ export default {
     },
     DisabledButton(ElementId, i, bool) {
       document.getElementById(ElementId + i).disabled = bool;
-      for(let j = 0; j < this.CountSociete(); j++) {
+      for(let j = 0; j < this.json.length; j++) {
         if (j === i) continue;
         try {
           document.getElementById(ElementId + j).disabled = !bool;
@@ -128,9 +128,6 @@ export default {
     HasChanged(index) {
       if (!(this.FillTab['societe'] === index))
         this.FillTab['etablissement'] = -1;
-    },
-    CountSociete() {
-      return this.json.length
     },
     IsSubmitted() {
       const matricule = this.to_complete.matricule !==null?isIDCorrectRes(this.json, this.to_complete.matricule): FindIDRes(this.json, false, 0)

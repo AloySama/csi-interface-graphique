@@ -156,3 +156,8 @@ a {
 #localisation {
     height: 125px;
 }
+
+ul {
+    list-style-type: none;
+    display: inline;
+}

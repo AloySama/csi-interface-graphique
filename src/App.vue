@@ -35,13 +35,13 @@
     <button id="AddRes" class="hover-item" @click="edit_res = true;  DisabledButtons('AddRes', 'old', false)">Ajouter une restaurant</button>
     <button v-if="edit_societe || edit_eta || edit_res" class="hover-item" @click="
                                                                 UpdateButtons(null)
-                                                                doEdit(false, false, 'AddSoc');
-                                                                doEdit(false, false, 'AddRes');
-                                                                doEdit(false, false, 'AddEta');
+                                                                doEdit(true, false, 'AddSoc');
+                                                                doEdit(true, false, 'AddRes');
+                                                                doEdit(true, false, 'AddEta');
     doEdit(false, false, 'AddEta');">Retour</button></template>
-  <SocieteForm :json-file="json" v-if="edit_societe" @json_value="SetJson"/>
-  <EtablissementForm :json-file="json" v-if="edit_eta" @edit_value="SetEta" @json_value="SetJson"></EtablissementForm>
-  <RestaurantForm :json-file="json" v-if="edit_res" @edit_value="SetRes"/>
+  <SocieteForm :json-file="json" v-if="edit_societe && editing" @json_value="SetJson"/>
+  <EtablissementForm :json-file="json" v-if="edit_eta && editing" @edit_value="SetEta" @json_value="SetJson"></EtablissementForm>
+  <RestaurantForm :json-file="json" v-if="edit_res && editing" @edit_value="SetRes"/>
   <UploadFiles v-if="ChooseFile" @upload-json="SetJson"/>
   <RemoveElements v-if="RemoveElement" :json-file="json"></RemoveElements>
   <Footer @setting_value="SetSettings"></Footer>
