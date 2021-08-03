@@ -49,8 +49,6 @@
 
 <script lang="ts">
 import {defineComponent} from "vue";
-import ParseSociete from "@/functions/ParseSociete";
-import ParseRestaurant from "@/functions/ParseRestaurant";
 import SocieteForm from "@/components/SocieteForm.vue";
 import EtablissementForm from "@/components/EtablissementForm.vue";
 import UploadFiles from "@/components/UploadFiles.vue";
@@ -81,8 +79,7 @@ export default defineComponent({
         'save': 'Enregistrer le fichier sur votre pc.',
         'remove': 'Supprimer un élément dans le fichier'
       },
-      ParseSociete,
-      ParseRestaurant,
+
       download
     }
   },

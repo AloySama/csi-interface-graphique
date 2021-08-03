@@ -1,4 +1,4 @@
-export default function ParseRestaurant(json: any, societe: number) {
+export default function ParseEtablissement(json: any, societe: number) {
     const list = [];
     if (json.length === 0) return null;
 

@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import ParseRestaurant from "@/functions/ParseRestaurant";
+import ParseEtablissement from "@/functions/ParseEtablissement";
 import ParseSociete from "../functions/ParseSociete";
 import Restaurant from "@/components/RestaurantForm";
 
@@ -46,7 +46,7 @@ export default {
       RemoveEtab: false,
       RemoveRest: false,
       DisabledButton: Restaurant.methods.DisabledButton,
-      ParseRestaurant
+      ParseRestaurant: ParseEtablissement
     }
   },
   methods:{

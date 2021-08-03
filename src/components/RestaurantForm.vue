@@ -54,7 +54,7 @@
 import Etablissement from './EtablissementForm'
 import App from "@/App";
 import ParseSociete from "../functions/ParseSociete";
-import ParseRestaurant from "@/functions/ParseRestaurant";
+import ParseEtablissement from "@/functions/ParseEtablissement";
 import TddForm from "@/components/TddForm";
 import {EditRestaurant} from "@/functions/EditElements";
 import {FindIDRes, isIDCorrectRes} from "@/functions/CheckID";
@@ -72,7 +72,7 @@ export default {
   data() {
     return {
       ParseSociete,
-      ParseRestaurant,
+      ParseRestaurant: ParseEtablissement,
       Etablissement,
       App,
       json: this.jsonFile,
