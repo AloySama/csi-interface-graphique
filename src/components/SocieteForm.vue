@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <form @submit.prevent="HandleSubmit" >
+    <form @submit.prevent="" >
       <div class="row">
         <div class="col-25">
           <label>Code</label>
