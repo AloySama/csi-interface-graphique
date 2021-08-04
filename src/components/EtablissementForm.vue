@@ -25,7 +25,7 @@
         </div>
         <div class="col-75">
           <input type="checkbox" v-model="add_id">
-          <input v-if="add_id" placeholder="id" v-model.number="to_complete.id">
+          <input v-if="add_id" type="number" placeholder="id" v-model.number="to_complete.id" :min="0" :required="add_id">
         </div>
       </div>
       <div class="row">
@@ -37,7 +37,7 @@
         </div>
         <tdd-form v-if="add_tdd" @tdd_form="CompleteTDD"/>
       </div>
-      <input class="hover-item" type="submit" :disabled="!to_complete.code" @click="IsSubmitted">
+      <input class="hover-item" type="submit" :disabled="!to_complete.code || to_complete.id < 0" @click="IsSubmitted">
     </form>
   </div>
 </template>
@@ -97,11 +97,12 @@ export default {
     },
     IsSubmitted() {
       const new_array = {
-        id: this.to_complete.id!==null?isIDCorrect(this.json[this.societe].etablissements, this.to_complete.id):FindAnID(this.json[this.societe].etablissements),
+        id: this.to_complete.id!==null?this.to_complete.id<0?FindAnID(this.json[this.societe].etablissements):
+            (isIDCorrect(this.json[this.societe].etablissements, this.to_complete.id)):FindAnID(this.json[this.societe].etablissements),
         code: this.to_complete.code,
         traiteursConfigs: this.to_complete.traiteursConfigs,
-        restaurants: this.to_complete.restaurants};
-
+        restaurants: this.to_complete.restaurants
+      };
       this.json = EditEtab(this.json, new_array, this.societe);
       this.$emit('json_value', this.json);
       this.AllNull();
