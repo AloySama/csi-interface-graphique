@@ -108,7 +108,7 @@ export default {
       this.AllNull();
     },
     AllNull() {
-      this.to_complete.id = '';
+      this.to_complete.id = null;
       this.to_complete.code = null;
       this.to_complete.restaurants = [];
       this.to_complete.traiteursConfigs = [];
