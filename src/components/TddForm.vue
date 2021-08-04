@@ -143,6 +143,7 @@ export default {
     RemoveFormTdd() {
       if (this.tdd_nbr <= this.values.min) return;
       this.to_complete.pop();
+      this.to_push.pop();
       this.tdd_nbr--;
     }
   }
