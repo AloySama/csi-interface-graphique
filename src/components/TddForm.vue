@@ -170,7 +170,10 @@ export default {
       this.tdd_nbr++;
     },
     AddFormTdd2x() {
-      if (this.tdd_nbr + 2 > this.values.max) return;
+      if (this.tdd_nbr + 2 > this.values.max) {
+        this.AddFormTdd();
+        return;
+      }
       this.ToComplete();
       this.ToComplete();
       this.ToPush();
@@ -184,7 +187,10 @@ export default {
       this.tdd_nbr--;
     },
     RemoveFormTdd2x() {
-      if (this.tdd_nbr - 2 < this.values.min) return;
+      if (this.tdd_nbr - 2 < this.values.min) {
+        this.RemoveFormTdd();
+        return;
+      }
       this.to_complete.pop();
       this.to_complete.pop();
       this.to_push.pop();
