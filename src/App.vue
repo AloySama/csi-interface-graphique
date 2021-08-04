@@ -19,7 +19,7 @@
         <button id="retour" :title="message['retour']" class="hover-item" v-if="editing || ChooseFile || RemoveElement"
         @click="doEdit(true, false, 'edit');
         doEdit(false, false, 'parcourir');
-        doEdit(false, false, 'remove')
+        doEdit(false, false, 'remove');
         UpdateButtons(null)
         ChooseFile = false; RemoveElement = false">Retour</button>
       </div>
@@ -115,7 +115,7 @@ export default defineComponent({
     },
     doEdit(must_edit: boolean, editing: boolean, id: string) {
       if (must_edit) this.editing = editing;
-      if (this.json == null) return;
+      if (id !== 'parcourir') if (this.json == null) return;
       const d = document.getElementById(id);
       if (d == null) return;
       // @ts-ignore
