@@ -15,5 +15,3 @@ export default function ParseRestaurant(json: JSON, societe: number, etab: numbe
     }
     return list;
 }
-
-//TODO: revoir cette fonction

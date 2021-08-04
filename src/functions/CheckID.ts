@@ -35,7 +35,7 @@ export function isIDCorrect(json: Record<string, any>, id: number) {
     }
     return id;
 }
-//TODO: revoir cette fonction car problème d'id
+
 export function FindIDRes(json: Record<string, any>, bool: boolean, _id: number) {
     let id = 0;
     let True = true;

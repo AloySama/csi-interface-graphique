@@ -127,7 +127,8 @@ export default {
       if (!(this.FillTab['societe'] === index)) this.FillTab['etablissement'] = -1;
     },
     IsSubmitted() {
-      const matricule = this.to_complete.matricule !==null?isIDCorrectRes(this.json, this.to_complete.matricule):FindIDRes(this.json, false, 0)
+      const matricule = this.to_complete.matricule!==null?this.to_complete.matricule<0?FindIDRes(this.json, false, 0):
+          isIDCorrectRes(this.json, this.to_complete.matricule):FindIDRes(this.json, false, 0);
       const new_array = {
         matricule: matricule,
         auxiliaireCreditClient: this.setAuxiliaire('C950', matricule),

@@ -71,7 +71,7 @@ export default defineComponent({
       edit_eta: false,
       edit_societe: false,
       edit_res: false,
-      tab: {old: "", old_edit: ""},
+      tab: {old: "", old_edit: "", delete: ""},
       message: {
         'edit': 'Cliquer sur moi pour commencer à éditer le fichier.',
         'retour': 'Quitte l\'édition',
@@ -121,8 +121,8 @@ export default defineComponent({
       // @ts-ignore
       d.disabled = editing;
     },
-    DisabledButtons(str: string, tab_str: TabType, mainbutton: boolean) {
-      const current = str;
+    DisabledButtons(id: string, tab_str: TabType, mainbutton: boolean) {
+      const current = id;
       // @ts-ignore
       if (this.tab[tab_str].length === 0) {
         // @ts-ignore
@@ -135,16 +135,20 @@ export default defineComponent({
       }
       else {
         // @ts-ignore
-          const doc_old = document.getElementById(this.tab[tab_str]);
+        const doc_old = document.getElementById(this.tab[tab_str]);
         // @ts-ignore
           this.tab[tab_str] = current;
           const doc_current = document.getElementById(current);
-          if (doc_old == null || doc_current == null) {
+          if (doc_current == null) {
             console.error('Une erreur est survenue.')
             return;
           }
-        // @ts-ignore
-        doc_old.disabled = false; doc_current.disabled = true;
+          if (doc_old != null) {
+            // @ts-ignore
+            doc_old.disabled = false;
+          }
+          // @ts-ignore
+          doc_current.disabled = true;
           if (!mainbutton) this.UpdateButtons(current);
           else this.UpdateButtonsMain(current);
       }
