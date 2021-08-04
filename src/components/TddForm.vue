@@ -1,9 +1,7 @@
 <template>
   <div>
-    <strong>Nombre : automatique si non renseigné ou 0 en fonction de la case.
-      Sinon null, false ou tableau vide si non renseigné</strong><br>
+    <button class="hover-item" @click="AddFormTdd2x">×2</button><button class="hover-item" @click="AddFormTdd">+</button> <b>{{tdd_nbr}}</b><button class="hover-item" @click="RemoveFormTdd">-</button><button class="hover-item" @click="RemoveFormTdd2x">-×2</button>
     <p v-if="tdd_nbr < values.min || tdd_nbr > values.max" class="error-message">Le nombre doit être compris entre {{values.min}} et {{values.max}}</p>
-    <button class="hover-item" @click="AddFormTdd">+</button> <b>{{tdd_nbr}}</b><button class="hover-item" @click="RemoveFormTdd">-</button>
     <div v-if="tdd_nbr >= values.min && tdd_nbr <= values.max">
       <div v-for="(number, main_index) in parseInt(tdd_nbr)" :key="parseInt(number)">
         <form @submit.prevent="">
@@ -171,11 +169,27 @@ export default {
       this.ToPush();
       this.tdd_nbr++;
     },
+    AddFormTdd2x() {
+      if (this.tdd_nbr + 2 > this.values.max) return;
+      this.ToComplete();
+      this.ToComplete();
+      this.ToPush();
+      this.ToPush();
+      this.tdd_nbr += 2;
+    },
     RemoveFormTdd() {
       if (this.tdd_nbr <= this.values.min) return;
       this.to_complete.pop();
       this.to_push.pop();
       this.tdd_nbr--;
+    },
+    RemoveFormTdd2x() {
+      if (this.tdd_nbr - 2 < this.values.min) return;
+      this.to_complete.pop();
+      this.to_complete.pop();
+      this.to_push.pop();
+      this.to_push.pop();
+      this.tdd_nbr -= 2;
     }
   }
 }
