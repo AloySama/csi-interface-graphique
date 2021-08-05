@@ -7,19 +7,21 @@
         <h1>ARCOLE<br>export</h1>
       </div>
       <div class="order">
-        <button class="hover-item" @click="DownloadFile" :disabled="json == null" :title="message['save']">Enregistrer</button>
         <button id="edit" :title="message['edit']" class="hover-item"
-                @click="editing = true; DisabledButtons('edit', 'old_edit', true);"
-                :disabled="json == null">Éditer ficher ARCOLE</button>
+                @click="editing=true; DisabledButtons('edit', 'old_edit', true);"
+                :disabled="json==null">Éditer ficher ARCOLE</button>
+        <button id="modify" class="hover-item" :disabled="json==null" @click="Modify = true; DisabledButtons('modify', 'old_edit', true)">Modifier éléments</button>
+        <button class="hover-item" @click="DownloadFile" :disabled="json==null" :title="message['save']">Enregistrer</button>
         <button id="parcourir" :title="message['parcours']" class="hover-item"
-                @click="ChooseFile = true; DisabledButtons('parcourir', 'old_edit', true);">Charger un fichier</button>
+                @click="ChooseFile=true; DisabledButtons('parcourir', 'old_edit', true);">Charger un fichier</button>
         <button id="remove" :title="message['remove']" class="hover-item"
-                @click="RemoveElement = true; DisabledButtons('remove', 'old_edit', true)"
+                @click="RemoveElement=true; DisabledButtons('remove', 'old_edit', true)"
                 :disabled="json==null" >Supprimer éléments</button>
-        <button id="retour" :title="message['retour']" class="hover-item" v-if="editing || ChooseFile || RemoveElement"
+        <button id="retour" :title="message['retour']" class="hover-item" v-if="editing || ChooseFile || RemoveElement || Modify"
         @click="doEdit(true, false, 'edit');
         doEdit(false, false, 'parcourir');
         doEdit(false, false, 'remove');
+        doEdit(false, false, 'modify');
         UpdateButtons(null)
         ChooseFile = false; RemoveElement = false">Retour</button>
       </div>
@@ -39,6 +41,7 @@
                                                                 doEdit(true, false, 'AddRes');
                                                                 doEdit(true, false, 'AddEta');
     doEdit(false, false, 'AddEta');">Retour</button></template>
+  <modify-element v-if="Modify"></modify-element>
   <SocieteForm :json-file="json" v-if="edit_societe && editing" @json_value="SetJson"/>
   <EtablissementForm :json-file="json" v-if="edit_eta && editing" @edit_value="SetEta" @json_value="SetJson"></EtablissementForm>
   <RestaurantForm :json-file="json" v-if="edit_res && editing" @edit_value="SetRes"/>
@@ -57,16 +60,18 @@ import download from '@/functions/Savedata'
 import Footer from "@/components/footer.vue";
 import RemoveElements from "@/components/RemoveElements.vue";
 import TabType from "@/functions/TabType";
+import ModifyElement from "@/components/ModifyElement.vue";
 
 export default defineComponent({
   name: 'App',
-  components: {RemoveElements, Footer, RestaurantForm, UploadFiles, EtablissementForm, SocieteForm},
+  components: {ModifyElement, RemoveElements, Footer, RestaurantForm, UploadFiles, EtablissementForm, SocieteForm},
   data() {
     return {
       setting_tab: {},
       img: require('@/assets/images/csi.png'),
       json: null,
       RemoveElement: false,
+      Modify: false,
       ChooseFile: false,
       editing: false,
       edit_eta: false,
@@ -156,11 +161,13 @@ export default defineComponent({
       this.edit_eta = 'AddEta' === current;
       this.edit_res = 'AddRes' === current;
       this.edit_societe = 'AddSoc' === current;
+      this.Modify = 'modify' === current;
     },
     UpdateButtonsMain(current: string) {
       this.editing = 'edit' === current;
       this.ChooseFile = 'parcourir' === current;
       this.RemoveElement = 'remove' === current;
+      this.Modify = 'modify' === current;
     }
   }
 });
