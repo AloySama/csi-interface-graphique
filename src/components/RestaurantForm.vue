@@ -150,7 +150,6 @@ export default {
       this.to_complete.reference_config_compensation = null;
       this.to_complete.restaurantId = null;
     }
-
   }
 }
 </script>
