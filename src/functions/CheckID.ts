@@ -1,8 +1,7 @@
-import {vModelRadio} from "vue";
-
 export function checkID(json: Record<string, any>, id: number) {
-    for (const i in json) {
-        if (json[i].id === id) return true
+    // @ts-ignore
+    for (const i of json) {
+        if (i.id === id) return true
     }
     return false;
 }
@@ -24,8 +23,8 @@ export function Reinitialize(json: Record<string, any>) {
 }
 
 export function checkEtabID(json: Record<string, any>, societe: number ,id: number) {
-    for (const i in json[societe].etablissements) {
-        if (json[societe].etablissements[i].id === id) return true
+    for (const i of json[societe].etablissements) {
+        if (i.id === id) return true
     }
     return false;
 }
@@ -66,6 +65,10 @@ export function isIDCorrectRes(json: Record<string, any>, id: number) {
     return id;
 }
 
-export function FindIDTraiteurConfig() {
-    return 0
+export function FindIDTC(json: JSON, societe: number, etab: number, rest: number, id: number) {
+    // @ts-ignore
+    for (const check of json[societe].etablissements[etab].restaurants[rest].traiteursConfigs) {
+        if (check.id === id) return true;
+    }
+    return false;
 }

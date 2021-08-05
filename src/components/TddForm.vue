@@ -25,14 +25,14 @@
           </ol>
           <div v-for="item in rsd" :key="item">
             <div :id="item" class="col-25 addLeft"></div>
-            <div><select v-model="to_complete[item]">
+            <div><select class="select-css" v-model="to_complete[item]">
               <option :value="values" v-for="values in array[item]" :key="values">{{values}}</option>
             </select></div>
             <label :for="item"><b>{{item}}</b></label>
           </div>
           <div>
             <label for="select" class="col-25">Choisir</label>
-            <select id="select" v-model="select" multiple>
+            <select class="select-css" id="select" v-model="select" multiple>
               <option :value="value" v-for="(value, item) in array['filtration']" :key="item">{{item}}</option>
             </select>
           </div>
@@ -41,7 +41,7 @@
               <div class="col-25">{{item}}</div>
               <div class="col-75">
                 <div id="localisation" v-if="item === 'localisations'">
-                  <select v-model="to_complete[main_index][item]" multiple>
+                  <select class="select-css" v-model="to_complete[main_index][item]" multiple>
                     <option :value="e" v-for="e in LOCALISATION" :key="e">{{e}}</option>
                   </select>
                 </div>
@@ -202,7 +202,6 @@ export default {
 </script>
 
 <style scoped>
-
 .place-icons {
   margin-top: 10px;
   float: left;
@@ -223,4 +222,5 @@ b {
 #zeroExclus {
   margin-bottom: 20px;
 }
+
 </style>

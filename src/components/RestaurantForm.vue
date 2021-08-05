@@ -57,7 +57,7 @@ import ParseSociete from "../functions/ParseSociete";
 import ParseEtablissement from "@/functions/ParseEtablissement";
 import TddForm from "@/components/TddForm";
 import {EditRestaurant} from "@/functions/EditElements";
-import {FindIDRes, isIDCorrectRes} from "@/functions/CheckID";
+import {FindIDRes, isIDCorrectRes, FindIDTC} from "@/functions/CheckID";
 
 export default {
   name: "RestaurantForm",
