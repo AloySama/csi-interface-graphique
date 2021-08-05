@@ -5,7 +5,7 @@
       <li class="OneLine" v-for="(soc, index_soc) in ParseSociete(json)" :key="index_soc">
         <button :id="'ButtonEta' + index_soc" class="hover-item" @click="disabledButton('ButtonEta', index_soc, true); hasChanged(index_soc); fillSociete(index_soc)">{{soc}}</button>
       </li>
-      <button class="hover-item" @click="fillSociete(-1); App.methods.doEdit(false, false, 'AddRes'); $emit('edit_value', false)">Retour</button>
+      <button class="hover-item" @click="fillSociete(-1); App.methods.doEdit( false, ['AddRes']); $emit('edit_value', false)">Retour</button>
     </ul>
   </div>
   <div v-if="FillTab['societe'] >= 0"> <div class="white">Choisir l'établissement</div>
@@ -32,8 +32,8 @@
         <label>Matricule personnalisé ?</label>
         </div>
         <div class="col-75">
-          <input v-model="AddMatricule" type="checkbox">
-          <input v-if="AddMatricule" type="number" min="0" v-model.number="to_complete.matricule" required>
+          <input v-model="bool.AddMatricule" type="checkbox">
+          <input v-if="bool.AddMatricule" type="number" min="0" v-model.number="to_complete.matricule" required>
         </div>
       </div>
       <div class="row">
@@ -41,9 +41,9 @@
           <label>Ajouter Traiteur Configs ?</label>
         </div>
         <div class="col-75">
-          <input v-model="AddTdd" type="checkbox">
+          <input v-model="bool.AddTdd" type="checkbox">
         </div>
-        <tdd-form v-if="AddTdd" v-model="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
+        <tdd-form v-if="bool.AddTdd" v-model="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
       </div>
     </form>
     <input class="hover-item" type="submit" @click="isSubmitted" :disabled="!to_complete.etab_code">
@@ -77,9 +77,10 @@ export default {
       App,
       json: this.jsonFile,
       FillTab: {'societe': -1, 'etablissement': -1},
-      AddMatricule: false,
-      AddId: false,
-      AddTdd: false,
+      bool : {
+        AddMatricule: false,
+        AddTdd: false
+      },
       old: null,
       to_complete: {
         "code_societe": '',
@@ -99,18 +100,15 @@ export default {
       }
     },
     setAuxiliaire(prefix, IDRes) {
-      if (IDRes < 10)
-        return prefix + '00' + IDRes;
-      else if (IDRes < 100)
-        return  prefix + '0' + IDRes;
-      return prefix + IDRes;
+      if (IDRes < 10) return (prefix + '0' + IDRes);
+      else if (IDRes < 100) return  (prefix + '0' + IDRes);
+      return (prefix + IDRes);
     },
     fillSociete(societe) {
       this.FillTab['societe'] = societe;
     },
     fillEtab(etablissement) {
       this.FillTab['etablissement'] = etablissement;
-      console.log(this.FillTab);
     },
     disabledButton(ElementId, i, bool) {
       document.getElementById(ElementId + i).disabled = bool;

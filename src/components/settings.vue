@@ -20,7 +20,7 @@
     <input class="hover-item" type="submit" @click="$emit('settings_value', settings)">
     <div class="row">
       <div class="col-25">
-        <label>Stringify</label>
+        <label>Stringify (≈ ×2 plus lourd si coché)</label>
       </div>
       <div class="col-75">
         <input type="checkbox" v-model="settings.stringify">

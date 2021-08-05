@@ -8,49 +8,46 @@
       </div>
       <div class="order">
         <button id="edit" :title="message['edit']" class="hover-item"
-                @click="editing=true; disabledButtons('edit', 'old_edit', true);"
+                @click="bool.editing=true; disabledButtons('edit', 'old_edit', true);"
                 :disabled="json==null">Éditer ficher ARCOLE</button>
-        <button id="modify" class="hover-item" :disabled="json==null" @click="Modify = true; disabledButtons('modify', 'old_edit', true)">Modifier éléments</button>
+        <button id="modify" class="hover-item" :title="message['modify']" :disabled="json==null" @click="bool.Modify = true; disabledButtons('modify', 'old_edit', true)">Modifier éléments</button>
         <button class="hover-item" @click="DownloadFile" :disabled="json==null" :title="message['save']">Enregistrer</button>
         <button id="parcourir" :title="message['parcours']" class="hover-item"
-                @click="ChooseFile=true; disabledButtons('parcourir', 'old_edit', true);">Charger un fichier</button>
+                @click="bool.ChooseFile=true; disabledButtons('parcourir', 'old_edit', true);">Charger un fichier</button>
         <button id="remove" :title="message['remove']" class="hover-item"
-                @click="RemoveElement=true; disabledButtons('remove', 'old_edit', true)"
+                @click="bool.RemoveElement=true; disabledButtons('remove', 'old_edit', true)"
                 :disabled="json==null" >Supprimer éléments</button>
-        <button id="retour" :title="message['retour']" class="hover-item" v-if="editing || ChooseFile || RemoveElement || Modify"
-        @click="doEdit(true, false, 'edit');
-        doEdit(false, false, 'parcourir');
-        doEdit(false, false, 'remove');
-        doEdit(false, false, 'modify');
+        <button id="retour" :title="message['retour']" class="hover-item" v-if="bool.editing || bool.ChooseFile || bool.RemoveElement || bool.Modify"
+        @click="
+        doEdit(false, ['edit', 'parcourir', 'remove', 'modify']);
         updateButtons(null)
-        ChooseFile = false; RemoveElement = false">Retour</button>
+        bool.ChooseFile = false; bool.RemoveElement = false">Retour</button>
       </div>
     </header>
   </div>
-  <template v-if="editing">
+  <template v-if="bool.editing">
     <button id="AddSoc" class="hover-item"
-            @click="edit_societe = true; disabledButtons('AddSoc', 'old', false)
+            @click="bool.edit_societe = true; disabledButtons('AddSoc', 'old', false)
             ">Ajouter une société</button>
     <button id="AddEta" class="hover-item"
-            @click="edit_eta = true; disabledButtons('AddEta', 'old', false)
+            @click="bool.edit_eta = true; disabledButtons('AddEta', 'old', false)
             ">Ajouter un établissement</button>
-    <button id="AddRes" class="hover-item" @click="edit_res = true;  disabledButtons('AddRes', 'old', false)">Ajouter une restaurant</button>
-    <button v-if="edit_societe || edit_eta || edit_res" class="hover-item" @click="
+    <button id="AddRes" class="hover-item" @click="bool.edit_res = true;  disabledButtons('AddRes', 'old', false)">Ajouter une restaurant</button>
+    <button v-if="bool.edit_societe || bool.edit_eta || bool.edit_res" class="hover-item" @click="
                                                                 updateButtons(null)
-                                                                doEdit(true, false, 'AddSoc');
-                                                                doEdit(true, false, 'AddRes');
-                                                                doEdit(true, false, 'AddEta');
-    doEdit(false, false, 'AddEta');">Retour</button></template>
-  <modify-element v-if="Modify"></modify-element>
-  <SocieteForm :json-file="json" v-if="edit_societe && editing" @json_value="SetJson"/>
-  <EtablissementForm :json-file="json" v-if="edit_eta && editing" @edit_value="SetEta" @json_value="SetJson"></EtablissementForm>
-  <RestaurantForm :json-file="json" v-if="edit_res && editing" @edit_value="SetRes"/>
-  <UploadFiles v-if="ChooseFile" @upload-json="SetJson"/>
-  <RemoveElements v-if="RemoveElement" :json-file="json"></RemoveElements>
+                                                                doEdit( false, ['AddSoc', 'AddRes', 'AddEta']);"
+    >Retour</button></template>
+  <modify-element v-if="bool.Modify"></modify-element>
+  <SocieteForm :json-file="json" v-if="bool.edit_societe && bool.editing" @json_value="SetJson"/>
+  <EtablissementForm :json-file="json" v-if="bool.edit_eta && bool.editing" @edit_value="SetEta" @json_value="SetJson"></EtablissementForm>
+  <RestaurantForm :json-file="json" v-if="bool.edit_res && bool.editing" @edit_value="SetRes"/>
+  <UploadFiles v-if="bool.ChooseFile" @upload-json="SetJson"/>
+  <RemoveElements v-if="bool.RemoveElement" :json-file="json"></RemoveElements>
   <Footer @setting_value="SetSettings"></Footer>
 </template>
 
 <script lang="ts">
+/* eslint-disable */
 import {defineComponent} from "vue";
 import SocieteForm from "@/components/SocieteForm.vue";
 import EtablissementForm from "@/components/EtablissementForm.vue";
@@ -70,20 +67,23 @@ export default defineComponent({
       setting_tab: {},
       img: require('@/assets/images/csi.png'),
       json: null,
-      RemoveElement: false,
-      Modify: false,
-      ChooseFile: false,
-      editing: false,
-      edit_eta: false,
-      edit_societe: false,
-      edit_res: false, // TODO: revoir ça aussi (peut être tout mettre directement dans un tableau)
+      bool: {
+        RemoveElement: false,
+        Modify: false,
+        ChooseFile: false,
+        editing: false,
+        edit_eta: false,
+        edit_societe: false,
+        edit_res: false,
+      },
       tab: {old: "", old_edit: "", delete: ""},
       message: {
-        'edit': 'Cliquer sur moi pour commencer à éditer le fichier.',
+        'edit': 'Cliquer sur moi pour commencer à éditer le fichier',
         'retour': 'Quitte l\'édition',
-        'parcours': 'Parcourir un fichier sur le pc.',
-        'save': 'Enregistrer le fichier sur votre pc.',
-        'remove': 'Supprimer un élément dans le fichier'
+        'parcours': 'Parcourir un fichier sur le pc',
+        'save': 'Enregistrer le fichier sur votre pc',
+        'remove': 'Supprimer un élément dans le fichier',
+        'modify': 'Modifier des éléments déjà présent'
       },
       download
     }
@@ -96,12 +96,13 @@ export default defineComponent({
       download(this.json, 'arcole.json', this.setting_tab)
     },
     SetEta(value: boolean) {
-      this.doEdit(false, value, 'AddEta');
-      this.edit_eta = value;
+
+      this.doEdit(value, ['AddEta']);
+      this.bool.edit_eta = value;
     },
     SetRes(value: boolean) {
-      this.doEdit(false, value, 'AddRes');
-      this.edit_res = value;
+      this.doEdit(value, ['AddRes']);
+      this.bool.edit_res = value;
     },
     SetJson(json: string) {
       if (json != null) {
@@ -117,30 +118,26 @@ export default defineComponent({
       }
       else alert("Le json est null !");
     },
-    doEdit(must_edit: boolean, editing: boolean, id: string) { //TODO: revoir cette fonction
-      if (must_edit) this.editing = editing;
-      if (id !== 'parcourir') if (this.json == null) return;
-      const d = document.getElementById(id);
-      if (d == null) return;
-      // @ts-ignore
-      d.disabled = editing;
+    doEdit(editing: boolean, ids: string[]) {
+      for (const id of ids) {
+        if (id !== 'parcourir') if (this.json == null) continue;
+        const d = document.getElementById(id);
+        if (d == null) continue;
+        // @ts-ignore
+        d.disabled = editing;
+      }
     },
     disabledButtons(id: string, tab_str: TabType, mainbutton: boolean) {
       const current = id;
-      // @ts-ignore
       if (this.tab[tab_str].length === 0) {
-        // @ts-ignore
           this.tab[tab_str] = current;
-        // @ts-ignore
           const doc = document.getElementById(this.tab[tab_str]);
           if (doc == null) return;
           // @ts-ignore
           doc.disabled = true;
       }
       else {
-        // @ts-ignore
         const doc_old = document.getElementById(this.tab[tab_str]);
-        // @ts-ignore
         this.tab[tab_str] = current;
         const doc_current = document.getElementById(current);
         if (doc_current == null) {
@@ -158,16 +155,16 @@ export default defineComponent({
       }
     },
     updateButtons(current: string) {
-      this.edit_eta = 'AddEta' === current;
-      this.edit_res = 'AddRes' === current;
-      this.edit_societe = 'AddSoc' === current;
-      this.Modify = 'modify' === current;
+      this.bool.edit_eta = 'AddEta' === current;
+      this.bool.edit_res = 'AddRes' === current;
+      this.bool.edit_societe = 'AddSoc' === current;
+      this.bool.Modify = 'modify' === current;
     },
     UpdateButtonsMain(current: string) {
-      this.editing = 'edit' === current;
-      this.ChooseFile = 'parcourir' === current;
-      this.RemoveElement = 'remove' === current;
-      this.Modify = 'modify' === current;
+      this.bool.editing = 'edit' === current;
+      this.bool.ChooseFile = 'parcourir' === current;
+      this.bool.RemoveElement = 'remove' === current;
+      this.bool.Modify = 'modify' === current;
     }
   }
 });

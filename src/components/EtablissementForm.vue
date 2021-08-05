@@ -5,7 +5,7 @@
       <li class="OneLine" v-for="(soc, index) in ParseSociete(json)" :key="index">
         <button :id="'ButtonEta' + index" class="hover-item" @click="disabledButton(index, true, 'ButtonEta')">{{soc}}</button>
       </li>
-        <button class="hover-item" @click="fillSociete(-1); App.methods.doEdit(false, false, 'AddEta'); $emit('edit_value', false)">Retour</button>
+        <button class="hover-item" @click="fillSociete(-1); App.methods.doEdit(false, ['AddEta']); $emit('edit_value', false)">Retour</button>
     </ul>
   </div>
   <div v-if="societe >= 0" class="container">
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import ParseSociete from "../functions/ParseSociete";
 import App from '../App'
 import TddForm from "@/components/TddForm";
