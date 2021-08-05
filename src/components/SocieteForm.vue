@@ -85,15 +85,6 @@ export default {
     }
   },
   methods: {
-    HandleSubmit() {
-      const IsValidForm = this.CodeIsValid;
-      if (IsValidForm) {
-        console.log('Formulaire soumit')
-      }
-      else {
-        console.log('Formulaire invalide')
-      }
-    },
     isSubmitted() {
       const new_array = { id: this.to_complete.id!==null?isIDCorrect(this.json, this.to_complete.id):FindAnID(this.json), code: this.to_complete.code,
         traiteursConfigs: this.to_complete.traiteursConfigs, etablissements: this.to_complete.etablissements};
@@ -109,7 +100,7 @@ export default {
       this.to_complete.traiteursConfigs = [];
     },
     CompleteTDD(tdd) {
-      this.to_complete.traiteursConfigs = tdd['tdd'];
+      this.to_complete.traiteursConfigs = tdd;
     }
   }
 }

@@ -1,3 +1,5 @@
+import {vModelRadio} from "vue";
+
 export function checkID(json: Record<string, any>, id: number) {
     for (const i in json) {
         if (json[i].id === id) return true
@@ -62,4 +64,8 @@ export function isIDCorrectRes(json: Record<string, any>, id: number) {
         return FindIDRes(json, false, 0)
     }
     return id;
+}
+
+export function FindIDTraiteurConfig() {
+    return 0
 }

@@ -112,7 +112,7 @@ export default {
   methods: {
     SubmitForm() {
       this.FormTdd.tdd = this.to_complete;
-      this.$emit('tdd_form', this.FormTdd);
+      this.$emit('tdd_form', this.FormTdd.tdd);
     },
     AddElement(main_index, index ,text) {
       if (this.to_push[main_index][index].length > 0) {

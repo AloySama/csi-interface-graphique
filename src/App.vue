@@ -59,6 +59,7 @@ import RemoveElements from "@/components/RemoveElements.vue";
 import TabType from "@/functions/TabType";
 
 export default defineComponent({
+  name: 'App',
   components: {RemoveElements, Footer, RestaurantForm, UploadFiles, EtablissementForm, SocieteForm},
   data() {
     return {
@@ -83,7 +84,6 @@ export default defineComponent({
       download
     }
   },
-  name: 'App',
   methods: {
     SetSettings(setting: []) {
       this.setting_tab = setting
@@ -166,25 +166,3 @@ export default defineComponent({
   }
 });
 </script>
-
-<style>
-#myBtn {
-  display: none;
-  position: fixed;
-  bottom: 20px;
-  right: 30px;
-  z-index: 99;
-  font-size: 18px;
-  border: none;
-  outline: none;
-  background-color: red;
-  color: white;
-  cursor: pointer;
-  padding: 15px;
-  border-radius: 4px;
-}
-
-#myBtn:hover {
-  background-color: #555;
-}
-</style>
