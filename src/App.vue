@@ -80,7 +80,6 @@ export default defineComponent({
         'save': 'Enregistrer le fichier sur votre pc.',
         'remove': 'Supprimer un élément dans le fichier'
       },
-
       download
     }
   },
@@ -89,7 +88,6 @@ export default defineComponent({
       this.setting_tab = setting
     },
     DownloadFile() {
-      console.log(this.setting_tab)
       download(this.json, 'arcole.json', this.setting_tab)
     },
     SetEta(value: boolean) {

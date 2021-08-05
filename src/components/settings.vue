@@ -18,11 +18,13 @@
       </div>
     </div>
     <input class="hover-item" type="submit" @click="$emit('settings_value', settings)">
-    <div>
-      <label>Stringify</label>
-    </div>
-    <div>
-      <input type="checkbox" v-model="settings.stringify">
+    <div class="row">
+      <div class="col-25">
+        <label>Stringify</label>
+      </div>
+      <div class="col-75">
+        <input type="checkbox" v-model="settings.stringify">
+      </div>
     </div>
   </form>
   </div>
