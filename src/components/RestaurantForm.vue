@@ -3,15 +3,15 @@
    <div class="white"> Choisir société</div><br>
     <ul>
       <li class="OneLine" v-for="(soc, index_soc) in ParseSociete(json)" :key="index_soc">
-        <button :id="'ButtonEta' + index_soc" class="hover-item" @click="DisabledButton('ButtonEta', index_soc, true); HasChanged(index_soc); FillSociete(index_soc)">{{soc}}</button>
+        <button :id="'ButtonEta' + index_soc" class="hover-item" @click="disabledButton('ButtonEta', index_soc, true); hasChanged(index_soc); fillSociete(index_soc)">{{soc}}</button>
       </li>
-      <button class="hover-item" @click="FillSociete(-1); App.methods.doEdit(false, false, 'AddRes'); $emit('edit_value', false)">Retour</button>
+      <button class="hover-item" @click="fillSociete(-1); App.methods.doEdit(false, false, 'AddRes'); $emit('edit_value', false)">Retour</button>
     </ul>
   </div>
   <div v-if="FillTab['societe'] >= 0"> <div class="white">Choisir l'établissement</div>
     <ul>
       <li class="OneLine" v-for="(etab, index_eta) in ParseEtablissement(json, FillTab['societe'])" :key="index_eta">
-        <button class="hover-item" :id="'ButtonRes' + FillTab['societe'] + index_eta" @click="FillEtab(index_eta);">{{etab}}</button>
+        <button class="hover-item" :id="'ButtonRes' + FillTab['societe'] + index_eta" @click="fillEtab(index_eta);">{{etab}}</button>
       </li>
     </ul>
   </div>
@@ -46,7 +46,7 @@
         <tdd-form v-if="AddTdd" v-model="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
       </div>
     </form>
-    <input class="hover-item" type="submit" @click="IsSubmitted" :disabled="!to_complete.etab_code">
+    <input class="hover-item" type="submit" @click="isSubmitted" :disabled="!to_complete.etab_code">
   </div>
 </template>
 
@@ -57,7 +57,7 @@ import ParseSociete from "../functions/ParseSociete";
 import ParseEtablissement from "@/functions/ParseEtablissement";
 import TddForm from "@/components/TddForm";
 import {EditRestaurant} from "@/functions/EditElements";
-import {FindIDRes, isIDCorrectRes, FindIDTC} from "@/functions/CheckID";
+import {FindIDRes, isIDCorrectRes} from "@/functions/CheckID";
 
 export default {
   name: "RestaurantForm",
@@ -105,14 +105,14 @@ export default {
         return  prefix + '0' + IDRes;
       return prefix + IDRes;
     },
-    FillSociete(societe) {
+    fillSociete(societe) {
       this.FillTab['societe'] = societe;
     },
-    FillEtab(etablissement) {
+    fillEtab(etablissement) {
       this.FillTab['etablissement'] = etablissement;
       console.log(this.FillTab);
     },
-    DisabledButton(ElementId, i, bool) {
+    disabledButton(ElementId, i, bool) {
       document.getElementById(ElementId + i).disabled = bool;
       for(let j = 0; j < this.json.length; j++) {
         if (j === i) continue;
@@ -125,10 +125,10 @@ export default {
         }
       }
     },
-    HasChanged(index) {
+    hasChanged(index) {
       if (!(this.FillTab['societe'] === index)) this.FillTab['etablissement'] = -1;
     },
-    IsSubmitted() {
+    isSubmitted() {
       const matricule = this.to_complete.matricule!==null?this.to_complete.matricule<0?FindIDRes(this.json, false, 0):
           isIDCorrectRes(this.json, this.to_complete.matricule):FindIDRes(this.json, false, 0);
       const new_array = {

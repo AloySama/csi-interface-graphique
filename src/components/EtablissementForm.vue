@@ -3,9 +3,9 @@
     <div class="white"> Choisissez à quelle société vous voulez ajouter l'établissement.<br></div>
     <ul>
       <li class="OneLine" v-for="(soc, index) in ParseSociete(json)" :key="index">
-        <button :id="'ButtonEta' + index" class="hover-item" @click="DisabledButton(index, true, 'ButtonEta')">{{soc}}</button>
+        <button :id="'ButtonEta' + index" class="hover-item" @click="disabledButton(index, true, 'ButtonEta')">{{soc}}</button>
       </li>
-        <button class="hover-item" @click="FillSociete(-1); App.methods.doEdit(false, false, 'AddEta'); $emit('edit_value', false)">Retour</button>
+        <button class="hover-item" @click="fillSociete(-1); App.methods.doEdit(false, false, 'AddEta'); $emit('edit_value', false)">Retour</button>
     </ul>
   </div>
   <div v-if="societe >= 0" class="container">
@@ -86,11 +86,11 @@ export default {
         this.to_complete.traiteursConfigs.push(t);
       }
     },
-    FillSociete(s) {
+    fillSociete(s) {
       this.societe = s;
     },
-    DisabledButton(i, bool, id) {
-      this.FillSociete(i);
+    disabledButton(i, bool, id) {
+      this.fillSociete(i);
       document.getElementById(id + i).disabled = bool;
       for(let j = 0; j < ParseSociete(this.json).length; j++) {
           if (j === i) continue;

@@ -47,7 +47,7 @@
                 </div>
                 <div v-else>
                   <input type="text" v-model="to_push[main_index][item]">
-                  <button class="hover-item" @click="AddElement(main_index, item, to_push[main_index][item])" :disabled="to_push[main_index][item].length < 1">Ajouter</button>
+                  <button class="hover-item" @click="addElement(main_index, item, to_push[main_index][item])" :disabled="to_push[main_index][item].length < 1">Ajouter</button>
                 </div>
               </div>
             </li>
@@ -114,7 +114,7 @@ export default {
       this.FormTdd.tdd = this.to_complete;
       this.$emit('tdd_form', this.FormTdd.tdd);
     },
-    AddElement(main_index, index ,text) {
+    addElement(main_index, index , text) {
       if (this.to_push[main_index][index].length > 0) {
         this.to_complete[main_index][index].push(text);
         this.to_push[main_index][index] = ''

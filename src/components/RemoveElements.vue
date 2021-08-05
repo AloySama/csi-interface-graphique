@@ -50,8 +50,8 @@ export default {
       RemoveEtab: false,
       RemoveRest: false,
       tab: {delete: ""},
-      DisabledButton: App.methods.DisabledButtons,
-      UpdateButtons: App.methods.UpdateButtons,
+      DisabledButton: App.methods.disabledButtons,
+      updateButtons: App.methods.updateButtons,
       ParseEtablissement,
       ParseRestaurant
     }
