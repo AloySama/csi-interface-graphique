@@ -39,8 +39,8 @@ export default {
   },
   methods: {
     SetSettings(setting) {
-      this.$emit('setting_value', setting);
-      this.settings_ = false;
+      this.$emit('setting_value', setting)
+      setTimeout(() => this.settings_ = false, 0)
     },
     OnClickButton() {
       this.settings_ = !this.settings_

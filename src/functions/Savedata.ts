@@ -13,7 +13,6 @@ export default function download(jsonData: any, filename: string, settings: Reco
     if (!settings['stringify']) space = 0
     // @ts-ignore
     const blob = new Blob([JSON.stringify(jsonData, undefined, space)], { type: 'text/plain;charset=utf-8;' })
-    console.log(settings['name'])
     if (navigator.msSaveBlob) {
         navigator.msSaveBlob(blob, filename)
     }
