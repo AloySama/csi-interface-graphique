@@ -9,7 +9,8 @@ export default function download(jsonData: any, filename: string, settings: Reco
             filename = settings['name'];
         }
     }
-    else space = 2
+    else space = 2;
+    if (!settings['stringify']) space = 0
     // @ts-ignore
     const blob = new Blob([JSON.stringify(jsonData, undefined, space)], { type: 'text/plain;charset=utf-8;' })
     console.log(settings['name'])

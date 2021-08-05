@@ -89,6 +89,7 @@ export default defineComponent({
       this.setting_tab = setting
     },
     DownloadFile() {
+      console.log(this.setting_tab)
       download(this.json, 'arcole.json', this.setting_tab)
     },
     SetEta(value: boolean) {

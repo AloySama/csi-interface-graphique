@@ -18,6 +18,12 @@
       </div>
     </div>
     <input class="hover-item" type="submit" @click="$emit('settings_value', settings)">
+    <div>
+      <label>Stringify</label>
+    </div>
+    <div>
+      <input type="checkbox" v-model="settings.stringify">
+    </div>
   </form>
   </div>
 </template>
@@ -30,7 +36,8 @@ export default {
     return {
       settings: {
         name: 'arcole.json',
-        space: 2
+        space: 2,
+        stringify: true
       }
     }
   }
