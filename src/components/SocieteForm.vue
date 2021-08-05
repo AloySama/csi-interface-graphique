@@ -100,7 +100,9 @@ export default {
       this.to_complete.traiteursConfigs = [];
     },
     CompleteTDD(tdd) {
-      this.to_complete.traiteursConfigs = tdd;
+      for (const t of tdd) {
+        this.to_complete.traiteursConfigs.push(t);
+      }
     }
   }
 }

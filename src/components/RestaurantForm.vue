@@ -97,7 +97,6 @@ export default {
       for (const t of tdd) {
         this.to_complete.traiteursConfigs.push(t);
       }
-      //this.to_complete.traiteursConfigs.push(tdd);
     },
     setAuxiliaire(prefix, IDRes) {
       if (IDRes < 10)
