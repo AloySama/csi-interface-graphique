@@ -25,7 +25,7 @@
           </ol>
           <div v-for="item in rsd" :key="item">
             <div :id="item" class="col-25 addLeft"></div>
-            <div><select class="select-css" v-model="to_complete[item]">
+            <div><select class="select-css" v-model="to_complete[main_index][item]">
               <option :value="values" v-for="values in array[item]" :key="values">{{values}}</option>
             </select></div>
             <label :for="item"><b>{{item}}</b></label>
