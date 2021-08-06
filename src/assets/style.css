@@ -48,7 +48,7 @@ header img {
     transform: translate(-3px, -5px);
 }
 .hover-item:disabled {
-    border: 1px solid #999999;
+    border: solid #999999;
     background-color: #cccccc;
     color: #666666;
     cursor: default;

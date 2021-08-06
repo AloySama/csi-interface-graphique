@@ -43,8 +43,8 @@
             <li v-for="item in select" :key="item">
               <div class="col-25">{{item}}</div>
               <div class="col-75">
-                <div id="localisation" v-if="item === 'localisations'">
-                  <select class="select-css" v-model="to_complete[main_index][item]" multiple>
+                <div  v-if="item === 'localisations'">
+                  <select id="localisation" class="select-css" v-model="to_complete[main_index][item]" multiple>
                     <option :value="e" v-for="e in LOCALISATION" :key="e">{{e}}</option>
                   </select>
                 </div>
@@ -229,8 +229,13 @@ b {
 
 #libelleinput {
   margin-right: 50em;
-}#recuperationinput {
+}
+#recuperationinput {
   margin-left: 30px;
- }
+}
+#localisation {
+  width: auto;
+  margin-right: 50px;
+}
 
 </style>
