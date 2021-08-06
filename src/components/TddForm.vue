@@ -14,9 +14,17 @@
           <ol>
             <li v-for="item in string" :key="item" >
               <div :id="item" class="col-25"><label>{{item}}</label></div>
-              <div class="col-75"><input type="text" v-model="to_complete[main_index][item]" checked></div>
+              <div :id="item + 'input'" class="col-75"><input type="text" v-model="to_complete[main_index][item]" checked></div>
             </li>
           </ol>
+            <ol>
+              <li v-for="item in rsd" :key="item">
+                <select :id="item+'input'" class="select-css" v-model="to_complete[main_index][item]">
+                  <option :value="values" v-for="values in array[item]" :key="values">{{values}}</option>
+                </select>
+                <label :for="item"><b>{{item}}</b></label>
+              </li>
+            </ol>
           <div class="container0 place-icons">
             <ul class="ks-cboxtags">
               <li v-for="item in bools" :key="item">
@@ -25,15 +33,8 @@
               </li>
             </ul>
           </div>
-          <div v-for="item in rsd" :key="item">
-            <div :id="item" class="col-25 addLeft"></div>
-            <div><select class="select-css" v-model="to_complete[main_index][item]">
-              <option :value="values" v-for="values in array[item]" :key="values">{{values}}</option>
-            </select></div>
-            <label :for="item"><b>{{item}}</b></label>
-          </div>
+
           <div>
-            <label for="select" class="col-25">Choisir</label>
             <select class="select-css" id="select" v-model="select" multiple>
               <option :value="value" v-for="(value, item) in array['filtration']" :key="item">{{item}}</option>
             </select>
@@ -57,6 +58,7 @@
         </form>
       </div>
       <button class="hover-item" @click="SubmitForm" >Valider TraiteurConfig</button>
+      <p class="error-message"><u>Cliquer sur 'valider TraiteurConfig' ou les données ne seront pas sauvegardé dans la société.</u></p>
     </div>
   </div>
 </template>
@@ -225,81 +227,10 @@ b {
   margin-bottom: 20px;
 }
 
-
-ul.ks-cboxtags {
-  list-style: none;
-  padding: 20px;
-}
-ul.ks-cboxtags li{
-  display: inline;
-}
-ul.ks-cboxtags li label{
-  display: inline-block;
-  background-color: rgba(255, 255, 255, .9);
-  border: 2px solid rgba(139, 139, 139, .3);
-  color: #adadad;
-  border-radius: 25px;
-  white-space: nowrap;
-  margin: 3px 0;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  transition: all .2s;
-}
-
-ul.ks-cboxtags li label {
-  margin: 5px;
-  padding: 8px 12px;
-  cursor: pointer;
-}
-
-ul.ks-cboxtags li label::before {
-  display: inline-block;
-  font-style: normal;
-  font-variant: normal;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  font-weight: 900;
-  font-size: 12px;
-  padding: 2px 6px 2px 2px;
-  content: "✘";
-  color: darkred;
-  transition: transform .3s ease-in-out;
-}
-
-ul.ks-cboxtags li input[type="checkbox"]:checked + label::before {
-  content: "✔";
-  color: darkgreen;
-  transform: rotate(-360deg);
-  transition: transform .3s ease-in-out;
-}
-
-ul.ks-cboxtags li input[type="checkbox"]:checked + label {
-  border: 2px solid #1bdbf8;
-  background-color: #12bbd4;
-  color: #fff;
-  transition: all .2s;
-}
-
-
-ul.ks-cboxtags li input[type="checkbox"] {
-  position: absolute;
-  opacity: 0;
-}
-ul.ks-cboxtags li input[type="checkbox"]:focus + label {
-  border: 2px solid #e9a1ff;
-}
-
-
-.container0 {
-  margin-top: 50px;
-  width: 100%;
-  position: relative;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 13px;
-}
+#libelleinput {
+  margin-right: 50em;
+}#recuperationinput {
+  margin-left: 30px;
+ }
 
 </style>

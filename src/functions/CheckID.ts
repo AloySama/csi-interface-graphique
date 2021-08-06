@@ -65,10 +65,11 @@ export function isIDCorrectRes(json: Record<string, any>, id: number) {
     return id;
 }
 
-export function FindIDTC(json: JSON, societe: number, etab: number, rest: number, id: number) {
-    // @ts-ignore
-    for (const check of json[societe].etablissements[etab].restaurants[rest].traiteursConfigs) {
-        if (check.id === id) return true;
-    }
-    return false;
+export function FindIDTC(TraiteurConfig: []) {
+    return 0
+}
+
+export function checkIDTC(TraiteurConfig: []) {
+    // vérifier simplement dans le TraiteurConfig si 2 fois le même id apparaît
+    return 0
 }
