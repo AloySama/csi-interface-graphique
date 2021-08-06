@@ -12,17 +12,19 @@
             </li>
           </ol>
           <ol>
-            <li v-for="item in string" :key="item">
+            <li v-for="item in string" :key="item" >
               <div :id="item" class="col-25"><label>{{item}}</label></div>
-              <div class="col-75"><input type="text" v-model="to_complete[main_index][item]"></div>
+              <div class="col-75"><input type="text" v-model="to_complete[main_index][item]" checked></div>
             </li>
           </ol>
-          <ol>
-            <li v-for="item in bools" :key="item">
-              <div :id="item" class="col-25">{{item}}</div>
-              <div class="col-75"><input class="place-icons" type="checkbox" v-model="to_complete[main_index][item]"></div>
-            </li>
-          </ol>
+          <div class="container0 place-icons">
+            <ul class="ks-cboxtags">
+              <li v-for="item in bools" :key="item">
+                <input :id="item" type="checkbox" v-model="to_complete[main_index][item]">
+                <label :for="item" >{{item}}</label>
+              </li>
+            </ul>
+          </div>
           <div v-for="item in rsd" :key="item">
             <div :id="item" class="col-25 addLeft"></div>
             <div><select class="select-css" v-model="to_complete[main_index][item]">
@@ -221,6 +223,83 @@ b {
 
 #zeroExclus {
   margin-bottom: 20px;
+}
+
+
+ul.ks-cboxtags {
+  list-style: none;
+  padding: 20px;
+}
+ul.ks-cboxtags li{
+  display: inline;
+}
+ul.ks-cboxtags li label{
+  display: inline-block;
+  background-color: rgba(255, 255, 255, .9);
+  border: 2px solid rgba(139, 139, 139, .3);
+  color: #adadad;
+  border-radius: 25px;
+  white-space: nowrap;
+  margin: 3px 0;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: all .2s;
+}
+
+ul.ks-cboxtags li label {
+  margin: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+ul.ks-cboxtags li label::before {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 900;
+  font-size: 12px;
+  padding: 2px 6px 2px 2px;
+  content: "✘";
+  color: darkred;
+  transition: transform .3s ease-in-out;
+}
+
+ul.ks-cboxtags li input[type="checkbox"]:checked + label::before {
+  content: "✔";
+  color: darkgreen;
+  transform: rotate(-360deg);
+  transition: transform .3s ease-in-out;
+}
+
+ul.ks-cboxtags li input[type="checkbox"]:checked + label {
+  border: 2px solid #1bdbf8;
+  background-color: #12bbd4;
+  color: #fff;
+  transition: all .2s;
+}
+
+
+ul.ks-cboxtags li input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+}
+ul.ks-cboxtags li input[type="checkbox"]:focus + label {
+  border: 2px solid #e9a1ff;
+}
+
+
+.container0 {
+  margin-top: 50px;
+  width: 100%;
+  position: relative;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 13px;
 }
 
 </style>
