@@ -37,7 +37,7 @@
                                                                 updateButtons(null)
                                                                 doEdit( false, ['AddSoc', 'AddRes', 'AddEta']);"
     >Retour</button></template>
-  <modify-element v-if="bool.Modify"></modify-element>
+  <modify-element :json-file="json" v-if="bool.Modify"></modify-element>
   <SocieteForm :json-file="json" v-if="bool.edit_societe && bool.editing" @json_value="SetJson"/>
   <EtablissementForm :json-file="json" v-if="bool.edit_eta && bool.editing" @edit_value="SetEta" @json_value="SetJson"></EtablissementForm>
   <RestaurantForm :json-file="json" v-if="bool.edit_res && bool.editing" @edit_value="SetRes"/>
