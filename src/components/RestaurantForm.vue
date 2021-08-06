@@ -43,7 +43,7 @@
         <div class="col-75">
           <input v-model="bool.AddTdd" type="checkbox">
         </div>
-        <tdd-form v-if="bool.AddTdd" v-model="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
+        <tdd-form v-if="bool.AddTdd" v-model="to_complete.traiteursConfigs" @tdd_form="completeTDD"/>
       </div>
     </form>
     <input class="hover-item" type="submit" @click="isSubmitted" :disabled="!to_complete.etab_code">
@@ -57,7 +57,7 @@ import ParseSociete from "../functions/ParseSociete";
 import ParseEtablissement from "@/functions/ParseEtablissement";
 import TddForm from "@/components/TddForm";
 import {EditRestaurant} from "@/functions/EditElements";
-import {FindIDRes, isIDCorrectRes} from "@/functions/CheckID";
+import {FindIDRes, checkIDTC, isIDCorrectRes} from "@/functions/CheckID";
 
 export default {
   name: "RestaurantForm",
@@ -94,7 +94,7 @@ export default {
     }
   },
   methods: {
-    CompleteTDD(tdd) {
+    completeTDD(tdd) {
       for (const t of tdd) {
         this.to_complete.traiteursConfigs.push(t);
       }
@@ -124,7 +124,7 @@ export default {
       }
     },
     hasChanged(index) {
-      if (!(this.FillTab['societe'] === index)) this.FillTab['etablissement'] = -1;
+      if ((this.FillTab['societe'] !== index)) this.FillTab['etablissement'] = -1;
     },
     isSubmitted() {
       const matricule = this.to_complete.matricule!==null?this.to_complete.matricule<0?FindIDRes(this.json, false, 0):
@@ -139,8 +139,9 @@ export default {
         etab_code: this.to_complete.etab_code,
         reference_config_compensation: this.to_complete.reference_config_compensation,
       };
+      alert(checkIDTC(new_array.traiteursConfigs))
       this.json = EditRestaurant(this.json, new_array, this.FillTab);
-      this.AllNull()
+      this.AllNull();
     },
     AllNull() {
       this.to_complete.code_societe = '';
@@ -149,6 +150,7 @@ export default {
       this.to_complete.etab_code = ''
       this.to_complete.reference_config_compensation = null;
       this.to_complete.restaurantId = null;
+      this.to_complete.traiteursConfigs = [];
     }
   }
 }
@@ -160,3 +162,10 @@ ul {
   display: inline;
 }
 </style>
+
+<!--
+for (const t of new_array.traiteursConfigs) {
+        //checkIDTC(t);
+        console.log(typeof t, new_array.traiteursConfigs)
+      }
+-->

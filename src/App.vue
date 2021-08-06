@@ -12,7 +12,7 @@
                 :disabled="json==null">Éditer ficher ARCOLE</button>
         <button id="modify" class="hover-item" :title="message['modify']" :disabled="json==null" @click="bool.Modify = true; disabledButtons('modify', 'old_edit', true)">Modifier éléments</button>
         <button class="hover-item" @click="DownloadFile" :disabled="json==null" :title="message['save']">Enregistrer</button>
-        <button id="parcourir" :title="message['parcours']" class="hover-item"
+        <button autofocus id="parcourir" :title="message['parcours']" class="hover-item"
                 @click="bool.ChooseFile=true; disabledButtons('parcourir', 'old_edit', true);">Charger un fichier</button>
         <button id="remove" :title="message['remove']" class="hover-item"
                 @click="bool.RemoveElement=true; disabledButtons('remove', 'old_edit', true)"
