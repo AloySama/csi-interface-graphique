@@ -4,7 +4,7 @@
     <p v-if="tdd_nbr < values.min || tdd_nbr > values.max" class="error-message">Le nombre doit être compris entre {{values.min}} et {{values.max}}</p>
     <div v-if="tdd_nbr >= values.min && tdd_nbr <= values.max">
       <div v-for="(number, main_index) in parseInt(tdd_nbr)" :key="parseInt(number)">
-        <form @submit.prevent="">
+        <form @submit.prevent="" class="top">
           <ol>
             <li v-for="item in ints" :key="item">
               <div :id="item + main_index"  :class="{'col-25': true, red: item==='id'}"><label>{{item}}</label></div>
@@ -17,12 +17,6 @@
               <div :id="item + 'input'" :class="{'col-75': true, 'libelleinput-even': select.length%2===0&&item==='libelle', 'libelleinput-odd': select.length%2===1&&item==='libelle'}"><input type="text" v-model="to_complete[main_index][item]"></div>
             </li>
           </ol>
-          <div>
-              <select id="recuperation" v-model="to_complete[main_index]['recuperation']" class="select-css top">
-                <option v-for="v in array['recuperation']" :key="v">{{v}}</option>
-              </select>
-              <label for="recuperation"><b>recuperation</b></label>
-          </div>
             <ol>
               <li v-for="item in rsd" :key="item">
                 <select :id="item+'input'" class="select-css top" v-model="to_complete[main_index][item]">
@@ -77,7 +71,7 @@ export default {
       values: {min: 1, max: 30},
       tdd_nbr: 0,
       tdd: [],
-      rsd : ['specialite', 'direction'],
+      rsd : ['recuperation','specialite', 'direction'],
       select: [],
       ints: ['id', 'codeJournal', 'compte', 'ordre'],
       bools: ['auxiliaireRestaurant', 'auxiliaireVide', 'auxilliaireCreditClient', 'compteAnalytique1TVA', 'matriculeRestaurant', 'modeER', 'taxe', 'transactionVI', 'zeroExclus'],
@@ -171,7 +165,7 @@ export default {
       })
     },
     ToPush() {
-      this.to_push.push({familles: '', groupes: '', sousfamilles: '', numeros: '', libelles: '', tags: '', documents: '', localisations: '', profits: '', comptes: ''});
+      this.to_push.push({familles: '', groupes: '', sousfamilles: '', numeros: '', libelles: '', tags: '', documents: '', localisations: '', profits: '', comptes: '', tvas: ''});
     },
     AddFormTdd() {
       if (this.tdd_nbr >= this.values.max) return;
