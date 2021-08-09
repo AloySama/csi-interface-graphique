@@ -23,8 +23,8 @@
           <label>Code Restaurant</label>
         </div>
         <div class="col-75">
-          <input type="text" required v-model="to_complete.etab_code">
-          <p class="error-message" v-if="!to_complete.etab_code"> Le code de la société est requit</p>
+          <input type="text" required v-model="to_complete[to_complete.length-1].etab_code">
+          <p class="error-message" v-if="!to_complete[to_complete.length-1].etab_code"> Le code de la société est requit</p>
         </div>
       </div>
       <div class="row">
@@ -33,7 +33,7 @@
         </div>
         <div class="col-75">
           <input v-model="bool.AddMatricule" type="checkbox">
-          <input v-if="bool.AddMatricule" type="number" min="0" v-model.number="to_complete.matricule" required>
+          <input v-if="bool.AddMatricule" type="number" min="0" v-model.number="to_complete[to_complete.length-1].matricule" required>
         </div>
       </div>
       <div class="row">
@@ -43,10 +43,10 @@
         <div class="col-75">
           <input v-model="bool.AddTdd" type="checkbox">
         </div>
-        <tdd-form v-if="bool.AddTdd" v-model="to_complete.traiteursConfigs" @tdd_form="completeTDD"/>
+        <tdd-form v-if="bool.AddTdd" @tdd_form="completeTDD"/>
       </div>
     </form>
-    <input class="hover-item" type="submit" @click="isSubmitted" :disabled="!to_complete.etab_code">
+    <input class="hover-item" type="submit" @click="isSubmitted" :disabled="!to_complete[to_complete.length-1].etab_code">
   </div>
 </template>
 
@@ -57,7 +57,7 @@ import ParseSociete from "../functions/ParseSociete";
 import ParseEtablissement from "@/functions/ParseEtablissement";
 import TddForm from "@/components/TddForm";
 import {EditRestaurant} from "@/functions/EditElements";
-import {FindIDRes, checkIDTC, isIDCorrectRes} from "@/functions/CheckID";
+import {FindIDRes, checkIDTC, isIDCorrectRes, FindIDTC} from "@/functions/CheckID";
 
 export default {
   name: "RestaurantForm",
@@ -77,31 +77,44 @@ export default {
       App,
       json: this.jsonFile,
       FillTab: {'societe': -1, 'etablissement': -1},
-      bool : {
+      bool: {
         AddMatricule: false,
         AddTdd: false
       },
       old: null,
-      to_complete: {
-        "code_societe": '',
-        "compteAuxiliaire": '',
-        "etab_code": '',
-        "reference_config_compensation": 0,
-        "matricule": null,
-        "restaurantId": null,
-        "traiteursConfigs": []
-      }
+      to_complete: [{
+        code_societe: '',
+        compteAuxiliaire: '',
+        etab_code: '',
+        reference_config_compensation: 0,
+        auxiliaireCreditClient: '',
+        matricule: null,
+        restaurantId: null,
+        traiteursConfigs: []
+      }]
     }
   },
   methods: {
+    addToComplete() {
+      this.to_complete.push({
+        code_societe: '',
+        compteAuxiliaire: '',
+        etab_code: '',
+        reference_config_compensation: 0,
+        auxiliaireCreditClient: '',
+        matricule: null,
+        restaurantId: null,
+        traiteursConfigs: []
+      })
+    },
     completeTDD(tdd) {
       for (const t of tdd) {
-        this.to_complete.traiteursConfigs.push(t);
+        this.to_complete[this.to_complete.length-1].traiteursConfigs.push(t);
       }
     },
     setAuxiliaire(prefix, IDRes) {
       if (IDRes < 10) return (prefix + '0' + IDRes);
-      else if (IDRes < 100) return  (prefix + '0' + IDRes);
+      else if (IDRes < 100) return (prefix + '0' + IDRes);
       return (prefix + IDRes);
     },
     fillSociete(societe) {
@@ -112,12 +125,11 @@ export default {
     },
     disabledButton(ElementId, i, bool) {
       document.getElementById(ElementId + i).disabled = bool;
-      for(let j = 0; j < this.json.length; j++) {
+      for (let j = 0; j < this.json.length; j++) {
         if (j === i) continue;
         try {
           document.getElementById(ElementId + j).disabled = !bool;
-        }
-        catch (e) {
+        } catch (e) {
           console.log(e);
           return;
         }
@@ -127,30 +139,17 @@ export default {
       if ((this.FillTab['societe'] !== index)) this.FillTab['etablissement'] = -1;
     },
     isSubmitted() {
-      const matricule = this.to_complete.matricule!==null?this.to_complete.matricule<0?FindIDRes(this.json, false, 0):
-          isIDCorrectRes(this.json, this.to_complete.matricule):FindIDRes(this.json, false, 0);
-      const new_array = {
-        matricule: matricule,
-        auxiliaireCreditClient: this.setAuxiliaire('C950', matricule),
-        restaurantId: matricule,
-        traiteursConfigs: this.to_complete.traiteursConfigs,
-        code_societe: this.to_complete.code_societe,
-        compteAuxiliaire: this.setAuxiliaire('REST', matricule),
-        etab_code: this.to_complete.etab_code,
-        reference_config_compensation: this.to_complete.reference_config_compensation,
-      };
-      alert(checkIDTC(new_array.traiteursConfigs))
-      this.json = EditRestaurant(this.json, new_array, this.FillTab);
-      this.AllNull();
-    },
-    AllNull() {
-      this.to_complete.code_societe = '';
-      this.to_complete.matricule = null;
-      this.to_complete.compteAuxiliaire = '';
-      this.to_complete.etab_code = ''
-      this.to_complete.reference_config_compensation = null;
-      this.to_complete.restaurantId = null;
-      this.to_complete.traiteursConfigs = [];
+      const length = this.to_complete.length-1;
+      const matricule = this.to_complete[length].matricule!==null?this.to_complete[length].matricule<0?FindIDRes(this.json, false, 0):
+          isIDCorrectRes(this.json, this.to_complete[length].matricule):FindIDRes(this.json, false, 0);
+      this.to_complete[length].matricule = matricule;
+      this.to_complete[length].restaurantId = matricule;
+      this.to_complete[length].compteAuxiliaire = this.setAuxiliaire('REST', matricule);
+      this.to_complete[length].auxiliaireCreditClient = this.setAuxiliaire('C950', matricule);
+      this.to_complete[length].traiteursConfigs = checkIDTC(this.to_complete[length].traiteursConfigs)?FindIDTC(this.to_complete[length].traiteursConfigs):this.to_complete[length].traiteursConfigs;
+      this.json = EditRestaurant(this.json, this.to_complete[length], this.FillTab);
+      this.bool.AddTdd = false;
+      this.addToComplete();
     }
   }
 }
@@ -162,10 +161,3 @@ ul {
   display: inline;
 }
 </style>
-
-<!--
-for (const t of new_array.traiteursConfigs) {
-        //checkIDTC(t);
-        console.log(typeof t, new_array.traiteursConfigs)
-      }
--->

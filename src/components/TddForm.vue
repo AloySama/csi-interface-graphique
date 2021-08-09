@@ -14,7 +14,7 @@
           <ol>
             <li v-for="item in string" :key="item" >
               <div :id="item" class="col-25"><label>{{item}}</label></div>
-              <div :id="item + 'input'" class="col-75"><input type="text" v-model="to_complete[main_index][item]" checked></div>
+              <div :id="item + 'input'" class="col-75"><input type="text" v-model="to_complete[main_index][item]"></div>
             </li>
           </ol>
             <ol>
@@ -28,8 +28,8 @@
           <div class="container0 place-icons">
             <ul class="ks-cboxtags">
               <li v-for="item in bools" :key="item">
-                <input :id="item" type="checkbox" v-model="to_complete[main_index][item]">
-                <label :for="item" >{{item}}</label>
+                <input :id="item + main_index" type="checkbox" v-model="to_complete[main_index][item]">
+                <label :for="item + main_index" >{{item}}</label>
               </li>
             </ul>
           </div>
@@ -117,6 +117,7 @@ export default {
     SubmitForm() {
       this.FormTdd.tdd = this.to_complete;
       this.$emit('tdd_form', this.FormTdd.tdd);
+      this.FormTdd.tdd = [];
     },
     addElement(main_index, index , text) {
       if (this.to_push[main_index][index].length > 0) {
@@ -217,10 +218,6 @@ ol {
 
 b {
   margin-left: 5px;
-}
-
-.addLeft {
-  margin-left: 950px;
 }
 
 #zeroExclus {

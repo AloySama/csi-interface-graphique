@@ -66,10 +66,24 @@ export function isIDCorrectRes(json: Record<string, any>, id: number) {
 }
 
 export function FindIDTC(TraiteurConfig: []) {
-    return 0
+    for (let i = 0; i < TraiteurConfig.length; i++) {
+        // @ts-ignore
+        TraiteurConfig[i].id = i;
+    }
+    return TraiteurConfig;
 }
 
 export function checkIDTC(TraiteurConfig: []) {
-    // vérifier simplement dans le TraiteurConfig si 2 fois le même id apparaît
-    return 0
+    const list: any[] = [];
+    for (const t of TraiteurConfig) {
+        // @ts-ignore
+        if (list.includes(t.id)) {
+            return true;
+        }
+        else {
+            // @ts-ignore
+            list.push(t.id)
+        }
+    }
+    return false;
 }
