@@ -7,19 +7,25 @@
         <form @submit.prevent="">
           <ol>
             <li v-for="item in ints" :key="item">
-              <div :id="item + main_index"  class="col-25"><label>{{item}}</label></div>
+              <div :id="item + main_index"  :class="{'col-25': true, red: item==='id'}"><label>{{item}}</label></div>
               <div class="col-75"><input type="number" min="0" v-model.number="to_complete[main_index][item]"></div>
             </li>
           </ol>
           <ol>
             <li v-for="item in string" :key="item" >
-              <div :id="item" class="col-25"><label>{{item}}</label></div>
-              <div :id="item + 'input'" class="col-75"><input type="text" v-model="to_complete[main_index][item]"></div>
+              <div :id="item" :class="{'col-25': true, 'libellelabel-even': select.length%2===0&&item==='libelle', 'libellelabel-odd': select.length%2===1&&item==='libelle'}"><label>{{item}}</label></div>
+              <div :id="item + 'input'" :class="{'col-75': true, 'libelleinput-even': select.length%2===0&&item==='libelle', 'libelleinput-odd': select.length%2===1&&item==='libelle'}"><input type="text" v-model="to_complete[main_index][item]"></div>
             </li>
           </ol>
+          <div>
+              <select id="recuperation" v-model="to_complete[main_index]['recuperation']" class="select-css top">
+                <option v-for="v in array['recuperation']" :key="v">{{v}}</option>
+              </select>
+              <label for="recuperation"><b>recuperation</b></label>
+          </div>
             <ol>
               <li v-for="item in rsd" :key="item">
-                <select :id="item+'input'" class="select-css" v-model="to_complete[main_index][item]">
+                <select :id="item+'input'" class="select-css top" v-model="to_complete[main_index][item]">
                   <option :value="values" v-for="values in array[item]" :key="values">{{values}}</option>
                 </select>
                 <label :for="item"><b>{{item}}</b></label>
@@ -33,7 +39,6 @@
               </li>
             </ul>
           </div>
-
           <div>
             <select class="select-css" id="select" v-model="select" multiple>
               <option :value="value" v-for="(value, item) in array['filtration']" :key="item">{{item}}</option>
@@ -72,7 +77,7 @@ export default {
       values: {min: 1, max: 30},
       tdd_nbr: 0,
       tdd: [],
-      rsd : ['recuperation', 'specialite', 'direction'],
+      rsd : ['specialite', 'direction'],
       select: [],
       ints: ['id', 'codeJournal', 'compte', 'ordre'],
       bools: ['auxiliaireRestaurant', 'auxiliaireVide', 'auxilliaireCreditClient', 'compteAnalytique1TVA', 'matriculeRestaurant', 'modeER', 'taxe', 'transactionVI', 'zeroExclus'],
@@ -85,7 +90,7 @@ export default {
           NUMERO: 'numeros',
           LIBELLE: 'libelles',
           TAG_CONTAINS: 'tags',
-          TVAS: 'tvas',
+          TVAS: 'tvas', // bugué wtf \\
           DOCUMENT: 'documents',
           LOCALISATION: 'localisations',
           PROFIT: 'profits',
@@ -93,12 +98,12 @@ export default {
           RULES: '?????' //TODO: VERIFIER ICI A QUOI CORRESPOND RULES
         },
         comptes: [],
+        tvas: [],
         documents: [],
         familles: [],
         groupes: [],
         libelles: [],
         localisations: [],
-        tvas: [],
         numeros: [],
         profits: [],
         sousfamilles: [],
@@ -224,15 +229,25 @@ b {
   margin-bottom: 20px;
 }
 
-#libelleinput {
+.top {
+  margin-top: 2em;
+}
+
+.libelleinput-odd {
+  margin-right: fill;
+}
+.libelleinput-even {
   margin-right: 50em;
+  position: center;
 }
-#recuperationinput {
-  margin-left: 30px;
-}
+
 #localisation {
   width: auto;
   margin-right: 50px;
+}
+
+.red {
+  color: red;
 }
 
 </style>

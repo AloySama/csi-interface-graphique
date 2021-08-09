@@ -5,14 +5,24 @@
   <div v-if="bool.ModifySociete">
     <ul>
       <li class="OneLine" v-for="(soc, index) in functions.ParseSociete(json)" :key="soc">
-        <button :id="'Modify' + index" class="hover-item" @click="tab.societe=index">{{soc}}</button>
+        <button :id="'Modify' + index" class="hover-item" @click="tab.societe=index;">{{soc}}</button>
       </li>
     </ul>
   </div>
   <div v-if="bool.ModifyEtab">etab</div>
   <div v-if="bool.ModifyRest">rest</div>
   <div v-if="tab.societe !== -1">
-    <societe-form :json-file="json" :complement="json[tab.societe]"> </societe-form>
+    <div class="container">
+      <form @submit.prevent="">
+        <div class="col-25">
+          <label>id:</label>
+        </div>
+        <div class="col-75">
+          <input :value="toComplete.societe.id = json[tab.societe].id" type="number">
+        </div>
+        <input class="hover-item" type="submit">
+      </form>
+    </div>
   </div>
 </template>
 
@@ -21,6 +31,7 @@ import ParseSociete from "../functions/ParseSociete";
 import SocieteForm from "@/components/SocieteForm";
 
 export default {
+  emits: ['complement'],
   components: {SocieteForm},
   props: {
     jsonFile: {
@@ -43,7 +54,21 @@ export default {
       },
       functions: {
         ParseSociete
+      },
+      toComplete: {
+        societe: {
+          id: 0,
+          code: '',
+          TraiteurConfig: []
+        }
       }
+    }
+  },
+  methods: {
+    FillSociete() {
+        /*this.toComplete.societe.code = this.json[this.tab.societe].code;
+        this.toComplete.societe.id = this.json[this.tab.societe].id;
+        this.toComplete.societe.TraiteurConfig = this.json[this.tab.societe].TraiteurConfig;*/
     }
   }
 }
