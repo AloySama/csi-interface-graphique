@@ -2,9 +2,9 @@ export default function ParseEtablissement(json: any, societe: number) {
     const list = [];
     if (json.length === 0) return null;
 
-    for (const index in json[societe].etablissements) {
+    for (const index of json[societe].etablissements) {
         try {
-            list.push(json[societe].etablissements[index].code)
+            list.push(index.code)
         }
         catch (e) {
             console.error("Erreur : une erreur est survenue lors du parsing du Json.")

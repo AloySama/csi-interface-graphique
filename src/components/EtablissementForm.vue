@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!etabModify">
     <div class="white"> Choisissez à quelle société vous voulez ajouter l'établissement.<br></div>
     <ul>
       <li class="OneLine" v-for="(soc, index) in ParseSociete(json)" :key="index">
@@ -7,6 +7,9 @@
       </li>
         <button class="hover-item" @click="fillSociete(-1); App.methods.doEdit(false, ['AddEta']); $emit('edit_value', false)">Retour</button>
     </ul>
+  </div>
+  <div v-else>
+    <button class="hover-item" @click="to_complete=etabModify; societe=idSoc">ok</button>
   </div>
   <div v-if="societe >= 0" class="container">
     <form @submit.prevent="">
@@ -55,6 +58,14 @@ export default {
     jsonFile: {
       default: null,
       required: true
+    },
+    etabModify: {
+      default: null,
+      required: false
+    },
+    id_societe: {
+      default: null,
+      required: false
     }
   },
   computed: {
@@ -69,6 +80,7 @@ export default {
     return {
       App,
       ParseSociete,
+      idSoc: this.id_societe,
       json: this.jsonFile,
       societe : -1,
       add_id: false,

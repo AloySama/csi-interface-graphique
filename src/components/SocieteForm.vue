@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     isSubmitted() {
-      if (typeof this.modify !== 'undefined') {
+      if (this.modify != null) {
         OverWriteSociete(this.json, this.to_complete, this.idSoc)
         this.add_eta = false;
         this.add_tdd = false;
