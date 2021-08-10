@@ -1,73 +1,80 @@
 <template>
-  <div>
-    <button class="hover-item" @click="AddFormTdd2x">×2</button><button class="hover-item" @click="AddFormTdd">+</button> <b>{{tdd_nbr}}</b><button class="hover-item" @click="RemoveFormTdd">-</button><button class="hover-item" @click="RemoveFormTdd2x">-×2</button>
-    <p v-if="tdd_nbr < values.min || tdd_nbr > values.max" class="error-message">Le nombre doit être compris entre {{values.min}} et {{values.max}}</p>
-    <div v-if="tdd_nbr >= values.min && tdd_nbr <= values.max">
-      <div v-for="(number, main_index) in parseInt(tdd_nbr)" :key="parseInt(number)">
-        <form @submit.prevent="" class="top">
-          <ol>
-            <li v-for="item in ints" :key="item">
-              <div :id="item + main_index"  :class="{'col-25': true, red: item==='id'}"><label>{{item}}</label></div>
-              <div class="col-75"><input type="number" min="0" v-model.number="to_complete[main_index][item]"></div>
-            </li>
-          </ol>
-          <ol>
-            <li v-for="item in string" :key="item" >
-              <div :id="item" :class="{'col-25': true, 'libellelabel-even': select.length%2===0&&item==='libelle', 'libellelabel-odd': select.length%2===1&&item==='libelle'}"><label>{{item}}</label></div>
-              <div :id="item + 'input'" :class="{'col-75': true, 'libelleinput-even': select.length%2===0&&item==='libelle', 'libelleinput-odd': select.length%2===1&&item==='libelle'}"><input type="text" v-model="to_complete[main_index][item]"></div>
-            </li>
-          </ol>
-            <ol>
-              <li v-for="item in rsd" :key="item">
-                <select :id="item+'input'" class="select-css top" v-model="to_complete[main_index][item]">
-                  <option :value="values" v-for="values in array[item]" :key="values">{{values}}</option>
-                </select>
-                <label :for="item"><b>{{item}}</b></label>
-              </li>
-            </ol>
-          <div class="container0 place-icons">
-            <ul class="ks-cboxtags">
-              <li v-for="item in bools" :key="item">
-                <input :id="item + main_index" type="checkbox" v-model="to_complete[main_index][item]">
-                <label :for="item + main_index" >{{item}}</label>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <select class="select-css" id="select" v-model="select" multiple>
-              <option :value="value" v-for="(value, item) in array['filtration']" :key="item">{{item}}</option>
-            </select>
-          </div>
-          <ol>
-            <li v-for="item in select" :key="item">
-              <div class="col-25">{{item}}</div>
-              <div class="col-75">
-                <div  v-if="item === 'localisations'">
-                  <select id="localisation" class="select-css" v-model="to_complete[main_index][item]" multiple>
-                    <option :value="e" v-for="e in LOCALISATION" :key="e">{{e}}</option>
-                  </select>
-                </div>
-                <div v-else>
-                  <input type="text" v-model="to_push[main_index][item]">
-                  <button class="hover-item" @click="addElement(main_index, item, to_push[main_index][item])" :disabled="to_push[main_index][item].length < 1">Ajouter</button>
-                </div>
-              </div>
-            </li>
-          </ol>
-        </form>
+<div>{{ typeof traiteurModif }}
+<button class="hover-item" @click="AddFormTdd2x">×2</button><button class="hover-item" @click="AddFormTdd">+</button> <b>{{tdd_nbr}}</b><button class="hover-item" @click="RemoveFormTdd">-</button><button class="hover-item" @click="RemoveFormTdd2x">-×2</button>
+<p v-if="tdd_nbr < values.min || tdd_nbr > values.max" class="error-message">Le TraiteurConfig doit être compris entre {{values.min}} et {{values.max}}</p>
+<div v-if="tdd_nbr >= values.min && tdd_nbr <= values.max">
+  <div v-for="(number, main_index) in parseInt(tdd_nbr)" :key="parseInt(number)">
+    <form @submit.prevent="" class="top">
+      <ol>
+        <li v-for="item in ints" :key="item">
+          <div :id="item + main_index"  :class="{'col-25': true, red: item==='id'}"><label>{{item}}</label></div>
+          <div class="col-75"><input type="number" min="0" v-model.number="to_complete[main_index][item]"></div>
+        </li>
+      </ol>
+      <ol>
+        <li v-for="item in string" :key="item" >
+          <div :id="item" :class="{'col-25': true}"><label>{{item}}</label></div>
+          <div :id="item + 'input'" :class="{'col-75': true, 'libelleinput-even': select.length%2===0&&item==='libelle', 'libelleinput-odd': select.length%2===1&&item==='libelle'}"><input type="text" v-model="to_complete[main_index][item]"></div>
+        </li>
+      </ol>
+      <ol>
+        <li v-for="item in rsd" :key="item">
+          <select :id="item+'input'" class="select-css top" v-model="to_complete[main_index][item]">
+            <option :value="values" v-for="values in array[item]" :key="values">{{values}}</option>
+          </select>
+          <label :for="item"><b>{{item}}</b></label>
+        </li>
+      </ol>
+      <div class="container0 place-icons">
+        <ul class="ks-cboxtags">
+          <li v-for="item in bools" :key="item">
+            <input :id="item + main_index" type="checkbox" v-model="to_complete[main_index][item]">
+            <label :for="item + main_index" >{{item}}</label>
+          </li>
+        </ul>
       </div>
-      <button class="hover-item" @click="SubmitForm" >Valider TraiteurConfig</button>
-      <p class="error-message"><u>Cliquer sur 'valider TraiteurConfig' ou les données ne seront pas sauvegardé dans la société.</u></p>
-    </div>
+      <div>
+        <select class="select-css" id="select" v-model="select" multiple>
+          <option :value="value" v-for="(value, item) in array['filtration']" :key="item">{{item}}</option>
+        </select>
+      </div>
+      <ol>
+        <li v-for="item in select" :key="item">
+          <div class="col-25">{{item}}</div>
+          <div class="col-75">
+            <div  v-if="item === 'localisations'">
+              <select id="localisation" class="select-css" v-model="to_complete[main_index][item]" multiple>
+                <option :value="e" v-for="e in LOCALISATION" :key="e">{{e}}</option>
+              </select>
+            </div>
+            <div v-else>
+              <input type="text" v-model="to_push[main_index][item]">
+              <button class="hover-item" @click="addElement(main_index, item, to_push[main_index][item])" :disabled="to_push[main_index][item].length < 1">Ajouter</button>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </form>
   </div>
+  <button class="hover-item" @click="SubmitForm" >Valider TraiteurConfig</button>
+  <p class="error-message"><u>Cliquer sur 'valider TraiteurConfig' ou les données ne seront pas sauvegardé dans la société.</u></p>
+</div>
+</div>
 </template>
 
 <script>
 export default {
   emits: ['tdd_form'],
   name: "TddForm",
+  props: {
+    TraiteurModify: {
+      default: null,
+      required: false
+    }
+  },
   data() {
     return {
+      traiteurModif: this.TraiteurModify,
       values: {min: 1, max: 30},
       tdd_nbr: 0,
       tdd: [],
@@ -84,7 +91,7 @@ export default {
           NUMERO: 'numeros',
           LIBELLE: 'libelles',
           TAG_CONTAINS: 'tags',
-          TVAS: 'tvas', // bugué wtf \\
+          TVAS: 'tvas',
           DOCUMENT: 'documents',
           LOCALISATION: 'localisations',
           PROFIT: 'profits',
@@ -165,7 +172,7 @@ export default {
       })
     },
     ToPush() {
-      this.to_push.push({familles: '', groupes: '', sousfamilles: '', numeros: '', libelles: '', tags: '', documents: '', localisations: '', profits: '', comptes: '', tvas: ''});
+      this.to_push.push({familles: '', groupes: '', sousfamilles: '', numeros: '', libelles: '', tags: '', documents: '', localisations: '', profits: '', comptes: '', tvas: '', rules: ''});
     },
     AddFormTdd() {
       if (this.tdd_nbr >= this.values.max) return;

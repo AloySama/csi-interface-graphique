@@ -1,12 +1,13 @@
 <template>
   <div class="container">
+    <button class="hover-item" @click="isModifyContent" v-if="modify">ok</button>
     <form @submit.prevent="" >
       <div class="row">
         <div class="col-25">
           <label>Code</label>
         </div>
         <div class="col-75">
-          <input autofocus type="text" required v-model="to_complete.code" placeholder="Code de la société" pattern="[A-Za-z0-9]{1,30}">
+          <input autofocus type="text" required v-model="to_complete.code" placeholder="Code de la société">
           <p v-if="!CodeIsValid" class="error-message">Le code est requit</p>
         </div>
       </div>
@@ -38,7 +39,7 @@
         <div class="col-75">
           <input v-model="add_tdd" type="checkbox">
         </div>
-        <tdd-form v-if="add_tdd" class="tdd" @tdd_form="CompleteTDD"/>
+        <tdd-form v-if="add_tdd" class="tdd" :traiteur-modify="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
       </div>
       <input class="hover-item" type="submit" :disabled="!to_complete.code" @click="isSubmitted">
     </form>
@@ -49,7 +50,7 @@
 <script>
 import TddForm from "@/components/TddForm";
 import EtablissementForm from "@/components/EtablissementForm";
-import EditSociete from "@/functions/EditElements";
+import EditSociete, {OverWriteSociete} from "@/functions/EditElements";
 import {FindAnID, Reinitialize, isIDCorrect} from '@/functions/CheckID'
 
 export default {
@@ -59,6 +60,14 @@ export default {
     jsonFile: {
       default: null,
       required: true
+    },
+    modifyContent: {
+      default: null,
+      required: false
+    },
+    id_societe: {
+      default: -1,
+      required: false
     }
   },
   components: {EtablissementForm, TddForm},
@@ -69,7 +78,7 @@ export default {
   },
   data() {
     return {
-      to_complete: {
+      to_complete : {
         id: null,
         code: '',
         traiteursConfigs: [],
@@ -81,11 +90,19 @@ export default {
       tdd_nbr: 1,
       add_eta: false,
       json: this.jsonFile,
+      modify: this.modifyContent,
+      idSoc: this.id_societe,
       Reinitialize
     }
   },
   methods: {
     isSubmitted() {
+      if (typeof this.modify !== 'undefined') {
+        OverWriteSociete(this.json, this.to_complete, this.idSoc)
+        this.add_eta = false;
+        this.add_tdd = false;
+        return;
+      }
       const new_array = { id: this.to_complete.id!==null?isIDCorrect(this.json, this.to_complete.id):FindAnID(this.json), code: this.to_complete.code,
         traiteursConfigs: this.to_complete.traiteursConfigs, etablissements: this.to_complete.etablissements};
       this.form.push(new_array);
@@ -102,6 +119,12 @@ export default {
     CompleteTDD(tdd) {
       for (const t of tdd) {
         this.to_complete.traiteursConfigs.push(t);
+      }
+    },
+    isModifyContent() {
+      if (typeof this.modify !== 'undefined') {
+        if (this.modify.traiteursConfigs.length !== 0) this.add_tdd = true;
+        this.to_complete = this.modify;
       }
     }
   }

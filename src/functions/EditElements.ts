@@ -12,6 +12,16 @@ export default function EditSociete(json: Record<string, unknown>, to_add: JSON)
     return json;
 }
 
+export function OverWriteSociete(json: Record<string, unknown>, to_add: JSON, id: number) {
+    try {
+        json[id] = to_add;
+    }
+    catch (e) {
+        console.error(e);
+    }
+    return json
+}
+
 export function EditEtab(json: Record<string, unknown>, to_add: JSON, societe: number) {
     try {
         // @ts-ignore

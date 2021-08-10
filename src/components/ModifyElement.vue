@@ -1,28 +1,18 @@
 <template>
-  <button class="hover-item" @click="bool.ModifySociete=!bool.ModifySociete">Modifier une société</button> <!-- Proposer le même formulaire que la société mais avec les paramètres de celle qui va être modifier, idem pour le reste -->
+  <button class="hover-item" @click="bool.ModifySociete=!bool.ModifySociete">Modifier une société</button>
   <button class="hover-item" @click="bool.ModifyEtab=!bool.ModifyEtab">Modifier un établissement</button>
   <button class="hover-item" @click="bool.ModifyRest=!bool.ModifyRest">Modifier un restaurant</button>
   <div v-if="bool.ModifySociete">
     <ul>
       <li class="OneLine" v-for="(soc, index) in functions.ParseSociete(json)" :key="soc">
-        <button :id="'Modify' + index" class="hover-item" @click="tab.societe=index;">{{soc}}</button>
+        <button :id="'ModifySoc' + index" class="hover-item" @click="waitFor(index); fillTab(index);">{{soc}}</button>
       </li>
     </ul>
   </div>
   <div v-if="bool.ModifyEtab">etab</div>
   <div v-if="bool.ModifyRest">rest</div>
   <div v-if="tab.societe !== -1">
-    <div class="container">
-      <form @submit.prevent="">
-        <div class="col-25">
-          <label>id:</label>
-        </div>
-        <div class="col-75">
-          <input :value="toComplete.societe.id = json[tab.societe].id" type="number">
-        </div>
-        <input class="hover-item" type="submit">
-      </form>
-    </div>
+    <societe-form :json-file="json" :modify-content="json[tab.societe]" :id_societe="tab.societe"></societe-form>
   </div>
 </template>
 
@@ -59,16 +49,20 @@ export default {
         societe: {
           id: 0,
           code: '',
-          TraiteurConfig: []
+          TraiteurConfigs: []
         }
       }
     }
   },
   methods: {
-    FillSociete() {
-        /*this.toComplete.societe.code = this.json[this.tab.societe].code;
-        this.toComplete.societe.id = this.json[this.tab.societe].id;
-        this.toComplete.societe.TraiteurConfig = this.json[this.tab.societe].TraiteurConfig;*/
+    fillTab(index) {
+      this.toComplete.societe.code = this.json[index].code;
+      this.toComplete.societe.id = this.json[index].id;
+      this.toComplete.societe.TraiteurConfigs = this.json[index].traiteursConfigs;
+    },
+    waitFor(index) {
+      this.tab.societe = -1
+      setTimeout(() => {this.tab.societe = index}, 0);
     }
   }
 }
