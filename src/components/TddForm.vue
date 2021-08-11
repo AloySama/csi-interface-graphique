@@ -63,11 +63,12 @@
             </div>
           </li>
         </ol>
+        <button class="hover-item" @click="deleteIt(main_index)">Supprimer</button>
       </form>
     </div>
-    <button class="hover-item" @click="SubmitForm">Valider TraiteurConfig</button>
-    <p class="error-message"><u>Cliquer sur 'valider TraiteurConfig' ou les données ne seront pas sauvegardé dans la société.</u></p>
   </div>
+  <button class="hover-item" @click="SubmitForm">Valider TraiteurConfig</button>
+  <p class="error-message"><u>Cliquer sur 'valider TraiteurConfig' ou les données ne seront pas sauvegardé dans la société.</u></p>
 </template>
 
 <script>
@@ -238,9 +239,13 @@ export default {
           this.to_complete[i] = this.traiteurModif[i];
         }
         this.isOKClicked = true;
-      } else {
-        alert('Erreur: problème sur le TraiteurConfig')
       }
+      else alert('Erreur: problème sur le TraiteurConfig')
+    },
+    deleteIt(index) {
+      this.to_complete.splice(index, 1);
+      this.tdd_nbr--;
+      console.log(this.to_complete)
     }
   }
 }
