@@ -39,7 +39,8 @@
         <div class="col-75">
           <input v-model="add_tdd" type="checkbox">
         </div>
-        <tdd-form v-if="add_tdd" class="tdd" :traiteur-modify="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
+        <tdd-form v-if="add_tdd&&modify==null" :traiteur-modification="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
+        <tdd-form v-if="add_tdd" @tdd_form="CompleteTDD"/>
       </div>
       <input class="hover-item" type="submit" :disabled="!to_complete.code" @click="isSubmitted">
     </form>

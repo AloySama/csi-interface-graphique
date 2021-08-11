@@ -1,6 +1,8 @@
 <template>
-<div>
-<button class="hover-item" @click="AddFormTdd2x">×2</button><button class="hover-item" @click="AddFormTdd">+</button> <b>{{tdd_nbr}}</b><button class="hover-item" @click="RemoveFormTdd">-</button><button class="hover-item" @click="RemoveFormTdd2x">-×2</button>
+  {{traiteurModif}}
+  <div>
+   <button class="hover-item" @click="isModifyContent" v-if="traiteurModif==null">ok</button>
+   <button class="hover-item" @click="AddFormTdd2x">×2</button><button class="hover-item" @click="AddFormTdd">+</button> <b>{{tdd_nbr}}</b><button class="hover-item" @click="RemoveFormTdd">-</button><button class="hover-item" @click="RemoveFormTdd2x">-×2</button>
 <p v-if="tdd_nbr < values.min || tdd_nbr > values.max" class="error-message">Le TraiteurConfig doit être compris entre {{values.min}} et {{values.max}}</p>
 <div v-if="tdd_nbr >= values.min && tdd_nbr <= values.max">
   <div v-for="(number, main_index) in parseInt(tdd_nbr)" :key="parseInt(number)">
@@ -14,7 +16,7 @@
       <ol>
         <li v-for="item in string" :key="item" >
           <div :id="item" :class="{'col-25': true}"><label>{{item}}</label></div>
-          <div :id="item + 'input'" :class="{'col-75': true, 'libelleinput-even': select.length%2===0&&item==='libelle', 'libelleinput-odd': select.length%2===1&&item==='libelle'}"><input type="text" v-model="to_complete[main_index][item]"></div>
+          <div :id="item + 'input'" :class="{'col-75': true, 'libelleinput-even': item==='libelle'&&(select.length%2===0||main_index===0), 'libelleinput-odd': select.length%2===1&&item==='libelle'&&main_index>0}"><input type="text" v-model="to_complete[main_index][item]"></div>
         </li>
       </ol>
       <ol>
@@ -67,14 +69,14 @@ export default {
   emits: ['tdd_form'],
   name: "TddForm",
   props: {
-    TraiteurModify: {
+    traiteurModification: {
       default: null,
-      required: false
+      required: false,
     }
   },
   data() {
     return {
-      traiteurModif: this.TraiteurModify,
+      traiteurModif: this.traiteurModification,
       values: {min: 1, max: 30},
       tdd_nbr: 0,
       tdd: [],
@@ -207,6 +209,9 @@ export default {
       this.to_push.pop();
       this.to_push.pop();
       this.tdd_nbr -= 2;
+    },
+    isModifyContent() {
+      return 0;
     }
   }
 }
@@ -249,6 +254,7 @@ b {
 
 .red {
   color: red;
+  font-weight: bold;
 }
 
 </style>

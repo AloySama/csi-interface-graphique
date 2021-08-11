@@ -16,7 +16,7 @@
       </li>
     </ul>
   </div>
-  <div v-if="tab.societe !== -1">
+  <div v-if="tab.societe !== -1 && bool.ModifyEtab">
     <ul>
       <li class="OneLine" v-for="(etab, index_eta) in functions.ParseEtablissement(json, tab.societe)" :key="index_eta">
         <button class="hover-item" :id="'ModifyEta' + index_eta" @click="tab.etab=index_eta">{{etab}}</button>
