@@ -1,7 +1,7 @@
 <template>
-  <button class="hover-item" @click="bool.ModifySociete=!bool.ModifySociete">Modifier une société</button>
-  <button class="hover-item" @click="bool.ModifyEtab=!bool.ModifyEtab">Modifier un établissement</button>
-  <button class="hover-item" @click="bool.ModifyRest=!bool.ModifyRest">Modifier un restaurant</button>
+  <button class="hover-item" @click="setBool(true, false, false)">Modifier une société</button>
+  <button class="hover-item" @click="setBool(false, true, false)">Modifier un établissement</button>
+  <button class="hover-item" @click="setBool(false, false, true)">Modifier un restaurant</button>
   <div v-if="bool.ModifySociete">
     <ul>
       <li class="OneLine" v-for="(soc, index) in functions.ParseSociete(json)" :key="soc">
@@ -82,6 +82,11 @@ export default {
     waitFor(index) {
       this.tab.societe = -1
       setTimeout(() => {this.tab.societe = index}, 0);
+    },
+    setBool(soc, etab, rest) {
+      this.bool.ModifySociete = soc;
+      this.bool.ModifyEtab = etab;
+      this.bool.ModifyRest = rest;
     }
   }
 }

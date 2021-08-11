@@ -66,8 +66,7 @@
       </form>
     </div>
     <button class="hover-item" @click="SubmitForm">Valider TraiteurConfig</button>
-    <p class="error-message"><u>Cliquer sur 'valider TraiteurConfig' ou les données ne seront pas sauvegardé dans la
-      société.</u></p>
+    <p class="error-message"><u>Cliquer sur 'valider TraiteurConfig' ou les données ne seront pas sauvegardé dans la société.</u></p>
   </div>
 </template>
 
@@ -83,6 +82,7 @@ export default {
   },
   data() {
     return {
+      isOKClicked: false,
       traiteurModif: this.traiteurModification,
       values: {min: 1, max: 30},
       tdd_nbr: 0,
@@ -131,7 +131,7 @@ export default {
   methods: {
     SubmitForm() {
       this.FormTdd.tdd = this.to_complete;
-      this.$emit('tdd_form', this.FormTdd.tdd);
+      this.$emit('tdd_form', {tdd: this.FormTdd.tdd, add: this.isOKClicked});
       this.FormTdd.tdd = [];
     },
     addElement(main_index, index, text) {
@@ -237,6 +237,7 @@ export default {
           this.AddFormTdd();
           this.to_complete[i] = this.traiteurModif[i];
         }
+        this.isOKClicked = true;
       } else {
         alert('Erreur: problème sur le TraiteurConfig')
       }

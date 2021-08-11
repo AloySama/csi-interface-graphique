@@ -118,8 +118,20 @@ export default {
       this.to_complete.traiteursConfigs = [];
     },
     CompleteTDD(tdd) {
-      for (const t of tdd) {
-        this.to_complete.traiteursConfigs.push(t);
+      if (tdd.add) {
+        let i = 0;
+        for (; i < tdd.tdd.length && this.to_complete.traiteursConfigs.length; i++) {
+          this.to_complete.traiteursConfigs[i] = tdd.tdd[i];
+        }
+        for (; i < tdd.tdd.length; i++) {
+          this.to_complete.traiteursConfigs.push(tdd.tdd[i]);
+        }
+      }
+      else {
+        for (const t of tdd.tdd) {
+          this.to_complete.traiteursConfigs.push(t);
+          console.log(t);
+        }
       }
     },
     isModifyContent() {
