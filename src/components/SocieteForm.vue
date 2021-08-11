@@ -39,8 +39,8 @@
         <div class="col-75">
           <input v-model="add_tdd" type="checkbox">
         </div>
-        <tdd-form v-if="add_tdd&&modify==null" :traiteur-modification="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
-        <tdd-form v-if="add_tdd" @tdd_form="CompleteTDD"/>
+        <tdd-form v-if="add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
+        <tdd-form v-else-if="add_tdd" @tdd_form="CompleteTDD"/>
       </div>
       <input class="hover-item" type="submit" :disabled="!to_complete.code" @click="isSubmitted">
     </form>
@@ -51,7 +51,7 @@
 <script>
 import TddForm from "@/components/TddForm";
 import EtablissementForm from "@/components/EtablissementForm";
-import EditSociete, {OverWriteSociete} from "@/functions/EditElements";
+import EditSociete from "@/functions/EditElements";
 import {FindAnID, Reinitialize, isIDCorrect} from '@/functions/CheckID'
 
 export default {
@@ -99,7 +99,7 @@ export default {
   methods: {
     isSubmitted() {
       if (this.modify != null) {
-        OverWriteSociete(this.json, this.to_complete, this.idSoc)
+        //OverWriteSociete(this.json, this.to_complete, this.idSoc)
         this.add_eta = false;
         this.add_tdd = false;
         return;
