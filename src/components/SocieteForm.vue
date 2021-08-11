@@ -118,14 +118,7 @@ export default {
     },
     CompleteTDD(tdd) {
       if (tdd.add) {
-        if (tdd.tdd.length < this.to_complete.traiteursConfigs.length) {
-          alert('OUI !!!')
-          this.to_complete.traiteursConfigs = tdd.tdd;
-          return;
-        }
-        let i = 0;
-        for (; i < tdd.tdd.length && this.to_complete.traiteursConfigs.length; i++) this.to_complete.traiteursConfigs[i] = tdd.tdd[i];
-        for (; i < tdd.tdd.length; i++) this.to_complete.traiteursConfigs.push(tdd.tdd[i]);
+        this.to_complete.traiteursConfigs = tdd.tdd;
       }
       else for (const t of tdd.tdd) this.to_complete.traiteursConfigs.push(t);
     },

@@ -85,7 +85,7 @@ export default {
     return {
       isOKClicked: false,
       traiteurModif: this.traiteurModification,
-      values: {min: 1, max: 30},
+      values: {min: 0, max: 30},
       tdd_nbr: 0,
       tdd: [],
       rsd: ['recuperation', 'specialite', 'direction'],
@@ -243,9 +243,8 @@ export default {
       else alert('Erreur: problème sur le TraiteurConfig')
     },
     deleteIt(index) {
-      this.to_complete.splice(index, 1);
       this.tdd_nbr--;
-      console.log(this.to_complete)
+      this.to_complete.splice(index, 1);
     }
   }
 }
