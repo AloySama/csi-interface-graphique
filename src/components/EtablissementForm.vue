@@ -32,15 +32,11 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-25">
-          <label>Ajouter Traiteur config ?</label>
-        </div>
-        <div class="col-75">
-          <input v-model="add_tdd" type="checkbox">
-        </div>
-        <tdd-form v-if="add_tdd" @tdd_form="CompleteTDD"/>
-      </div>
-      <input class="hover-item" type="submit" :disabled="!to_complete.code || to_complete.id < 0" @click="IsSubmitted">
+        <div class="col-25"><label>Ajouter Traiteur config ?</label></div>
+        <div class="col-75"><input v-model="add_tdd" type="checkbox"></div>
+        <tdd-form v-if="add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
+        <tdd-form v-else-if="add_tdd" @tdd_form="CompleteTDD"/>
+      </div><input class="hover-item" type="submit" :disabled="!to_complete.code || to_complete.id < 0" @click="IsSubmitted">
     </form>
   </div>
 </template>
@@ -82,6 +78,7 @@ export default {
       ParseSociete,
       idSoc: this.id_societe,
       json: this.jsonFile,
+      modify: this.etabModify,
       societe : -1,
       add_id: false,
       add_tdd: false,

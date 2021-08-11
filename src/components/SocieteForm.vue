@@ -117,9 +117,7 @@ export default {
       this.to_complete.traiteursConfigs = [];
     },
     CompleteTDD(tdd) {
-      if (tdd.add) {
-        this.to_complete.traiteursConfigs = tdd.tdd;
-      }
+      if (tdd.add) this.to_complete.traiteursConfigs = tdd.tdd;
       else for (const t of tdd.tdd) this.to_complete.traiteursConfigs.push(t);
     },
     isModifyContent() {
