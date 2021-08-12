@@ -51,7 +51,7 @@
     </ul>
   </div>
   <div v-if="bool.ModifyRest && tab.societe !== -1 && tab.etab !== -1 && tab.rest !== -1">
-    <restaurant-form json-file="json-file"></restaurant-form>
+    <restaurant-form json-file="json-file" :rest-modify="json[tab.societe].etablissements[tab.etab].restaurants[tab.rest]" :id-tab="{soc: tab.societe, eta: tab.etab, rest: tab.rest}"></restaurant-form>
   </div>
 </template>
 
