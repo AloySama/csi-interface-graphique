@@ -48,7 +48,9 @@
         <div class="col-75">
           <input v-model="bool.AddTdd" type="checkbox">
         </div>
-        <tdd-form v-if="bool.AddTdd" @tdd_form="completeTDD"/>
+
+        <tdd-form v-if="bool.AddTdd&&modify!=null" :traiteur-modification="to_complete[to_complete.length-1].traiteursConfigs" @tdd_form="completeTDD"/>
+        <tdd-form v-else-if="bool.AddTdd" @tdd_form="completeTDD"/>
       </div>
     </form>
     <input class="hover-item" type="submit" @click="isSubmitted" :disabled="!to_complete[to_complete.length-1].etab_code">
@@ -123,7 +125,8 @@ export default {
       })
     },
     completeTDD(tdd) {
-        this.to_complete[this.to_complete.length-1].traiteursConfigs = tdd.tdd;
+      if (tdd.add) this.to_complete[this.to_complete.length-1].traiteursConfigs = tdd.tdd;
+      else for (const t of tdd.tdd) this.to_complete[this.to_complete.length-1].traiteursConfigs.push(t);
     },
     setAuxiliaire(prefix, IDRes) {
       if (IDRes < 10) return (prefix + '0' + IDRes);
@@ -143,7 +146,7 @@ export default {
         try {
           document.getElementById(ElementId + j).disabled = !bool;
         } catch (e) {
-          console.log(e);
+          console.error(e);
           return;
         }
       }
@@ -152,6 +155,10 @@ export default {
       if ((this.FillTab['societe'] !== index)) this.FillTab['etablissement'] = -1;
     },
     isSubmitted() {
+      if (this.modify != null) {
+        this.bool.AddTdd = false;
+        return;
+      }
       const length = this.to_complete.length-1;
       const matricule = this.to_complete[length].matricule!==null?this.to_complete[length].matricule<0?FindIDRes(this.json, false, 0):
           isIDCorrectRes(this.json, this.to_complete[length].matricule):FindIDRes(this.json, false, 0);

@@ -82,7 +82,7 @@ export default {
     return {
       isOKClicked: false,
       traiteurModif: this.traiteurModification,
-      values: {min: 0, max: 30},
+      values: {min: 0, max: 50},
       tdd_nbr: 0,
       tdd: [],
       rsd: ['recuperation', 'specialite', 'direction'],
