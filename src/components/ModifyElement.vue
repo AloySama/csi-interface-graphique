@@ -46,9 +46,12 @@
   <div>
     <ul v-if="bool.ModifyRest && tab.societe !== -1 && tab.etab !== -1">
       <li v-for="(rest, index) in functions.ParseRestaurant(json, tab.societe, tab.etab)" :key="rest">
-        <button class="hover-item" :id="'ModifyRest' + index">{{rest}}</button>
+        <button class="hover-item" :id="'ModifyRest' + index" @click="tab.rest=index">{{rest}}</button>
       </li>
     </ul>
+  </div>
+  <div v-if="bool.ModifyRest && tab.societe !== -1 && tab.etab !== -1 && tab.rest !== -1">
+    <restaurant-form json-file="json-file"></restaurant-form>
   </div>
 </template>
 
@@ -58,10 +61,11 @@ import ParseSociete from "../functions/ParseSociete";
 import ParseRestaurant from "@/functions/ParseRestaurant";
 import SocieteForm from "@/components/SocieteForm";
 import EtablissementForm from "@/components/EtablissementForm";
+import RestaurantForm from "@/components/RestaurantForm";
 
 export default {
   emits: ['complement'],
-  components: {EtablissementForm, SocieteForm},
+  components: {RestaurantForm, EtablissementForm, SocieteForm},
   props: {
     jsonFile: {
       required: true

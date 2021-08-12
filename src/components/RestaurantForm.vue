@@ -20,7 +20,7 @@
     <form @submit.prevent="">
       <div class="row">
         <div class="col-25">
-          <label>Code Restaurant</label>
+          <label>Etab code</label>
         </div>
         <div class="col-75">
           <input type="text" required v-model="to_complete[to_complete.length-1].etab_code">

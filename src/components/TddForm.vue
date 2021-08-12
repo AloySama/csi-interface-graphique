@@ -1,5 +1,5 @@
 <template>
-  <button class="hover-item" @click="isModifyContent" v-if="traiteurModif!=null">ok</button>
+  <button class="hover-item" @click="isModifyContent" v-if="traiteurModif!=null&&traiteurModif.length!==0">ok</button>
   <button class="hover-item" @click="AddFormTdd2x">×2</button><button class="hover-item" @click="AddFormTdd">+</button>
   <b>{{ tdd_nbr }}</b>
   <button class="hover-item" @click="RemoveFormTdd">-</button><button class="hover-item" @click="RemoveFormTdd2x">-×2</button>
