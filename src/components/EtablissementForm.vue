@@ -1,6 +1,6 @@
 <template>
   <div v-if="!etabModify">
-    <div class="white"> Choisissez à quelle société vous voulez ajouter l'établissement.<br></div>
+    <div class="white" v-if="modify==null"> Choisissez à quelle société vous voulez ajouter l'établissement.<br></div>
     <ul>
       <li class="OneLine" v-for="(soc, index) in ParseSociete(json)" :key="index">
         <button :id="'ButtonEta' + index" class="hover-item" @click="disabledButton(index, true, 'ButtonEta')">{{soc}}</button>
@@ -8,7 +8,7 @@
         <button class="hover-item" @click="fillSociete(-1); App.methods.doEdit(false, ['AddEta']); $emit('edit_value', false)">Retour</button>
     </ul>
   </div>
-  <div v-else>
+  <div v-else-if="modify.length!==0">
     <button class="hover-item" @click="to_complete=etabModify; societe=idSoc; isModifyContent">ok</button>
   </div>
   <div v-if="societe >= 0" class="container">

@@ -27,14 +27,35 @@
     <societe-form :json-file="json" :modify-content="json[tab.societe]" :id_societe="tab.societe"></societe-form>
   </div>
   <div v-if="tab.etab !== -1 && bool.ModifyEtab">
-    <etablissement-form :json-file="json" :etab-modify="json[tab.societe].etablissements[tab.etab]" :id_societe="tab.societe"></etablissement-form>
+    <etablissement-form :json-file="json" :etab-modify="returnEtab()" :id_societe="tab.societe"></etablissement-form>
   </div>
-  <div v-if="bool.ModifyRest">rest</div>
+  <div v-if="bool.ModifyRest">
+    <ul>
+      <li class="OneLine" v-for="(soc, index) in functions.ParseSociete(json)" :key="soc">
+        <button class="hover-item" @click="tab.societe=index;">{{soc}}</button>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <ul v-if="bool.ModifyRest && tab.societe !== -1">
+      <li class="OneLine" v-for="(etab, index_eta) in functions.ParseEtablissement(json, tab.societe)" :key="index_eta">
+        <button class="hover-item" :id="'ModifyEta' + index_eta" @click="tab.etab=index_eta">{{etab}}</button>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <ul v-if="bool.ModifyRest && tab.societe !== -1 && tab.etab !== -1">
+      <li v-for="(rest, index) in functions.ParseRestaurant(json, tab.societe, tab.etab)" :key="rest">
+        <button class="hover-item" :id="'ModifyRest' + index">{{rest}}</button>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
 import ParseEtablissement from "@/functions/ParseEtablissement";
 import ParseSociete from "../functions/ParseSociete";
+import ParseRestaurant from "@/functions/ParseRestaurant";
 import SocieteForm from "@/components/SocieteForm";
 import EtablissementForm from "@/components/EtablissementForm";
 
@@ -62,7 +83,8 @@ export default {
       },
       functions: {
         ParseSociete,
-        ParseEtablissement
+        ParseEtablissement,
+        ParseRestaurant
       },
       toComplete: {
         societe: {
@@ -87,6 +109,14 @@ export default {
       this.bool.ModifySociete = soc;
       this.bool.ModifyEtab = etab;
       this.bool.ModifyRest = rest;
+    },
+    returnEtab() {
+      const value = this.json[this.tab.societe].etablissements[this.tab.etab];
+      if (value == null) return []
+      return value;
+    },
+    hasChanged(i) {
+      return i !== this.tab.societe;
     }
   }
 }

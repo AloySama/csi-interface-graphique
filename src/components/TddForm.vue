@@ -1,5 +1,4 @@
 <template>
-  {{traiteurModif}}
   <button class="hover-item" @click="isModifyContent" v-if="traiteurModif!=null">ok</button>
   <button class="hover-item" @click="AddFormTdd2x">×2</button><button class="hover-item" @click="AddFormTdd">+</button>
   <b>{{ tdd_nbr }}</b>

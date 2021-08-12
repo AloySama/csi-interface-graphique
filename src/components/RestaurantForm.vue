@@ -108,9 +108,7 @@ export default {
       })
     },
     completeTDD(tdd) {
-      for (const t of tdd) {
-        this.to_complete[this.to_complete.length-1].traiteursConfigs.push(t);
-      }
+        this.to_complete[this.to_complete.length-1].traiteursConfigs = tdd.tdd;
     },
     setAuxiliaire(prefix, IDRes) {
       if (IDRes < 10) return (prefix + '0' + IDRes);
