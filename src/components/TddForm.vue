@@ -1,12 +1,10 @@
 <template>
+  {{traiteurModif}}
   <button class="hover-item" @click="isModifyContent" v-if="traiteurModif!=null">ok</button>
-  <button class="hover-item" @click="AddFormTdd2x">×2</button>
-  <button class="hover-item" @click="AddFormTdd">+</button>
+  <button class="hover-item" @click="AddFormTdd2x">×2</button><button class="hover-item" @click="AddFormTdd">+</button>
   <b>{{ tdd_nbr }}</b>
-  <button class="hover-item" @click="RemoveFormTdd">-</button>
-  <button class="hover-item" @click="RemoveFormTdd2x">-×2</button>
-  <p v-if="tdd_nbr < values.min || tdd_nbr > values.max" class="error-message">Le TraiteurConfig doit être compris entre
-    {{ values.min }} et {{ values.max }}</p>
+  <button class="hover-item" @click="RemoveFormTdd">-</button><button class="hover-item" @click="RemoveFormTdd2x">-×2</button>
+  <p v-if="tdd_nbr < values.min || tdd_nbr > values.max" class="error-message">Le TraiteurConfig doit être compris entre {{ values.min }} et {{ values.max }}</p>
   <div v-if="tdd_nbr >= values.min && tdd_nbr <= values.max">
     <div v-for="(number, main_index) in parseInt(tdd_nbr)" :key="parseInt(number)">
       <form @submit.prevent="" class="top">
