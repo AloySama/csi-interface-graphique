@@ -69,6 +69,8 @@
 </template>
 
 <script>
+import {checkIDTC, FindIDTC} from "@/functions/CheckID";
+
 export default {
   emits: ['tdd_form'],
   name: "TddForm",
@@ -128,6 +130,7 @@ export default {
   },
   methods: {
     SubmitForm() {
+      if (checkIDTC(this.to_complete)) this.to_complete = FindIDTC(this.to_complete)
       this.FormTdd.tdd = this.to_complete;
       this.$emit('tdd_form', {tdd: this.FormTdd.tdd, add: this.isOKClicked});
       this.FormTdd.tdd = [];

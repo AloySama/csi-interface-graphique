@@ -66,7 +66,7 @@ export function isIDCorrectRes(json: Record<string, any>, id: number) {
 export function FindIDTC(TraiteurConfig: []) {
     for (let i = 0; i < TraiteurConfig.length; i++) {
         // @ts-ignore
-        TraiteurConfig[i].id = i;
+        TraiteurConfig[i].id = i + 1;
     }
     return TraiteurConfig;
 }

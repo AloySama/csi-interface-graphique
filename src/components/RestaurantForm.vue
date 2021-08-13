@@ -1,24 +1,35 @@
 <template>
   <div v-if="!modify">
-   <div>
-     <div class="white"> Choisir société</div><br>
+    <div>
+      <div class="white"> Choisir société</div>
+      <br>
       <ul>
         <li class="OneLine" v-for="(soc, index_soc) in ParseSociete(json)" :key="index_soc">
-          <button :id="'ButtonEta' + index_soc" class="hover-item" @click="disabledButton('ButtonEta', index_soc, true); hasChanged(index_soc); fillSociete(index_soc)">{{soc}}</button>
+          <button :id="'ButtonEta' + index_soc" class="hover-item"
+                  @click="disabledButton('ButtonEta', index_soc, true); hasChanged(index_soc); fillSociete(index_soc)">
+            {{ soc }}
+          </button>
         </li>
-        <button class="hover-item" @click="fillSociete(-1); App.methods.doEdit( false, ['AddRes']); $emit('edit_value', false)">Retour</button>
+        <button class="hover-item"
+                @click="fillSociete(-1); App.methods.doEdit( false, ['AddRes']); $emit('edit_value', false)">Retour
+        </button>
       </ul>
     </div>
-    <div v-if="FillTab['societe'] >= 0"> <div class="white">Choisir l'établissement</div>
+    <div v-if="FillTab['societe'] >= 0">
+      <div class="white">Choisir l'établissement</div>
       <ul>
         <li class="OneLine" v-for="(etab, index_eta) in ParseEtablissement(json, FillTab['societe'])" :key="index_eta">
-          <button class="hover-item" :id="'ButtonRes' + FillTab['societe'] + index_eta" @click="fillEtab(index_eta);">{{etab}}</button>
+          <button class="hover-item" :id="'ButtonRes' + FillTab['societe'] + index_eta" @click="fillEtab(index_eta);">
+            {{ etab }}
+          </button>
         </li>
       </ul>
     </div>
   </div>
   <div v-else>
-    <button class="hover-item" @click="setToComplete(); FillTab['societe']=ids.soc; FillTab['etablissement']=ids.eta">ok</button>
+    <button class="hover-item" @click="setToComplete(); FillTab['societe']=ids.soc; FillTab['etablissement']=ids.eta">
+      ok
+    </button>
   </div>
   <div v-if="FillTab['societe'] >= 0 && FillTab['etablissement'] >= 0" class="container">
     <strong>Attention : le matricule d'un restaurant est unique dans tout le fichier json</strong>
@@ -29,16 +40,26 @@
         </div>
         <div class="col-75">
           <input type="text" required v-model="to_complete[to_complete.length-1].etab_code">
-          <p class="error-message" v-if="!to_complete[to_complete.length-1].etab_code"> Le code de la société est requit</p>
+          <p class="error-message" v-if="!to_complete[to_complete.length-1].etab_code"> Le code de la société est
+            requit</p>
         </div>
       </div>
       <div class="row">
         <div class="col-25">
-        <label>Matricule personnalisé ?</label>
+          <label>code_societe</label>
+        </div>
+        <div class="col-75">
+          <input type="text" v-model="to_complete[to_complete.length-1].code_societe">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label>Matricule personnalisé ?</label>
         </div>
         <div class="col-75">
           <input v-model="bool.AddMatricule" type="checkbox">
-          <input v-if="bool.AddMatricule" type="number" min="0" v-model.number="to_complete[to_complete.length-1].matricule" required>
+          <input v-if="bool.AddMatricule" type="number" min="0"
+                 v-model.number="to_complete[to_complete.length-1].matricule" required>
         </div>
       </div>
       <div class="row">
@@ -48,12 +69,13 @@
         <div class="col-75">
           <input v-model="bool.AddTdd" type="checkbox">
         </div>
-
-        <tdd-form v-if="bool.AddTdd&&modify!=null" :traiteur-modification="to_complete[to_complete.length-1].traiteursConfigs" @tdd_form="completeTDD"/>
+        <tdd-form v-if="bool.AddTdd&&modify!=null"
+                  :traiteur-modification="to_complete[to_complete.length-1].traiteursConfigs" @tdd_form="completeTDD"/>
         <tdd-form v-else-if="bool.AddTdd" @tdd_form="completeTDD"/>
       </div>
     </form>
-    <input class="hover-item" type="submit" @click="isSubmitted" :disabled="!to_complete[to_complete.length-1].etab_code">
+    <input class="hover-item" type="submit" @click="isSubmitted"
+           :disabled="!to_complete[to_complete.length-1].etab_code">
   </div>
 </template>
 
@@ -68,7 +90,7 @@ import {FindIDRes, checkIDTC, isIDCorrectRes, FindIDTC} from "@/functions/CheckI
 
 export default {
   name: "RestaurantForm",
-  props : {
+  props: {
     jsonFile: {
       default: null,
       required: true
@@ -125,8 +147,8 @@ export default {
       })
     },
     completeTDD(tdd) {
-      if (tdd.add) this.to_complete[this.to_complete.length-1].traiteursConfigs = tdd.tdd;
-      else for (const t of tdd.tdd) this.to_complete[this.to_complete.length-1].traiteursConfigs.push(t);
+      if (tdd.add) this.to_complete[this.to_complete.length - 1].traiteursConfigs = tdd.tdd;
+      else for (const t of tdd.tdd) this.to_complete[this.to_complete.length - 1].traiteursConfigs.push(t);
     },
     setAuxiliaire(prefix, IDRes) {
       if (IDRes < 10) return (prefix + '0' + IDRes);
@@ -159,15 +181,15 @@ export default {
         this.bool.AddTdd = false;
         return;
       }
-      const length = this.to_complete.length-1;
-      const matricule = this.to_complete[length].matricule!==null?this.to_complete[length].matricule<0?FindIDRes(this.json, false, 0):
-          isIDCorrectRes(this.json, this.to_complete[length].matricule):FindIDRes(this.json, false, 0);
+      const length = this.to_complete.length - 1;
+      const matricule = this.to_complete[length].matricule !== null ? this.to_complete[length].matricule < 0 ? FindIDRes(this.json, false, 0) :
+          isIDCorrectRes(this.json, this.to_complete[length].matricule) : FindIDRes(this.json, false, 0);
       this.to_complete[length].matricule = matricule;
       this.to_complete[length].restaurantId = matricule;
       this.to_complete[length].compteAuxiliaire = this.setAuxiliaire('REST', matricule);
       this.to_complete[length].auxiliaireCreditClient = this.setAuxiliaire('C950', matricule);
-      this.to_complete[length].traiteursConfigs = checkIDTC(this.to_complete[length].traiteursConfigs)?
-          FindIDTC(this.to_complete[length].traiteursConfigs):this.to_complete[length].traiteursConfigs;
+      this.to_complete[length].traiteursConfigs = checkIDTC(this.to_complete[length].traiteursConfigs) ?
+          FindIDTC(this.to_complete[length].traiteursConfigs) : this.to_complete[length].traiteursConfigs;
       this.json = EditRestaurant(this.json, this.to_complete[length], this.FillTab);
       this.bool.AddTdd = false;
       this.addToComplete();

@@ -107,14 +107,15 @@ export default {
       }
     },
     IsSubmitted() {
+      if (typeof this.to_complete.id === 'string') this.to_complete.id = null;
+      this.to_complete.id = this.to_complete.id !== null ? isIDCorrect(this.json, this.to_complete.id) : FindAnID(this.json);
       if (this.modify != null) {
         this.add_eta = false;
         this.add_tdd = false;
         return;
       }
       const new_array = {
-        id: this.to_complete.id!==null?this.to_complete.id<0?FindAnID(this.json[this.societe].etablissements):
-            (isIDCorrect(this.json[this.societe].etablissements, this.to_complete.id)):FindAnID(this.json[this.societe].etablissements),
+        id: this.to_complete.id,
         code: this.to_complete.code,
         traiteursConfigs: this.to_complete.traiteursConfigs,
         restaurants: this.to_complete.restaurants
