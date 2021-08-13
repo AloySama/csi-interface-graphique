@@ -8,9 +8,9 @@
         <p :class="{gear: true, 'red-gear': settings_}"><a @click="OnClickButton"> <font-awesome-icon :icon="['fas', 'cog']"/></a></p>
       </div>
       <div id="contacts--social">
-        <div id="twitter"><a :href="twitter" target="_blank"><font-awesome-icon :icon="['fab', 'twitter']" class="place-icons"/></a></div>
-        <div id="facebook"><a :href="facebook" target="_blank"><font-awesome-icon :icon="['fab', 'facebook']" class="place-icons"/></a></div>
-        <div id="linkedin"><a :href="linkedin" target="_blank"><font-awesome-icon :icon="['fab', 'linkedin']" class="place-icons"/></a></div>
+        <div id="twitter"><a :href="twitter" target="_blank"><font-awesome-icon :icon="['fab', 'twitter']" class="place-icons" :title="twitter_title"/></a></div>
+        <div id="facebook"><a :href="facebook" target="_blank"><font-awesome-icon :icon="['fab', 'facebook']" class="place-icons" :title="facebook_title" /></a></div>
+        <div id="linkedin"><a :href="linkedin" target="_blank"><font-awesome-icon :icon="['fab', 'linkedin']" class="place-icons" :title="linkedin_title"/></a></div>
       </div>
     </div>
     <div id="mentions">
@@ -33,8 +33,11 @@ export default {
       mention : new Date().getFullYear() +' | ',
       date: 'Vous avez affiché cette page le ' + new Date().toLocaleString(),
       twitter: 'https://twitter.com/cashsystemes',
+      twitter_title: 'Twitter de CSI',
       facebook: 'https://www.facebook.com/cashsystemes/',
+      facebook_title: 'Facebook de CSI',
       linkedin: 'https://www.linkedin.com/company/cashsystemesindustrie?trk=public_profile_topcard_current_company&originalSubdomain=fr',
+      linkedin_title: 'LinkedIn de CSI'
     }
   },
   methods: {
