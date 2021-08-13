@@ -54,7 +54,7 @@ import EtablissementForm from "@/components/EtablissementForm.vue";
 import UploadFiles from "@/components/UploadFiles.vue";
 import RestaurantForm from "@/components/RestaurantForm.vue";
 import download from '@/functions/Savedata'
-import Footer from "@/components/footer.vue";
+import Footer from "@/components/Footer.vue";
 import RemoveElements from "@/components/RemoveElements.vue";
 import TabType from "@/functions/TabType";
 import ModifyElement from "@/components/ModifyElement.vue";

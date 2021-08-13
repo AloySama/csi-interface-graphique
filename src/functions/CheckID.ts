@@ -1,8 +1,6 @@
 export function checkID(json: Record<string, any>, id: number) {
     // @ts-ignore
-    for (const i of json) {
-        if (i.id === id) return true
-    }
+    for (const i of json) if (i.id === id) return true
     return false;
 }
 
@@ -30,9 +28,9 @@ export function checkEtabID(json: Record<string, any>, societe: number ,id: numb
 }
 
 export function isIDCorrect(json: Record<string, any>, id: number) {
-    if (checkID(json, id)) {
-        alert('L\'id existe déjà, nombre automatique attribué')
-        return FindAnID(json)
+    if (checkID(json, id) || id < 0) {
+        alert('Problème sur l\'id, nombre automatique attribué')
+        return FindAnID(json);
     }
     return id;
 }

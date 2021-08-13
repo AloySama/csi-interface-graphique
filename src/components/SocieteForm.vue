@@ -103,15 +103,17 @@ export default {
         this.add_tdd = false;
         return;
       }
-      const new_array = { id: this.to_complete.id!==null?isIDCorrect(this.json, this.to_complete.id):FindAnID(this.json), code: this.to_complete.code,
-        traiteursConfigs: this.to_complete.traiteursConfigs, etablissements: this.to_complete.etablissements};
+      const new_array = {id: this.to_complete.id!==null?isIDCorrect(this.json, this.to_complete.id):FindAnID(this.json),
+        code: this.to_complete.code,
+        traiteursConfigs: this.to_complete.traiteursConfigs,
+        etablissements: this.to_complete.etablissements};
       this.form.push(new_array);
       this.json = EditSociete(this.json, new_array);
       this.$emit('json_value', this.json);
       this.AllNull();
     },
     AllNull() {
-      this.to_complete.id = '';
+      this.to_complete.id = null;
       this.to_complete.code = null;
       this.to_complete.etablissements = [];
       this.to_complete.traiteursConfigs = [];
