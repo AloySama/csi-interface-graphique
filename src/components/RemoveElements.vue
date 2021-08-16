@@ -69,7 +69,6 @@ export default {
     },
     removeObjRest() {
       this.json[this.object.societe].etablissements[this.object.etab].restaurants.splice(this.object.rest, 1);
-      // this.DisabledButton('ButtonRem' + this.object.societe, 'delete');
       this.allReset(false, false, true);
     },
     allReset(soc, etab, rest) {

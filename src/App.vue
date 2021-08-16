@@ -19,9 +19,7 @@
                 :disabled="json==null" >Supprimer éléments</button>
         <button id="retour" :title="message['retour']" class="hover-item" v-if="bool.editing || bool.ChooseFile || bool.RemoveElement || bool.Modify"
         @click="
-        doEdit(false, ['edit', 'parcourir', 'remove', 'modify']);
-        updateButtons(null)
-        bool.ChooseFile = false; bool.RemoveElement = false">Retour</button>
+        doEdit(false, ['edit', 'parcourir', 'remove', 'modify']); updateButtons(null);bool.ChooseFile=false; bool.RemoveElement=false">Retour</button>
       </div>
     </header>
   </div>
