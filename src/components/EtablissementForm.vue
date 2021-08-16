@@ -108,12 +108,13 @@ export default {
     },
     IsSubmitted() {
       if (typeof this.to_complete.id === 'string') this.to_complete.id = null;
-      this.to_complete.id = this.to_complete.id !== null ? isIDCorrect(this.json, this.to_complete.id) : FindAnID(this.json);
       if (this.modify != null) {
         this.add_eta = false;
         this.add_tdd = false;
+        this.to_complete.id = this.to_complete.id !== null ? isIDCorrect(this.json[this.societe].etablissements, this.to_complete.id, this.to_complete.id) : FindAnID(this.json);
         return;
       }
+      this.to_complete.id = this.to_complete.id !== null ? isIDCorrect(this.json[this.societe].etablissements, this.to_complete.id, -1) : FindAnID(this.json);
       const new_array = {
         id: this.to_complete.id,
         code: this.to_complete.code,

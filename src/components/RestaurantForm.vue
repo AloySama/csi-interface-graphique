@@ -177,17 +177,19 @@ export default {
       if ((this.FillTab['societe'] !== index)) this.FillTab['etablissement'] = -1;
     },
     isSubmitted() {
+      const length = this.to_complete.length - 1;
+      if (typeof this.to_complete[length].matricule === 'string') this.to_complete[length].matricule = null;
       if (this.modify != null) {
         this.bool.AddTdd = false;
+        this.to_complete[length].matricule = this.to_complete[length].matricule !== null ? isIDCorrectRes(this.json, this.to_complete[length].matricule, this.to_complete[length].matricule) :
+            FindIDRes(this.json, false, 0, this.to_complete[length].matricule);
         return;
       }
-      const length = this.to_complete.length - 1;
-      const matricule = this.to_complete[length].matricule !== null ? this.to_complete[length].matricule < 0 ? FindIDRes(this.json, false, 0) :
-          isIDCorrectRes(this.json, this.to_complete[length].matricule) : FindIDRes(this.json, false, 0);
-      this.to_complete[length].matricule = matricule;
-      this.to_complete[length].restaurantId = matricule;
-      this.to_complete[length].compteAuxiliaire = this.setAuxiliaire('REST', matricule);
-      this.to_complete[length].auxiliaireCreditClient = this.setAuxiliaire('C950', matricule);
+      this.to_complete[length].matricule = this.to_complete[length].matricule !== null ? isIDCorrectRes(this.json, this.to_complete[length].matricule,-1) :
+          FindIDRes(this.json, false, 0,-1);
+      this.to_complete[length].restaurantId = this.to_complete[length].matricule;
+      this.to_complete[length].compteAuxiliaire = this.setAuxiliaire('REST', this.to_complete[length].matricule);
+      this.to_complete[length].auxiliaireCreditClient = this.setAuxiliaire('C950', this.to_complete[length].matricule);
       this.to_complete[length].traiteursConfigs = checkIDTC(this.to_complete[length].traiteursConfigs) ?
           FindIDTC(this.to_complete[length].traiteursConfigs) : this.to_complete[length].traiteursConfigs;
       this.json = EditRestaurant(this.json, this.to_complete[length], this.FillTab);

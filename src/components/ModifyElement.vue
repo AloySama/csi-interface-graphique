@@ -5,7 +5,7 @@
   <div v-if="bool.ModifySociete">
     <ul>
       <li class="OneLine" v-for="(soc, index) in functions.ParseSociete(json)" :key="soc">
-        <button :id="'ModifySoc' + index" class="hover-item" @click="waitFor(index); fillTab(index);">{{soc}}</button>
+        <button :id="'ModifySoc' + index" class="hover-item" @click="waitForSociete(index); fillTab(index);">{{soc}}</button>
       </li>
     </ul>
   </div>
@@ -19,7 +19,7 @@
   <div v-if="tab.societe !== -1 && bool.ModifyEtab">
     <ul>
       <li class="OneLine" v-for="(etab, index_eta) in functions.ParseEtablissement(json, tab.societe)" :key="index_eta">
-        <button class="hover-item" :id="'ModifyEta' + index_eta" @click="tab.etab=index_eta">{{etab}}</button>
+        <button class="hover-item" :id="'ModifyEta' + index_eta" @click="waitForEtab(index_eta)">{{etab}}</button>
       </li>
     </ul>
   </div>
@@ -46,12 +46,12 @@
   <div>
     <ul v-if="bool.ModifyRest && tab.societe !== -1 && tab.etab !== -1">
       <li v-for="(rest, index) in functions.ParseRestaurant(json, tab.societe, tab.etab)" :key="rest">
-        <button class="hover-item" :id="'ModifyRest' + index" @click="tab.rest=index">{{rest}}</button>
+        <button class="hover-item" :id="'ModifyRest' + index" @click="waitForRest(index)">{{rest}}</button>
       </li>
     </ul>
   </div>
   <div v-if="bool.ModifyRest && tab.societe !== -1 && tab.etab !== -1 && tab.rest !== -1">
-    <restaurant-form json-file="json-file" :rest-modify="json[tab.societe].etablissements[tab.etab].restaurants[tab.rest]" :id-tab="{soc: tab.societe, eta: tab.etab, rest: tab.rest}"></restaurant-form>
+    <restaurant-form :json-file="json" :rest-modify="json[tab.societe].etablissements[tab.etab].restaurants[tab.rest]" :id-tab="{soc: tab.societe, eta: tab.etab, rest: tab.rest}"></restaurant-form>
   </div>
 </template>
 
@@ -105,9 +105,17 @@ export default {
       this.toComplete.societe.id = this.json[index].id;
       this.toComplete.societe.TraiteurConfigs = this.json[index].traiteursConfigs;
     },
-    waitFor(index) {
+    waitForSociete(index) {
       this.tab.societe = -1
       setTimeout(() => {this.tab.societe = index}, 0);
+    },
+    waitForEtab(index) {
+      this.tab.etab = -1
+      setTimeout(() => {this.tab.etab = index}, 0);
+    },
+    waitForRest(index) {
+      this.tab.rest = -1
+      setTimeout(() => {this.tab.rest = index}, 0);
     },
     setBool(soc, etab, rest) {
       this.bool.ModifySociete = soc;
