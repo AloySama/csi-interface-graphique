@@ -39,6 +39,7 @@
       </div><input class="hover-item" type="submit" :disabled="!to_complete.code || to_complete.id < 0" @click="IsSubmitted">
     </form>
   </div>
+  <button v-if="id_societe!=null" class="hover-item" @click="Reinitialize(json[id_societe].etablissements)">Réinitialise les ID</button>
 </template>
 
 <script>
@@ -46,6 +47,7 @@
 import ParseSociete from "../functions/ParseSociete";
 import App from '../App'
 import TddForm from "@/components/TddForm";
+import {Reinitialize} from "@/functions/CheckID";
 import {EditEtab} from "@/functions/EditElements";
 import {FindAnID, isIDCorrect} from "@/functions/CheckID";
 
@@ -76,6 +78,7 @@ export default {
     return {
       App,
       ParseSociete,
+      Reinitialize,
       idSoc: this.id_societe,
       json: this.jsonFile,
       modify: this.etabModify,

@@ -38,16 +38,28 @@ export function FindIDRes(json: Record<string, any>, bool: boolean, _id: number,
     // @ts-ignore
     for (const societe of json) {
         for (const etablissement of societe.etablissements) {
-            for (const k of etablissement.restaurants) {
-                if (k.matricule === except && once === 0) once++;
-                else if (bool && k.matricule === _id) return true;
-                else if (k.matricule === id) ++id;
+            for (const rest of etablissement.restaurants) {
+                if (rest.matricule === except && once === 0) once++;
+                else if (bool && rest.matricule === _id) return true;
+                else if (rest.matricule === id) ++id;
                 else break;
             }
         }
     }
     if (bool) return false;
     return id;
+}
+
+export function ReinitializeRes(json: Record<string, any>) {
+    let id = 0;
+    // @ts-ignore
+    for (const societe of json) {
+        for (const etablissement of societe) {
+            for (const restaurant of etablissement) {
+                restaurant.matricule = id++;
+            }
+        }
+    }
 }
 
 export function isIDCorrectRes(json: Record<string, any>, id: number, except: number) {

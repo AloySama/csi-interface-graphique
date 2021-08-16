@@ -77,9 +77,11 @@
     <input class="hover-item" type="submit" @click="isSubmitted"
            :disabled="!to_complete[to_complete.length-1].etab_code">
   </div>
+  <button class="hover-item" @click="-ReinitializeRes(json)">Reinitialise ID</button>
 </template>
 
 <script>
+import {ReinitializeRes} from '@/functions/CheckID';
 import Etablissement from './EtablissementForm'
 import App from "@/App";
 import ParseSociete from "../functions/ParseSociete";
@@ -110,6 +112,7 @@ export default {
     return {
       ParseSociete,
       ParseEtablissement,
+      ReinitializeRes,
       Etablissement,
       App,
       modify: this.restModify,
