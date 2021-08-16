@@ -47,7 +47,7 @@
             <div class="col-25">{{ item }}</div>
             <div class="col-75">
               <div v-if="item === 'localisations'">
-                <select id="localisation" class="select-css" v-model="to_complete[main_index][item]" multiple>
+                <select id="localisation" class="select-css top" v-model="to_complete[main_index][item]" multiple>
                   <option :value="e" v-for="e in LOCALISATION" :key="e">{{ e }}</option>
                 </select>
               </div>
