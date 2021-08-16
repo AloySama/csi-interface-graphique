@@ -53,7 +53,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .black {
   margin-left: 75px;
   position: center;

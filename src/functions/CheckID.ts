@@ -54,8 +54,8 @@ export function ReinitializeRes(json: Record<string, any>) {
     let id = 0;
     // @ts-ignore
     for (const societe of json) {
-        for (const etablissement of societe) {
-            for (const restaurant of etablissement) {
+        for (const etablissement of societe.etablissements) {
+            for (const restaurant of etablissement.restaurants) {
                 restaurant.matricule = id++;
             }
         }
