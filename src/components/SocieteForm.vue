@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <button class="hover-item" @click="isModifyContent" v-if="modify">ok</button>
-    <form @submit.prevent="" >
+    <button class="hover-item" @click="isModifyContent" v-if="modify">Modifier</button>
+    <form @submit.prevent="">
       <div class="row">
         <div class="col-25">
           <label>Code</label>
@@ -19,19 +19,17 @@
           <input v-model="add_id" type="checkbox">
         </div>
       </div>
-      <div>
         <div v-if="add_id" class="row indent">
-          <form>
+          <form @submit.prevent="">
             <div class="col-25">
               <label >id</label>
             </div>
             <div class="col-75">
               <input  type="number" min="0" v-model.number="to_complete.id">
-              <p class="error-message" v-if="to_complete.id < 0">L'id ne peut être strictement positif.</p>
+              <p class="error-message" v-if="to_complete.id < 0">L'id ne peut être que strictement positif.</p>
             </div>
           </form>
         </div>
-      </div>
       <div class="row">
         <div class="col-25">
           <label >Ajouter Traiteur config ?</label>

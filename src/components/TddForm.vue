@@ -1,5 +1,5 @@
 <template>
-  <button class="hover-item" @click="isModifyContent" v-if="traiteurModif!=null&&traiteurModif.length!==0">ok</button>
+  <button class="hover-item" @click="isModifyContent" v-if="traiteurModif!=null&&traiteurModif.length!==0">OK</button>
   <button class="hover-item" @click="AddFormTdd2x">×2</button><button class="hover-item" @click="AddFormTdd">+</button>
   <b>{{ tdd_nbr }}</b>
   <button class="hover-item" @click="RemoveFormTdd">-</button><button class="hover-item" @click="RemoveFormTdd2x">-×2</button>
@@ -66,6 +66,15 @@
   </div>
   <button class="hover-item" @click="SubmitForm">Valider TraiteurConfig</button>
   <p class="error-message"><u>Cliquer sur 'valider TraiteurConfig' ou les données ne seront pas sauvegardé dans la société.</u></p>
+  <div v-if="traiteurModif != null && checkTab(traiteurModif)">
+    <hr class="HR"/>
+    <strong>Modifier éléments tableaux</strong>
+    <form @submit.prevent="">
+      <button class="hover-item" v-for="(tdd, index) in traiteurModif" :key="tdd" @click="modifyTabs=listOfFillTabs(traiteurModif[index]); indexes=index">TraiteurConfig{{index}}
+      </button>
+      <div v-for="item in modifyTabs" :key="item"></div>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -82,6 +91,8 @@ export default {
   },
   data() {
     return {
+      modifyTabs: {},
+      indexes: -1,
       isOKClicked: false,
       traiteurModif: this.traiteurModification,
       values: {min: 0, max: 50},
@@ -245,6 +256,24 @@ export default {
     deleteIt(index) {
       this.tdd_nbr--;
       this.to_complete.splice(index, 1);
+    },
+    checkTab(tdds) {
+      for (const tdd of tdds) {
+        for (const value in this.array.filtration) {
+          if (this.array.filtration[value] !== '?????') // Supprimer cette ligne quand RULE sera attribué
+            if (tdd[this.array.filtration[value]].length > 0) return true;
+        }
+      }
+      return false;
+    },
+    listOfFillTabs(tdd) {
+      const list = [];
+      for (const value in this.array.filtration) {
+        if (this.array.filtration[value] !== '?????' && tdd[this.array.filtration[value]].length > 0) {
+          list.push(this.array.filtration[value])
+        }
+      }
+      return list;
     }
   }
 }
@@ -289,6 +318,11 @@ b {
 .red {
   color: red;
   font-weight: bold;
+}
+
+hr.HR {
+  border: 10px solid green;
+  border-radius: 5px;
 }
 
 </style>
