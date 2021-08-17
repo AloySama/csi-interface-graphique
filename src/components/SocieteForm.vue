@@ -55,7 +55,7 @@ import EditSociete from "@/functions/EditElements";
 import {FindAnID, Reinitialize, isIDCorrect} from '@/functions/CheckID'
 
 export default {
-  emits: ['json_value'],
+  emits: ['json_value', 'to_complete'],
   name: "SocieteForm",
   props: {
     jsonFile: {
@@ -99,10 +99,13 @@ export default {
   methods: {
     isSubmitted() {
       if (typeof this.to_complete.id === 'string')this.to_complete.id = null;
+      if (this.to_complete.code.length === 0) this.to_complete.code = 'Défaut';
       if (this.modify != null) {
+        this.to_complete.id = this.to_complete.id !== null ? isIDCorrect(this.json, this.to_complete.id, this.to_complete.id) : FindAnID(this.json);
+        this.$emit('to_complete', this.to_complete);
         this.add_eta = false;
         this.add_tdd = false;
-        this.to_complete.id = this.to_complete.id !== null ? isIDCorrect(this.json, this.to_complete.id, this.to_complete.id) : FindAnID(this.json);
+        this.to_complete = []
         return;
       }
       this.to_complete.id = this.to_complete.id !== null ? isIDCorrect(this.json, this.to_complete.id, -1) : FindAnID(this.json);
@@ -128,7 +131,12 @@ export default {
     isModifyContent() {
       if (typeof this.modify !== 'undefined') {
         if (this.modify.traiteursConfigs.length !== 0) this.add_tdd = true;
-        this.to_complete = this.modify;
+        this.to_complete = {
+          id: this.modify.id,
+          code: this.modify.code,
+          traiteursConfigs: this.modify.traiteursConfigs,
+          etablissements: this.modify.etablissements
+        }
       }
     }
   }

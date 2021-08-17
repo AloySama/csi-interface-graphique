@@ -9,7 +9,7 @@
     </ul>
   </div>
   <div v-else-if="modify.length!==0">
-    <button class="hover-item" @click="to_complete=etabModify; societe=idSoc; isModifyContent">ok</button>
+    <button class="hover-item" @click="isModifyContent">ok</button>
   </div>
   <div v-if="societe >= 0" class="container">
     <form @submit.prevent="">
@@ -72,7 +72,7 @@ export default {
     }
   },
   components: {TddForm},
-  emits : ['edit_value', 'json_value'],
+  emits : ['edit_value', 'json_value', 'to_complete'],
   name: "EtablissementForm",
   data() {
     return {
@@ -115,6 +115,7 @@ export default {
         this.add_eta = false;
         this.add_tdd = false;
         this.to_complete.id = this.to_complete.id !== null ? isIDCorrect(this.json[this.societe].etablissements, this.to_complete.id, this.to_complete.id) : FindAnID(this.json);
+        this.$emit('to_complete', this.to_complete);
         return;
       }
       this.to_complete.id = this.to_complete.id !== null ? isIDCorrect(this.json[this.societe].etablissements, this.to_complete.id, -1) : FindAnID(this.json);
@@ -135,12 +136,15 @@ export default {
       this.to_complete.traiteursConfigs = [];
     },
     isModifyContent() {
+      this.societe = this.idSoc;
       if (typeof this.modify !== 'undefined') {
-        if (this.modify.traiteursConfigs.length !== 0) {
-          this.add_tdd = true;
-          alert('oui')
-        }
-        this.to_complete = this.modify;
+        if (this.modify.traiteursConfigs.length !== 0) this.add_tdd = true;
+        this.to_complete = {
+          id: this.modify.id,
+          code: this.modify.code,
+          traiteursConfigs: this.modify.traiteursConfigs,
+          restaurants: this.modify.restaurants
+        };
       }
     }
   }

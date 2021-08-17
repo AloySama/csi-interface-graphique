@@ -27,7 +27,7 @@
     </div>
   </div>
   <div v-else>
-    <button class="hover-item" @click="setToComplete(); FillTab['societe']=ids.soc; FillTab['etablissement']=ids.eta">
+    <button class="hover-item" @click="isModifyContent">
       ok
     </button>
   </div>
@@ -107,7 +107,7 @@ export default {
     }
   },
   components: {TddForm},
-  emits: ['edit_value'],
+  emits: ['edit_value', 'to_complete'],
   data() {
     return {
       ParseSociete,
@@ -179,6 +179,22 @@ export default {
     hasChanged(index) {
       if ((this.FillTab['societe'] !== index)) this.FillTab['etablissement'] = -1;
     },
+    isModifyContent() {
+      this.FillTab.societe = this.ids.soc;
+      this.FillTab.etablissement = this.ids.eta;
+      if (typeof this.modify !== 'undefined') {
+        this.to_complete.push({
+          code_societe: this.modify.code_societe,
+          compteAuxiliaire: this.modify.compteAuxiliaire,
+          etab_code: this.modify.etab_code,
+          reference_config_compensation: this.modify.reference_config_compensation,
+          auxiliaireCreditClient: this.modify.auxiliaireCreditClient,
+          matricule: this.modify.matricule,
+          restaurantId: this.modify.restaurantId,
+          traiteursConfigs: this.modify.traiteursConfigs
+        })
+      }
+    },
     isSubmitted() {
       const length = this.to_complete.length - 1;
       if (typeof this.to_complete[length].matricule === 'string') this.to_complete[length].matricule = null;
@@ -186,6 +202,7 @@ export default {
         this.bool.AddTdd = false;
         this.to_complete[length].matricule = this.to_complete[length].matricule !== null ? isIDCorrectRes(this.json, this.to_complete[length].matricule, this.to_complete[length].matricule) :
             FindIDRes(this.json, false, 0, this.to_complete[length].matricule);
+        this.$emit('to_complete', this.to_complete[length]);
         return;
       }
       this.to_complete[length].matricule = this.to_complete[length].matricule !== null ? isIDCorrectRes(this.json, this.to_complete[length].matricule,-1) :

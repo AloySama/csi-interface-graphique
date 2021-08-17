@@ -24,10 +24,10 @@
     </ul>
   </div>
   <div v-if="tab.societe !== -1 && bool.ModifySociete">
-    <societe-form :json-file="json" :modify-content="json[tab.societe]" :id_societe="tab.societe"></societe-form>
+    <societe-form :json-file="json" :modify-content="json[tab.societe]" :id_societe="tab.societe" @to_complete="setCompleteSoc"></societe-form>
   </div>
   <div v-if="tab.etab !== -1 && bool.ModifyEtab">
-    <etablissement-form :json-file="json" :etab-modify="returnEtab()" :id_societe="tab.societe"></etablissement-form>
+    <etablissement-form :json-file="json" :etab-modify="returnEtab()" :id_societe="tab.societe" @to_complete="setCompleteEta"></etablissement-form>
   </div>
   <div v-if="bool.ModifyRest">
     <ul>
@@ -51,7 +51,7 @@
     </ul>
   </div>
   <div v-if="bool.ModifyRest && tab.societe !== -1 && tab.etab !== -1 && tab.rest !== -1">
-    <restaurant-form :json-file="json" :rest-modify="json[tab.societe].etablissements[tab.etab].restaurants[tab.rest]" :id-tab="{soc: tab.societe, eta: tab.etab, rest: tab.rest}"></restaurant-form>
+    <restaurant-form :json-file="json" :rest-modify="json[tab.societe].etablissements[tab.etab].restaurants[tab.rest]" :id-tab="{soc: tab.societe, eta: tab.etab, rest: tab.rest}" @to_complete="setCompleteRes"></restaurant-form>
   </div>
 </template>
 
@@ -121,6 +121,18 @@ export default {
       this.bool.ModifySociete = soc;
       this.bool.ModifyEtab = etab;
       this.bool.ModifyRest = rest;
+    },
+    setCompleteSoc(complete) {
+      this.json[this.tab.societe] = complete;
+      setTimeout(() => {this.tab.societe = -1}, 0);
+    },
+    setCompleteEta(complete) {
+      this.json[this.tab.societe].etablissements[this.tab.etab] = complete;
+      setTimeout(() => {this.tab.etab = -1}, 0);
+    },
+    setCompleteRes(complete) {
+      this.json[this.tab.societe].etablissements[this.tab.etab].restaurants[this.tab.rest] = complete;
+      setTimeout(() => {this.tab.rest = -1}, 0);
     },
     returnEtab() {
       const value = this.json[this.tab.societe].etablissements[this.tab.etab];
