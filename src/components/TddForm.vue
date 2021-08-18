@@ -150,6 +150,8 @@ export default {
   methods: {
     SubmitForm() {
       if (checkIDTC(this.to_complete)) this.to_complete = FindIDTC(this.to_complete)
+      for (const c of this.to_complete) c.filtration = this.listOfFillTabs(c);
+      console.log(this.to_complete);
       this.FormTdd.tdd = this.to_complete;
       this.$emit('tdd_form', {tdd: this.FormTdd.tdd, add: this.isOKClicked});
       this.FormTdd.tdd = [];
@@ -293,6 +295,9 @@ export default {
     deleteItemTabs(id) {
       this.traiteurModif[this.indexes][this.tabName].splice(id, 1)
       this.deleteTabs=this.listItemTabs(this.tabName);
+      for (const c of this.traiteurModif) {
+        c.filtration = this.listOfFillTabs(c);
+      }
     }
   }
 }
