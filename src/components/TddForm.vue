@@ -72,7 +72,13 @@
     <form @submit.prevent="">
       <button class="hover-item" v-for="(tdd, index) in traiteurModif" :key="tdd" @click="modifyTabs=listOfFillTabs(traiteurModif[index]); indexes=index">TraiteurConfig{{index}}
       </button>
-      <div v-for="item in modifyTabs" :key="item"></div>
+      <div>
+        <button class="hover-item" v-for="item in modifyTabs" :key="item" @click="deleteTabs=listItemTabs(item); tabName=item">{{item}}</button>
+      </div>
+      <div v-if="typeof deleteTabs != null">
+        <b>Cliquez sur un élément pour le supprimer</b><br>
+        <button class="hover-item" v-for="(item, index) in deleteTabs" :key="item" @click="deleteItemTabs(index)">{{item}}</button>
+      </div>
     </form>
   </div>
 </template>
@@ -91,7 +97,9 @@ export default {
   },
   data() {
     return {
-      modifyTabs: {},
+      modifyTabs: [],
+      deleteTabs: null,
+      tabName: '',
       indexes: -1,
       isOKClicked: false,
       traiteurModif: this.traiteurModification,
@@ -274,6 +282,17 @@ export default {
         }
       }
       return list;
+    },
+    listItemTabs(item) {
+      const list = [];
+      for (const obj of this.traiteurModif[this.indexes][item]) {
+        list.push(obj);
+      }
+      return list;
+    },
+    deleteItemTabs(id) {
+      this.traiteurModif[this.indexes][this.tabName].splice(id, 1)
+      this.deleteTabs=this.listItemTabs(this.tabName);
     }
   }
 }
