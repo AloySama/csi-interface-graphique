@@ -5,7 +5,7 @@
       <li class="OneLine" v-for="(soc, index) in ParseSociete(json)" :key="index">
         <button :id="'ButtonEta' + index" class="hover-item" @click="disabledButton(index, true, 'ButtonEta')">{{soc}}</button>
       </li>
-        <button class="hover-item" @click="fillSociete(-1); App.methods.doEdit(false, ['AddEta']); $emit('edit_value', false)">Retour</button>
+        <button class="hover-item" @click="societe = -1; App.methods.doEdit(false, ['AddEta']); $emit('edit_value', false)">Retour</button>
     </ul>
   </div>
   <div v-else-if="modify.length!==0">
@@ -98,11 +98,8 @@ export default {
       if (tdd.add) this.to_complete.traiteursConfigs = tdd.tdd;
       else for (const t of tdd.tdd) this.to_complete.traiteursConfigs.push(t);
     },
-    fillSociete(s) {
-      this.societe = s;
-    },
     disabledButton(i, bool, id) {
-      this.fillSociete(i);
+      this.societe = i;
       document.getElementById(id + i).disabled = bool;
       for(let j = 0; j < ParseSociete(this.json).length; j++) {
           if (j === i) continue;

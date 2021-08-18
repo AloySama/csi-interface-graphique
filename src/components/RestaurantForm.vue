@@ -153,7 +153,7 @@ export default {
       if (tdd.add) this.to_complete[this.to_complete.length - 1].traiteursConfigs = tdd.tdd;
       else for (const t of tdd.tdd) this.to_complete[this.to_complete.length - 1].traiteursConfigs.push(t);
     },
-    setAuxiliaire(prefix, IDRes) {
+    setAuxiliaire(prefix, IDRes) { //TODO revoir cette fonction
       if (IDRes < 10) return (prefix + '0' + IDRes);
       else if (IDRes < 100) return (prefix + '0' + IDRes);
       return (prefix + IDRes);
@@ -215,11 +215,6 @@ export default {
       this.json = EditRestaurant(this.json, this.to_complete[length], this.FillTab);
       this.bool.AddTdd = false;
       this.addToComplete();
-    },
-    setToComplete() {
-      const arr = [];
-      arr.push(this.modify);
-      this.to_complete = arr;
     }
   }
 }

@@ -5,7 +5,7 @@
   <div v-if="bool.ModifySociete">
     <ul>
       <li class="OneLine" v-for="(soc, index) in functions.ParseSociete(json)" :key="soc">
-        <button :id="'ModifySoc' + index" class="hover-item" @click="waitForSociete(index); fillTab(index);">{{soc}}</button>
+        <button :id="'ModifySoc' + index" class="hover-item" @click="waitFor(index, 'societe'); fillTab(index);">{{soc}}</button>
       </li>
     </ul>
   </div>
@@ -19,7 +19,7 @@
   <div v-if="tab.societe !== -1 && bool.ModifyEtab">
     <ul>
       <li class="OneLine" v-for="(etab, index_eta) in functions.ParseEtablissement(json, tab.societe)" :key="index_eta">
-        <button class="hover-item" :id="'ModifyEta' + index_eta" @click="waitForEtab(index_eta)">{{etab}}</button>
+        <button class="hover-item" :id="'ModifyEta' + index_eta" @click="waitFor(index_eta, 'etab')">{{etab}}</button>
       </li>
     </ul>
   </div>
@@ -46,7 +46,7 @@
   <div>
     <ul v-if="bool.ModifyRest && tab.societe !== -1 && tab.etab !== -1">
       <li v-for="(rest, index) in functions.ParseRestaurant(json, tab.societe, tab.etab)" :key="rest">
-        <button class="hover-item" :id="'ModifyRest' + index" @click="waitForRest(index)">{{rest}}</button>
+        <button class="hover-item" :id="'ModifyRest' + index" @click="waitFor(index, 'rest')">{{rest}}</button>
       </li>
     </ul>
   </div>
@@ -105,17 +105,9 @@ export default {
       this.toComplete.societe.id = this.json[index].id;
       this.toComplete.societe.TraiteurConfigs = this.json[index].traiteursConfigs;
     },
-    waitForSociete(index) {
-      this.tab.societe = -1
-      setTimeout(() => {this.tab.societe = index}, 0);
-    },
-    waitForEtab(index) {
-      this.tab.etab = -1
-      setTimeout(() => {this.tab.etab = index}, 0);
-    },
-    waitForRest(index) {
-      this.tab.rest = -1
-      setTimeout(() => {this.tab.rest = index}, 0);
+    waitFor(index, fill) {
+      this.tab[fill] = -1
+      setTimeout(() => {this.tab[fill] = index}, 0);
     },
     setBool(soc, etab, rest) {
       this.bool.ModifySociete = soc;
