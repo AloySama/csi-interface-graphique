@@ -3,8 +3,8 @@
   <button class="hover-item" @click="AddFormTdd2x">×2</button><button class="hover-item" @click="AddFormTdd">+</button>
   <b>{{ tdd_nbr }}</b>
   <button class="hover-item" @click="RemoveFormTdd">-</button><button class="hover-item" @click="RemoveFormTdd2x">-×2</button>
-  <p v-if="tdd_nbr < values.min || tdd_nbr > values.max" class="error-message">Le TraiteurConfig doit être compris entre {{ values.min }} et {{ values.max }}</p>
-  <div v-if="tdd_nbr >= values.min && tdd_nbr <= values.max">
+  <p v-if="tdd_nbr < values.min" class="error-message">Le TraiteurConfig doit être supérieur à {{ values.min }}</p>
+  <div v-if="tdd_nbr >= values.min">
     <div v-for="(number, main_index) in parseInt(tdd_nbr)" :key="parseInt(number)">
       <form @submit.prevent="" class="top">
         <ol>
@@ -103,7 +103,7 @@ export default {
       indexes: -1,
       isOKClicked: false,
       traiteurModif: this.traiteurModification,
-      values: {min: 0, max: 50},
+      values: {min: 0},
       tdd_nbr: 0,
       tdd: [],
       rsd: ['recuperation', 'specialite', 'direction'],
@@ -124,9 +124,10 @@ export default {
           LOCALISATION: 'localisations',
           PROFIT: 'profits',
           COMPTE: 'comptes',
-          RULES: '?????' //TODO: VERIFIER ICI A QUOI CORRESPOND RULES
+          RULES: 'rules'
         },
         comptes: [],
+        rules: [],
         tvas: [],
         documents: [],
         familles: [],
@@ -174,6 +175,7 @@ export default {
         "codeJournal": 0,
         "compte": 0,
         "comptes": [],
+        "rules": [],
         "documents": [],
         "familles": [],
         "filtration": [],
@@ -219,16 +221,11 @@ export default {
       });
     },
     AddFormTdd() {
-      if (this.tdd_nbr >= this.values.max) return;
       this.ToComplete();
       this.ToPush();
       this.tdd_nbr++;
     },
     AddFormTdd2x() {
-      if (this.tdd_nbr + 2 > this.values.max) {
-        this.AddFormTdd();
-        return;
-      }
       this.ToComplete();
       this.ToComplete();
       this.ToPush();
