@@ -100,17 +100,8 @@ b {
 body > #bg {
     height: 100%;
     width: 100%;
-    background-color: rebeccapurple;
-    clip-path: polygon(0 0, 100% 0%, 34% 100%, 0 100%);
-    position: fixed;
-    z-index: -1;
-}
-
-body > #bg2 {
-    height: 100%;
-    width: 100%;
-    background-color: white;
-    clip-path: polygon(30% 100%, 100% 0%, 100% 100%, 30% 100%);
+    background-image: url("bg.jpg");
+    background-size: cover;
     position: fixed;
     z-index: -1;
 }
