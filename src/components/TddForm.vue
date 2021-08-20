@@ -51,6 +51,11 @@
                   <option :value="e" v-for="e in LOCALISATION" :key="e">{{ e }}</option>
                 </select>
               </div>
+              <div v-else-if="item==='documents'">
+                <select id="document" class="select-css top" v-model="to_complete[main_index][item]" multiple>
+                  <option :value="e" v-for="e in DOCUMENT" :key="e">{{ e }}</option>
+                </select>
+              </div>
               <div v-else>
                 <input type="text" v-model="to_push[main_index][item]">
                 <button class="hover-item" @click="addElement(main_index, item, to_push[main_index][item])"
@@ -126,15 +131,15 @@ export default {
           PROFIT: 'profits',
           COMPTE: 'comptes'
         },
-        comptes: [],
-        rules: [],
+        comptes: [], // number
+        rules: [], //number
         tvas: [],
         documents: [],
         familles: [],
         groupes: [],
         libelles: [],
         localisations: [],
-        numeros: [],
+        numeros: [], //number
         profits: [],
         sousfamilles: [],
         tags: [],
@@ -145,6 +150,7 @@ export default {
       string: ["auxiliaire", "compteAnalytique1", "compteAnalytique2", "compteAnalytique3", "tax_code", "transaction", 'libelle'],
       to_complete: [],
       LOCALISATION: ['EAT_IN', 'TAKE_OUT', 'DRIVE_THROUGH', 'DELIVERY', 'PICKUP', 'KIOSK_EAT_IN', 'KIOSK_TAKE_OUT', 'SALLE', 'SALLE_EAT_IN', 'SALLE_TAKE_OUT', 'EXTERIEUR', 'PARKING'],
+      DOCUMENT: ['COMMANDE', 'TICKET','RECU_PRELEVEMENT', 'RECU_SESSION_OUVERTE', 'RECU_FIN_SESSION', 'FACTURE', 'NOTE', 'RECU_FIN_SESSION_DECLARE', 'RECU_PRELEVEMENT_DECLARE', 'RECU_REPRISE_SESSION', 'RECU_FIN_SESSION_ANNULEE', 'BON_DEPENSE', 'BON_RECETTE', 'BON_EQUILLIBRE', 'CLOTURE_REGLEMENT', 'TABLE', 'COMPTE', 'COMPTECOMMANDE', 'DUPLICATA', 'RECU_TRANSFERT', 'RECU_REGLEMENT_EMPLOYE', 'RECU_RAZ_COMPTE', 'CLOTURE_EXERCICE', 'RECU_EXPORT', 'TEST', 'REPAS_COMPLET', 'DOCUMENT'],
       FormTdd: {tdd: []}
     }
   },
