@@ -57,7 +57,8 @@
                 </select>
               </div>
               <div v-else>
-                <input type="text" v-model="to_push[main_index][item]">
+                <input v-if="tabNumber.includes(item)" type="number" v-model.number="to_push[main_index][item]">
+                <input v-else type="text" v-model="to_push[main_index][item]">
                 <button class="hover-item" @click="addElement(main_index, item, to_push[main_index][item])"
                         :disabled="to_push[main_index][item].length < 1">Ajouter
                 </button>
@@ -131,15 +132,15 @@ export default {
           PROFIT: 'profits',
           COMPTE: 'comptes'
         },
-        comptes: [], // number
-        rules: [], //number
+        comptes: [],
+        rules: [],
+        numeros: [],
         tvas: [],
         documents: [],
         familles: [],
         groupes: [],
         libelles: [],
         localisations: [],
-        numeros: [], //number
         profits: [],
         sousfamilles: [],
         tags: [],
@@ -151,20 +152,19 @@ export default {
       to_complete: [],
       LOCALISATION: ['EAT_IN', 'TAKE_OUT', 'DRIVE_THROUGH', 'DELIVERY', 'PICKUP', 'KIOSK_EAT_IN', 'KIOSK_TAKE_OUT', 'SALLE', 'SALLE_EAT_IN', 'SALLE_TAKE_OUT', 'EXTERIEUR', 'PARKING'],
       DOCUMENT: ['COMMANDE', 'TICKET','RECU_PRELEVEMENT', 'RECU_SESSION_OUVERTE', 'RECU_FIN_SESSION', 'FACTURE', 'NOTE', 'RECU_FIN_SESSION_DECLARE', 'RECU_PRELEVEMENT_DECLARE', 'RECU_REPRISE_SESSION', 'RECU_FIN_SESSION_ANNULEE', 'BON_DEPENSE', 'BON_RECETTE', 'BON_EQUILLIBRE', 'CLOTURE_REGLEMENT', 'TABLE', 'COMPTE', 'COMPTECOMMANDE', 'DUPLICATA', 'RECU_TRANSFERT', 'RECU_REGLEMENT_EMPLOYE', 'RECU_RAZ_COMPTE', 'CLOTURE_EXERCICE', 'RECU_EXPORT', 'TEST', 'REPAS_COMPLET', 'DOCUMENT'],
+      tabNumber: ['comptes', 'rules', 'numeros'],
       FormTdd: {tdd: []}
     }
   },
   methods: {
     SubmitForm() {
-      if (checkIDTC(this.to_complete)) this.to_complete = FindIDTC(this.to_complete)
       for (const c of this.to_complete) c.filtration = this.listOfFillTabs(c);
-      console.log(this.to_complete);
       this.FormTdd.tdd = this.to_complete;
       this.$emit('tdd_form', {tdd: this.FormTdd.tdd, add: this.isOKClicked});
       this.FormTdd.tdd = [];
     },
     addElement(main_index, index, text) {
-      if (this.to_push[main_index][index].length > 0) {
+      if (this.to_push[main_index][index].length > 0 || this.to_push[main_index][index] > 0) {
         this.to_complete[main_index][index].push(text);
         this.to_push[main_index][index] = ''
       }
@@ -217,15 +217,15 @@ export default {
         familles: '',
         groupes: '',
         sousfamilles: '',
-        numeros: '',
+        numeros: 0,
         libelles: '',
         tags: '',
         documents: '',
         localisations: '',
         profits: '',
-        comptes: '',
+        comptes: 0,
         tvas: '',
-        rules: ''
+        rules: 0
       });
     },
     AddFormTdd() {
@@ -275,7 +275,6 @@ export default {
     checkTab(tdds) {
       for (const tdd of tdds) {
         for (const value in this.array.filtration) {
-          if (this.array.filtration[value] !== '?????') // Supprimer cette ligne quand RULE sera attribué
             if (tdd[this.array.filtration[value]].length > 0) return true;
         }
       }
@@ -284,7 +283,7 @@ export default {
     listOfFillTabs(tdd) {
       const list = [];
       for (const value in this.array.filtration) {
-        if (this.array.filtration[value] !== '?????' && tdd[this.array.filtration[value]].length > 0) {
+        if (tdd[this.array.filtration[value]].length > 0) {
           list.push(this.array.filtration[value])
         }
       }

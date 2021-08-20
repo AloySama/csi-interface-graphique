@@ -51,6 +51,8 @@ import TddForm from "@/components/TddForm";
 import EtablissementForm from "@/components/EtablissementForm";
 import EditSociete from "@/functions/EditElements";
 import {FindAnID, Reinitialize, isIDCorrect} from '@/functions/CheckID'
+import {FindIDTC} from "@/functions/CheckID";
+import {checkIDTC} from "@/functions/CheckID";
 
 export default {
   emits: ['json_value', 'to_complete'],
@@ -123,8 +125,10 @@ export default {
       this.to_complete.traiteursConfigs = [];
     },
     CompleteTDD(tdd) {
+      if (checkIDTC(tdd.tdd)) tdd.tdd = FindIDTC(tdd.tdd)
       if (tdd.add) this.to_complete.traiteursConfigs = tdd.tdd;
       else for (const t of tdd.tdd) this.to_complete.traiteursConfigs.push(t);
+      this.add_tdd = false;
     },
     isModifyContent() {
       if (typeof this.modify !== 'undefined') {
