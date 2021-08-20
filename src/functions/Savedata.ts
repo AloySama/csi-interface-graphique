@@ -19,5 +19,4 @@ export default function download(jsonData: any, filename: string, settings: Reco
             document.body.removeChild(link)
         }
     }
-    return true;
 }
