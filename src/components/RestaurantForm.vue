@@ -27,9 +27,7 @@
     </div>
   </div>
   <div v-else>
-    <button class="hover-item" @click="isModifyContent">
-      ok
-    </button>
+    <button class="hover-item" @click="isModifyContent">modifier</button>
   </div>
   <div v-if="FillTab['societe'] >= 0 && FillTab['etablissement'] >= 0" class="container">
     <strong>Attention : le matricule d'un restaurant est unique dans tout le fichier json</strong>

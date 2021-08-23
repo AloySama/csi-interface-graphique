@@ -100,7 +100,7 @@ b {
 body > #bg {
     height: 100%;
     width: 100%;
-    background-image: url("bg.jpg");
+    background-image: url("./images/bg.jpg");
     background-size: cover;
     position: fixed;
     z-index: -1;
@@ -154,9 +154,4 @@ ul {
 }
 .OneLine {
     display: inline;
-}
-
-.StraitLine {
-    border-top: 1px solid #000;
-    width : 100%;
 }

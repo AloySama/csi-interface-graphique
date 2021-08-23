@@ -16,10 +16,10 @@
           <label>Ajouter un id personnalisé ?</label>
         </div>
         <div class="col-75">
-          <input v-model="add_id" type="checkbox">
+          <input v-model="bool.add_id" type="checkbox">
         </div>
       </div>
-        <div v-if="add_id" class="row indent">
+        <div v-if="bool.add_id" class="row indent">
           <form @submit.prevent="">
             <div class="col-25">
               <label >id</label>
@@ -35,10 +35,10 @@
           <label >Ajouter Traiteur config ?</label>
         </div>
         <div class="col-75">
-          <input v-model="add_tdd" type="checkbox">
+          <input v-model="bool.add_tdd" type="checkbox">
         </div>
-        <tdd-form v-if="add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
-        <tdd-form v-else-if="add_tdd" @tdd_form="CompleteTDD"/>
+        <tdd-form v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
+        <tdd-form v-else-if="bool.add_tdd" @tdd_form="CompleteTDD"/>
       </div>
       <input class="hover-item" type="submit" :disabled="!to_complete.code" @click="isSubmitted">
     </form>
@@ -86,10 +86,12 @@ export default {
         etablissements: []
       },
       form : [],
-      add_id: false,
-      add_tdd: false,
+      bool: {
+        add_id: false,
+        add_tdd: false,
+        add_eta: false,
+      },
       tdd_nbr: 1,
-      add_eta: false,
       json: this.jsonFile,
       modify: this.modifyContent,
       idSoc: this.id_societe,
@@ -98,7 +100,8 @@ export default {
   },
   methods: {
     isSubmitted() {
-      this.add_eta = this.add_tdd = false;
+      this.bool.add_eta = false;
+      this.bool.add_tdd = false;
       if (typeof this.to_complete.id === 'string')this.to_complete.id = null;
       if (this.to_complete.code.length === 0) this.to_complete.code = 'Défaut';
       if (this.modify != null) {
@@ -128,7 +131,7 @@ export default {
       if (tdd.add) this.to_complete.traiteursConfigs = tdd.tdd;
       else for (const t of tdd.tdd) this.to_complete.traiteursConfigs.push(t);
       if (checkIDTC(this.to_complete.traiteursConfigs)) this.to_complete.traiteursConfigs = FindIDTC(this.to_complete.traiteursConfigs);
-      this.add_tdd = false;
+      this.bool.add_tdd = false;
     },
     isModifyContent() {
       if (typeof this.modify !== 'undefined') {

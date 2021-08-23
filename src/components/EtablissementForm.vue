@@ -27,16 +27,16 @@
           <label>Id personnalisé ?</label>
         </div>
         <div class="col-75">
-          <input type="checkbox" v-model="add_id">
-          <input v-if="add_id" type="number" placeholder="id" v-model.number="to_complete.id" :min="0" :required="add_id">
+          <input type="checkbox" v-model="bool.add_id">
+          <input v-if="bool.add_id" type="number" placeholder="id" v-model.number="to_complete.id" :min="0" :required="bool.add_id">
         </div>
       </div>
       <div class="row">
         <div class="col-25"><label>Ajouter Traiteur config ?</label></div>
-        <div class="col-75"><input v-model="add_tdd" type="checkbox"></div>
-        <tdd-form v-if="add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
-        <tdd-form v-else-if="add_tdd" @tdd_form="CompleteTDD"/>
-      </div><input class="hover-item" type="submit" :disabled="!to_complete.code || to_complete.id < 0" @click="IsSubmitted">
+        <div class="col-75"><input v-model="bool.add_tdd" type="checkbox"></div>
+        <tdd-form v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
+        <tdd-form v-else-if="bool.add_tdd" @tdd_form="CompleteTDD"/>
+      </div><input class="hover-item" type="submit" :disabled="!to_complete.code||to_complete.id < 0" @click="IsSubmitted">
     </form>
   </div>
   <button v-if="id_societe!=null" class="hover-item" @click="Reinitialize(json[id_societe].etablissements)">Réinitialise les ID</button>
@@ -84,8 +84,10 @@ export default {
       json: this.jsonFile,
       modify: this.etabModify,
       societe : -1,
-      add_id: false,
-      add_tdd: false,
+      bool: {
+        add_id: false,
+        add_tdd: false,
+      },
       to_complete: {
         id: null,
         code: '',
@@ -100,7 +102,7 @@ export default {
       if (tdd.add) this.to_complete.traiteursConfigs = tdd.tdd;
       else for (const t of tdd.tdd) this.to_complete.traiteursConfigs.push(t);
       if (checkIDTC(this.to_complete.traiteursConfigs)) this.to_complete.traiteursConfigs = FindIDTC(this.to_complete.traiteursConfigs);
-      this.add_tdd = false;
+      this.bool.add_tdd = false;
     },
     disabledButton(i, bool, id) {
       this.societe = i;
@@ -113,8 +115,8 @@ export default {
     IsSubmitted() {
       if (typeof this.to_complete.id === 'string') this.to_complete.id = null;
       if (this.modify != null) {
-        this.add_eta = false;
-        this.add_tdd = false;
+        this.bool.add_eta = false;
+        this.bool.add_tdd = false;
         this.to_complete.id = this.to_complete.id !== null ? isIDCorrect(this.json[this.societe].etablissements, this.to_complete.id, this.to_complete.id) : FindAnID(this.json);
         this.$emit('to_complete', this.to_complete);
         return;
@@ -139,7 +141,7 @@ export default {
     isModifyContent() {
       this.societe = this.idSoc;
       if (typeof this.modify !== 'undefined') {
-        if (this.modify.traiteursConfigs.length !== 0) this.add_tdd = true;
+        if (this.modify.traiteursConfigs.length !== 0) this.bool.add_tdd = true;
         this.to_complete = {
           id: this.modify.id,
           code: this.modify.code,
