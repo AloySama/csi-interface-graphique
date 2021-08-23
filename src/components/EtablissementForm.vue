@@ -50,6 +50,7 @@ import TddForm from "@/components/TddForm";
 import {Reinitialize} from "@/functions/CheckID";
 import {EditEtab} from "@/functions/EditElements";
 import {FindAnID, isIDCorrect} from "@/functions/CheckID";
+import {FindIDTC, checkIDTC} from "@/functions/CheckID";
 
 export default {
   props: {
@@ -95,8 +96,11 @@ export default {
   },
   methods: {
     CompleteTDD(tdd) {
+      if (checkIDTC(tdd.tdd)) tdd.tdd = FindIDTC(tdd.tdd)
       if (tdd.add) this.to_complete.traiteursConfigs = tdd.tdd;
       else for (const t of tdd.tdd) this.to_complete.traiteursConfigs.push(t);
+      if (checkIDTC(this.to_complete.traiteursConfigs)) this.to_complete.traiteursConfigs = FindIDTC(this.to_complete.traiteursConfigs);
+      this.add_tdd = false;
     },
     disabledButton(i, bool, id) {
       this.societe = i;

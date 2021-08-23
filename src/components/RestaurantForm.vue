@@ -152,9 +152,10 @@ export default {
     completeTDD(tdd) {
       if (tdd.add) this.to_complete[this.to_complete.length - 1].traiteursConfigs = tdd.tdd;
       else for (const t of tdd.tdd) this.to_complete[this.to_complete.length - 1].traiteursConfigs.push(t);
+      this.bool.AddTdd = false;
     },
-    setAuxiliaire(prefix, IDRes) { //TODO revoir cette fonction
-      if (IDRes < 10) return (prefix + '0' + IDRes);
+    setAuxiliaire(prefix, IDRes) {
+      if (IDRes < 10) return (prefix + '00' + IDRes);
       else if (IDRes < 100) return (prefix + '0' + IDRes);
       return (prefix + IDRes);
     },

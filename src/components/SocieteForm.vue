@@ -98,8 +98,7 @@ export default {
   },
   methods: {
     isSubmitted() {
-      this.add_eta = false;
-      this.add_tdd = false;
+      this.add_eta = this.add_tdd = false;
       if (typeof this.to_complete.id === 'string')this.to_complete.id = null;
       if (this.to_complete.code.length === 0) this.to_complete.code = 'Défaut';
       if (this.modify != null) {
@@ -128,6 +127,7 @@ export default {
       if (checkIDTC(tdd.tdd)) tdd.tdd = FindIDTC(tdd.tdd)
       if (tdd.add) this.to_complete.traiteursConfigs = tdd.tdd;
       else for (const t of tdd.tdd) this.to_complete.traiteursConfigs.push(t);
+      if (checkIDTC(this.to_complete.traiteursConfigs)) this.to_complete.traiteursConfigs = FindIDTC(this.to_complete.traiteursConfigs);
       this.add_tdd = false;
     },
     isModifyContent() {
