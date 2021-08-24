@@ -75,6 +75,7 @@ export default {
 #container-bis{
   padding-top:20px;
   width:100vw;
+  margin-left: -10px;
   color:white;
   background-color:#292354;
   display:flex;
