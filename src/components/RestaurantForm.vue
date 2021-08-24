@@ -113,6 +113,7 @@ export default {
       ReinitializeRes,
       Etablissement,
       App,
+      numberOfZeros: 3,
       modify: this.restModify,
       ids: this.idTab,
       json: this.jsonFile,
@@ -151,10 +152,21 @@ export default {
       this.to_complete[this.to_complete.length - 1].traiteursConfigs = tdd
       this.bool.AddTdd = false;
     },
+    lengthNumber(number) {
+      if (number === 1) return 1;
+      let i = 0;
+
+      for (; number > 1; i++) {
+        number /= 10;
+      }
+      return i;
+    },
     setAuxiliaire(prefix, IDRes) {
-      if (IDRes < 10) return (prefix + '00' + IDRes);
-      else if (IDRes < 100) return (prefix + '0' + IDRes);
-      return (prefix + IDRes);
+      const length = this.lengthNumber(IDRes);
+      let text = prefix;
+
+      for (let i = 0; i < (this.numberOfZeros - length); i++) text += '0'
+      return text += IDRes;
     },
     fillSociete(societe) {
       this.FillTab['societe'] = societe;
