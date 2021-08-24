@@ -281,8 +281,13 @@ export default {
     listOfFillTabs(tdd) {
       const list = [];
       for (const value in this.array.filtration) {
-        if (tdd[this.array.filtration[value]].length > 0) {
-          list.push(this.array.filtration[value])
+        try {
+          if (tdd[this.array.filtration[value]].length > 0) {
+            list.push(this.array.filtration[value])
+          }
+        }
+        catch (e) {
+          continue;
         }
       }
       return list;

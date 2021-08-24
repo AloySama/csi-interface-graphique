@@ -19,7 +19,7 @@
                 :disabled="json==null" >Supprimer éléments</button>
         <button id="retour" :title="message['retour']" class="hover-item" v-if="bool.editing || bool.ChooseFile || bool.RemoveElement || bool.Modify"
         @click="
-        doEdit(false, ['edit', 'parcourir', 'remove', 'modify']); updateButtons(null);bool.ChooseFile=false; bool.RemoveElement=false; bool.editing=false">Retour</button>
+        doEdit(false, ['edit', 'parcourir', 'remove', 'modify']); updateButtonsMain(null);">Retour</button>
       </div>
     </header>
   </div>
@@ -149,7 +149,7 @@ export default defineComponent({
         // @ts-ignore
         doc_current.disabled = true;
         if (!mainbutton) this.updateButtons(current);
-        else this.UpdateButtonsMain(current);
+        else this.updateButtonsMain(current);
       }
     },
     updateButtons(current: string) {
@@ -158,7 +158,7 @@ export default defineComponent({
       this.bool.edit_societe = 'AddSoc' === current;
       this.bool.Modify = 'modify' === current;
     },
-    UpdateButtonsMain(current: string) {
+    updateButtonsMain(current: string) {
       this.bool.editing = 'edit' === current;
       this.bool.ChooseFile = 'parcourir' === current;
       this.bool.RemoveElement = 'remove' === current;
