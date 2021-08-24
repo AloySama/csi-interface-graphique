@@ -262,7 +262,6 @@ export default {
           this.AddFormTdd();
           this.to_complete[i] = this.traiteurModif[i];
         }
-        this.isOKClicked = true;
       }
       else alert('Erreur: problème sur le TraiteurConfig')
     },

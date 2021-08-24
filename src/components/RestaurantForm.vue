@@ -75,7 +75,7 @@
     <input class="hover-item" type="submit" @click="isSubmitted"
            :disabled="!to_complete[to_complete.length-1].etab_code">
   </div>
-  <button class="hover-item" @click="ReinitializeRes(json)">Reinitialise ID</button>
+  <button class="hover-item" @click="ReinitializeRes(json)">Reinitialiser ID</button>
 </template>
 
 <script>

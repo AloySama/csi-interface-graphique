@@ -43,7 +43,7 @@
       <input class="hover-item" type="submit" :disabled="!to_complete.code" @click="isSubmitted">
     </form>
   </div>
-  <button class="hover-item" @click="Reinitialize(json)">Réinitialise les ID</button>
+  <button class="hover-item" @click="Reinitialize(json)">Réinitialiser les ID</button>
 </template>
 
 <script>

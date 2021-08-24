@@ -39,7 +39,7 @@
       </div><input class="hover-item" type="submit" :disabled="!to_complete.code||to_complete.id < 0" @click="IsSubmitted">
     </form>
   </div>
-  <button v-if="id_societe!=null" class="hover-item" @click="Reinitialize(json[id_societe].etablissements)">Réinitialise les ID</button>
+  <button v-if="id_societe!=null" class="hover-item" @click="Reinitialize(json[id_societe].etablissements)">Réinitialiser les ID</button>
 </template>
 
 <script>
