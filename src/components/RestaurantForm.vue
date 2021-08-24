@@ -148,8 +148,7 @@ export default {
       })
     },
     completeTDD(tdd) {
-      if (tdd.add) this.to_complete[this.to_complete.length - 1].traiteursConfigs = tdd.tdd;
-      else for (const t of tdd.tdd) this.to_complete[this.to_complete.length - 1].traiteursConfigs.push(t);
+      this.to_complete[this.to_complete.length - 1].traiteursConfigs = tdd
       this.bool.AddTdd = false;
     },
     setAuxiliaire(prefix, IDRes) {

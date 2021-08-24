@@ -98,9 +98,8 @@ export default {
   },
   methods: {
     CompleteTDD(tdd) {
-      if (checkIDTC(tdd.tdd)) tdd.tdd = FindIDTC(tdd.tdd)
-      if (tdd.add) this.to_complete.traiteursConfigs = tdd.tdd;
-      else for (const t of tdd.tdd) this.to_complete.traiteursConfigs.push(t);
+      if (checkIDTC(tdd)) tdd = FindIDTC(tdd)
+      this.to_complete.traiteursConfigs = tdd;
       if (checkIDTC(this.to_complete.traiteursConfigs)) this.to_complete.traiteursConfigs = FindIDTC(this.to_complete.traiteursConfigs);
       this.bool.add_tdd = false;
     },

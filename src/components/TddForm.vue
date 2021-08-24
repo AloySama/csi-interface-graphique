@@ -90,7 +90,6 @@
 </template>
 
 <script>
-import {checkIDTC, FindIDTC} from "@/functions/CheckID";
 
 export default {
   emits: ['tdd_form'],
@@ -107,7 +106,6 @@ export default {
       deleteTabs: null,
       tabName: '',
       indexes: -1,
-      isOKClicked: false,
       traiteurModif: this.traiteurModification,
       values: {min: 0},
       tdd_nbr: 0,
@@ -160,7 +158,7 @@ export default {
     SubmitForm() {
       for (const c of this.to_complete) c.filtration = this.listOfFillTabs(c);
       this.FormTdd.tdd = this.to_complete;
-      this.$emit('tdd_form', {tdd: this.FormTdd.tdd, add: this.isOKClicked});
+      this.$emit('tdd_form', this.FormTdd.tdd);
       this.FormTdd.tdd = [];
     },
     addElement(main_index, index, text) {
