@@ -64,9 +64,7 @@ export function ReinitializeRes(json: Record<string, any>) {
 
 export function isIDCorrectRes(json: Record<string, any>, id: number, except: number) {
     // @ts-ignore
-    if (FindIDRes(json, true, id, except) || id < 0) {
-        return FindIDRes(json, false, 0, -1);
-    }
+    if (FindIDRes(json, true, id, except) || id < 0) return FindIDRes(json, false, 0, -1);
     return id;
 }
 

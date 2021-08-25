@@ -5,13 +5,9 @@
       <br>
       <ul>
         <li class="OneLine" v-for="(soc, index_soc) in ParseSociete(json)" :key="index_soc">
-          <button :id="'ButtonEta' + index_soc" class="hover-item"
-                  @click="disabledButton('ButtonEta', index_soc, true); hasChanged(index_soc); fillSociete(index_soc)">
-            {{ soc }}
-          </button>
+          <button :id="'ButtonEta' + index_soc" class="hover-item" @click="disabledButton('ButtonEta', index_soc, true); hasChanged(index_soc); fillSociete(index_soc)">{{ soc }}</button>
         </li>
-        <button class="hover-item"
-                @click="fillSociete(-1); App.methods.doEdit( false, ['AddRes']); $emit('edit_value', false)">Retour
+        <button class="hover-item" @click="fillSociete(-1); App.methods.doEdit( false, ['AddRes']); $emit('edit_value', false)">Retour
         </button>
       </ul>
     </div>
@@ -122,7 +118,6 @@ export default {
         AddMatricule: false,
         AddTdd: false
       },
-      old: null,
       to_complete: [{
         code_societe: '',
         compteAuxiliaire: '',
@@ -153,12 +148,10 @@ export default {
       this.bool.AddTdd = false;
     },
     lengthNumber(number) {
-      if (number === 1) return 1;
+      if (number === 1 || number === 0) return 1;
       let i = 0;
 
-      for (; number > 1; i++) {
-        number /= 10;
-      }
+      for (; number > 1; i++) number /= 10;
       return i;
     },
     setAuxiliaire(prefix, IDRes) {
