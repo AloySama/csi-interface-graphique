@@ -17,15 +17,13 @@
 
 <script>
 export default {
-  emits: ['upload-json'] ,
+  emits: ['upload-json'],
   data() {
     return {
       json: null
     }
   },
-  components: {
-    FileReader
-  },
+  components: {FileReader},
   name: "UploadFiles",
   methods: {
     loadTextFromFile(ev) {

@@ -156,7 +156,12 @@ export default {
   },
   methods: {
     SubmitForm() {
-      for (const c of this.to_complete) c.filtration = this.listOfFillTabs(c);
+      for (const c of this.to_complete) {
+        c.filtration = this.listOfFillTabs(c);
+        if (typeof c.compteAnalytique1 === 'string' && c.compteAnalytique1.length === 0) c.compteAnalytique1 = null;
+        if (typeof c.compteAnalytique2 === 'string' && c.compteAnalytique2.length === 0) c.compteAnalytique2 = null;
+        if (typeof c.compteAnalytique3 === 'string' && c.compteAnalytique3.length === 0) c.compteAnalytique3 = null;
+      }
       this.FormTdd.tdd = this.to_complete;
       this.$emit('tdd_form', this.FormTdd.tdd);
       this.FormTdd.tdd = [];

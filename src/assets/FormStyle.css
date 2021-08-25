@@ -1,7 +1,3 @@
-* {
-    box-sizing: border-box;
-}
-
 input, select, textarea{
     color: darkgreen;
 }

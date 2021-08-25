@@ -32,13 +32,13 @@
     <button v-if="bool.edit_societe || bool.edit_eta || bool.edit_res" class="hover-item" @click="
                                                                 updateButtons(null)
                                                                 doEdit( false, ['AddSoc', 'AddRes', 'AddEta']);">Retour</button></template>
-  <modify-element :json-file="json" v-if="bool.Modify"></modify-element>
+  <modify-element :json-file="json" v-if="bool.Modify"/>
   <SocieteForm :json-file="json" v-if="bool.edit_societe && bool.editing" @json_value="SetJson"/>
-  <EtablissementForm :json-file="json" v-if="bool.edit_eta && bool.editing" @edit_value="SetEta" @json_value="SetJson"></EtablissementForm>
+  <EtablissementForm :json-file="json" v-if="bool.edit_eta && bool.editing" @edit_value="SetEta" @json_value="SetJson"/>
   <RestaurantForm :json-file="json" v-if="bool.edit_res && bool.editing" @edit_value="SetRes"/>
   <UploadFiles v-if="bool.ChooseFile" @upload-json="SetJson"/>
-  <RemoveElements v-if="bool.RemoveElement" :json-file="json"></RemoveElements>
-  <Footer @setting_value="SetSettings"></Footer>
+  <RemoveElements v-if="bool.RemoveElement" :json-file="json"/>
+  <Footer @setting_value="SetSettings"/>
 </template>
 
 <script lang="ts">
