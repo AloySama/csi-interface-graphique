@@ -280,7 +280,12 @@ export default {
     checkTab(tdds) {
       for (const tdd of tdds) {
         for (const value in this.array.filtration) {
+          try {
             if (tdd[this.array.filtration[value]].length > 0) return true;
+          }
+          catch (e) {
+            continue;
+          }
         }
       }
       return false;

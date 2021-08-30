@@ -1,6 +1,6 @@
 <template>
   <div v-if="!etabModify">
-    <div class="white" v-if="modify==null"> Choisissez à quelle société vous voulez ajouter l'établissement.<br></div>
+    <div class="white" v-if="modify==null">Choisissez à quelle société vous voulez ajouter l'établissement.</div>
     <ul>
       <li class="OneLine" v-for="(soc, index) in ParseSociete(json)" :key="index">
         <button :id="'ButtonEta' + index" class="hover-item" @click="disabledButton(index, true, 'ButtonEta')">{{soc}}</button>
