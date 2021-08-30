@@ -1,7 +1,7 @@
 <template>
   <div class="white">Cliquer bien sur <u>envoyer</u>, ou le fichier ne sera pas enregistrer</div>
     <form @submit.prevent="" class="form" id="MyForm">
-      <div class="fileUpload">
+      <div class="fileUpload" id="dropContainer">
         <input name="UploadFile" id="UploadFiles" type="file" required accept=".json" @change="loadTextFromFile">
         <label for="UploadFiles">Parcourir ...</label> &nbsp;
       </div>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+
 export default {
   emits: ['upload-json'],
   data() {

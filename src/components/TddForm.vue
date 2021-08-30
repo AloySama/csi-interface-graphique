@@ -1,5 +1,5 @@
 <template>
-  <button class="hover-item" @click="isModifyContent" v-if="traiteurModif!=null&&traiteurModif.length!==0">OK</button>
+  <button class="hover-item" @click="isModifyContent" v-if="traiteurModif!=null&&traiteurModif.length!==0&&!modifyClick">Modifier</button>
   <button class="hover-item" @click="AddFormTdd2x">×2</button><button class="hover-item" @click="AddFormTdd">+</button>
   <b>{{ tdd_nbr }}</b>
   <button class="hover-item" @click="RemoveFormTdd">-</button><button class="hover-item" @click="RemoveFormTdd2x">-×2</button>
@@ -103,6 +103,7 @@ export default {
   data() {
     return {
       modifyTabs: [],
+      modifyClick: false,
       deleteTabs: null,
       tabName: '',
       indexes: -1,
@@ -158,9 +159,10 @@ export default {
     SubmitForm() {
       for (const c of this.to_complete) {
         c.filtration = this.listOfFillTabs(c);
-        if (typeof c.compteAnalytique1 === 'string' && c.compteAnalytique1.length === 0) c.compteAnalytique1 = null;
-        if (typeof c.compteAnalytique2 === 'string' && c.compteAnalytique2.length === 0) c.compteAnalytique2 = null;
-        if (typeof c.compteAnalytique3 === 'string' && c.compteAnalytique3.length === 0) c.compteAnalytique3 = null;
+        for (let i = 1; i !== 3; i++) {
+          const text = 'compteAnalytique' + i;
+          if (typeof c[text] === 'string' && c[text].length === 0) c[text] = null;
+        }
       }
       this.FormTdd.tdd = this.to_complete;
       this.$emit('tdd_form', this.FormTdd.tdd);
@@ -180,9 +182,9 @@ export default {
         compteAnalytique3: null,
         tax_code: null,
         id: 0,
-        ordre: 0,
-        codeJournal: 0,
-        compte: 0,
+        ordre: 1,
+        codeJournal: 10,
+        compte: 7000000,
         comptes: [],
         rules: [],
         documents: [],
@@ -196,9 +198,9 @@ export default {
         profits: [],
         sousfamilles: [],
         tags: [],
-        recuperation: '',
-        specialite: '',
-        direction: '',
+        recuperation: 'TOTAL',
+        specialite: 'ARTICLE',
+        direction: 'CREDIT',
         type: '1',
         libelle: '',
         transaction: "",
@@ -206,7 +208,7 @@ export default {
         matriculeRestaurant: false,
         modeER: true,
         compteAnalytique1TVA: false,
-        auxiliaireVide: false,
+        auxiliaireVide: true,
         auxilliaireCreditClient: false,
         transactionVI: false,
         auxiliaireRestaurant: false,
@@ -267,6 +269,7 @@ export default {
           this.AddFormTdd();
           this.to_complete[i] = this.traiteurModif[i];
         }
+        this.modifyClick = true;
       }
       else alert('Erreur: problème sur le TraiteurConfig')
     },

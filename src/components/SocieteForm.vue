@@ -134,7 +134,7 @@ export default {
     },
     isModifyContent() {
       if (typeof this.modify !== 'undefined') {
-        if (this.modify.traiteursConfigs.length !== 0) this.add_tdd = true;
+        if (this.modify.traiteursConfigs.length !== 0) this.bool.add_tdd = true;
         this.to_complete = {
           id: this.modify.id,
           code: this.modify.code,

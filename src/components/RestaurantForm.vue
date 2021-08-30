@@ -38,14 +38,14 @@
             requit</p>
         </div>
       </div>
-      <div class="row">
-        <div class="col-25">
-          <label>code_societe</label>
-        </div>
-        <div class="col-75">
-          <input type="text" v-model="to_complete[to_complete.length-1].code_societe">
-        </div>
-      </div>
+<!--      <div class="row">-->
+<!--        <div class="col-25">-->
+<!--          <label>code_societe</label>-->
+<!--        </div>-->
+<!--        <div class="col-75">-->
+<!--          <input type="text" v-model="to_complete[to_complete.length-1].code_societe">-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="row">
         <div class="col-25">
           <label>Matricule personnalisé ?</label>
@@ -119,7 +119,7 @@ export default {
         AddTdd: false
       },
       to_complete: [{
-        code_societe: '',
+        // code_societe: '',
         compteAuxiliaire: '',
         etab_code: '',
         reference_config_compensation: 0,
@@ -133,7 +133,7 @@ export default {
   methods: {
     addToComplete() {
       this.to_complete.push({
-        code_societe: '',
+        // code_societe: '',
         compteAuxiliaire: '',
         etab_code: '',
         reference_config_compensation: 0,
@@ -187,7 +187,7 @@ export default {
       this.FillTab.etablissement = this.ids.eta;
       if (typeof this.modify !== 'undefined') {
         this.to_complete.push({
-          code_societe: this.modify.code_societe,
+          // code_societe: this.modify.code_societe,
           compteAuxiliaire: this.modify.compteAuxiliaire,
           etab_code: this.modify.etab_code,
           reference_config_compensation: this.modify.reference_config_compensation,
@@ -196,6 +196,7 @@ export default {
           restaurantId: this.modify.restaurantId,
           traiteursConfigs: this.modify.traiteursConfigs
         })
+        if (this.modify.traiteursConfigs.length!==0) this.bool.AddTdd = true;
       }
     },
     isSubmitted() {

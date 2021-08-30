@@ -2,8 +2,7 @@
   <div class="app">
     <header>
       <div class="title">
-        <a href="https://www.cashsystemes.eu/"><img :src="img" alt="logo CSI"
-                                                    title="https://www.cashsystemes.eu/"></a>
+        <a href="https://www.cashsystemes.eu/"><img :src="img" alt="logo CSI" title="https://www.cashsystemes.eu/"></a>
         <h1>ARCOLE<br>export</h1>
       </div>
       <div class="order">
@@ -23,15 +22,15 @@
       </div>
     </header>
   </div>
-  <template v-if="bool.editing">
+  <div v-if="bool.editing">
     <button id="AddSoc" class="hover-item"
             @click="bool.edit_societe = true; disabledButtons('AddSoc', 'old', false)">Ajouter une société</button>
     <button id="AddEta" class="hover-item"
             @click="bool.edit_eta = true; disabledButtons('AddEta', 'old', false)">Ajouter un établissement</button>
-    <button id="AddRes" class="hover-item" @click="bool.edit_res = true;  disabledButtons('AddRes', 'old', false)">Ajouter une restaurant</button>
+    <button id="AddRes" class="hover-item" @click="bool.edit_res = true;  disabledButtons('AddRes', 'old', false)">Ajouter un restaurant</button>
     <button v-if="bool.edit_societe || bool.edit_eta || bool.edit_res" class="hover-item" @click="
                                                                 updateButtons(null)
-                                                                doEdit( false, ['AddSoc', 'AddRes', 'AddEta']);">Retour</button></template>
+                                                                doEdit( false, ['AddSoc', 'AddRes', 'AddEta']);">Retour</button></div>
   <modify-element :json-file="json" v-if="bool.Modify"/>
   <SocieteForm :json-file="json" v-if="bool.edit_societe && bool.editing" @json_value="SetJson"/>
   <EtablissementForm :json-file="json" v-if="bool.edit_eta && bool.editing" @edit_value="SetEta" @json_value="SetJson"/>
