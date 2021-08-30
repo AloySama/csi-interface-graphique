@@ -1,5 +1,5 @@
 <template>
-  <button class="hover-item" @click="isModifyContent" v-if="traiteurModif!=null&&traiteurModif.length!==0&&!modifyClick">Modifier</button>
+  <button class="hover-item" @click="isModifyContent" v-if="traiteurModif!=null&&traiteurModif.length!==0">Modifier</button>
   <button class="hover-item" @click="AddFormTdd2x">×2</button><button class="hover-item" @click="AddFormTdd">+</button>
   <b>{{ tdd_nbr }}</b>
   <button class="hover-item" @click="RemoveFormTdd">-</button><button class="hover-item" @click="RemoveFormTdd2x">-×2</button>
@@ -157,11 +157,11 @@ export default {
   },
   methods: {
     SubmitForm() {
-      for (const c of this.to_complete) {
-        c.filtration = this.listOfFillTabs(c);
+      for (const complete of this.to_complete) {
+        complete.filtration = this.listOfFillTabs(complete);
         for (let i = 1; i !== 3; i++) {
           const text = 'compteAnalytique' + i;
-          if (typeof c[text] === 'string' && c[text].length === 0) c[text] = null;
+          if (typeof complete[text] === 'string' && complete[text].length === 0) complete[text] = null;
         }
       }
       this.FormTdd.tdd = this.to_complete;
@@ -264,6 +264,8 @@ export default {
     },
     isModifyContent() {
       if (this.traiteurModif != null) {
+        this.to_complete = [];
+        this.tdd_nbr = 0;
         const len = this.traiteurModif.length;
         for (let i = 0; i < len; i++) {
           this.AddFormTdd();
@@ -334,10 +336,6 @@ ol {
 
 b {
   margin-left: 5px;
-}
-
-#zeroExclus {
-  margin-bottom: 20px;
 }
 
 .top {
