@@ -116,11 +116,11 @@ export default {
       if (this.modify != null) {
         this.bool.add_eta = false;
         this.bool.add_tdd = false;
-        this.to_complete.id = this.to_complete.id !== null ? isIDCorrect(this.json[this.societe].etablissements, this.to_complete.id, this.to_complete.id) : FindAnID(this.json);
+        this.to_complete.id = this.to_complete.id !== null ? isIDCorrect(this.json[this.societe].etablissements, this.to_complete.id, this.to_complete.id) : FindAnID(this.json[this.societe].etablissements);
         this.$emit('to_complete', this.to_complete);
         return;
       }
-      this.to_complete.id = this.to_complete.id !== null ? isIDCorrect(this.json[this.societe].etablissements, this.to_complete.id, -1) : FindAnID(this.json);
+      this.to_complete.id = this.to_complete.id !== null ? isIDCorrect(this.json[this.societe].etablissements, this.to_complete.id, -1) : FindAnID(this.json[this.societe].etablissements);
       const new_array = {
         id: this.to_complete.id,
         code: this.to_complete.code,
