@@ -33,7 +33,7 @@
           <label>Etab code</label>
         </div>
         <div class="col-75">
-          <input type="text" required v-model="to_complete[to_complete.length-1].etab_code">
+          <input type="text" required v-model="to_complete[to_complete.length-1].etab_code" maxlength="30">
           <p class="error-message" v-if="!to_complete[to_complete.length-1].etab_code"> Le code de la société est
             requit</p>
         </div>

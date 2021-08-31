@@ -18,7 +18,7 @@
           <label>Code</label>
         </div>
         <div class="col-75">
-          <input type="text" required v-model="to_complete.code">
+          <input type="text" required v-model="to_complete.code" maxlength="30">
           <p v-if="!CodeIsValid" class="error-message">Le code est requit</p>
         </div>
       </div>

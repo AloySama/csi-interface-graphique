@@ -18,7 +18,7 @@
             <div :id="item" :class="{'col-25': true}"><label>{{ item }}</label></div>
             <div :id="item + 'input'"
                  :class="{'col-75': true, 'libelleinput-even': item==='libelle'&&(select.length%2===0||main_index===0), 'libelleinput-odd': select.length%2===1&&item==='libelle'&&main_index>0}">
-              <input type="text" v-model="to_complete[main_index][item]"></div>
+              <input type="text" v-model="to_complete[main_index][item]" maxlength="30"></div>
           </li>
         </ol>
         <ol>

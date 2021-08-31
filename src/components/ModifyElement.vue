@@ -86,7 +86,7 @@ export default {
         rest: -1
       },
       functions: {
-        ParseSociete,
+        ParseSociete, //TODO: si société/etab/rest vide, afficher un message indiquant à l'utilisateur que cette catégorie est vide.
         ParseEtablissement,
         ParseRestaurant
       },
