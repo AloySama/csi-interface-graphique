@@ -46,11 +46,11 @@
 /* eslint-disable */
 import ParseSociete from "../functions/ParseSociete";
 import App from '../App'
-import TddForm from "@/components/TddForm";
-import {Reinitialize} from "@/functions/CheckID";
-import {EditEtab} from "@/functions/EditElements";
-import {FindAnID, isIDCorrect} from "@/functions/CheckID";
-import {FindIDTC, checkIDTC} from "@/functions/CheckID";
+import TddForm from "src/components/TddForm";
+import {Reinitialize} from "src/functions/CheckID";
+import {EditEtab} from "src/functions/EditElements";
+import {FindAnID, isIDCorrect} from "src/functions/CheckID";
+import {FindIDTC, checkIDTC} from "src/functions/CheckID";
 
 export default {
   props: {
