@@ -1,28 +1,5 @@
 <template>
-  <div v-if="!modify">
-    <div>
-      <div class="white"> Choisir société</div>
-      <br>
-      <ul>
-        <li class="OneLine" v-for="(soc, index_soc) in ParseSociete(json)" :key="index_soc">
-          <button :id="'ButtonEta' + index_soc" class="hover-item" @click="disabledButton('ButtonEta', index_soc, true); hasChanged(index_soc); fillSociete(index_soc)">{{ soc }}</button>
-        </li>
-        <button class="hover-item" @click="fillSociete(-1); App.methods.doEdit( false, ['AddRes']); $emit('edit_value', false)">Retour
-        </button>
-      </ul>
-    </div>
-    <div v-if="FillTab['societe'] >= 0">
-      <div class="white">Choisir l'établissement</div>
-      <ul>
-        <li class="OneLine" v-for="(etab, index_eta) in ParseEtablissement(json, FillTab['societe'])" :key="index_eta">
-          <button class="hover-item" :id="'ButtonRes' + FillTab['societe'] + index_eta" @click="fillEtab(index_eta);">
-            {{ etab }}
-          </button>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <div v-else>
+  <div v-if="modify">
     <button class="hover-item" @click="isModifyContent">modifier</button>
   </div>
   <div v-if="FillTab['societe'] >= 0 && FillTab['etablissement'] >= 0" class="container">
@@ -35,17 +12,9 @@
         <div class="col-75">
           <input type="text" required v-model="to_complete[to_complete.length-1].etab_code" maxlength="30">
           <p class="error-message" v-if="!to_complete[to_complete.length-1].etab_code"> Le code de la société est
-            requit</p>
+            requis</p>
         </div>
       </div>
-<!--      <div class="row">-->
-<!--        <div class="col-25">-->
-<!--          <label>code_societe</label>-->
-<!--        </div>-->
-<!--        <div class="col-75">-->
-<!--          <input type="text" v-model="to_complete[to_complete.length-1].code_societe">-->
-<!--        </div>-->
-<!--      </div>-->
       <div class="row">
         <div class="col-25">
           <label>Matricule personnalisé ?</label>
@@ -97,7 +66,7 @@ export default {
     },
     idTab: {
       default: {},
-      required: false
+      required: true
     }
   },
   components: {TddForm},
@@ -113,13 +82,12 @@ export default {
       modify: this.restModify,
       ids: this.idTab,
       json: this.jsonFile,
-      FillTab: {'societe': -1, 'etablissement': -1},
+      FillTab: {'societe': this.idTab.soc, 'etablissement': this.idTab.eta},
       bool: {
         AddMatricule: false,
         AddTdd: false
       },
       to_complete: [{
-        // code_societe: '',
         compteAuxiliaire: '',
         etab_code: '',
         reference_config_compensation: 0,
@@ -160,12 +128,6 @@ export default {
 
       for (let i = 0; i < (this.numberOfZeros - length); i++) text += '0'
       return text += IDRes;
-    },
-    fillSociete(societe) {
-      this.FillTab['societe'] = societe;
-    },
-    fillEtab(etablissement) {
-      this.FillTab['etablissement'] = etablissement;
     },
     disabledButton(ElementId, i, bool) {
       document.getElementById(ElementId + i).disabled = bool;

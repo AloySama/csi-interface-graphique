@@ -1,14 +1,5 @@
 <template>
-  <div v-if="!etabModify">
-    <div class="white" v-if="modify==null">Choisissez à quelle société vous voulez ajouter l'établissement.</div>
-    <ul>
-      <li class="OneLine" v-for="(soc, index) in ParseSociete(json)" :key="index">
-        <button :id="'ButtonEta' + index" class="hover-item" @click="disabledButton(index, true, 'ButtonEta')">{{soc}}</button>
-      </li>
-        <button class="hover-item" @click="societe = -1; App.methods.doEdit(false, ['AddEta']); $emit('edit_value', false)">Retour</button>
-    </ul>
-  </div>
-  <div v-else-if="modify.length!==0">
+  <div v-if="etabModify && modify.length!==0">
     <button class="hover-item" @click="isModifyContent">ok</button>
   </div>
   <div v-if="societe >= 0" class="container">
@@ -19,7 +10,7 @@
         </div>
         <div class="col-75">
           <input type="text" required v-model="to_complete.code" maxlength="30">
-          <p v-if="!CodeIsValid" class="error-message">Le code est requit</p>
+          <p v-if="!CodeIsValid" class="error-message">Le code est requis</p>
         </div>
       </div>
       <div class="row">
@@ -46,11 +37,11 @@
 /* eslint-disable */
 import ParseSociete from "../functions/ParseSociete";
 import App from '../App'
-import TddForm from "src/components/TddForm";
-import {Reinitialize} from "src/functions/CheckID";
-import {EditEtab} from "src/functions/EditElements";
-import {FindAnID, isIDCorrect} from "src/functions/CheckID";
-import {FindIDTC, checkIDTC} from "src/functions/CheckID";
+import TddForm from "@/components/TddForm";
+import {Reinitialize} from "@/functions/CheckID";
+import {EditEtab} from "@/functions/EditElements";
+import {FindAnID, isIDCorrect} from "@/functions/CheckID";
+import {FindIDTC, checkIDTC} from "@/functions/CheckID";
 
 export default {
   props: {
@@ -64,7 +55,7 @@ export default {
     },
     id_societe: {
       default: null,
-      required: false
+      required: true
     }
   },
   computed: {
@@ -83,7 +74,7 @@ export default {
       idSoc: this.id_societe,
       json: this.jsonFile,
       modify: this.etabModify,
-      societe : -1,
+      societe : this.id_societe,
       bool: {
         add_id: false,
         add_tdd: false,

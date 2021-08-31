@@ -56,12 +56,12 @@
 </template>
 
 <script>
-import ParseEtablissement from "@/functions/ParseEtablissement";
+import ParseEtablissement from "src/functions/ParseEtablissement";
 import ParseSociete from "../functions/ParseSociete";
-import ParseRestaurant from "@/functions/ParseRestaurant";
-import SocieteForm from "@/components/SocieteForm";
-import EtablissementForm from "@/components/EtablissementForm";
-import RestaurantForm from "@/components/RestaurantForm";
+import ParseRestaurant from "src/functions/ParseRestaurant";
+import SocieteForm from "src/components/SocieteForm";
+import EtablissementForm from "src/components/EtablissementForm";
+import RestaurantForm from "src/components/RestaurantForm";
 
 export default {
   emits: ['complement'],

@@ -29,10 +29,10 @@
 </template>
 
 <script>
-import ParseEtablissement from "@/functions/ParseEtablissement";
-import ParseRestaurant from "@/functions/ParseRestaurant";
+import ParseEtablissement from "src/functions/ParseEtablissement";
+import ParseRestaurant from "src/functions/ParseRestaurant";
 import ParseSociete from "../functions/ParseSociete";
-import App from "@/App";
+import App from "src/App";
 
 export default {
   props: {
@@ -59,18 +59,7 @@ export default {
     }
   },
   methods: {
-    removeObjSociete() {
-      this.json.splice(this.object.societe, 1);
-      this.allReset(true, true, true);
-    },
-    removeObjEtab() {
-      this.json[this.object.societe].etablissements.splice(this.object.etab, 1);
-      this.allReset(false, true, true);
-    },
-    removeObjRest() {
-      this.json[this.object.societe].etablissements[this.object.etab].restaurants.splice(this.object.rest, 1);
-      this.allReset(false, false, true);
-    },
+
     allReset(soc, etab, rest) {
       if (soc) this.object.societe = -1;
       if (etab) this.object.etab = -1;

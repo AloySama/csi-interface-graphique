@@ -8,7 +8,7 @@
         </div>
         <div class="col-75">
           <input autofocus type="text" required v-model="to_complete.code" placeholder="Code de la société" maxlength="30">
-          <p v-if="!CodeIsValid" class="error-message">Le code est requit</p>
+          <p v-if="!CodeIsValid" class="error-message">Le code est requis</p>
         </div>
       </div>
       <div class="row">
