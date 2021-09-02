@@ -5,7 +5,7 @@ export default function ParseRestaurant(json: JSON, societe: number, etab: numbe
     for (const index of json[societe].etablissements[etab].restaurants) {
         try {
             //@ts-ignore
-            list.push(index.restaurantId);
+            list.push(index.matricule);
         }
         catch (e) {
             console.log(e)

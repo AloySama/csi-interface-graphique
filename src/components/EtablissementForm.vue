@@ -1,7 +1,4 @@
 <template>
-  <div v-if="etabModify && modify.length!==0">
-    <button class="hover-item" @click="isModifyContent">ok</button>
-  </div>
   <div v-if="societe >= 0" class="container">
     <form @submit.prevent="">
       <div class="row">
@@ -44,6 +41,9 @@ import {FindAnID, isIDCorrect} from "@/functions/CheckID";
 import {FindIDTC, checkIDTC} from "@/functions/CheckID";
 
 export default {
+  created() {
+    this.isModifyContent();
+  },
   props: {
     jsonFile: {
       default: null,
@@ -129,23 +129,16 @@ export default {
       this.to_complete.traiteursConfigs = [];
     },
     isModifyContent() {
+      if (this.modify == null) return;
       this.societe = this.idSoc;
-      if (typeof this.modify !== 'undefined') {
-        if (this.modify.traiteursConfigs.length !== 0) this.bool.add_tdd = true;
-        this.to_complete = {
-          id: this.modify.id,
-          code: this.modify.code,
-          traiteursConfigs: this.modify.traiteursConfigs,
-          restaurants: this.modify.restaurants
-        };
+      if (this.modify.traiteursConfigs.length !== 0) this.bool.add_tdd = true;
+      this.to_complete = {
+        id: this.modify.id,
+        code: this.modify.code,
+        traiteursConfigs: this.modify.traiteursConfigs,
+        restaurants: this.modify.restaurants
       }
     }
   }
 }
 </script>
-
-<style scoped>
-.OneLine {
-  display: inline;
-}
-</style>

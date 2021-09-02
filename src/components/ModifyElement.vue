@@ -24,7 +24,7 @@
     </ul>
   </div>
   <div v-if="tab.societe !== -1 && bool.ModifySociete">
-    <societe-form :json-file="json" :modify-content="json[tab.societe]" :id_societe="tab.societe" @to_complete="setCompleteSoc"/>
+    <societe-form :json-file="json" :modify-content="json[tab.societe]" :id_societe="tab.societe" @to_complete="setCompleteSoc"/> <!-- /////////////ICI/////////////// -->
   </div>
   <div v-if="tab.etab !== -1 && bool.ModifyEtab">
     <etablissement-form :json-file="json" :etab-modify="returnEtab()" :id_societe="tab.societe" @to_complete="setCompleteEta"/>

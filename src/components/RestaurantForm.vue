@@ -1,7 +1,4 @@
 <template>
-  <div v-if="modify">
-    <button class="hover-item" @click="isModifyContent">modifier</button>
-  </div>
   <div v-if="FillTab['societe'] >= 0 && FillTab['etablissement'] >= 0" class="container">
     <strong>Attention : le matricule d'un restaurant est unique dans tout le fichier json</strong>
     <form @submit.prevent="">
@@ -54,6 +51,9 @@ import {EditRestaurant} from "@/functions/EditElements";
 import {FindIDRes, checkIDTC, isIDCorrectRes, FindIDTC} from "@/functions/CheckID";
 
 export default {
+  created() {
+    this.isModifyContent();
+  },
   name: "RestaurantForm",
   props: {
     jsonFile: {
@@ -144,20 +144,20 @@ export default {
       if ((this.FillTab['societe'] !== index)) this.FillTab['etablissement'] = -1;
     },
     isModifyContent() {
+      console.log(this.ids)
       this.FillTab.societe = this.ids.soc;
       this.FillTab.etablissement = this.ids.eta;
-      if (typeof this.modify !== 'undefined') {
-        this.to_complete.push({
-          compteAuxiliaire: this.modify.compteAuxiliaire,
-          etab_code: this.modify.etab_code,
-          reference_config_compensation: this.modify.reference_config_compensation,
-          auxiliaireCreditClient: this.modify.auxiliaireCreditClient,
-          matricule: this.modify.matricule,
-          restaurantId: this.modify.restaurantId,
-          traiteursConfigs: this.modify.traiteursConfigs
-        })
-        if (this.modify.traiteursConfigs.length!==0) this.bool.AddTdd = true;
-      }
+      if (this.modify == null) return;
+      this.to_complete.push({
+        compteAuxiliaire: this.modify.compteAuxiliaire,
+        etab_code: this.modify.etab_code,
+        reference_config_compensation: this.modify.reference_config_compensation,
+        auxiliaireCreditClient: this.modify.auxiliaireCreditClient,
+        matricule: this.modify.matricule,
+        restaurantId: this.modify.restaurantId,
+        traiteursConfigs: this.modify.traiteursConfigs
+      })
+      if (this.modify.traiteursConfigs.length!==0) this.bool.AddTdd = true;
     },
     isSubmitted() {
       const length = this.to_complete.length - 1;

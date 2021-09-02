@@ -5,7 +5,8 @@
         <button :id="'ButtonSociete' + index" class="hover-item" @click="disabledButton('societe', index, 'ButtonSociete' + index); bool.addEtablissement=false">{{societe}}</button>
       </li>
       <li class="OneLine">
-        <button class="hover-item green" @click="addSocieteJson()">Ajouter Société</button>
+        <button class="hover-item green" @click="addSocieteJson()">Ajouter</button>
+        <button class="hover-item blue" v-if="tab.societe !== -1" @click="bool.modifySociete = true">Modifier</button>
         <ul>
           <button class="hover-item red" @click="removeObjSociete()">Supprimer</button>
         </ul>
@@ -13,15 +14,16 @@
     </ul>
   </div>
   <div v-else>
-    <button class="hover-item green" @click="addSocieteJson()">Ajouter Société</button>
+    <button class="hover-item green" @click="addSocieteJson()">Ajouter</button>
   </div>
-  <div v-if="tab.societe!==-1 && json[tab.societe].etablissements.length !== 0">
+  <div v-if="tab.societe !==-1 && json[tab.societe].etablissements.length !== 0">
     <ul>
       <li class="OneLine" v-for="(etablissement, index) in functions.ParseEtablissement(json, tab.societe)" :key="etablissement">
         <button :id="'ButtonEtablissement' + index" class="hover-item" @click="disabledButton('etablissement', index, 'ButtonEtablissement' + index); bool.addRestaurant = false">{{etablissement}}</button>
       </li>
       <li class="OneLine">
-        <button class="hover-item green" @click="addEtabJson()">Ajouter Établissement</button>
+        <button class="hover-item green" @click="addEtabJson()">Ajouter</button>
+        <button class="hover-item blue" v-if="tab.etablissement !== -1" @click="bool.modifyEtablissement = true">Modifier</button>
         <ul>
           <button class="hover-item red" @click="removeObjEtab()">Supprimer</button>
         </ul>
@@ -38,6 +40,7 @@
       </li>
       <li class="OneLine">
         <button class="hover-item green" @click="addRestJson()">Ajouter Restaurant</button>
+        <button class="hover-item blue" v-if="tab.restaurant !== -1" @click="bool.modifyRestaurant = true">Modifier</button>
         <ul>
           <button class="hover-item red" @click="removeObjRest()">Supprimer</button>
         </ul>
@@ -48,8 +51,11 @@
     <button class="hover-item green" @click="addRestJson()">Ajouter Restaurant</button>
   </div>
   <societe-form v-if="bool.addSociete" :json-file="json"/>
+  <societe-form v-if="bool.modifySociete" :json-file="json" :modify-content="json[tab.societe]" :id_societe="tab.societe" @to_complete="setCompleteSoc"/>
   <etablissement-form v-if="bool.addEtablissement" :json-file="json" :id_societe="tab.societe"/>
+  <etablissement-form v-if="bool.modifyEtablissement" :json-file="json" :etab-modify="returnEtab()" :id_societe="tab.societe" @to_complete="setCompleteEta"/>
   <restaurant-form v-if="bool.addRestaurant" :json-file="json" :id-tab="{soc: tab.societe, eta: tab.etablissement}"/>
+  <restaurant-form v-if="bool.modifyRestaurant" :json-file="json" :rest-modify="json[tab.societe].etablissements[tab.etablissement].restaurants[tab.restaurant]" :id-tab="{soc: tab.societe, eta: tab.etablissement}" @to_complete="setCompleteRes"/>
 </template>
 
 <script>
@@ -76,7 +82,10 @@ export default {
       bool : {
         addSociete: false,
         addEtablissement: false,
-        addRestaurant: false
+        addRestaurant: false,
+        modifySociete: false,
+        modifyEtablissement: false,
+        modifyRestaurant: false,
       },
       functions: {
         ParseSociete,
@@ -121,7 +130,7 @@ export default {
     },
     removeObjSociete() {
       if (this.tab.societe !== -1) {
-        if (confirm('Voulez-vous vraiment supprimer cette société ?\nCette action est irreversible')) {
+        if (confirm('Voulez-vous vraiment supprimer cette société ?\nCette action est irreversible.')) {
           this.json.splice(this.tab.societe, 1);
         }
         else return;
@@ -155,6 +164,24 @@ export default {
       this.bool.addEtablissement = false;
       this.bool.addRestaurant = true;
       this.bool.addSociete = false;
+    },
+    setCompleteSoc(complete) {
+      this.json[this.tab.societe] = complete;
+      setTimeout(() => {this.tab.societe = -1; this.bool.modifySociete = false}, 0);
+    },
+    setCompleteEta(complete) {
+      this.json[this.tab.societe].etablissements[this.tab.etablissement] = complete;
+      setTimeout(() => {this.tab.etab = -1; this.bool.modifyEtablissement = false}, 0);
+    },
+    setCompleteRes(complete) {
+      console.log(complete)
+      this.json[this.tab.societe].etablissements[this.tab.etablissement].restaurants[this.tab.restaurant] = complete;
+      setTimeout(() => {this.tab.restaurant = -1; this.bool.modifyRestaurant = false}, 0);
+    },
+    returnEtab() {
+      const value = this.json[this.tab.societe].etablissements[this.tab.etablissement];
+      if (value == null) return [];
+      return value;
     }
   }
 }
