@@ -138,11 +138,7 @@ export default {
         }
       }
     },
-    hasChanged(index) {
-      if ((this.FillTab['societe'] !== index)) this.FillTab['etablissement'] = -1;
-    },
     isModifyContent() {
-      console.log(this.ids)
       this.FillTab.societe = this.ids.soc;
       this.FillTab.etablissement = this.ids.eta;
       if (this.modify == null) return;

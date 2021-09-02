@@ -6,7 +6,7 @@
           <label>Code</label>
         </div>
         <div class="col-75">
-          <input autofocus type="text" required v-model="to_complete.code" placeholder="Code de la société" maxlength="30">
+          <input type="text" required v-model="to_complete.code" placeholder="Code de la société" maxlength="30">
           <p v-if="!CodeIsValid" class="error-message">Le code est requis</p>
         </div>
       </div>
@@ -135,10 +135,7 @@ export default {
       this.bool.add_tdd = false;
     },
     isModifyContent() {
-      if (this.modify == null || typeof this.modify === 'undefined') {
-        console.log('Invalide')
-        return;
-      }
+      if (this.modify == null || typeof this.modify === 'undefined') return;
       if (this.modify.traiteursConfigs.length !== 0) this.bool.add_tdd = true;
       this.to_complete = {
         id: this.modify.id,
