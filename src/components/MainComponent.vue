@@ -16,7 +16,7 @@
   <div v-else>
     <button class="hover-item green" @click="addSocieteJson()">Ajouter</button>
   </div>
-  <div v-if="tab.societe !==-1 && json[tab.societe].etablissements.length !== 0">
+  <div v-if="tab.societe !== -1 && json[tab.societe].etablissements.length !== 0">
     <ul>
       <li class="OneLine" v-for="(etablissement, index) in functions.ParseEtablissement(json, tab.societe)" :key="etablissement">
         <button :id="'ButtonEtablissement' + index" class="hover-item" @click="disabledButton('etablissement', index, 'ButtonEtablissement' + index); bool.addRestaurant = false">{{etablissement}}</button>
@@ -136,16 +136,19 @@ export default {
         else return;
       }
       this.tab.societe = -1;
+      this.setBool(false, false, false , false, false , false);
     },
     removeObjEtab() {
       if (this.tab.etablissement !== -1)
         this.json[this.tab.societe].etablissements.splice(this.tab.etablissement, 1);
       this.tab.etablissement = -1;
+      this.setBool(false, false, false , false, false , false);
     },
     removeObjRest() {
       if (this.tab.restaurant !== -1)
         this.json[this.tab.societe].etablissements[this.tab.etablissement].restaurants.splice(this.tab.restaurant, 1);
       this.tab.restaurant = -1;
+      this.setBool(false, false, false , false, false , false);
     },
     addSocieteJson() {
       this.tab.etablissement = -1;
@@ -162,14 +165,23 @@ export default {
     setCompleteSoc(complete) {
       this.json[this.tab.societe] = complete;
       setTimeout(() => {this.tab.societe = -1; this.bool.modifySociete = false}, 0);
+      const doc = document.getElementById(this.old_ids.societe);
+      if (doc == null) return;
+      doc.disabled = false;
     },
     setCompleteEta(complete) {
       this.json[this.tab.societe].etablissements[this.tab.etablissement] = complete;
       setTimeout(() => {this.tab.etab = -1; this.bool.modifyEtablissement = false}, 0);
+      const doc = document.getElementById(this.old_ids.etablissement);
+      if (doc == null) return;
+      doc.disabled = false;
     },
     setCompleteRes(complete) {
       this.json[this.tab.societe].etablissements[this.tab.etablissement].restaurants[this.tab.restaurant] = complete;
-      setTimeout(() => {this.tab.restaurant = -1; this.bool.modifyRestaurant = false}, 0);
+      setTimeout(() => {this.tab.restaurant = -1; this.bool.modifyRestaurant = false;}, 0);
+      const doc = document.getElementById(this.old_ids.restaurant);
+      if (doc == null) return;
+      doc.disabled = false;
     },
     returnEtab() {
       const value = this.json[this.tab.societe].etablissements[this.tab.etablissement];

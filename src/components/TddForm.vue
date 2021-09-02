@@ -367,3 +367,6 @@ hr.HR {
 }
 
 </style>
+
+<!--TODO: Pour les traiteurConfig, afficher en petit les termes suivants : (libelle codeJournal direction compte),
+TODO: si bouton cliqué, affiché le TraiteurConfig, pensé à ajouter une suppression au niveau des tableaux -->
