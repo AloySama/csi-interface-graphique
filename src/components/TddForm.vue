@@ -71,7 +71,7 @@
     </div>
   </div>
   <button class="hover-item" @click="SubmitForm">Valider TraiteurConfig</button>
-  <p class="error-message"><u>Cliquer sur 'valider TraiteurConfig' ou les données ne seront pas sauvegardé dans la société.</u></p>
+  <p class="error-message"><u>Cliquer sur 'valider TraiteurConfig' ou les données ne seront pas sauvegardé.</u></p>
   <div v-if="traiteurModif != null && checkTab(traiteurModif)">
     <hr class="HR"/>
     <strong>Modifier éléments tableaux</strong>

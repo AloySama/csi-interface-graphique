@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <button class="hover-item" @click="isModifyContent" v-if="modify">Modifier</button>
     <form @submit.prevent="">
       <div class="row">
         <div class="col-25">

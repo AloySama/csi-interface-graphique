@@ -6,7 +6,7 @@
         <h1>ARCOLE<br>export</h1>
       </div>
       <div class="order">
-        <button autofocus id="parcourir" :title="message['parcours']" class="hover-item"
+        <button id="parcourir" :title="message['parcours']" class="hover-item"
                 @click="bool.ChooseFile=true; bool.Modify = false; disabledButtons('parcourir', 'old_edit');">Charger un fichier</button>
         <button id="modify" class="hover-item" :disabled="json==null" @click="bool.Modify = true; bool.ChooseFile = false; disabledButtons('modify', 'old_edit');">Modifier éléments</button>
         <button class="hover-item" @click="DownloadFile" :disabled="json==null" :title="message['save']">Enregistrer</button>

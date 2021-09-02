@@ -2,14 +2,12 @@
   <div v-if="FillTab['societe'] >= 0 && FillTab['etablissement'] >= 0" class="container">
     <strong>Attention : le matricule d'un restaurant est unique dans tout le fichier json</strong>
     <form @submit.prevent="">
-      <div class="row">
+      <div class="row" v-for="(value, key) of string" :key="value">
         <div class="col-25">
-          <label>Etab code</label>
+          <label>{{key}}</label>
         </div>
         <div class="col-75">
-          <input type="text" required v-model="to_complete[to_complete.length-1].etab_code" maxlength="30">
-          <p class="error-message" v-if="!to_complete[to_complete.length-1].etab_code"> Le code de la société est
-            requis</p>
+          <input type="text" v-model="to_complete[to_complete.length-1][value]" maxlength="30">
         </div>
       </div>
       <div class="row">
@@ -18,13 +16,12 @@
         </div>
         <div class="col-75">
           <input v-model="bool.AddMatricule" type="checkbox">
-          <input v-if="bool.AddMatricule" type="number" min="0"
-                 v-model.number="to_complete[to_complete.length-1].matricule" required>
+          <input v-if="bool.AddMatricule" type="number" min="0" v-model.number="to_complete[to_complete.length-1].matricule" required>
         </div>
       </div>
       <div class="row">
         <div class="col-25">
-          <label>Ajouter Traiteur Configs ?</label>
+          <label>Ajouter TraiteurConfigs ?</label>
         </div>
         <div class="col-75">
           <input v-model="bool.AddTdd" type="checkbox">
@@ -95,7 +92,8 @@ export default {
         matricule: null,
         restaurantId: null,
         traiteursConfigs: []
-      }]
+      }],
+      string: {"Etab code": 'etab_code', "Auxiliaire credit client": 'auxiliaireCreditClient', "Code societe": 'code_societe'}
     }
   },
   methods: {
@@ -183,3 +181,7 @@ export default {
   }
 }
 </script>
+
+<!--
+     "reference_config_compensation": 999,
+-->

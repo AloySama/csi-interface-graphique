@@ -6,7 +6,7 @@
       </li>
       <li class="OneLine">
         <button class="hover-item green" @click="addSocieteJson()">Ajouter</button>
-        <button class="hover-item blue" v-if="tab.societe !== -1" @click="bool.modifySociete = true">Modifier</button>
+        <button class="hover-item blue" v-if="tab.societe !== -1" @click="bool.modifySociete = true; bool.modifyEtablissement = false; bool.modifyEtablissement = false">Modifier</button>
         <ul>
           <button class="hover-item red" @click="removeObjSociete()">Supprimer</button>
         </ul>
@@ -23,7 +23,7 @@
       </li>
       <li class="OneLine">
         <button class="hover-item green" @click="addEtabJson()">Ajouter</button>
-        <button class="hover-item blue" v-if="tab.etablissement !== -1" @click="bool.modifyEtablissement = true">Modifier</button>
+        <button class="hover-item blue" v-if="tab.etablissement !== -1" @click="bool.modifyEtablissement = true; bool.modifySociete = false; bool.modifyRestaurant = false">Modifier</button>
         <ul>
           <button class="hover-item red" @click="removeObjEtab()">Supprimer</button>
         </ul>
@@ -40,7 +40,7 @@
       </li>
       <li class="OneLine">
         <button class="hover-item green" @click="addRestJson()">Ajouter Restaurant</button>
-        <button class="hover-item blue" v-if="tab.restaurant !== -1" @click="bool.modifyRestaurant = true">Modifier</button>
+        <button class="hover-item blue" v-if="tab.restaurant !== -1" @click="bool.modifyRestaurant = true; bool.modifySociete = false; bool.modifyEtablissement = false">Modifier</button>
         <ul>
           <button class="hover-item red" @click="removeObjRest()">Supprimer</button>
         </ul>
@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       json: this.jsonFile,
-      old_id: '',
+      old_ids: {societe: '', etablissement: '', restaurant: ''},
       tab: {societe: -1, etablissement: -1, restaurant: -1},
       bool : {
         addSociete: false,
@@ -106,15 +106,15 @@ export default {
       }
       this.tab[index] = i;
       const current = id;
-      if (this.old_id.length === 0) {
-        this.old_id = current;
-        const doc = document.getElementById(this.old_id);
+      if (this.old_ids[index].length === 0) {
+        this.old_ids[index] = current;
+        const doc = document.getElementById(this.old_ids[index]);
         if (doc == null) return;
         // @ts-ignore
         doc.disabled = true;
       } else {
-        const doc_old = document.getElementById(this.old_id);
-        this.old_id = current;
+        const doc_old = document.getElementById(this.old_ids[index]);
+        this.old_ids[index] = current;
         const doc_current = document.getElementById(current);
         if (doc_current == null) {
           console.error('Une erreur est survenue.')
