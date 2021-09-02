@@ -6,7 +6,9 @@
       </li>
       <li class="OneLine">
         <button class="hover-item green" @click="addSocieteJson()">Ajouter Société</button>
-        <button class="hover-item red" @click="removeObjSociete()">Supprimer</button>
+        <ul>
+          <button class="hover-item red" @click="removeObjSociete()">Supprimer</button>
+        </ul>
       </li>
     </ul>
   </div>
@@ -20,21 +22,25 @@
       </li>
       <li class="OneLine">
         <button class="hover-item green" @click="addEtabJson()">Ajouter Établissement</button>
-        <button class="hover-item red" @click="removeObjEtab()">Supprimer</button>
+        <ul>
+          <button class="hover-item red" @click="removeObjEtab()">Supprimer</button>
+        </ul>
       </li>
     </ul>
   </div>
   <div v-else-if="tab.societe!==-1">
     <button class="hover-item green" @click="addEtabJson()">Ajouter Établissement</button>
   </div>
-  <div v-if="tab.societe!==-1 && tab.etablissement!==-1 && json[tab.societe].etablissements[tab.etablissement].restaurants.length !== 0 ">
+  <div v-if="tab.societe!==-1 && tab.etablissement !== -1 && json[tab.societe].etablissements[tab.etablissement].restaurants.length !== 0 ">
     <ul>
       <li class="OneLine" v-for="(restaurant, index) in functions.ParseRestaurant(json, tab.societe, tab.etablissement)" :key="restaurant">
         <button :id="'ButtonRestaurant' + index" class="hover-item" @click="disabledButton('restaurant', index, 'ButtonRestaurant' + index)">{{restaurant}}</button>
       </li>
       <li class="OneLine">
         <button class="hover-item green" @click="addRestJson()">Ajouter Restaurant</button>
-        <button class="hover-item red" @click="removeObjRest()">Supprimer</button>
+        <ul>
+          <button class="hover-item red" @click="removeObjRest()">Supprimer</button>
+        </ul>
       </li>
     </ul>
   </div>
@@ -114,8 +120,12 @@ export default {
       }
     },
     removeObjSociete() {
-      if (this.tab.societe !== -1)
-        this.json.splice(this.tab.societe, 1);
+      if (this.tab.societe !== -1) {
+        if (confirm('Voulez-vous vraiment supprimer cette société ?\nCette action est irreversible')) {
+          this.json.splice(this.tab.societe, 1);
+        }
+        else return;
+      }
       this.tab.societe = -1;
     },
     removeObjEtab() {
@@ -145,10 +155,6 @@ export default {
       this.bool.addEtablissement = false;
       this.bool.addRestaurant = true;
       this.bool.addSociete = false;
-    },
-    waitFor(index, fill) {
-      this.tab[fill] = -1
-      setTimeout(() => {this.tab[fill] = index}, 0);
     }
   }
 }
@@ -165,5 +171,9 @@ export default {
 .green {
   color: darkgreen;
   border: 3px solid darkgreen;
+}
+.blue {
+  color: darkblue;
+  border: 3px solid darkblue;
 }
 </style>

@@ -101,7 +101,6 @@ export default {
   methods: {
     addToComplete() {
       this.to_complete.push({
-        // code_societe: '',
         compteAuxiliaire: '',
         etab_code: '',
         reference_config_compensation: 0,
@@ -149,7 +148,6 @@ export default {
       this.FillTab.etablissement = this.ids.eta;
       if (typeof this.modify !== 'undefined') {
         this.to_complete.push({
-          // code_societe: this.modify.code_societe,
           compteAuxiliaire: this.modify.compteAuxiliaire,
           etab_code: this.modify.etab_code,
           reference_config_compensation: this.modify.reference_config_compensation,
