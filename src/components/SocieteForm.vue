@@ -129,8 +129,15 @@ export default {
       this.to_complete.traiteursConfigs = [];
     },
     CompleteTDD(tdd) {
-      if (checkIDTC(tdd)) tdd = FindIDTC(tdd)
-      this.to_complete.traiteursConfigs = tdd;
+      if (tdd.modify === false) {
+        if (checkIDTC(tdd.tdd)) tdd.tdd = FindIDTC(tdd.tdd)
+        this.to_complete.traiteursConfigs = tdd.tdd;
+      }
+      else {
+        for (const tddElement of tdd.tdd) {
+          this.to_complete.traiteursConfigs.push(tddElement);
+        }
+      }
       if (checkIDTC(this.to_complete.traiteursConfigs)) this.to_complete.traiteursConfigs = FindIDTC(this.to_complete.traiteursConfigs);
       this.bool.add_tdd = false;
     },

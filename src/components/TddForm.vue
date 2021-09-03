@@ -1,5 +1,5 @@
 <template>
-  <div v-if="traiteurModif == null">
+  <div>
     <button class="" @click="AddFormTdd2x">+2</button><button class="" @click="AddFormTdd">+</button>
     <b>{{ tdd_nbr }}</b>
     <button class="" @click="RemoveFormTdd">-</button><button class="" @click="RemoveFormTdd2x">-2</button>
@@ -102,7 +102,7 @@
 export default {
   created() {
     //this.isModifyContent();
-    console.log(this.traiteurModif)
+    if (this.traiteurModif != null) this.isModify = true;
   },
   emits: ['tdd_form'],
   name: "TddForm",
@@ -114,6 +114,7 @@ export default {
   },
   data() {
     return {
+      isModify: false,
       modifyTabs: [],
       modifyClick: false,
       deleteTabs: null,
@@ -177,7 +178,7 @@ export default {
         }
       }
       this.FormTdd.tdd = this.to_complete;
-      this.$emit('tdd_form', this.FormTdd.tdd);
+      this.$emit('tdd_form', {tdd: this.FormTdd.tdd, modify: this.isModify});
       this.FormTdd.tdd = [];
     },
     addElement(main_index, index, text) {
