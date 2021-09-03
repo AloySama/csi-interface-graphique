@@ -4,17 +4,9 @@ export default function ParseSociete(json: any) {
         console.error("Json n'est pas défini : null retourné")
         return null;
     }
-    if (json.length === 0) {
-        return null;
-    }
-    for (const index in json) {
-        try {
-            list.push(json[index].code)
-        }
-        catch (e) {
-            console.error(e)
-            return null;
-        }
+    if (json.length === 0) return null;
+    for (const index of json) {
+        list.push(index.code)
     }
     return list;
 }

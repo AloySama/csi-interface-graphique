@@ -1,9 +1,18 @@
 <template>
-  <button class="hover-item" @click="isModifyContent" v-if="traiteurModif!=null&&traiteurModif.length!==0">Modifier</button>
-  <button class="hover-item" @click="AddFormTdd2x">×2</button><button class="hover-item" @click="AddFormTdd">+</button>
-  <b>{{ tdd_nbr }}</b>
-  <button class="hover-item" @click="RemoveFormTdd">-</button><button class="hover-item" @click="RemoveFormTdd2x">-×2</button>
-  <p v-if="tdd_nbr < values.min" class="error-message">Le TraiteurConfig doit être supérieur à {{ values.min }}</p>
+  <div>
+    <button class="" @click="AddFormTdd2x">+2</button><button class="" @click="AddFormTdd">+</button>
+    <b>{{ tdd_nbr }}</b>
+    <button class="" @click="RemoveFormTdd">-</button><button class="" @click="RemoveFormTdd2x">-2</button>
+  </div>
+  <div v-if="traiteurModif != null && traiteurModif.length > 0">
+    <ul>
+      <li id="traiteurListe" v-for="(tdd, index) in traiteurModif" :key="tdd">
+        <button class="hover-item">{{tdd.libelle}} | {{tdd.codeJournal}} | {{tdd.direction}} | {{tdd.compte}}</button>
+        <button class="hover-item redButton indentButton" @click="deleteTraiteur(index)">Supprimer</button>
+        <button class="hover-item blueButton">Modifier</button>
+      </li>
+    </ul>
+  </div>
   <div v-if="tdd_nbr >= values.min">
     <div v-for="(number, main_index) in parseInt(tdd_nbr)" :key="parseInt(number)">
       <form @submit.prevent="" class="top">
@@ -16,8 +25,7 @@
         <ol>
           <li v-for="item in string" :key="item">
             <div :id="item" :class="{'col-25': true}"><label>{{ item }}</label></div>
-            <div :id="item + 'input'"
-                 :class="{'col-75': true, 'libelleinput-even': item==='libelle'&&(select.length%2===0||main_index===0), 'libelleinput-odd': select.length%2===1&&item==='libelle'&&main_index>0}">
+            <div :id="item + 'input'" class="col-75">
               <input type="text" v-model="to_complete[main_index][item]" maxlength="30"></div>
           </li>
         </ol>
@@ -59,39 +67,43 @@
               <div v-else>
                 <input v-if="tabNumber.includes(item)" type="number" v-model.number="to_push[main_index][item]">
                 <input v-else type="text" v-model="to_push[main_index][item]">
-                <button class="hover-item" @click="addElement(main_index, item, to_push[main_index][item])"
+                <button class="" @click="addElement(main_index, item, to_push[main_index][item])"
                         :disabled="to_push[main_index][item].length < 1">Ajouter
                 </button>
               </div>
             </div>
           </li>
         </ol>
-        <button class="hover-item" @click="deleteIt(main_index)">Supprimer</button>
+        <button class="" @click="deleteIt(main_index)">Supprimer</button>
       </form>
     </div>
   </div>
-  <button class="hover-item" @click="SubmitForm">Valider TraiteurConfig</button>
-  <p class="error-message"><u>Cliquer sur 'valider TraiteurConfig' ou les données ne seront pas sauvegardé dans la société.</u></p>
-  <div v-if="traiteurModif != null && checkTab(traiteurModif)">
-    <hr class="HR"/>
-    <strong>Modifier éléments tableaux</strong>
-    <form @submit.prevent="">
-      <button class="hover-item" v-for="(tdd, index) in traiteurModif" :key="tdd" @click="modifyTabs=listOfFillTabs(traiteurModif[index]); indexes=index">TraiteurConfig{{index}}
-      </button>
-      <div>
-        <button class="hover-item" v-for="item in modifyTabs" :key="item" @click="deleteTabs=listItemTabs(item); tabName=item">{{item}}</button>
-      </div>
-      <div v-if="typeof deleteTabs != null">
-        <b>Cliquez sur un élément pour le supprimer</b><br>
-        <button class="hover-item" v-for="(item, index) in deleteTabs" :key="item" @click="deleteItemTabs(index)">{{item}}</button>
-      </div>
-    </form>
-  </div>
+  <button class="" @click="SubmitForm">Valider TraiteurConfig</button>
+  <p class="error-message"><u>Cliquer sur 'valider TraiteurConfig' ou les données ne seront pas sauvegardé.</u></p>
+<!--  <div v-if="traiteurModif != null && checkTab(traiteurModif)">-->
+<!--    <hr class="HR"/>-->
+<!--    <strong>Modifier éléments tableaux</strong>-->
+<!--    <form @submit.prevent="">-->
+<!--      <button class="" v-for="(tdd, index) in traiteurModif" :key="tdd" @click="modifyTabs=listOfFillTabs(traiteurModif[index]); indexes=index">TraiteurConfig{{index}}-->
+<!--      </button>-->
+<!--      <div>-->
+<!--        <button class="" v-for="item in modifyTabs" :key="item" @click="deleteTabs=listItemTabs(item); tabName=item">{{item}}</button>-->
+<!--      </div>-->
+<!--      <div v-if="typeof deleteTabs != null">-->
+<!--        <b>Cliquez sur un élément pour le supprimer</b><br>-->
+<!--        <button class="" v-for="(item, index) in deleteTabs" :key="item" @click="deleteItemTabs(index)">{{item}}</button>-->
+<!--      </div>-->
+<!--    </form>-->
+<!--  </div>-->
 </template>
 
 <script>
 
 export default {
+  created() {
+    //this.isModifyContent();
+    if (this.traiteurModif != null) this.isModify = true;
+  },
   emits: ['tdd_form'],
   name: "TddForm",
   props: {
@@ -102,6 +114,7 @@ export default {
   },
   data() {
     return {
+      isModify: false,
       modifyTabs: [],
       modifyClick: false,
       deleteTabs: null,
@@ -165,7 +178,7 @@ export default {
         }
       }
       this.FormTdd.tdd = this.to_complete;
-      this.$emit('tdd_form', this.FormTdd.tdd);
+      this.$emit('tdd_form', {tdd: this.FormTdd.tdd, modify: this.isModify});
       this.FormTdd.tdd = [];
     },
     addElement(main_index, index, text) {
@@ -279,18 +292,8 @@ export default {
       this.tdd_nbr--;
       this.to_complete.splice(index, 1);
     },
-    checkTab(tdds) {
-      for (const tdd of tdds) {
-        for (const value in this.array.filtration) {
-          try {
-            if (tdd[this.array.filtration[value]].length > 0) return true;
-          }
-          catch (e) {
-            continue;
-          }
-        }
-      }
-      return false;
+    deleteTraiteur(index) {
+      this.traiteurModif.splice(index, 1);
     },
     listOfFillTabs(tdd) {
       const list = [];
@@ -336,19 +339,11 @@ ol {
 
 b {
   margin-left: 5px;
+  color: black;
 }
 
 .top {
   margin-top: 2em;
-}
-
-.libelleinput-odd {
-  margin-right: fill;
-}
-
-.libelleinput-even {
-  margin-right: 50em;
-  position: center;
 }
 
 #localisation {
@@ -361,9 +356,26 @@ b {
   font-weight: bold;
 }
 
-hr.HR {
-  border: 10px solid green;
-  border-radius: 5px;
+#buttons li {
+  float: left;
+  list-style: none;
+  text-align: center;
+  background-color: #000000;
+  margin-right: 30px;
+  width: 150px;
+  line-height: 60px;
+}
+
+#traiteurListe {
+  text-align: left;
+}
+
+.indentButton {
+  text-align: right;
+  display: inline;
 }
 
 </style>
+
+<!--TODO: Pour les traiteurConfig, afficher en petit les termes suivants : (libelle codeJournal direction compte),
+TODO: si bouton cliqué, affiché le TraiteurConfig, pensé à ajouter une suppression au niveau des tableaux -->

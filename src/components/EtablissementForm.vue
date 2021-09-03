@@ -1,16 +1,4 @@
 <template>
-  <div v-if="!etabModify">
-    <div class="white" v-if="modify==null">Choisissez à quelle société vous voulez ajouter l'établissement.</div>
-    <ul>
-      <li class="OneLine" v-for="(soc, index) in ParseSociete(json)" :key="index">
-        <button :id="'ButtonEta' + index" class="hover-item" @click="disabledButton(index, true, 'ButtonEta')">{{soc}}</button>
-      </li>
-        <button class="hover-item" @click="societe = -1; App.methods.doEdit(false, ['AddEta']); $emit('edit_value', false)">Retour</button>
-    </ul>
-  </div>
-  <div v-else-if="modify.length!==0">
-    <button class="hover-item" @click="isModifyContent">ok</button>
-  </div>
   <div v-if="societe >= 0" class="container">
     <form @submit.prevent="">
       <div class="row">
@@ -19,7 +7,7 @@
         </div>
         <div class="col-75">
           <input type="text" required v-model="to_complete.code" maxlength="30">
-          <p v-if="!CodeIsValid" class="error-message">Le code est requit</p>
+          <p v-if="!CodeIsValid" class="error-message">Le code est requis</p>
         </div>
       </div>
       <div class="row">
@@ -53,6 +41,9 @@ import {FindAnID, isIDCorrect} from "@/functions/CheckID";
 import {FindIDTC, checkIDTC} from "@/functions/CheckID";
 
 export default {
+  created() {
+    this.isModifyContent();
+  },
   props: {
     jsonFile: {
       default: null,
@@ -64,7 +55,7 @@ export default {
     },
     id_societe: {
       default: null,
-      required: false
+      required: true
     }
   },
   computed: {
@@ -83,7 +74,7 @@ export default {
       idSoc: this.id_societe,
       json: this.jsonFile,
       modify: this.etabModify,
-      societe : -1,
+      societe : this.id_societe,
       bool: {
         add_id: false,
         add_tdd: false,
@@ -98,8 +89,15 @@ export default {
   },
   methods: {
     CompleteTDD(tdd) {
-      if (checkIDTC(tdd)) tdd = FindIDTC(tdd)
-      this.to_complete.traiteursConfigs = tdd;
+      if (tdd.modify === false) {
+        if (checkIDTC(tdd.tdd)) tdd.tdd = FindIDTC(tdd.tdd)
+        this.to_complete.traiteursConfigs = tdd.tdd;
+      }
+      else {
+        for (const tddElement of tdd.tdd) {
+          this.to_complete.traiteursConfigs.push(tddElement)
+        }
+      }
       if (checkIDTC(this.to_complete.traiteursConfigs)) this.to_complete.traiteursConfigs = FindIDTC(this.to_complete.traiteursConfigs);
       this.bool.add_tdd = false;
     },
@@ -138,23 +136,16 @@ export default {
       this.to_complete.traiteursConfigs = [];
     },
     isModifyContent() {
+      if (this.modify == null) return;
       this.societe = this.idSoc;
-      if (typeof this.modify !== 'undefined') {
-        if (this.modify.traiteursConfigs.length !== 0) this.bool.add_tdd = true;
-        this.to_complete = {
-          id: this.modify.id,
-          code: this.modify.code,
-          traiteursConfigs: this.modify.traiteursConfigs,
-          restaurants: this.modify.restaurants
-        };
+      if (this.modify.traiteursConfigs.length !== 0) this.bool.add_tdd = true;
+      this.to_complete = {
+        id: this.modify.id,
+        code: this.modify.code,
+        traiteursConfigs: this.modify.traiteursConfigs,
+        restaurants: this.modify.restaurants
       }
     }
   }
 }
 </script>
-
-<style scoped>
-.OneLine {
-  display: inline;
-}
-</style>

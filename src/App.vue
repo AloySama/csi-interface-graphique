@@ -6,78 +6,45 @@
         <h1>ARCOLE<br>export</h1>
       </div>
       <div class="order">
-        <button autofocus id="parcourir" :title="message['parcours']" class="hover-item"
-                @click="bool.ChooseFile=true; disabledButtons('parcourir', 'old_edit', true);">Charger un fichier</button>
-        <button id="edit" :title="message['edit']" class="hover-item"
-                @click="bool.editing=true; disabledButtons('edit', 'old_edit', true);"
-                :disabled="json==null">Éditer ficher ARCOLE</button>
-        <button id="modify" class="hover-item" :title="message['modify']" :disabled="json==null" @click="bool.Modify = true; disabledButtons('modify', 'old_edit', true)">Modifier éléments</button>
+        <button id="parcourir" :title="message['parcours']" class="hover-item"
+                @click="bool.ChooseFile=true; bool.Modify = false; disabledButtons('parcourir', 'old_edit');">Charger un fichier</button>
+        <button id="modify" class="hover-item" :disabled="json==null" @click="bool.Modify = true; bool.ChooseFile = false; disabledButtons('modify', 'old_edit');">Modifier éléments</button>
         <button class="hover-item" @click="DownloadFile" :disabled="json==null" :title="message['save']">Enregistrer</button>
-        <button id="remove" :title="message['remove']" class="hover-item"
-                @click="bool.RemoveElement=true; disabledButtons('remove', 'old_edit', true)"
-                :disabled="json==null" >Supprimer éléments</button>
-        <button id="retour" :title="message['retour']" class="hover-item" v-if="bool.editing || bool.ChooseFile || bool.RemoveElement || bool.Modify"
-        @click="
-        doEdit(false, ['edit', 'parcourir', 'remove', 'modify']); updateButtonsMain(null);">Retour</button>
       </div>
     </header>
   </div>
-  <div v-if="bool.editing">
-    <button id="AddSoc" class="hover-item"
-            @click="bool.edit_societe = true; disabledButtons('AddSoc', 'old', false)">Ajouter une société</button>
-    <button id="AddEta" class="hover-item"
-            @click="bool.edit_eta = true; disabledButtons('AddEta', 'old', false)">Ajouter un établissement</button>
-    <button id="AddRes" class="hover-item" @click="bool.edit_res = true;  disabledButtons('AddRes', 'old', false)">Ajouter un restaurant</button>
-    <button v-if="bool.edit_societe || bool.edit_eta || bool.edit_res" class="hover-item" @click="
-                                                                updateButtons(null)
-                                                                doEdit( false, ['AddSoc', 'AddRes', 'AddEta']);">Retour</button></div>
-  <modify-element :json-file="json" v-if="bool.Modify"/>
-  <SocieteForm :json-file="json" v-if="bool.edit_societe && bool.editing" @json_value="SetJson"/>
-  <EtablissementForm :json-file="json" v-if="bool.edit_eta && bool.editing" @edit_value="SetEta" @json_value="SetJson"/>
-  <RestaurantForm :json-file="json" v-if="bool.edit_res && bool.editing" @edit_value="SetRes"/>
+  <main-component  v-if="bool.Modify" :json-file="json"/>
   <UploadFiles v-if="bool.ChooseFile" @upload-json="SetJson"/>
-  <RemoveElements v-if="bool.RemoveElement" :json-file="json"/>
   <Footer @setting_value="SetSettings"/>
 </template>
 
 <script lang="ts">
 /* eslint-disable */
 import {defineComponent} from "vue";
-import SocieteForm from "@/components/SocieteForm.vue";
-import EtablissementForm from "@/components/EtablissementForm.vue";
 import UploadFiles from "@/components/UploadFiles.vue";
-import RestaurantForm from "@/components/RestaurantForm.vue";
 import download from '@/functions/Savedata'
 import Footer from "@/components/Footer.vue";
-import RemoveElements from "@/components/RemoveElements.vue";
 import TabType from "@/functions/TabType";
-import ModifyElement from "@/components/ModifyElement.vue";
+import MainComponent from "@/components/MainComponent.vue";
 
 export default defineComponent({
   name: 'App',
-  components: {ModifyElement, RemoveElements, Footer, RestaurantForm, UploadFiles, EtablissementForm, SocieteForm},
+  components: {MainComponent, Footer,UploadFiles},
   data() {
     return {
       setting_tab: {},
       img: require('@/assets/images/csi.png'),
       json: null,
       bool: {
-        RemoveElement: false,
         Modify: false,
         ChooseFile: false,
-        editing: false,
-        edit_eta: false,
-        edit_societe: false,
-        edit_res: false,
+        Editing: false,
       },
       tab: {old: "", old_edit: "", delete: ""},
       message: {
-        'edit': 'Cliquer sur moi pour commencer à éditer le fichier',
         'retour': 'Quitte l\'édition',
         'parcours': 'Parcourir un fichier sur le pc',
         'save': 'Enregistrer le fichier sur votre pc',
-        'remove': 'Supprimer un élément dans le fichier',
-        'modify': 'Modifier des éléments déjà présent'
       },
       download
     }
@@ -88,15 +55,6 @@ export default defineComponent({
     },
     DownloadFile() {
       download(this.json, 'arcole.json', this.setting_tab)
-    },
-    SetEta(value: boolean) {
-
-      this.doEdit(value, ['AddEta']);
-      this.bool.edit_eta = value;
-    },
-    SetRes(value: boolean) {
-      this.doEdit(value, ['AddRes']);
-      this.bool.edit_res = value;
     },
     SetJson(json: string) {
       if (json != null) {
@@ -121,7 +79,7 @@ export default defineComponent({
         d.disabled = editing;
       }
     },
-    disabledButtons(id: string, tab_str: TabType, mainbutton: boolean) {
+    disabledButtons(id: string, tab_str: TabType) {
       const current = id;
       if (this.tab[tab_str].length === 0) {
           this.tab[tab_str] = current;
@@ -144,21 +102,12 @@ export default defineComponent({
         }
         // @ts-ignore
         doc_current.disabled = true;
-        if (!mainbutton) this.updateButtons(current);
-        else this.updateButtonsMain(current);
+        this.updateButtonsMain(current);
       }
     },
-    updateButtons(current: string) {
-      this.bool.edit_eta = 'AddEta' === current;
-      this.bool.edit_res = 'AddRes' === current;
-      this.bool.edit_societe = 'AddSoc' === current;
-      this.bool.Modify = 'modify' === current;
-    },
     updateButtonsMain(current: string) {
-      this.bool.editing = 'edit' === current;
+      this.bool.Editing = 'edit' === current;
       this.bool.ChooseFile = 'parcourir' === current;
-      this.bool.RemoveElement = 'remove' === current;
-      this.bool.Modify = 'modify' === current;
     }
   }
 });

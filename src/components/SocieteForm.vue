@@ -1,14 +1,13 @@
 <template>
   <div class="container">
-    <button class="hover-item" @click="isModifyContent" v-if="modify">Modifier</button>
     <form @submit.prevent="">
       <div class="row">
         <div class="col-25">
           <label>Code</label>
         </div>
         <div class="col-75">
-          <input autofocus type="text" required v-model="to_complete.code" placeholder="Code de la société" maxlength="30">
-          <p v-if="!CodeIsValid" class="error-message">Le code est requit</p>
+          <input type="text" required v-model="to_complete.code" placeholder="Code de la société" maxlength="30">
+          <p v-if="!CodeIsValid" class="error-message">Le code est requis</p>
         </div>
       </div>
       <div class="row">
@@ -25,7 +24,7 @@
               <label >id</label>
             </div>
             <div class="col-75">
-              <input  type="number" min="0" v-model.number="to_complete.id">
+              <input type="number" min="0" v-model.number="to_complete.id">
               <p class="error-message" v-if="to_complete.id < 0">L'id ne peut être que strictement positif.</p>
             </div>
           </form>
@@ -55,6 +54,9 @@ import {FindIDTC} from "@/functions/CheckID";
 import {checkIDTC} from "@/functions/CheckID";
 
 export default {
+  created() {
+    this.isModifyContent();
+  },
   emits: ['json_value', 'to_complete'],
   name: "SocieteForm",
   props: {
@@ -118,7 +120,7 @@ export default {
       this.form.push(new_array);
       this.json = EditSociete(this.json, new_array);
       this.$emit('json_value', this.json);
-      this.AllNull();
+      setTimeout(() => {this.to_complete = [];}, 0);
     },
     AllNull() {
       this.to_complete.id = null;
@@ -127,20 +129,26 @@ export default {
       this.to_complete.traiteursConfigs = [];
     },
     CompleteTDD(tdd) {
-      if (checkIDTC(tdd)) tdd = FindIDTC(tdd)
-      this.to_complete.traiteursConfigs = tdd;
+      if (tdd.modify === false) {
+        if (checkIDTC(tdd.tdd)) tdd.tdd = FindIDTC(tdd.tdd)
+        this.to_complete.traiteursConfigs = tdd.tdd;
+      }
+      else {
+        for (const tddElement of tdd.tdd) {
+          this.to_complete.traiteursConfigs.push(tddElement);
+        }
+      }
       if (checkIDTC(this.to_complete.traiteursConfigs)) this.to_complete.traiteursConfigs = FindIDTC(this.to_complete.traiteursConfigs);
       this.bool.add_tdd = false;
     },
     isModifyContent() {
-      if (typeof this.modify !== 'undefined') {
-        if (this.modify.traiteursConfigs.length !== 0) this.bool.add_tdd = true;
-        this.to_complete = {
-          id: this.modify.id,
-          code: this.modify.code,
-          traiteursConfigs: this.modify.traiteursConfigs,
-          etablissements: this.modify.etablissements
-        }
+      if (this.modify == null || typeof this.modify === 'undefined') return;
+      if (this.modify.traiteursConfigs.length !== 0) this.bool.add_tdd = true;
+      this.to_complete = {
+        id: this.modify.id,
+        code: this.modify.code,
+        traiteursConfigs: this.modify.traiteursConfigs,
+        etablissements: this.modify.etablissements
       }
     }
   }

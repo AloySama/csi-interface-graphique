@@ -1,64 +1,27 @@
 <template>
-  <div v-if="!modify">
-    <div>
-      <div class="white"> Choisir société</div>
-      <br>
-      <ul>
-        <li class="OneLine" v-for="(soc, index_soc) in ParseSociete(json)" :key="index_soc">
-          <button :id="'ButtonEta' + index_soc" class="hover-item" @click="disabledButton('ButtonEta', index_soc, true); hasChanged(index_soc); fillSociete(index_soc)">{{ soc }}</button>
-        </li>
-        <button class="hover-item" @click="fillSociete(-1); App.methods.doEdit( false, ['AddRes']); $emit('edit_value', false)">Retour
-        </button>
-      </ul>
-    </div>
-    <div v-if="FillTab['societe'] >= 0">
-      <div class="white">Choisir l'établissement</div>
-      <ul>
-        <li class="OneLine" v-for="(etab, index_eta) in ParseEtablissement(json, FillTab['societe'])" :key="index_eta">
-          <button class="hover-item" :id="'ButtonRes' + FillTab['societe'] + index_eta" @click="fillEtab(index_eta);">
-            {{ etab }}
-          </button>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <div v-else>
-    <button class="hover-item" @click="isModifyContent">modifier</button>
-  </div>
   <div v-if="FillTab['societe'] >= 0 && FillTab['etablissement'] >= 0" class="container">
     <strong>Attention : le matricule d'un restaurant est unique dans tout le fichier json</strong>
     <form @submit.prevent="">
-      <div class="row">
+      <div class="row" v-for="(value, key) of string" :key="value">
         <div class="col-25">
-          <label>Etab code</label>
+          <label>{{key}}</label>
         </div>
         <div class="col-75">
-          <input type="text" required v-model="to_complete[to_complete.length-1].etab_code" maxlength="30">
-          <p class="error-message" v-if="!to_complete[to_complete.length-1].etab_code"> Le code de la société est
-            requit</p>
+          <input type="text" v-model="to_complete[to_complete.length-1][value]" maxlength="30">
         </div>
       </div>
-<!--      <div class="row">-->
-<!--        <div class="col-25">-->
-<!--          <label>code_societe</label>-->
-<!--        </div>-->
-<!--        <div class="col-75">-->
-<!--          <input type="text" v-model="to_complete[to_complete.length-1].code_societe">-->
-<!--        </div>-->
-<!--      </div>-->
       <div class="row">
         <div class="col-25">
           <label>Matricule personnalisé ?</label>
         </div>
         <div class="col-75">
           <input v-model="bool.AddMatricule" type="checkbox">
-          <input v-if="bool.AddMatricule" type="number" min="0"
-                 v-model.number="to_complete[to_complete.length-1].matricule" required>
+          <input v-if="bool.AddMatricule" type="number" min="0" v-model.number="to_complete[to_complete.length-1].matricule" required>
         </div>
       </div>
       <div class="row">
         <div class="col-25">
-          <label>Ajouter Traiteur Configs ?</label>
+          <label>Ajouter TraiteurConfigs ?</label>
         </div>
         <div class="col-75">
           <input v-model="bool.AddTdd" type="checkbox">
@@ -85,6 +48,9 @@ import {EditRestaurant} from "@/functions/EditElements";
 import {FindIDRes, checkIDTC, isIDCorrectRes, FindIDTC} from "@/functions/CheckID";
 
 export default {
+  created() {
+    this.isModifyContent();
+  },
   name: "RestaurantForm",
   props: {
     jsonFile: {
@@ -97,7 +63,7 @@ export default {
     },
     idTab: {
       default: {},
-      required: false
+      required: true
     }
   },
   components: {TddForm},
@@ -113,13 +79,12 @@ export default {
       modify: this.restModify,
       ids: this.idTab,
       json: this.jsonFile,
-      FillTab: {'societe': -1, 'etablissement': -1},
+      FillTab: {'societe': this.idTab.soc, 'etablissement': this.idTab.eta},
       bool: {
         AddMatricule: false,
         AddTdd: false
       },
       to_complete: [{
-        // code_societe: '',
         compteAuxiliaire: '',
         etab_code: '',
         reference_config_compensation: 0,
@@ -127,13 +92,13 @@ export default {
         matricule: null,
         restaurantId: null,
         traiteursConfigs: []
-      }]
+      }],
+      string: {"Etab code": 'etab_code', "Auxiliaire credit client": 'auxiliaireCreditClient', "Code societe": 'code_societe'}
     }
   },
   methods: {
     addToComplete() {
       this.to_complete.push({
-        // code_societe: '',
         compteAuxiliaire: '',
         etab_code: '',
         reference_config_compensation: 0,
@@ -144,7 +109,16 @@ export default {
       })
     },
     completeTDD(tdd) {
-      this.to_complete[this.to_complete.length - 1].traiteursConfigs = tdd
+      if (tdd.modify === false) {
+        if (checkIDTC(tdd.tdd)) tdd.tdd = FindIDTC(tdd.tdd)
+        this.to_complete[this.to_complete.length - 1].traiteursConfigs = tdd.tdd
+      } else {
+        for (const tddElement of tdd.tdd) {
+          this.to_complete[this.to_complete.length - 1].traiteursConfigs.push(tddElement);
+        }
+      }
+      if (checkIDTC(this.to_complete[this.to_complete.length - 1].traiteursConfigs)) this.to_complete[this.to_complete.length - 1].traiteursConfigs = FindIDTC(this.to_complete[this.to_complete.length - 1].traiteursConfigs);
+
       this.bool.AddTdd = false;
     },
     lengthNumber(number) {
@@ -161,12 +135,6 @@ export default {
       for (let i = 0; i < (this.numberOfZeros - length); i++) text += '0'
       return text += IDRes;
     },
-    fillSociete(societe) {
-      this.FillTab['societe'] = societe;
-    },
-    fillEtab(etablissement) {
-      this.FillTab['etablissement'] = etablissement;
-    },
     disabledButton(ElementId, i, bool) {
       document.getElementById(ElementId + i).disabled = bool;
       for (let j = 0; j < this.json.length; j++) {
@@ -179,25 +147,20 @@ export default {
         }
       }
     },
-    hasChanged(index) {
-      if ((this.FillTab['societe'] !== index)) this.FillTab['etablissement'] = -1;
-    },
     isModifyContent() {
       this.FillTab.societe = this.ids.soc;
       this.FillTab.etablissement = this.ids.eta;
-      if (typeof this.modify !== 'undefined') {
-        this.to_complete.push({
-          // code_societe: this.modify.code_societe,
-          compteAuxiliaire: this.modify.compteAuxiliaire,
-          etab_code: this.modify.etab_code,
-          reference_config_compensation: this.modify.reference_config_compensation,
-          auxiliaireCreditClient: this.modify.auxiliaireCreditClient,
-          matricule: this.modify.matricule,
-          restaurantId: this.modify.restaurantId,
-          traiteursConfigs: this.modify.traiteursConfigs
-        })
-        if (this.modify.traiteursConfigs.length!==0) this.bool.AddTdd = true;
-      }
+      if (this.modify == null) return;
+      this.to_complete.push({
+        compteAuxiliaire: this.modify.compteAuxiliaire,
+        etab_code: this.modify.etab_code,
+        reference_config_compensation: this.modify.reference_config_compensation,
+        auxiliaireCreditClient: this.modify.auxiliaireCreditClient,
+        matricule: this.modify.matricule,
+        restaurantId: this.modify.restaurantId,
+        traiteursConfigs: this.modify.traiteursConfigs
+      })
+      if (this.modify.traiteursConfigs.length!==0) this.bool.AddTdd = true;
     },
     isSubmitted() {
       const length = this.to_complete.length - 1;
@@ -223,3 +186,7 @@ export default {
   }
 }
 </script>
+
+<!--
+     "reference_config_compensation": 999,
+-->

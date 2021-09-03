@@ -15,12 +15,15 @@ body {
     display: flex;
     flex-direction: column;
 }
+
 body::-webkit-scrollbar {
     width: 8px;
 }
+
 body::-webkit-scrollbar-track {
     background: #1e1e24;
 }
+
 body::-webkit-scrollbar-thumb {
     background: #6649b8;
 }
@@ -30,23 +33,27 @@ body::-webkit-scrollbar-thumb {
     border: 1px darkblue solid;
     background-image: linear-gradient(to top right, mediumpurple, white);
 }
+
 header {
     text-align: center;
 }
+
 header img {
-    height:125px;
-    width:125px;
+    height: 125px;
+    width: 125px;
     margin-right: 10px;
     transition-duration: 1s;
 }
+
 .hover-item {
     margin-top: 5px;
     transition: .25s;
 }
+
 .hover-item:hover {
-    text-decoration: underline black;
     transform: translate(-3px, -5px);
 }
+
 .hover-item:disabled {
     border: solid #999999;
     background-color: #cccccc;
@@ -54,26 +61,32 @@ header img {
     cursor: default;
     pointer-events: none;
 }
+
 .hover-item:active {
     background-color: #ece6d9;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
 }
+
 header img:hover {
     transform: translate(0, 8px);
     transition-duration: 0.5s;
 }
+
 header .order {
     margin-top: 35px;
 }
+
 app {
     font-family: "Ubuntu", serif;
     text-align: center;
     display: flex;
 }
+
 div {
     margin-bottom: 10px;
 }
+
 button {
     margin: 0 0 10px 10px;
     color: #860ace;
@@ -85,13 +98,16 @@ button {
     font-size: 20px;
     background: white;
 }
+
 .title {
     display: flex;
     justify-content: center;
 }
+
 br {
     overflow: auto;
 }
+
 b {
     color: darkblue;
     overflow: auto;
@@ -158,6 +174,20 @@ ul {
     list-style-type: none;
     display: inline;
 }
+
 .OneLine {
     display: inline;
+}
+
+.redButton {
+    color: darkred;
+    border: 3px solid darkred;
+}
+.greenButton {
+    color: darkgreen;
+    border: 3px solid darkgreen;
+}
+.blueButton {
+    color: darkblue;
+    border: 3px solid darkblue;
 }
