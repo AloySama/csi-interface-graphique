@@ -189,12 +189,20 @@ export default {
       return value;
     },
     setBool(addS, addE, addR, modS, modE, modR) {
-      this.bool.addSociete = addS;
-      this.bool.addEtablissement = addE;
-      this.bool.addRestaurant = addR
-      this.bool.modifySociete = modS
-      this.bool.modifyEtablissement = modE
-      this.bool.modifyRestaurant = modR;
+      this.bool.addSociete = false;
+      this.bool.addEtablissement = false;
+      this.bool.addRestaurant = false;
+      this.bool.modifySociete = false;
+      this.bool.modifyEtablissement = false;
+      this.bool.modifyRestaurant = false;
+      setTimeout(() => {
+        this.bool.addSociete = addS;
+        this.bool.addEtablissement = addE;
+        this.bool.addRestaurant = addR;
+        this.bool.modifySociete = modS;
+        this.bool.modifyEtablissement = modE;
+        this.bool.modifyRestaurant = modR;
+        }, 0);
     }
   }
 }

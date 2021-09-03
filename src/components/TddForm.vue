@@ -1,13 +1,16 @@
 <template>
   <div>
-    <button class="" @click="AddFormTdd2x">+2</button><button class="" @click="AddFormTdd">+</button>
+    <button class="" @click="AddFormTdd2x">+2</button>
+    <button class="" @click="AddFormTdd">+</button>
     <b>{{ tdd_nbr }}</b>
-    <button class="" @click="RemoveFormTdd">-</button><button class="" @click="RemoveFormTdd2x">-2</button>
+    <button class="" @click="RemoveFormTdd">-</button>
+    <button class="" @click="RemoveFormTdd2x">-2</button>
   </div>
   <div v-if="traiteurModif != null && traiteurModif.length > 0">
     <ul>
       <li id="traiteurListe" v-for="(tdd, index) in traiteurModif" :key="tdd">
-        <button class="hover-item">{{tdd.libelle}} | {{tdd.codeJournal}} | {{tdd.direction}} | {{tdd.compte}}</button>
+        <button class="hover-item">{{ tdd.libelle }} | {{ tdd.codeJournal }} | {{ tdd.direction }} | {{ tdd.compte }}
+        </button>
         <button class="hover-item redButton indentButton" @click="deleteTraiteur(index)">Supprimer</button>
         <button class="hover-item blueButton">Modifier</button>
       </li>
@@ -80,21 +83,21 @@
   </div>
   <button class="" @click="SubmitForm">Valider TraiteurConfig</button>
   <p class="error-message"><u>Cliquer sur 'valider TraiteurConfig' ou les données ne seront pas sauvegardé.</u></p>
-<!--  <div v-if="traiteurModif != null && checkTab(traiteurModif)">-->
-<!--    <hr class="HR"/>-->
-<!--    <strong>Modifier éléments tableaux</strong>-->
-<!--    <form @submit.prevent="">-->
-<!--      <button class="" v-for="(tdd, index) in traiteurModif" :key="tdd" @click="modifyTabs=listOfFillTabs(traiteurModif[index]); indexes=index">TraiteurConfig{{index}}-->
-<!--      </button>-->
-<!--      <div>-->
-<!--        <button class="" v-for="item in modifyTabs" :key="item" @click="deleteTabs=listItemTabs(item); tabName=item">{{item}}</button>-->
-<!--      </div>-->
-<!--      <div v-if="typeof deleteTabs != null">-->
-<!--        <b>Cliquez sur un élément pour le supprimer</b><br>-->
-<!--        <button class="" v-for="(item, index) in deleteTabs" :key="item" @click="deleteItemTabs(index)">{{item}}</button>-->
-<!--      </div>-->
-<!--    </form>-->
-<!--  </div>-->
+  <!--  <div v-if="traiteurModif != null && checkTab(traiteurModif)">-->
+  <!--    <hr class="HR"/>-->
+  <!--    <strong>Modifier éléments tableaux</strong>-->
+  <!--    <form @submit.prevent="">-->
+  <!--      <button class="" v-for="(tdd, index) in traiteurModif" :key="tdd" @click="modifyTabs=listOfFillTabs(traiteurModif[index]); indexes=index">TraiteurConfig{{index}}-->
+  <!--      </button>-->
+  <!--      <div>-->
+  <!--        <button class="" v-for="item in modifyTabs" :key="item" @click="deleteTabs=listItemTabs(item); tabName=item">{{item}}</button>-->
+  <!--      </div>-->
+  <!--      <div v-if="typeof deleteTabs != null">-->
+  <!--        <b>Cliquez sur un élément pour le supprimer</b><br>-->
+  <!--        <button class="" v-for="(item, index) in deleteTabs" :key="item" @click="deleteItemTabs(index)">{{item}}</button>-->
+  <!--      </div>-->
+  <!--    </form>-->
+  <!--  </div>-->
 </template>
 
 <script>
@@ -163,7 +166,7 @@ export default {
       string: ["auxiliaire", "compteAnalytique1", "compteAnalytique2", "compteAnalytique3", "tax_code", "transaction", 'libelle'],
       to_complete: [],
       LOCALISATION: ['EAT_IN', 'TAKE_OUT', 'DRIVE_THROUGH', 'DELIVERY', 'PICKUP', 'KIOSK_EAT_IN', 'KIOSK_TAKE_OUT', 'SALLE', 'SALLE_EAT_IN', 'SALLE_TAKE_OUT', 'EXTERIEUR', 'PARKING'],
-      DOCUMENT: ['COMMANDE', 'TICKET','RECU_PRELEVEMENT', 'RECU_SESSION_OUVERTE', 'RECU_FIN_SESSION', 'FACTURE', 'NOTE', 'RECU_FIN_SESSION_DECLARE', 'RECU_PRELEVEMENT_DECLARE', 'RECU_REPRISE_SESSION', 'RECU_FIN_SESSION_ANNULEE', 'BON_DEPENSE', 'BON_RECETTE', 'BON_EQUILLIBRE', 'CLOTURE_REGLEMENT', 'TABLE', 'COMPTE', 'COMPTECOMMANDE', 'DUPLICATA', 'RECU_TRANSFERT', 'RECU_REGLEMENT_EMPLOYE', 'RECU_RAZ_COMPTE', 'CLOTURE_EXERCICE', 'RECU_EXPORT', 'TEST', 'REPAS_COMPLET', 'DOCUMENT'],
+      DOCUMENT: ['COMMANDE', 'TICKET', 'RECU_PRELEVEMENT', 'RECU_SESSION_OUVERTE', 'RECU_FIN_SESSION', 'FACTURE', 'NOTE', 'RECU_FIN_SESSION_DECLARE', 'RECU_PRELEVEMENT_DECLARE', 'RECU_REPRISE_SESSION', 'RECU_FIN_SESSION_ANNULEE', 'BON_DEPENSE', 'BON_RECETTE', 'BON_EQUILLIBRE', 'CLOTURE_REGLEMENT', 'TABLE', 'COMPTE', 'COMPTECOMMANDE', 'DUPLICATA', 'RECU_TRANSFERT', 'RECU_REGLEMENT_EMPLOYE', 'RECU_RAZ_COMPTE', 'CLOTURE_EXERCICE', 'RECU_EXPORT', 'TEST', 'REPAS_COMPLET', 'DOCUMENT'],
       tabNumber: ['comptes', 'rules', 'numeros'],
       FormTdd: {tdd: []}
     }
@@ -318,7 +321,7 @@ export default {
     },
     deleteItemTabs(id) {
       this.traiteurModif[this.indexes][this.tabName].splice(id, 1)
-      this.deleteTabs=this.listItemTabs(this.tabName);
+      this.deleteTabs = this.listItemTabs(this.tabName);
       for (const c of this.traiteurModif) {
         c.filtration = this.listOfFillTabs(c);
       }
