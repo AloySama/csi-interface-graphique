@@ -178,3 +178,16 @@ ul {
 .OneLine {
     display: inline;
 }
+
+.redButton {
+    color: darkred;
+    border: 3px solid darkred;
+}
+.greenButton {
+    color: darkgreen;
+    border: 3px solid darkgreen;
+}
+.blueButton {
+    color: darkblue;
+    border: 3px solid darkblue;
+}

@@ -5,16 +5,16 @@
         <button :id="'ButtonSociete' + index" class="hover-item" @click="disabledButton('societe', index, 'ButtonSociete' + index); bool.addEtablissement=false">{{societe}}</button>
       </li>
       <li class="OneLine">
-        <button class="hover-item green" @click="addSocieteJson()">Ajouter</button>
-        <button class="hover-item blue" v-if="tab.societe !== -1" @click="setBool(false, false, false, true, false, false)">Modifier</button>
+        <button class="hover-item greenButton" @click="addSocieteJson()">Ajouter</button>
+        <button class="hover-item blueButton" v-if="tab.societe !== -1" @click="setBool(false, false, false, true, false, false)">Modifier</button>
         <ul>
-          <button class="hover-item red" @click="removeObjSociete()" :disabled="tab.societe===-1">Supprimer</button>
+          <button class="hover-item redButton" @click="removeObjSociete()" :disabled="tab.societe===-1">Supprimer</button>
         </ul>
       </li>
     </ul>
   </div>
   <div v-else>
-    <button class="hover-item green" @click="addSocieteJson()">Ajouter</button>
+    <button class="hover-item greenButton" @click="addSocieteJson()">Ajouter</button>
   </div>
   <div v-if="tab.societe !== -1 && json[tab.societe].etablissements.length !== 0">
     <ul>
@@ -22,16 +22,16 @@
         <button :id="'ButtonEtablissement' + index" class="hover-item" @click="disabledButton('etablissement', index, 'ButtonEtablissement' + index); bool.addRestaurant = false">{{etablissement}}</button>
       </li>
       <li class="OneLine">
-        <button class="hover-item green" @click="addEtabJson()">Ajouter</button>
-        <button class="hover-item blue" v-if="tab.etablissement !== -1" @click="setBool(false, false, false, false, true, false)">Modifier</button>
+        <button class="hover-item greenButton" @click="addEtabJson()">Ajouter</button>
+        <button class="hover-item blueButton" v-if="tab.etablissement !== -1" @click="setBool(false, false, false, false, true, false)">Modifier</button>
         <ul>
-          <button class="hover-item red" @click="removeObjEtab()" :disabled="tab.etablissement===-1">Supprimer</button>
+          <button class="hover-item redButton" @click="removeObjEtab()" :disabled="tab.etablissement===-1">Supprimer</button>
         </ul>
       </li>
     </ul>
   </div>
   <div v-else-if="tab.societe!==-1">
-    <button class="hover-item green" @click="addEtabJson()">Ajouter Établissement</button>
+    <button class="hover-item greenButton" @click="addEtabJson()">Ajouter Établissement</button>
   </div>
   <div v-if="tab.societe!==-1 && tab.etablissement !== -1 && json[tab.societe].etablissements[tab.etablissement].restaurants.length !== 0 ">
     <ul>
@@ -39,10 +39,10 @@
         <button :id="'ButtonRestaurant' + index" class="hover-item" @click="disabledButton('restaurant', index, 'ButtonRestaurant' + index)">{{restaurant}}</button>
       </li>
       <li class="OneLine">
-        <button class="hover-item green" @click="addRestJson()">Ajouter Restaurant</button>
-        <button class="hover-item blue" v-if="tab.restaurant !== -1" @click="setBool(false, false, false, false ,false, true)">Modifier</button>
+        <button class="hover-item greenButton" @click="addRestJson()">Ajouter Restaurant</button>
+        <button class="hover-item blueButton" v-if="tab.restaurant !== -1" @click="setBool(false, false, false, false ,false, true)">Modifier</button>
         <ul>
-          <button class="hover-item red" @click="removeObjRest()" :disabled="tab.restaurant===-1">Supprimer</button>
+          <button class="hover-item redButton" @click="removeObjRest()" :disabled="tab.restaurant===-1">Supprimer</button>
         </ul>
       </li>
     </ul>
@@ -203,17 +203,5 @@ export default {
 <style scoped>
 .OneLine {
   display: inline;
-}
-.red {
-  color: darkred;
-  border: 3px solid darkred;
-}
-.green {
-  color: darkgreen;
-  border: 3px solid darkgreen;
-}
-.blue {
-  color: darkblue;
-  border: 3px solid darkblue;
 }
 </style>

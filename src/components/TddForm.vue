@@ -4,15 +4,15 @@
     <b>{{ tdd_nbr }}</b>
     <button class="" @click="RemoveFormTdd">-</button><button class="" @click="RemoveFormTdd2x">-2</button>
   </div>
-<!--  <div v-else>-->
-<!--    <div>-->
-<!--      <ul id="buttons">-->
-<!--        <li>-->
-<!--      <button v-for="tdd in traiteurModif" :key="tdd">{{tdd.libelle}} | {{tdd.codeJournal}} | {{tdd.direction}} | {{tdd.compte}}</button>-->
-<!--        </li>-->
-<!--      </ul>-->
-<!--    </div>-->
-<!--  </div>-->
+  <div v-if="traiteurModif != null && traiteurModif.length > 0">
+    <ul>
+      <li id="traiteurListe" v-for="(tdd, index) in traiteurModif" :key="tdd">
+        <button class="hover-item">{{tdd.libelle}} | {{tdd.codeJournal}} | {{tdd.direction}} | {{tdd.compte}}</button>
+        <button class="hover-item redButton indentButton" @click="deleteTraiteur(index)">Supprimer</button>
+        <button class="hover-item blueButton">Modifier</button>
+      </li>
+    </ul>
+  </div>
   <div v-if="tdd_nbr >= values.min">
     <div v-for="(number, main_index) in parseInt(tdd_nbr)" :key="parseInt(number)">
       <form @submit.prevent="" class="top">
@@ -292,6 +292,9 @@ export default {
       this.tdd_nbr--;
       this.to_complete.splice(index, 1);
     },
+    deleteTraiteur(index) {
+      this.traiteurModif.splice(index, 1);
+    },
     listOfFillTabs(tdd) {
       const list = [];
       for (const value in this.array.filtration) {
@@ -336,6 +339,7 @@ ol {
 
 b {
   margin-left: 5px;
+  color: black;
 }
 
 .top {
@@ -352,10 +356,6 @@ b {
   font-weight: bold;
 }
 
-/*hr.HR {*/
-/*  border: 10px solid green;*/
-/*  border-radius: 5px;*/
-/*}*/
 #buttons li {
   float: left;
   list-style: none;
@@ -364,6 +364,15 @@ b {
   margin-right: 30px;
   width: 150px;
   line-height: 60px;
+}
+
+#traiteurListe {
+  text-align: left;
+}
+
+.indentButton {
+  text-align: right;
+  display: inline;
 }
 
 </style>

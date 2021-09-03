@@ -112,13 +112,13 @@ export default {
       if (tdd.modify === false) {
         if (checkIDTC(tdd.tdd)) tdd.tdd = FindIDTC(tdd.tdd)
         this.to_complete[this.to_complete.length - 1].traiteursConfigs = tdd.tdd
-      }
-      else {
+      } else {
         for (const tddElement of tdd.tdd) {
           this.to_complete[this.to_complete.length - 1].traiteursConfigs.push(tddElement);
         }
       }
-      if (checkIDTC(this.to_complete.traiteursConfigs)) this.to_complete.traiteursConfigs = FindIDTC(this.to_complete.traiteursConfigs);
+      if (checkIDTC(this.to_complete[this.to_complete.length - 1].traiteursConfigs)) this.to_complete[this.to_complete.length - 1].traiteursConfigs = FindIDTC(this.to_complete[this.to_complete.length - 1].traiteursConfigs);
+
       this.bool.AddTdd = false;
     },
     lengthNumber(number) {
