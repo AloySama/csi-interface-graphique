@@ -120,7 +120,7 @@ export default {
           console.error('Une erreur est survenue.')
           return;
         }
-        if (doc_old != null) {
+        if (doc_old) {
           // @ts-ignore
           doc_old.disabled = false;
         }
@@ -166,15 +166,13 @@ export default {
       this.json[this.tab.societe] = complete;
       setTimeout(() => {this.tab.societe = -1; this.bool.modifySociete = false}, 0);
       const doc = document.getElementById(this.old_ids.societe);
-      if (doc == null) return;
-      doc.disabled = false;
+      if (doc) doc.disabled = false;
     },
     setCompleteEta(complete) {
       this.json[this.tab.societe].etablissements[this.tab.etablissement] = complete;
       setTimeout(() => {this.tab.etab = -1; this.bool.modifyEtablissement = false}, 0);
       const doc = document.getElementById(this.old_ids.etablissement);
-      if (doc == null) return;
-      doc.disabled = false;
+      if (doc) doc.disabled = false;
     },
     setCompleteRes(complete) {
       this.json[this.tab.societe].etablissements[this.tab.etablissement].restaurants[this.tab.restaurant] = complete;

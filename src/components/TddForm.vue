@@ -9,10 +9,9 @@
   <div v-if="traiteurModif != null && traiteurModif.length > 0">
     <ul>
       <li id="traiteurListe" v-for="(tdd, index) in traiteurModif" :key="tdd">
-        <button class="hover-item">{{ tdd.libelle }} | {{ tdd.codeJournal }} | {{ tdd.direction }} | {{ tdd.compte }}
-        </button>
+        <button class="hover-item">{{ tdd.libelle }} | {{ tdd.codeJournal }} | {{ tdd.direction }} | {{ tdd.compte }}</button>
         <button class="hover-item redButton indentButton" @click="deleteTraiteur(index)">Supprimer</button>
-        <button class="hover-item blueButton">Modifier</button>
+        <button class="hover-item blueButton" @click="modifyContent(index)">Modifier</button>
       </li>
     </ul>
   </div>
@@ -21,13 +20,13 @@
       <form @submit.prevent="" class="top">
         <ol>
           <li v-for="item in ints" :key="item">
-            <div :id="item + main_index" :class="{'col-25': true, red: item==='id'}"><label>{{ item }}</label></div>
-            <div class="col-75"><input type="number" min="0" v-model.number="to_complete[main_index][item]"></div>
+            <div :id="item + main_index" class="col-25"><label>{{ item }}</label></div>
+            <div class="col-75"><input type="number" :min="0" v-model.number="to_complete[main_index][item]"></div>
           </li>
         </ol>
         <ol>
           <li v-for="item in string" :key="item">
-            <div :id="item" :class="{'col-25': true}"><label>{{ item }}</label></div>
+            <div :id="item" class="col-25"><label>{{ item }}</label></div>
             <div :id="item + 'input'" class="col-75">
               <input type="text" v-model="to_complete[main_index][item]" maxlength="30"></div>
           </li>
@@ -62,7 +61,7 @@
                   <option :value="e" v-for="e in LOCALISATION" :key="e">{{ e }}</option>
                 </select>
               </div>
-              <div v-else-if="item==='documents'">
+              <div v-else-if="item === 'documents'">
                 <select id="document" class="select-css top" v-model="to_complete[main_index][item]" multiple>
                   <option :value="e" v-for="e in DOCUMENT" :key="e">{{ e }}</option>
                 </select>
@@ -70,41 +69,24 @@
               <div v-else>
                 <input v-if="tabNumber.includes(item)" type="number" v-model.number="to_push[main_index][item]">
                 <input v-else type="text" v-model="to_push[main_index][item]">
-                <button class="" @click="addElement(main_index, item, to_push[main_index][item])"
+                <button class="hover-item" @click="addElement(main_index, item, to_push[main_index][item])"
                         :disabled="to_push[main_index][item].length < 1">Ajouter
                 </button>
               </div>
             </div>
           </li>
         </ol>
-        <button class="" @click="deleteIt(main_index)">Supprimer</button>
+        <button class="hover-item" @click="deleteIt(main_index)">Supprimer</button>
       </form>
     </div>
   </div>
-  <button class="" @click="SubmitForm">Valider TraiteurConfig</button>
-  <p class="error-message"><u>Cliquer sur 'valider TraiteurConfig' ou les données ne seront pas sauvegardé.</u></p>
-  <!--  <div v-if="traiteurModif != null && checkTab(traiteurModif)">-->
-  <!--    <hr class="HR"/>-->
-  <!--    <strong>Modifier éléments tableaux</strong>-->
-  <!--    <form @submit.prevent="">-->
-  <!--      <button class="" v-for="(tdd, index) in traiteurModif" :key="tdd" @click="modifyTabs=listOfFillTabs(traiteurModif[index]); indexes=index">TraiteurConfig{{index}}-->
-  <!--      </button>-->
-  <!--      <div>-->
-  <!--        <button class="" v-for="item in modifyTabs" :key="item" @click="deleteTabs=listItemTabs(item); tabName=item">{{item}}</button>-->
-  <!--      </div>-->
-  <!--      <div v-if="typeof deleteTabs != null">-->
-  <!--        <b>Cliquez sur un élément pour le supprimer</b><br>-->
-  <!--        <button class="" v-for="(item, index) in deleteTabs" :key="item" @click="deleteItemTabs(index)">{{item}}</button>-->
-  <!--      </div>-->
-  <!--    </form>-->
-  <!--  </div>-->
+  <button class="hover-item" @click="SubmitForm">Valider TraiteurConfig</button>
+  <p class="error-message">Cliquer sur <u>valider TraiteurConfig</u> ou les données ne seront pas sauvegardé.</p>
 </template>
 
 <script>
-
 export default {
   created() {
-    //this.isModifyContent();
     if (this.traiteurModif != null) this.isModify = true;
   },
   emits: ['tdd_form'],
@@ -117,6 +99,7 @@ export default {
   },
   data() {
     return {
+      modifyTdd: [],
       isModify: false,
       modifyTabs: [],
       modifyClick: false,
@@ -129,7 +112,7 @@ export default {
       tdd: [],
       rsd: ['recuperation', 'specialite', 'direction'],
       select: [],
-      ints: ['id', 'codeJournal', 'compte', 'ordre'],
+      ints: ['codeJournal', 'compte', 'ordre'],
       bools: ['auxiliaireRestaurant', 'auxiliaireVide', 'auxilliaireCreditClient', 'compteAnalytique1TVA', 'matriculeRestaurant', 'modeER', 'taxe', 'transactionVI', 'zeroExclus', 'transactionESP', 'transactionCBD'],
       to_push: [],
       array: {
@@ -173,6 +156,11 @@ export default {
   },
   methods: {
     SubmitForm() {
+      if (this.modifyTdd.length !== 0) {
+        // for (const fill of this.modifyTdd) {
+        //   // console.log(fill.obj)
+        // }
+      }
       for (const complete of this.to_complete) {
         complete.filtration = this.listOfFillTabs(complete);
         for (let i = 1; i !== 3; i++) {
@@ -182,12 +170,13 @@ export default {
       }
       this.FormTdd.tdd = this.to_complete;
       this.$emit('tdd_form', {tdd: this.FormTdd.tdd, modify: this.isModify});
+      this.tdd_nbr = 0;
       this.FormTdd.tdd = [];
     },
     addElement(main_index, index, text) {
       if (this.to_push[main_index][index].length > 0 || this.to_push[main_index][index] > 0) {
         this.to_complete[main_index][index].push(text);
-        this.to_push[main_index][index] = ''
+        this.to_push[main_index][index] = '';
       }
     },
     ToComplete() {
@@ -197,7 +186,6 @@ export default {
         compteAnalytique2: null,
         compteAnalytique3: null,
         tax_code: null,
-        id: 0,
         ordre: 1,
         codeJournal: 10,
         compte: 7000000,
@@ -278,18 +266,11 @@ export default {
       this.to_push.pop();
       this.tdd_nbr -= 2;
     },
-    isModifyContent() {
-      if (this.traiteurModif != null) {
-        this.to_complete = [];
-        this.tdd_nbr = 0;
-        const len = this.traiteurModif.length;
-        for (let i = 0; i < len; i++) {
-          this.AddFormTdd();
-          this.to_complete[i] = this.traiteurModif[i];
-        }
-        this.modifyClick = true;
-      }
-      else alert('Erreur: problème sur le TraiteurConfig')
+    modifyContent(index) {
+      this.AddFormTdd();
+      const obj = Object.assign({}, this.traiteurModif[index]);
+      this.to_complete[this.to_complete.length-1] = obj;
+      this.modifyTdd.push({index: index, obj: obj});
     },
     deleteIt(index) {
       this.tdd_nbr--;
@@ -307,7 +288,7 @@ export default {
           }
         }
         catch (e) {
-          continue;
+          console.log(e);
         }
       }
       return list;
