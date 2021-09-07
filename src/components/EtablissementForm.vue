@@ -90,7 +90,6 @@ export default {
   methods: {
     CompleteTDD(tdd) {
       if (tdd.modify === false) {
-        if (checkIDTC(tdd.tdd)) tdd.tdd = FindIDTC(tdd.tdd)
         this.to_complete.traiteursConfigs = tdd.tdd;
       }
       else {

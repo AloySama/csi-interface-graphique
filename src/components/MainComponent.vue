@@ -6,7 +6,7 @@
       </li>
       <li class="OneLine">
         <button class="hover-item greenButton" @click="addSocieteJson()">Ajouter</button>
-        <button class="hover-item blueButton" v-if="tab.societe !== -1" @click="setBool(false, false, false, true, false, false)">Modifier</button>
+        <button class="hover-item blueButton" v-if="tab.societe !== -1" @click="setBool('modS')">Modifier</button>
         <ul>
           <button class="hover-item redButton" @click="removeObjSociete()" :disabled="tab.societe===-1">Supprimer</button>
         </ul>
@@ -19,11 +19,11 @@
   <div v-if="tab.societe !== -1 && json[tab.societe].etablissements.length !== 0">
     <ul>
       <li class="OneLine" v-for="(etablissement, index) in functions.ParseEtablissement(json, tab.societe)" :key="etablissement">
-        <button :id="'ButtonEtablissement' + index" class="hover-item" @click="disabledButton('etablissement', index, 'ButtonEtablissement' + index); bool.addRestaurant = false">{{etablissement}}</button>
+        <button :id="'ButtonEtablissement' + index" class="hover-item" @click="disabledButton('etablissement', index, 'ButtonEtablissement' + index); bool.addRestaurant = false; bool.modifyEtablissement = false">{{etablissement}}</button>
       </li>
       <li class="OneLine">
         <button class="hover-item greenButton" @click="addEtabJson()">Ajouter</button>
-        <button class="hover-item blueButton" v-if="tab.etablissement !== -1" @click="setBool(false, false, false, false, true, false)">Modifier</button>
+        <button class="hover-item blueButton" v-if="tab.etablissement !== -1" @click="setBool('modE')">Modifier</button>
         <ul>
           <button class="hover-item redButton" @click="removeObjEtab()" :disabled="tab.etablissement===-1">Supprimer</button>
         </ul>
@@ -40,7 +40,7 @@
       </li>
       <li class="OneLine">
         <button class="hover-item greenButton" @click="addRestJson()">Ajouter Restaurant</button>
-        <button class="hover-item blueButton" v-if="tab.restaurant !== -1" @click="setBool(false, false, false, false ,false, true)">Modifier</button>
+        <button class="hover-item blueButton" v-if="tab.restaurant !== -1" @click="setBool('modR')">Modifier</button>
         <ul>
           <button class="hover-item redButton" @click="removeObjRest()" :disabled="tab.restaurant===-1">Supprimer</button>
         </ul>
@@ -136,31 +136,31 @@ export default {
         else return;
       }
       this.tab.societe = -1;
-      this.setBool(false, false, false , false, false , false);
+      this.setBool(null);
     },
     removeObjEtab() {
       if (this.tab.etablissement !== -1)
         this.json[this.tab.societe].etablissements.splice(this.tab.etablissement, 1);
       this.tab.etablissement = -1;
-      this.setBool(false, false, false , false, false , false);
+      this.setBool(null);
     },
     removeObjRest() {
       if (this.tab.restaurant !== -1)
         this.json[this.tab.societe].etablissements[this.tab.etablissement].restaurants.splice(this.tab.restaurant, 1);
       this.tab.restaurant = -1;
-      this.setBool(false, false, false , false, false , false);
+      this.setBool(null);
     },
     addSocieteJson() {
       this.tab.etablissement = -1;
       this.tab.restaurant = -1;
-      this.setBool(true, false, false, false, false, false);
+      this.setBool('addS');
     },
     addEtabJson() {
       this.tab.restaurant = -1;
-      this.setBool(false, true, false, false, false, false)
+      this.setBool('addE')
     },
     addRestJson() {
-      this.setBool(false, false, true, false , false, false)
+      this.setBool('addR')
     },
     setCompleteSoc(complete) {
       this.json[this.tab.societe] = complete;
@@ -186,7 +186,7 @@ export default {
       if (value == null) return [];
       return value;
     },
-    setBool(addS, addE, addR, modS, modE, modR) {
+    setBool(str) {
       this.bool.addSociete = false;
       this.bool.addEtablissement = false;
       this.bool.addRestaurant = false;
@@ -194,13 +194,13 @@ export default {
       this.bool.modifyEtablissement = false;
       this.bool.modifyRestaurant = false;
       setTimeout(() => {
-        this.bool.addSociete = addS;
-        this.bool.addEtablissement = addE;
-        this.bool.addRestaurant = addR;
-        this.bool.modifySociete = modS;
-        this.bool.modifyEtablissement = modE;
-        this.bool.modifyRestaurant = modR;
-        }, 0);
+        this.bool.addSociete = 'addS' === str;
+        this.bool.addEtablissement = 'addE' === str;
+        this.bool.addRestaurant = 'addR' === str;
+        this.bool.modifySociete = 'modS' === str;
+        this.bool.modifyEtablissement = 'modE' === str;
+        this.bool.modifyRestaurant = 'modR' === str;
+      }, 0);
     }
   }
 }

@@ -9,9 +9,11 @@
   <div v-if="traiteurModif != null && traiteurModif.length > 0">
     <ul>
       <li id="traiteurListe" v-for="(tdd, index) in traiteurModif" :key="tdd">
-        <button class="hover-item">{{ tdd.libelle }} | {{ tdd.codeJournal }} | {{ tdd.direction }} | {{ tdd.compte }}</button>
-        <button class="hover-item redButton indentButton" @click="deleteTraiteur(index)">Supprimer</button>
-        <button class="hover-item blueButton" @click="modifyContent(index)">Modifier</button>
+        <button :id="'ButtonTddModify' + index" class="hover-item" @click="disabledButton('ButtonTddModify' + index); tdd_nbr = 0">{{ tdd.libelle }} | {{ tdd.codeJournal }} | {{ tdd.direction }} | {{ tdd.compte }}</button>
+        <div v-if="idButtonModify === ('ButtonTddModify' + index)" class="OneLine">
+          <button class="hover-item redButton indentButton" @click="deleteTraiteur(index)">Supprimer</button>
+          <button class="hover-item blueButton" @click="modifyContent(index)">Modifier</button>
+        </div>
       </li>
     </ul>
   </div>
@@ -76,7 +78,6 @@
             </div>
           </li>
         </ol>
-        <button class="hover-item" @click="deleteIt(main_index)">Supprimer</button>
       </form>
     </div>
   </div>
@@ -99,6 +100,7 @@ export default {
   },
   data() {
     return {
+      idButtonModify: '',
       modifyTdd: [],
       isModify: false,
       modifyTabs: [],
@@ -157,15 +159,23 @@ export default {
   methods: {
     SubmitForm() {
       if (this.modifyTdd.length !== 0) {
-        // for (const fill of this.modifyTdd) {
-        //   // console.log(fill.obj)
-        // }
+        this.to_complete = []
+        for (const fill of this.modifyTdd) {
+          this.traiteurModif[fill.index] = fill.obj;
+          // this.to_complete.splice(fill.len, 1);
+        }
       }
-      for (const complete of this.to_complete) {
-        complete.filtration = this.listOfFillTabs(complete);
-        for (let i = 1; i !== 3; i++) {
-          const text = 'compteAnalytique' + i;
-          if (typeof complete[text] === 'string' && complete[text].length === 0) complete[text] = null;
+      else {
+        for (const complete of this.to_complete) {
+          try {
+            complete.filtration = this.listOfFillTabs(complete);
+          } catch (e) {
+            continue;
+          }
+          for (let i = 1; i !== 3; i++) {
+            const text = 'compteAnalytique' + i;
+            if (typeof complete[text] === 'string' && complete[text].length === 0) complete[text] = null;
+          }
         }
       }
       this.FormTdd.tdd = this.to_complete;
@@ -267,14 +277,10 @@ export default {
       this.tdd_nbr -= 2;
     },
     modifyContent(index) {
-      this.AddFormTdd();
       const obj = Object.assign({}, this.traiteurModif[index]);
-      this.to_complete[this.to_complete.length-1] = obj;
-      this.modifyTdd.push({index: index, obj: obj});
-    },
-    deleteIt(index) {
-      this.tdd_nbr--;
-      this.to_complete.splice(index, 1);
+      this.to_complete[0] = obj;
+      this.AddFormTdd();
+      this.modifyTdd.push({index: index, obj: obj, len: this.to_complete.length-1});
     },
     deleteTraiteur(index) {
       this.traiteurModif.splice(index, 1);
@@ -299,6 +305,31 @@ export default {
         list.push(obj);
       }
       return list;
+    },
+    disabledButton(id) {
+      this.to_complete = [];
+      const current = id;
+      if (this.idButtonModify.length === 0) {
+        this.idButtonModify = current;
+        const doc = document.getElementById(this.idButtonModify);
+        if (doc == null) return;
+        // @ts-ignore
+        doc.disabled = true;
+      } else {
+        const doc_old = document.getElementById(this.idButtonModify);
+        this.idButtonModify = current;
+        const doc_current = document.getElementById(current);
+        if (doc_current == null) {
+          console.error('Une erreur est survenue.')
+          return;
+        }
+        if (doc_old) {
+          // @ts-ignore
+          doc_old.disabled = false;
+        }
+        // @ts-ignore
+        doc_current.disabled = true;
+      }
     },
     deleteItemTabs(id) {
       this.traiteurModif[this.indexes][this.tabName].splice(id, 1)
