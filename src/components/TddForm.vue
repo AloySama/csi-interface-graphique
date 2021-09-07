@@ -1,17 +1,17 @@
 <template>
   <div>
-    <button class="" @click="AddFormTdd2x">+2</button>
-    <button class="" @click="AddFormTdd">+</button>
+    <button :disabled="isModifying===true" class="hover-item" @click="AddFormTdd2x">+2</button>
+    <button :disabled="isModifying===true" class="hover-item" @click="AddFormTdd">+</button>
     <b>{{ tdd_nbr }}</b>
-    <button class="" @click="RemoveFormTdd">-</button>
-    <button class="" @click="RemoveFormTdd2x">-2</button>
+    <button :disabled="isModifying===true" class="hover-item" @click="RemoveFormTdd">-</button>
+    <button :disabled="isModifying===true" class="hover-item" @click="RemoveFormTdd2x">-2</button>
   </div>
   <div v-if="traiteurModif != null && traiteurModif.length > 0">
     <ul>
       <li id="traiteurListe" v-for="(tdd, index) in traiteurModif" :key="tdd">
-        <button :id="'ButtonTddModify' + index" class="hover-item" @click="disabledButton('ButtonTddModify' + index); tdd_nbr = 0">{{ tdd.libelle }} | {{ tdd.codeJournal }} | {{ tdd.direction }} | {{ tdd.compte }}</button>
+        <button :id="'ButtonTddModify' + index" class="hover-item" @click="disabledButton('ButtonTddModify' + index); tdd_nbr = 0; isModifying = false; modifyTabs=listOfFillTabs(traiteurModif[index]); indexes = index">{{ tdd.libelle }} | {{ tdd.codeJournal }} | {{ tdd.direction }} | {{ tdd.compte }}</button>
         <div v-if="idButtonModify === ('ButtonTddModify' + index)" class="OneLine">
-          <button class="hover-item redButton indentButton" @click="deleteTraiteur(index)">Supprimer</button>
+          <button class="hover-item redButton indentButton" @click="deleteTraiteur(index); isModifying = false; idButtonModify = ''">Supprimer</button>
           <button class="hover-item blueButton" @click="modifyContent(index)">Modifier</button>
         </div>
       </li>
@@ -83,6 +83,15 @@
   </div>
   <button class="hover-item" @click="SubmitForm">Valider TraiteurConfig</button>
   <p class="error-message">Cliquer sur <u>valider TraiteurConfig</u> ou les données ne seront pas sauvegardé.</p>
+  <form @submit.prevent="">
+    <div>
+      <button class="hover-item" v-for="item in modifyTabs" :key="item" @click="deleteTabs=listItemTabs(item); tabName=item">{{item}}</button>
+    </div>
+    <div v-if="deleteTabs != null">
+      <b>Cliquez sur un élément pour le supprimer</b><br>
+      <button class="hover-item" v-for="(item, index) in deleteTabs" :key="item" @click="deleteItemTabs(index)">{{item}}</button>
+    </div>
+  </form>
 </template>
 
 <script>
@@ -100,6 +109,8 @@ export default {
   },
   data() {
     return {
+
+      isModifying: false,
       idButtonModify: '',
       modifyTdd: [],
       isModify: false,
@@ -161,8 +172,8 @@ export default {
       if (this.modifyTdd.length !== 0) {
         this.to_complete = []
         for (const fill of this.modifyTdd) {
+          fill.obj.filtration = this.listOfFillTabs(fill.obj);
           this.traiteurModif[fill.index] = fill.obj;
-          // this.to_complete.splice(fill.len, 1);
         }
       }
       else {
@@ -277,6 +288,7 @@ export default {
       this.tdd_nbr -= 2;
     },
     modifyContent(index) {
+      this.isModifying = true;
       const obj = Object.assign({}, this.traiteurModif[index]);
       this.to_complete[0] = obj;
       this.AddFormTdd();
@@ -294,8 +306,9 @@ export default {
           }
         }
         catch (e) {
-          console.log(e);
+          continue;
         }
+        console.log()
       }
       return list;
     },
