@@ -1,22 +1,4 @@
-.fileUpload {
-    background: mediumpurple;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
-    color: #fff;
-    font-size: 1em;
-    font-weight: bold;
-    margin: 1.25em auto;
-    padding: .5em;
-    position: relative;
-    text-align: center;
-    width: 120px;
-    cursor: pointer;
-}
-.fileUpload:hover, .fileUpload:active, .fileUpload:focus {
-    background: purple;
-    cursor: pointer;
-}
+
 .fileUpload input.upload {
     position: absolute;
     top: 0;

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <button :disabled="isModifying===true" class="hover-item" @click="AddFormTdd2x">+2</button>
-    <button :disabled="isModifying===true" class="hover-item" @click="AddFormTdd">+</button>
+    <button :disabled="isModifying===true" class="btn blue" @click="AddFormTdd2x">+2</button>
+    <button :disabled="isModifying===true" class="btn blue" @click="AddFormTdd">+</button>
     <b>{{ tdd_nbr }}</b>
-    <button :disabled="isModifying===true" class="hover-item" @click="RemoveFormTdd">-</button>
-    <button :disabled="isModifying===true" class="hover-item" @click="RemoveFormTdd2x">-2</button>
+    <button :disabled="isModifying===true" class="btn blue" @click="RemoveFormTdd">-</button>
+    <button :disabled="isModifying===true" class="btn blue" @click="RemoveFormTdd2x">-2</button>
   </div>
   <div v-if="traiteurModif != null && traiteurModif.length > 0">
     <ul>
@@ -13,7 +13,7 @@
         isModifying = false; modifyTabs=listOfFillTabs(traiteurModif[index]); indexes = index; hasClickedOnce = false">{{ tdd.libelle }} | {{ tdd.codeJournal }} | {{ tdd.direction }} | {{ tdd.compte }}</button>
         <div v-if="idButtonModify === ('ButtonTddModify' + index)" class="OneLine">
           <button class="hover-item redButton indentButton" @click="deleteTraiteur(index); isModifying = false; idButtonModify = ''">Supprimer</button>
-          <button v-if="!hasClickedOnce" class="hover-item blueButton" @click="modifyContent(index); hasClickedOnce = true">Modifier</button>
+          <button v-if="!hasClickedOnce" class="hover-item blueButton" @click="modifyContent(index); hasClickedOnce = true; tdd_nbr = 1">Modifier</button>
         </div>
       </li>
     </ul>
@@ -72,7 +72,7 @@
               <div v-else>
                 <input v-if="tabNumber.includes(item)" type="number" v-model.number="to_push[main_index][item]">
                 <input v-else type="text" v-model="to_push[main_index][item]">
-                <button class="hover-item" @click="addElement(main_index, item, to_push[main_index][item])"
+                <button class="btn green" @click="addElement(main_index, item, to_push[main_index][item])"
                         :disabled="to_push[main_index][item].length < 1">Ajouter</button>
               </div>
             </div>
@@ -81,7 +81,7 @@
       </form>
     </div>
   </div>
-  <button class="hover-item" @click="SubmitForm">Valider TraiteurConfig</button>
+  <button class="btn green" @click="SubmitForm">Valider TraiteurConfig</button>
   <p class="error-message">Cliquer sur <u>valider TraiteurConfig</u> ou les données ne seront pas sauvegardé.</p>
   <form v-if="hasClickedOnce" @submit.prevent="">
     <b>Cliquer pour éditer les tableaux</b>

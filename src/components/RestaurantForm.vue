@@ -34,7 +34,7 @@
     <input class="hover-item" type="submit" @click="isSubmitted"
            :disabled="!to_complete[to_complete.length-1].etab_code">
   </div>
-  <button class="hover-item" @click="ReinitializeRes(json)">Reinitialiser ID</button>
+  <button class="btn yellow" @click="ReinitializeRes(json)">Reinitialiser ID</button>
 </template>
 
 <script>
@@ -169,6 +169,7 @@ export default {
         this.bool.AddTdd = false;
         this.to_complete[length].matricule = this.to_complete[length].matricule !== null ? isIDCorrectRes(this.json, this.to_complete[length].matricule, this.to_complete[length].matricule) :
             FindIDRes(this.json, false, 0, this.to_complete[length].matricule);
+        this.to_complete[length].restaurantId = this.to_complete[length].matricule;
         this.$emit('to_complete', this.to_complete[length]);
         return;
       }
@@ -186,7 +187,3 @@ export default {
   }
 }
 </script>
-
-<!--
-     "reference_config_compensation": 999,
--->

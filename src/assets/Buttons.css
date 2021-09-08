@@ -1,0 +1,87 @@
+#buttons {
+    padding-top: 50px;
+    text-align: center;
+}
+
+.btn {
+
+    border: none;
+    border-radius: 5px;
+    padding: 15px 25px;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none;
+    margin: 20px;
+    color: #fff;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.btn:active {
+    transform: translate(0px, 5px);
+    -webkit-transform: translate(0px, 5px);
+    box-shadow: 0 1px 0 0;
+}
+
+.blue {
+    background-color: #55acee;
+    box-shadow: 0 5px 0 0 #3C93D5;
+}
+
+.blue:hover {
+    background-color: #6FC6FF;
+}
+
+.btn:disabled {
+    background-color: grey;
+    box-shadow: 0 5px 0 0 grey;
+    cursor: default;
+}
+
+.green {
+    background-color: #2ecc71;
+    box-shadow: 0 5px 0 0 #15B358;
+}
+
+.green:hover {
+    background-color: #48E68B;
+}
+
+
+.red {
+    background-color: #e74c3c;
+    box-shadow: 0 5px 0 0 #CE3323;
+}
+
+.red:hover {
+    background-color: #FF6656;
+}
+
+.purple {
+    background-color: #9b59b6;
+    box-shadow: 0 5px 0 0 #82409D;
+}
+
+.purple:hover {
+    background-color: #B573D0;
+}
+
+.orange {
+    background-color: #e67e22;
+    box-shadow: 0 5px 0 0 #CD6509;
+}
+
+.orange:hover {
+    background-color: #FF983C;
+}
+
+.yellow {
+    background-color: #f1c40f;
+    box-shadow: 0 5px 0  0 #D8AB00;
+}
+
+.yellow:hover {
+    background-color: #FFDE29;
+}
