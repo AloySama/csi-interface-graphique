@@ -19,7 +19,7 @@
   <div v-if="tab.societe !== -1 && json[tab.societe].etablissements.length !== 0">
     <ul>
       <li class="OneLine" v-for="(etablissement, index) in functions.ParseEtablissement(json, tab.societe)" :key="etablissement">
-        <button :id="'ButtonEtablissement' + index" class="hover-item" @click="disabledButton('etablissement', index, 'ButtonEtablissement' + index); bool.addRestaurant = false; bool.modifyEtablissement = false">{{etablissement}}</button>
+        <button :id="'ButtonEtablissement' + index" class="hover-item" @click="disabledButton('etablissement', index, 'ButtonEtablissement' + index); bool.addRestaurant = false; ">{{etablissement}}</button>
       </li>
       <li class="OneLine">
         <button class="hover-item greenButton" @click="addEtabJson()">Ajouter</button>

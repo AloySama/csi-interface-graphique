@@ -9,10 +9,11 @@
   <div v-if="traiteurModif != null && traiteurModif.length > 0">
     <ul>
       <li id="traiteurListe" v-for="(tdd, index) in traiteurModif" :key="tdd">
-        <button :id="'ButtonTddModify' + index" class="hover-item" @click="disabledButton('ButtonTddModify' + index); tdd_nbr = 0; isModifying = false; modifyTabs=listOfFillTabs(traiteurModif[index]); indexes = index">{{ tdd.libelle }} | {{ tdd.codeJournal }} | {{ tdd.direction }} | {{ tdd.compte }}</button>
+        <button :id="'ButtonTddModify' + index" class="hover-item" @click="disabledButton('ButtonTddModify' + index); tdd_nbr = 0;
+        isModifying = false; modifyTabs=listOfFillTabs(traiteurModif[index]); indexes = index; hasClickedOnce = false">{{ tdd.libelle }} | {{ tdd.codeJournal }} | {{ tdd.direction }} | {{ tdd.compte }}</button>
         <div v-if="idButtonModify === ('ButtonTddModify' + index)" class="OneLine">
           <button class="hover-item redButton indentButton" @click="deleteTraiteur(index); isModifying = false; idButtonModify = ''">Supprimer</button>
-          <button class="hover-item blueButton" @click="modifyContent(index)">Modifier</button>
+          <button v-if="!hasClickedOnce" class="hover-item blueButton" @click="modifyContent(index); hasClickedOnce = true">Modifier</button>
         </div>
       </li>
     </ul>
@@ -72,8 +73,7 @@
                 <input v-if="tabNumber.includes(item)" type="number" v-model.number="to_push[main_index][item]">
                 <input v-else type="text" v-model="to_push[main_index][item]">
                 <button class="hover-item" @click="addElement(main_index, item, to_push[main_index][item])"
-                        :disabled="to_push[main_index][item].length < 1">Ajouter
-                </button>
+                        :disabled="to_push[main_index][item].length < 1">Ajouter</button>
               </div>
             </div>
           </li>
@@ -83,7 +83,8 @@
   </div>
   <button class="hover-item" @click="SubmitForm">Valider TraiteurConfig</button>
   <p class="error-message">Cliquer sur <u>valider TraiteurConfig</u> ou les données ne seront pas sauvegardé.</p>
-  <form @submit.prevent="">
+  <form v-if="hasClickedOnce" @submit.prevent="">
+    <b>Cliquer pour éditer les tableaux</b>
     <div>
       <button class="hover-item" v-for="item in modifyTabs" :key="item" @click="deleteTabs=listItemTabs(item); tabName=item">{{item}}</button>
     </div>
@@ -109,7 +110,7 @@ export default {
   },
   data() {
     return {
-
+      hasClickedOnce: false,
       isModifying: false,
       idButtonModify: '',
       modifyTdd: [],
