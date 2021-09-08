@@ -34,12 +34,6 @@
     background-color: #6FC6FF;
 }
 
-.btn:disabled {
-    background-color: grey;
-    box-shadow: 0 5px 0 0 grey;
-    cursor: default;
-}
-
 .green {
     background-color: #2ecc71;
     box-shadow: 0 5px 0 0 #15B358;
@@ -84,4 +78,10 @@
 
 .yellow:hover {
     background-color: #FFDE29;
+}
+
+.btn:disabled {
+    background-color: grey;
+    box-shadow: 0 5px 0 0 grey;
+    cursor: default;
 }

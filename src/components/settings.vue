@@ -17,7 +17,7 @@
         <input type="number" placeholder="Défaut : 2" min="1" max="10" v-model.number="settings.space">
       </div>
     </div>
-    <input class="hover-item" type="submit" @click="$emit('settings_value', settings)">
+    <input class="btn green" type="submit" @click="$emit('settings_value', settings)">
     <div class="row">
       <div class="col-25">
         <label>Stringify (plus lourd si coché)</label>

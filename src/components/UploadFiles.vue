@@ -3,7 +3,7 @@
     <form @submit.prevent="" class="form" id="MyForm">
       <div class="fileUpload" id="dropContainer">
         <input name="UploadFile" id="UploadFiles" type="file" required accept=".json" @change="loadTextFromFile">
-        <label class="btn purple" for="UploadFiles">Parcourir ...</label> &nbsp;
+        <label class="btn purple" for="UploadFiles"><font-awesome-icon :icon="['fas', 'search']" /> Parcourir ...</label> &nbsp;
       </div>
     </form>
   <div class="overflow" id="container" style="height: 500px; min-width: 500px">Aperçu du fichier json ici</div>

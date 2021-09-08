@@ -9,11 +9,11 @@
   <div v-if="traiteurModif != null && traiteurModif.length > 0">
     <ul>
       <li id="traiteurListe" v-for="(tdd, index) in traiteurModif" :key="tdd">
-        <button :id="'ButtonTddModify' + index" class="hover-item" @click="disabledButton('ButtonTddModify' + index); tdd_nbr = 0;
+        <button :id="'ButtonTddModify' + index" class="btn orange" @click="disabledButton('ButtonTddModify' + index); tdd_nbr = 0;
         isModifying = false; modifyTabs=listOfFillTabs(traiteurModif[index]); indexes = index; hasClickedOnce = false">{{ tdd.libelle }} | {{ tdd.codeJournal }} | {{ tdd.direction }} | {{ tdd.compte }}</button>
-        <div v-if="idButtonModify === ('ButtonTddModify' + index)" class="OneLine">
-          <button class="hover-item redButton indentButton" @click="deleteTraiteur(index); isModifying = false; idButtonModify = ''">Supprimer</button>
-          <button v-if="!hasClickedOnce" class="hover-item blueButton" @click="modifyContent(index); hasClickedOnce = true; tdd_nbr = 1">Modifier</button>
+        <div v-if="idButtonModify === ('ButtonTddModify' + index)">
+          <button class="btn red" @click="deleteTraiteur(index); isModifying = false; idButtonModify = ''">Supprimer</button>
+          <button v-if="!hasClickedOnce" class="btn blue" @click="modifyContent(index); hasClickedOnce = true; tdd_nbr = 1">Modifier</button>
         </div>
       </li>
     </ul>
@@ -86,11 +86,11 @@
   <form v-if="hasClickedOnce" @submit.prevent="">
     <b>Cliquer pour éditer les tableaux</b>
     <div>
-      <button class="hover-item" v-for="item in modifyTabs" :key="item" @click="deleteTabs=listItemTabs(item); tabName=item">{{item}}</button>
+      <button class="btn orange" v-for="item in modifyTabs" :key="item" @click="deleteTabs=listItemTabs(item); tabName=item">{{item}}</button>
     </div>
     <div v-if="deleteTabs != null">
       <b>Cliquez sur un élément pour le supprimer</b><br>
-      <button class="hover-item" v-for="(item, index) in deleteTabs" :key="item" @click="deleteItemTabs(index)">{{item}}</button>
+      <button class="btn orange" v-for="(item, index) in deleteTabs" :key="item" @click="deleteItemTabs(index)">{{item}}</button>
     </div>
   </form>
 </template>
@@ -378,11 +378,6 @@ b {
 #localisation {
   width: auto;
   margin-right: 50px;
-}
-
-.red {
-  color: red;
-  font-weight: bold;
 }
 
 #buttons li {
