@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width,initial-scale=1.0">
-      <link rel="icon" href="csi_favicon.ico">
-      <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-      <title>CSI export ARCOLE</title>
-  </head>
-  <body>
-  <div id="bg"></div>
-  <div v-cloak>
-      <button onclick="topFunction()" id="myBtn" title="Monter la page" class="btnIndex red">🠕</button>
-  </div>
-    <noscript>
-      <strong>Nous sommes désolé mais ce site ne fonctionne pas sans Javascript d'activé. Veuillez activer Javascript et relancer la page Web.</strong>
-    </noscript>
-    <div id="app"></div>
-  </body>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="csi_favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <title>CSI export ARCOLE</title>
+</head>
+<body>
+
+<div id="bg"></div>
+<div v-cloak>
+    <button onclick="topFunction()" id="myBtn" title="Monter la page" class="btnIndex red">🠕</button>
+</div>
+<noscript>
+    <strong>Nous sommes désolé mais ce site ne fonctionne pas sans Javascript d'activé. Veuillez activer Javascript et
+        relancer la page Web.</strong>
+</noscript>
+<div id="app"></div>
+</body>
 </html>
 
 <script>
     let myButton = document.getElementById("myBtn");
-    window.onscroll = function() {scrollFunction()};
+    window.onscroll = function () {
+        scrollFunction()
+    };
 
     function scrollFunction() {
         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
@@ -31,6 +35,7 @@
             myButton.style.display = "none";
         }
     }
+
     function topFunction() {
         myButton.scrollTo({
             top: 0,
@@ -75,4 +80,5 @@
     .red:hover {
         background-color: #FF6656;
     }
+
 </style>

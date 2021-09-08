@@ -84,7 +84,7 @@ body > #bg {
     width: 105%;
     left: -10px;
     top: -10px;
-    background-image: url("./images/bg.jpg");
+    background-color: lightgray;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
