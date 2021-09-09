@@ -15,7 +15,10 @@
           <label>Matricule personnalisé ?</label>
         </div>
         <div class="col-75">
-          <input class="" v-model="bool.AddMatricule" type="checkbox">
+          <label class="checkbox-button">
+            <input type="checkbox" class="checkbox-button__input" name="choice1" v-model="bool.AddMatricule">
+            <span class="checkbox-button__control"></span>
+          </label>
           <input v-if="bool.AddMatricule" type="number" min="0" v-model.number="to_complete[to_complete.length-1].matricule" required>
         </div>
       </div>
@@ -24,7 +27,10 @@
           <label>Ajouter TraiteurConfigs ?</label>
         </div>
         <div class="col-75">
-          <input v-model="bool.AddTdd" type="checkbox">
+          <label class="checkbox-button">
+            <input type="checkbox" class="checkbox-button__input" name="choice1" v-model="bool.AddTdd">
+            <span class="checkbox-button__control"></span>
+          </label>
         </div>
         <tdd-form v-if="bool.AddTdd&&modify!=null"
                   :traiteur-modification="to_complete[to_complete.length-1].traiteursConfigs" @tdd_form="completeTDD"/>

@@ -59,7 +59,7 @@
         <ol>
           <li v-for="item in select" :key="item">
             <div class="col-25">{{ item }}</div>
-            <div :class="{'col-75': true, 'set-margin': select.length % 2 === 1 && item===select[select.length-1]}">
+            <div :class="{'col-75': true, 'set-margin': select.length % 2 === 1 && item === select[select.length-1]}">
               <div v-if="item === 'localisations'">
                 <select id="localisation" class="select-css top" v-model="to_complete[main_index][item]" multiple>
                   <option :value="e" v-for="e in LOCALISATION" :key="e">{{ e }}</option>

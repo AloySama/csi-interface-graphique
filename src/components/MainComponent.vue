@@ -14,7 +14,7 @@
     </ul>
   </div>
   <div v-else>
-    <button class="btn green" @click="addSocieteJson()">Ajouter</button>
+    <button class="btn green" @click="addSocieteJson()">Ajouter société</button>
   </div>
   <div v-if="tab.societe !== -1 && json[tab.societe].etablissements.length !== 0">
     <ul>
@@ -48,7 +48,7 @@
     </ul>
   </div>
   <div v-else-if="tab.societe!==-1 && tab.etablissement !== -1">
-    <button class="btn green" @click="addRestJson()">Ajouter</button>
+    <button class="btn green" @click="addRestJson()">Ajouter restaurant</button>
   </div>
   <societe-form v-if="bool.addSociete" :json-file="json"/>
   <societe-form v-else-if="bool.modifySociete" :json-file="json" :modify-content="json[tab.societe]" :id_societe="tab.societe" @to_complete="setCompleteSoc"/>
