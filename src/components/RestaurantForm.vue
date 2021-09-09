@@ -12,6 +12,14 @@
       </div>
       <div class="row">
         <div class="col-25">
+          <label>reference_config_compensation</label>
+        </div>
+        <div class="col-75">
+          <input type="number" v-model.number="to_complete[to_complete.length-1].reference_config_compensation">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
           <label>Matricule personnalisé ?</label>
         </div>
         <div class="col-75">
@@ -99,7 +107,7 @@ export default {
         restaurantId: null,
         traiteursConfigs: []
       }],
-      string: {"Etab code": 'etab_code', "Auxiliaire credit client": 'auxiliaireCreditClient', "Code societe": 'code_societe'}
+      string: {"Etab code": 'etab_code', "Code societe": 'code_societe'}
     }
   },
   methods: {

@@ -48,7 +48,6 @@
 </template>
 
 <script>
-/* eslint-disable */
 import ParseSociete from "../functions/ParseSociete";
 import App from '../App'
 import TddForm from "@/components/TddForm";

@@ -1,4 +1,3 @@
-
 .fileUpload input.upload {
     position: absolute;
     top: 0;
@@ -32,6 +31,5 @@ input[type="file"] {
     height: 50%;
     align-items: center;
     margin: -7px auto 10px;
-
     overflow: auto;
 }
