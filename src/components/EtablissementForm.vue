@@ -24,7 +24,7 @@
         <div class="col-75"><input v-model="bool.add_tdd" type="checkbox"></div>
         <tdd-form v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
         <tdd-form v-else-if="bool.add_tdd" @tdd_form="CompleteTDD"/>
-      </div><input class="hover-item" type="submit" :disabled="!to_complete.code||to_complete.id < 0" @click="IsSubmitted">
+      </div><input class="btn green" type="submit" :disabled="!to_complete.code||to_complete.id < 0" @click="IsSubmitted">
     </form>
   </div>
   <button v-if="id_societe!=null" class="btn yellow" @click="Reinitialize(json[id_societe].etablissements)">Réinitialiser les ID</button>

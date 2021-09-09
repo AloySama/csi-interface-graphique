@@ -15,7 +15,7 @@
           <label>Matricule personnalisé ?</label>
         </div>
         <div class="col-75">
-          <input v-model="bool.AddMatricule" type="checkbox">
+          <input class="" v-model="bool.AddMatricule" type="checkbox">
           <input v-if="bool.AddMatricule" type="number" min="0" v-model.number="to_complete[to_complete.length-1].matricule" required>
         </div>
       </div>
@@ -31,7 +31,7 @@
         <tdd-form v-else-if="bool.AddTdd" @tdd_form="completeTDD"/>
       </div>
     </form>
-    <input class="hover-item" type="submit" @click="isSubmitted"
+    <input class="btn green" type="submit" @click="isSubmitted"
            :disabled="!to_complete[to_complete.length-1].etab_code">
   </div>
   <button class="btn yellow" @click="ReinitializeRes(json)">Reinitialiser ID</button>

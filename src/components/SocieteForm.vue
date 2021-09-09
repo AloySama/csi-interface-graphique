@@ -39,7 +39,7 @@
         <tdd-form v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
         <tdd-form v-else-if="bool.add_tdd" @tdd_form="CompleteTDD"/>
       </div>
-      <input class="hover-item" type="submit" :disabled="!to_complete.code" @click="isSubmitted">
+      <input class="btn green" type="submit" :disabled="!to_complete.code" @click="isSubmitted">
     </form>
   </div>
   <button class="btn yellow" @click="Reinitialize(json)">Réinitialiser les ID</button>

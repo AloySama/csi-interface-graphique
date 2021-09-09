@@ -39,7 +39,7 @@
         <button :id="'ButtonRestaurant' + index" class="btn orange" @click="disabledButton('restaurant', index, 'ButtonRestaurant' + index)">{{restaurant}}</button>
       </li>
       <li class="OneLine">
-        <button class="btn green" @click="addRestJson()">Ajouter Restaurant</button>
+        <button class="btn green" @click="addRestJson()">Ajouter</button>
         <button class="btn blue" v-if="tab.restaurant !== -1" @click="setBool('modR')">Modifier</button>
         <ul>
           <button class="btn red" @click="removeObjRest()" :disabled="tab.restaurant===-1">Supprimer</button>
@@ -48,7 +48,7 @@
     </ul>
   </div>
   <div v-else-if="tab.societe!==-1 && tab.etablissement !== -1">
-    <button class="btn green" @click="addRestJson()">Ajouter Restaurant</button>
+    <button class="btn green" @click="addRestJson()">Ajouter</button>
   </div>
   <societe-form v-if="bool.addSociete" :json-file="json"/>
   <societe-form v-else-if="bool.modifySociete" :json-file="json" :modify-content="json[tab.societe]" :id_societe="tab.societe" @to_complete="setCompleteSoc"/>

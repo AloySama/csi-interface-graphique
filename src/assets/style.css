@@ -30,8 +30,8 @@ body::-webkit-scrollbar-thumb {
 
 .app {
     padding: 10px;
-    border: 1px darkblue solid;
-    background-image: linear-gradient(to top right, mediumpurple, white);
+    border: 1px none ;
+    background: #f2f2f2;
 }
 
 header {
