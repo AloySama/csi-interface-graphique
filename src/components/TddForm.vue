@@ -23,7 +23,8 @@
       <form @submit.prevent="" class="top">
         <ol>
           <li v-for="item in ints" :key="item">
-            <div :id="item + main_index" class="col-25"><label>{{ item }}</label></div>
+            <div :id="item + main_index" :class="{'col-25': true, 'red-text': to_complete[main_index][item] < 0}"> <!--//////////////ICI//////////////-->
+              <label>{{ item }}</label></div>
             <div class="col-75"><input type="number" :min="0" v-model.number="to_complete[main_index][item]"></div>
           </li>
         </ol>
@@ -58,7 +59,7 @@
         <ol>
           <li v-for="item in select" :key="item">
             <div class="col-25">{{ item }}</div>
-            <div class="col-75">
+            <div :class="{'col-75': true, 'set-margin': select.length % 2 === 1 && item===select[select.length-1]}">
               <div v-if="item === 'localisations'">
                 <select id="localisation" class="select-css top" v-model="to_complete[main_index][item]" multiple>
                   <option :value="e" v-for="e in LOCALISATION" :key="e">{{ e }}</option>
@@ -70,7 +71,7 @@
                 </select>
               </div>
               <div v-else>
-                <input v-if="tabNumber.includes(item)" type="number" v-model.number="to_push[main_index][item]">
+                <input v-if="tabNumber.includes(item)" type="number" v-model.number="to_push[main_index][item]" min="0">
                 <input v-else type="text" v-model="to_push[main_index][item]">
                 <button class="btn green" @click="addElement(main_index, item, to_push[main_index][item])"
                         :disabled="to_push[main_index][item].length < 1">Ajouter</button>
@@ -196,7 +197,7 @@ export default {
       this.FormTdd.tdd = [];
     },
     addElement(main_index, index, text) {
-      if (this.to_push[main_index][index].length > 0 || this.to_push[main_index][index] > 0) {
+      if (this.to_push[main_index][index].length >= 0 || this.to_push[main_index][index] >= 0) {
         this.to_complete[main_index][index].push(text);
         this.to_push[main_index][index] = '';
       }
@@ -394,12 +395,12 @@ b {
   text-align: left;
 }
 
-.indentButton {
-  text-align: right;
-  display: inline;
+.red-text {
+  color: red;
+}
+
+.set-margin {
+  margin-right: 50%;
 }
 
 </style>
-
-<!--TODO: Pour les traiteurConfig, afficher en petit les termes suivants : (libelle codeJournal direction compte),
-TODO: si bouton cliqué, affiché le TraiteurConfig, pensé à ajouter une suppression au niveau des tableaux -->
