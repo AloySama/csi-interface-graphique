@@ -12,7 +12,7 @@
 
 <div id="bg"></div>
 <div v-cloak>
-    <button onclick="topFunction()" id="myBtn" title="Monter la page" class="btnIndex red">🠕</button>
+    <button onclick="topFunction()" class="red" id="myBtn" title="Monter la page">🠕</button>
 </div>
 <noscript>
     <strong>Nous sommes désolé mais ce site ne fonctionne pas sans Javascript d'activé. Veuillez activer Javascript et
@@ -23,31 +23,33 @@
 </html>
 
 <script>
-    let myButton = document.getElementById("myBtn");
+    const myButton = document.getElementById("myBtn");
     window.onscroll = function () {
         scrollFunction()
     };
 
     function scrollFunction() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
             myButton.style.display = "block";
-        } else {
+        }
+        else {
             myButton.style.display = "none";
         }
     }
 
     function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
         myButton.scrollTo({
             top: 0,
             behavior: "smooth"
         })
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
     }
 </script>
 
 <style scoped>
-    .btnIndex {
+    #myBtn {
+        display: none;
         font-weight: bold;
         bottom: 20px;
         left: 30px;
@@ -61,23 +63,19 @@
         text-decoration: none;
         margin: 20px;
         color: #fff;
-        display: inline-block;
         cursor: pointer;
         transition: .25s;
+        background-color: #e74c3c;
+        box-shadow: 0 5px 0 0 #CE3323;
     }
 
-    .btnIndex:active {
+    #myBtn:active {
         transform: translate(0px, 5px);
         -webkit-transform: translate(0px, 5px);
         box-shadow: 0 1px 0 0;
     }
 
-    .red {
-        background-color: #e74c3c;
-        box-shadow: 0 5px 0 0 #CE3323;
-    }
-
-    .red:hover {
+    #myBtn:hover {
         background-color: #FF6656;
     }
 

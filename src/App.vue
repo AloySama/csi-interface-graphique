@@ -8,7 +8,7 @@
       <div class="order" id="buttons">
         <button id="parcourir" :title="message['parcours']" class="btn blue"
                 @click="bool.ChooseFile=true; bool.Modify = false; disabledButtons('parcourir', 'old_edit');"><font-awesome-icon :icon="['fas', 'upload']" /> Charger un fichier</button>
-        <button id="modify" class="btn blue" :disabled="json==null" @click="bool.Modify = true; bool.ChooseFile = false; disabledButtons('modify', 'old_edit');"><font-awesome-icon :icon="['fas', 'edit']" /> Modifier éléments</button>
+        <button id="modify" :title="message['edit']" class="btn blue" :disabled="json==null" @click="bool.Modify = true; bool.ChooseFile = false; disabledButtons('modify', 'old_edit');"><font-awesome-icon :icon="['fas', 'edit']" /> Modifier éléments</button>
         <button class="btn purple" @click="DownloadFile" :disabled="json==null" :title="message['save']"><font-awesome-icon :icon="['fas', 'download']" /> Enregistrer</button>
       </div>
     </header>
@@ -42,7 +42,8 @@ export default defineComponent({
       },
       tab: {old: "", old_edit: "", delete: ""},
       message: {
-        'retour': 'Quitte l\'édition',
+        'retour': 'Quitter l\'édition',
+        'edit': 'Éditer le fichier',
         'parcours': 'Parcourir un fichier sur le pc',
         'save': 'Enregistrer le fichier sur votre pc',
       },
