@@ -20,7 +20,7 @@
     <input class="btn green" type="submit" @click="$emit('settings_value', settings)">
     <div class="row">
       <div class="col-25">
-        <label>Stringify (plus lourd si coché)</label>
+        <label>Stringify</label>
       </div>
       <div class="col-75">
         <input type="checkbox" v-model="settings.stringify">

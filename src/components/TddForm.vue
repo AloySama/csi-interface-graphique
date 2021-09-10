@@ -23,7 +23,7 @@
       <form @submit.prevent="" class="top">
         <ol>
           <li v-for="item in ints" :key="item">
-            <div :id="item + main_index" :class="{'col-25': true, 'red-text': to_complete[main_index][item] < 0}"> <!--//////////////ICI//////////////-->
+            <div :id="item + main_index" :class="{'col-25': true, 'red-text': to_complete[main_index][item] < 0}">
               <label>{{ item }}</label></div>
             <div class="col-75"><input type="number" :min="0" v-model.number="to_complete[main_index][item]"></div>
           </li>
@@ -301,11 +301,10 @@ export default {
     },
     listOfFillTabs(tdd) {
       const list = [];
+
       for (const value in this.array.filtration) {
         try {
-          if (tdd[this.array.filtration[value]].length > 0) {
-            list.push(this.array.filtration[value])
-          }
+          if (tdd[this.array.filtration[value]].length > 0) list.push(value)
         }
         catch (e) {
           continue;
