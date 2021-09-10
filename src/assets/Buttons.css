@@ -1,0 +1,142 @@
+#buttons {
+    padding-top: 50px;
+    text-align: center;
+}
+
+.btn {
+
+    border: none;
+    border-radius: 5px;
+    padding: 15px 25px;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none;
+    margin: 20px;
+    color: #fff;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.btn:active {
+    transform: translate(0px, 5px);
+    -webkit-transform: translate(0px, 5px);
+    box-shadow: 0 1px 0 0;
+}
+
+.blue {
+    background-color: #55acee;
+    box-shadow: 0 5px 0 0 #3C93D5;
+}
+
+.blue:hover {
+    background-color: #6FC6FF;
+}
+
+.green {
+    background-color: #2ecc71;
+    box-shadow: 0 5px 0 0 #15B358;
+}
+
+.green:hover {
+    background-color: #48E68B;
+}
+
+
+.red {
+    background-color: #e74c3c;
+    box-shadow: 0 5px 0 0 #CE3323;
+}
+
+.red:hover {
+    background-color: #FF6656;
+}
+
+.purple {
+    background-color: #9b59b6;
+    box-shadow: 0 5px 0 0 #82409D;
+}
+
+.purple:hover {
+    background-color: #B573D0;
+}
+
+.orange {
+    background-color: #e67e22;
+    box-shadow: 0 5px 0 0 #CD6509;
+}
+
+.orange:hover {
+    background-color: #FF983C;
+}
+
+.yellow {
+    background-color: #f1c40f;
+    box-shadow: 0 5px 0  0 #D8AB00;
+}
+
+.yellow:hover {
+    background-color: #FFDE29;
+}
+
+.btn:disabled {
+    background-color: grey;
+    box-shadow: 0 5px 0 0 grey;
+    cursor: default;
+}
+
+.checkbox-button {
+    cursor: pointer;
+}
+
+input[type=checkbox] {
+    box-sizing: border-box;
+    padding: 0;
+}
+
+input {
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 11px 23px;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 0;
+    outline: 0;
+    background-color: transparent;
+}
+
+.checkbox-button__input {
+    opacity: 0;
+    position: absolute;
+}
+
+.checkbox-button__control {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    vertical-align: middle;
+    background-color: inherit;
+    color: #017b5f;
+    border: 2px solid #666;
+}
+
+.checkbox-button__input:checked+.checkbox-button__control:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: .75mm;
+    left: .75mm;
+    width: 10px;
+    height: 10px;
+    background-color: #01a982;
+}
+
+.checkbox-button__input:checked+.checkbox-button__control {
+    border-color: #01a982;
+}
+
+.checkbox-button__control {
+    transform: scale(0.75);
+}

@@ -12,10 +12,21 @@
       </div>
       <div class="row">
         <div class="col-25">
+          <label>reference_config_compensation</label>
+        </div>
+        <div class="col-75">
+          <input type="number" v-model.number="to_complete[to_complete.length-1].reference_config_compensation">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
           <label>Matricule personnalisé ?</label>
         </div>
         <div class="col-75">
-          <input v-model="bool.AddMatricule" type="checkbox">
+          <label class="checkbox-button">
+            <input type="checkbox" class="checkbox-button__input" name="choice1" v-model="bool.AddMatricule">
+            <span class="checkbox-button__control"></span>
+          </label>
           <input v-if="bool.AddMatricule" type="number" min="0" v-model.number="to_complete[to_complete.length-1].matricule" required>
         </div>
       </div>
@@ -24,17 +35,20 @@
           <label>Ajouter TraiteurConfigs ?</label>
         </div>
         <div class="col-75">
-          <input v-model="bool.AddTdd" type="checkbox">
+          <label class="checkbox-button">
+            <input type="checkbox" class="checkbox-button__input" name="choice1" v-model="bool.AddTdd">
+            <span class="checkbox-button__control"></span>
+          </label>
         </div>
         <tdd-form v-if="bool.AddTdd&&modify!=null"
                   :traiteur-modification="to_complete[to_complete.length-1].traiteursConfigs" @tdd_form="completeTDD"/>
         <tdd-form v-else-if="bool.AddTdd" @tdd_form="completeTDD"/>
       </div>
     </form>
-    <input class="hover-item" type="submit" @click="isSubmitted"
+    <input class="btn green" type="submit" @click="isSubmitted"
            :disabled="!to_complete[to_complete.length-1].etab_code">
   </div>
-  <button class="hover-item" @click="ReinitializeRes(json)">Reinitialiser ID</button>
+  <button class="btn yellow" @click="ReinitializeRes(json)">Reinitialiser ID</button>
 </template>
 
 <script>
@@ -93,7 +107,7 @@ export default {
         restaurantId: null,
         traiteursConfigs: []
       }],
-      string: {"Etab code": 'etab_code', "Auxiliaire credit client": 'auxiliaireCreditClient', "Code societe": 'code_societe'}
+      string: {"Etab code": 'etab_code', "Code societe": 'code_societe'}
     }
   },
   methods: {
@@ -169,6 +183,7 @@ export default {
         this.bool.AddTdd = false;
         this.to_complete[length].matricule = this.to_complete[length].matricule !== null ? isIDCorrectRes(this.json, this.to_complete[length].matricule, this.to_complete[length].matricule) :
             FindIDRes(this.json, false, 0, this.to_complete[length].matricule);
+        this.to_complete[length].restaurantId = this.to_complete[length].matricule;
         this.$emit('to_complete', this.to_complete[length]);
         return;
       }
@@ -186,7 +201,3 @@ export default {
   }
 }
 </script>
-
-<!--
-     "reference_config_compensation": 999,
--->

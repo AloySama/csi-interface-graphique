@@ -30,8 +30,8 @@ body::-webkit-scrollbar-thumb {
 
 .app {
     padding: 10px;
-    border: 1px darkblue solid;
-    background-image: linear-gradient(to top right, mediumpurple, white);
+    border: 1px none ;
+    background: #f2f2f2;
 }
 
 header {
@@ -43,29 +43,6 @@ header img {
     width: 125px;
     margin-right: 10px;
     transition-duration: 1s;
-}
-
-.hover-item {
-    margin-top: 5px;
-    transition: .25s;
-}
-
-.hover-item:hover {
-    transform: translate(-3px, -5px);
-}
-
-.hover-item:disabled {
-    border: solid #999999;
-    background-color: #cccccc;
-    color: #666666;
-    cursor: default;
-    pointer-events: none;
-}
-
-.hover-item:active {
-    background-color: #ece6d9;
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
 }
 
 header img:hover {
@@ -87,25 +64,9 @@ div {
     margin-bottom: 10px;
 }
 
-button {
-    margin: 0 0 10px 10px;
-    color: #860ace;
-    cursor: pointer;
-    padding: 8px 16px;
-    border: 3px solid #be1aff;
-    border-radius: 15px;
-    font-weight: bold;
-    font-size: 20px;
-    background: white;
-}
-
 .title {
     display: flex;
     justify-content: center;
-}
-
-br {
-    overflow: auto;
 }
 
 b {
@@ -118,7 +79,7 @@ body > #bg {
     width: 105%;
     left: -10px;
     top: -10px;
-    background-image: url("./images/bg.jpg");
+    background-color: lightgray;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -177,17 +138,4 @@ ul {
 
 .OneLine {
     display: inline;
-}
-
-.redButton {
-    color: darkred;
-    border: 3px solid darkred;
-}
-.greenButton {
-    color: darkgreen;
-    border: 3px solid darkgreen;
-}
-.blueButton {
-    color: darkblue;
-    border: 3px solid darkblue;
 }

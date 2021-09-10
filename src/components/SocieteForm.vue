@@ -15,10 +15,13 @@
           <label>Ajouter un id personnalisé ?</label>
         </div>
         <div class="col-75">
-          <input v-model="bool.add_id" type="checkbox">
+          <label class="checkbox-button">
+            <input type="checkbox" class="checkbox-button__input" name="choice1" v-model="bool.add_id">
+            <span class="checkbox-button__control"></span>
+          </label>
         </div>
       </div>
-        <div v-if="bool.add_id" class="row indent">
+        <div v-if="bool.add_id" class="row">
           <form @submit.prevent="">
             <div class="col-25">
               <label >id</label>
@@ -34,15 +37,18 @@
           <label >Ajouter Traiteur config ?</label>
         </div>
         <div class="col-75">
-          <input v-model="bool.add_tdd" type="checkbox">
+          <label class="checkbox-button">
+            <input type="checkbox" class="checkbox-button__input" name="choice1" v-model="bool.add_tdd">
+            <span class="checkbox-button__control"></span>
+          </label>
         </div>
         <tdd-form v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
         <tdd-form v-else-if="bool.add_tdd" @tdd_form="CompleteTDD"/>
       </div>
-      <input class="hover-item" type="submit" :disabled="!to_complete.code" @click="isSubmitted">
+      <input class="btn green" type="submit" :disabled="!to_complete.code" @click="isSubmitted">
     </form>
   </div>
-  <button class="hover-item" @click="Reinitialize(json)">Réinitialiser les ID</button>
+  <button class="btn yellow" @click="Reinitialize(json)">Réinitialiser les ID</button>
 </template>
 
 <script>

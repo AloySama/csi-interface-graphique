@@ -1,19 +1,19 @@
 <template>
   <div>
-    <button :disabled="isModifying===true" class="hover-item" @click="AddFormTdd2x">+2</button>
-    <button :disabled="isModifying===true" class="hover-item" @click="AddFormTdd">+</button>
+    <button :disabled="isModifying===true" class="btn blue" @click="AddFormTdd2x">+2</button>
+    <button :disabled="isModifying===true" class="btn blue" @click="AddFormTdd">+</button>
     <b>{{ tdd_nbr }}</b>
-    <button :disabled="isModifying===true" class="hover-item" @click="RemoveFormTdd">-</button>
-    <button :disabled="isModifying===true" class="hover-item" @click="RemoveFormTdd2x">-2</button>
+    <button :disabled="isModifying===true" class="btn blue" @click="RemoveFormTdd">-</button>
+    <button :disabled="isModifying===true" class="btn blue" @click="RemoveFormTdd2x">-2</button>
   </div>
   <div v-if="traiteurModif != null && traiteurModif.length > 0">
     <ul>
       <li id="traiteurListe" v-for="(tdd, index) in traiteurModif" :key="tdd">
-        <button :id="'ButtonTddModify' + index" class="hover-item" @click="disabledButton('ButtonTddModify' + index); tdd_nbr = 0;
+        <button :id="'ButtonTddModify' + index" class="btn orange" @click="disabledButton('ButtonTddModify' + index); tdd_nbr = 0;
         isModifying = false; modifyTabs=listOfFillTabs(traiteurModif[index]); indexes = index; hasClickedOnce = false">{{ tdd.libelle }} | {{ tdd.codeJournal }} | {{ tdd.direction }} | {{ tdd.compte }}</button>
-        <div v-if="idButtonModify === ('ButtonTddModify' + index)" class="OneLine">
-          <button class="hover-item redButton indentButton" @click="deleteTraiteur(index); isModifying = false; idButtonModify = ''">Supprimer</button>
-          <button v-if="!hasClickedOnce" class="hover-item blueButton" @click="modifyContent(index); hasClickedOnce = true">Modifier</button>
+        <div v-if="idButtonModify === ('ButtonTddModify' + index)">
+          <button class="btn red" @click="deleteTraiteur(index); isModifying = false; idButtonModify = ''">Supprimer</button>
+          <button v-if="!hasClickedOnce" class="btn blue" @click="modifyContent(index); hasClickedOnce = true; tdd_nbr = 1">Modifier</button>
         </div>
       </li>
     </ul>
@@ -23,7 +23,8 @@
       <form @submit.prevent="" class="top">
         <ol>
           <li v-for="item in ints" :key="item">
-            <div :id="item + main_index" class="col-25"><label>{{ item }}</label></div>
+            <div :id="item + main_index" :class="{'col-25': true, 'red-text': to_complete[main_index][item] < 0}">
+              <label>{{ item }}</label></div>
             <div class="col-75"><input type="number" :min="0" v-model.number="to_complete[main_index][item]"></div>
           </li>
         </ol>
@@ -58,7 +59,7 @@
         <ol>
           <li v-for="item in select" :key="item">
             <div class="col-25">{{ item }}</div>
-            <div class="col-75">
+            <div :class="{'col-75': true, 'set-margin': select.length % 2 === 1 && item === select[select.length-1]}">
               <div v-if="item === 'localisations'">
                 <select id="localisation" class="select-css top" v-model="to_complete[main_index][item]" multiple>
                   <option :value="e" v-for="e in LOCALISATION" :key="e">{{ e }}</option>
@@ -70,9 +71,9 @@
                 </select>
               </div>
               <div v-else>
-                <input v-if="tabNumber.includes(item)" type="number" v-model.number="to_push[main_index][item]">
+                <input v-if="tabNumber.includes(item)" type="number" v-model.number="to_push[main_index][item]" min="0">
                 <input v-else type="text" v-model="to_push[main_index][item]">
-                <button class="hover-item" @click="addElement(main_index, item, to_push[main_index][item])"
+                <button class="btn green" @click="addElement(main_index, item, to_push[main_index][item])"
                         :disabled="to_push[main_index][item].length < 1">Ajouter</button>
               </div>
             </div>
@@ -81,16 +82,16 @@
       </form>
     </div>
   </div>
-  <button class="hover-item" @click="SubmitForm">Valider TraiteurConfig</button>
+  <button class="btn green" @click="SubmitForm">Valider TraiteurConfig</button>
   <p class="error-message">Cliquer sur <u>valider TraiteurConfig</u> ou les données ne seront pas sauvegardé.</p>
   <form v-if="hasClickedOnce" @submit.prevent="">
     <b>Cliquer pour éditer les tableaux</b>
     <div>
-      <button class="hover-item" v-for="item in modifyTabs" :key="item" @click="deleteTabs=listItemTabs(item); tabName=item">{{item}}</button>
+      <button class="btn orange" v-for="item in modifyTabs" :key="item" @click="deleteTabs=listItemTabs(item); tabName=item">{{item}}</button>
     </div>
     <div v-if="deleteTabs != null">
       <b>Cliquez sur un élément pour le supprimer</b><br>
-      <button class="hover-item" v-for="(item, index) in deleteTabs" :key="item" @click="deleteItemTabs(index)">{{item}}</button>
+      <button class="btn orange" v-for="(item, index) in deleteTabs" :key="item" @click="deleteItemTabs(index)">{{item}}</button>
     </div>
   </form>
 </template>
@@ -160,7 +161,7 @@ export default {
         recuperation: ['QUANTITE', 'UNITAIRE', 'TOTAL', 'HT', 'TVA', 'SERVICE', 'REEL', 'THEORIQUE', 'DELTA', 'MONTANT0', 'MONTANT1', 'MONTANT2'],
         specialite: ['ARTICLE', 'TVA', 'STATISTIQUE', 'OFFERT', 'TIROIR_PREFERMENT', 'REGLEMENT', 'TIROIR_REGLEMENT', 'RECU', 'DESACTIVE', 'TICKET', 'TIROIR_REMISE']
       },
-      string: ["auxiliaire", "compteAnalytique1", "compteAnalytique2", "compteAnalytique3", "tax_code", "transaction", 'libelle'],
+      string: ["auxiliaire", "compteAnalytique1", "compteAnalytique2", "compteAnalytique3", "tax_code", "transaction", 'libelle', 'type'],
       to_complete: [],
       LOCALISATION: ['EAT_IN', 'TAKE_OUT', 'DRIVE_THROUGH', 'DELIVERY', 'PICKUP', 'KIOSK_EAT_IN', 'KIOSK_TAKE_OUT', 'SALLE', 'SALLE_EAT_IN', 'SALLE_TAKE_OUT', 'EXTERIEUR', 'PARKING'],
       DOCUMENT: ['COMMANDE', 'TICKET', 'RECU_PRELEVEMENT', 'RECU_SESSION_OUVERTE', 'RECU_FIN_SESSION', 'FACTURE', 'NOTE', 'RECU_FIN_SESSION_DECLARE', 'RECU_PRELEVEMENT_DECLARE', 'RECU_REPRISE_SESSION', 'RECU_FIN_SESSION_ANNULEE', 'BON_DEPENSE', 'BON_RECETTE', 'BON_EQUILLIBRE', 'CLOTURE_REGLEMENT', 'TABLE', 'COMPTE', 'COMPTECOMMANDE', 'DUPLICATA', 'RECU_TRANSFERT', 'RECU_REGLEMENT_EMPLOYE', 'RECU_RAZ_COMPTE', 'CLOTURE_EXERCICE', 'RECU_EXPORT', 'TEST', 'REPAS_COMPLET', 'DOCUMENT'],
@@ -196,7 +197,7 @@ export default {
       this.FormTdd.tdd = [];
     },
     addElement(main_index, index, text) {
-      if (this.to_push[main_index][index].length > 0 || this.to_push[main_index][index] > 0) {
+      if (this.to_push[main_index][index].length >= 0 || this.to_push[main_index][index] >= 0) {
         this.to_complete[main_index][index].push(text);
         this.to_push[main_index][index] = '';
       }
@@ -300,11 +301,10 @@ export default {
     },
     listOfFillTabs(tdd) {
       const list = [];
+
       for (const value in this.array.filtration) {
         try {
-          if (tdd[this.array.filtration[value]].length > 0) {
-            list.push(this.array.filtration[value])
-          }
+          if (tdd[this.array.filtration[value]].length > 0) list.push(value)
         }
         catch (e) {
           continue;
@@ -380,11 +380,6 @@ b {
   margin-right: 50px;
 }
 
-.red {
-  color: red;
-  font-weight: bold;
-}
-
 #buttons li {
   float: left;
   list-style: none;
@@ -399,12 +394,12 @@ b {
   text-align: left;
 }
 
-.indentButton {
-  text-align: right;
-  display: inline;
+.red-text {
+  color: red;
+}
+
+.set-margin {
+  margin-right: 50%;
 }
 
 </style>
-
-<!--TODO: Pour les traiteurConfig, afficher en petit les termes suivants : (libelle codeJournal direction compte),
-TODO: si bouton cliqué, affiché le TraiteurConfig, pensé à ajouter une suppression au niveau des tableaux -->

@@ -15,23 +15,39 @@
           <label>Id personnalisé ?</label>
         </div>
         <div class="col-75">
-          <input type="checkbox" v-model="bool.add_id">
-          <input v-if="bool.add_id" type="number" placeholder="id" v-model.number="to_complete.id" :min="0" :required="bool.add_id">
+          <label class="checkbox-button">
+            <input type="checkbox" class="checkbox-button__input" name="choice1" v-model="bool.add_id">
+            <span class="checkbox-button__control"></span>
+          </label>
         </div>
+      </div>
+      <div class="row" v-if="bool.add_id">
+        <form @submit.prevent="">
+          <div class="col-25">
+            <label>id</label>
+          </div>
+          <div class="col-75">
+            <input type="number" placeholder="id" v-model.number="to_complete.id" :min="0" :required="bool.add_id">
+          </div>
+        </form>
       </div>
       <div class="row">
         <div class="col-25"><label>Ajouter Traiteur config ?</label></div>
-        <div class="col-75"><input v-model="bool.add_tdd" type="checkbox"></div>
+        <div class="col-75">
+          <label class="checkbox-button">
+            <input type="checkbox" class="checkbox-button__input" name="choice1" v-model="bool.add_tdd">
+            <span class="checkbox-button__control"></span>
+          </label>
+        </div>
         <tdd-form v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
         <tdd-form v-else-if="bool.add_tdd" @tdd_form="CompleteTDD"/>
-      </div><input class="hover-item" type="submit" :disabled="!to_complete.code||to_complete.id < 0" @click="IsSubmitted">
+      </div><input class="btn green" type="submit" :disabled="!to_complete.code||to_complete.id < 0" @click="IsSubmitted">
     </form>
   </div>
-  <button v-if="id_societe!=null" class="hover-item" @click="Reinitialize(json[id_societe].etablissements)">Réinitialiser les ID</button>
+  <button v-if="id_societe!=null" class="btn yellow" @click="Reinitialize(json[id_societe].etablissements)">Réinitialiser les ID</button>
 </template>
 
 <script>
-/* eslint-disable */
 import ParseSociete from "../functions/ParseSociete";
 import App from '../App'
 import TddForm from "@/components/TddForm";
