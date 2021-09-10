@@ -10,7 +10,7 @@
     <ul>
       <li id="traiteurListe" v-for="(tdd, index) in traiteurModif" :key="tdd">
         <button :id="'ButtonTddModify' + index" class="btn orange" @click="disabledButton('ButtonTddModify' + index); tdd_nbr = 0;
-        isModifying = false; modifyTabs=listOfFillTabs(traiteurModif[index]); indexes = index; modifyContent(index); hasClickedOnce = true; tdd_nbr = 1">{{ tdd.libelle }} | {{ tdd.codeJournal }} | {{ tdd.direction }} | {{ tdd.compte }}</button>
+        isModifying = false; modifyTabs=listOfFillTabs(traiteurModif[index], false); indexes = index; modifyContent(index); hasClickedOnce = true; tdd_nbr = 1">{{ tdd.libelle }} | {{ tdd.codeJournal }} | {{ tdd.direction }} | {{ tdd.compte }}</button>
         <div v-if="idButtonModify === ('ButtonTddModify' + index)">
           <button class="btn red OneLine" @click="deleteTraiteur(index); isModifying = false; idButtonModify = ''">Supprimer</button>
         </div>
@@ -86,7 +86,7 @@
   <form v-if="hasClickedOnce" @submit.prevent="">
     <b>Cliquer pour éditer les tableaux</b>
     <div>
-      <button class="btn orange" v-for="item in modifyTabs" :key="item" @click="deleteTabs=listItemTabs(item); tabName=item">{{item}}</button>
+      <button class="btn orange" v-for="key in modifyTabs" :key="key" @click="deleteTabs=listItemTabs(key.value); tabName=key.value">{{key.key}}</button>
     </div>
     <div v-if="deleteTabs != null">
       <b>Cliquez sur un élément pour le supprimer</b><br>
@@ -173,14 +173,14 @@ export default {
       if (this.modifyTdd.length !== 0) {
         this.to_complete = []
         for (const fill of this.modifyTdd) {
-          fill.obj.filtration = this.listOfFillTabs(fill.obj);
+          fill.obj.filtration = this.listOfFillTabs(fill.obj, true);
           this.traiteurModif[fill.index] = fill.obj;
         }
       }
       else {
         for (const complete of this.to_complete) {
           try {
-            complete.filtration = this.listOfFillTabs(complete);
+            complete.filtration = this.listOfFillTabs(complete, true);
           } catch (e) {
             continue;
           }
@@ -304,18 +304,20 @@ export default {
     deleteTraiteur(index) {
       this.traiteurModif.splice(index, 1);
     },
-    listOfFillTabs(tdd) {
+    listOfFillTabs(tdd, filtration) {
       const list = [];
 
-      for (const value in this.array.filtration) {
+      for (const key in this.array.filtration) {
         try {
-          if (tdd[this.array.filtration[value]].length > 0) list.push(value)
+          if (tdd[this.array.filtration[key]].length > 0 && filtration === false) list.push({value: this.array.filtration[key], key: key})
+          else if (tdd[this.array.filtration[key]].length > 0) list.push(key)
         }
         catch (e) {
           continue;
         }
         console.log()
       }
+      console.log(list)
       return list;
     },
     listItemTabs(item) {
@@ -323,6 +325,7 @@ export default {
       for (const obj of this.traiteurModif[this.indexes][item]) {
         list.push(obj);
       }
+      console.log(list)
       return list;
     },
     disabledButton(id) {
@@ -354,7 +357,7 @@ export default {
       this.traiteurModif[this.indexes][this.tabName].splice(id, 1)
       this.deleteTabs = this.listItemTabs(this.tabName);
       for (const c of this.traiteurModif) {
-        c.filtration = this.listOfFillTabs(c);
+        c.filtration = this.listOfFillTabs(c, true);
       }
     }
   }
