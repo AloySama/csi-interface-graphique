@@ -10,10 +10,9 @@
     <ul>
       <li id="traiteurListe" v-for="(tdd, index) in traiteurModif" :key="tdd">
         <button :id="'ButtonTddModify' + index" class="btn orange" @click="disabledButton('ButtonTddModify' + index); tdd_nbr = 0;
-        isModifying = false; modifyTabs=listOfFillTabs(traiteurModif[index]); indexes = index; hasClickedOnce = false">{{ tdd.libelle }} | {{ tdd.codeJournal }} | {{ tdd.direction }} | {{ tdd.compte }}</button>
+        isModifying = false; modifyTabs=listOfFillTabs(traiteurModif[index]); indexes = index; modifyContent(index); hasClickedOnce = true; tdd_nbr = 1">{{ tdd.libelle }} | {{ tdd.codeJournal }} | {{ tdd.direction }} | {{ tdd.compte }}</button>
         <div v-if="idButtonModify === ('ButtonTddModify' + index)">
-          <button class="btn red" @click="deleteTraiteur(index); isModifying = false; idButtonModify = ''">Supprimer</button>
-          <button v-if="!hasClickedOnce" class="btn blue" @click="modifyContent(index); hasClickedOnce = true; tdd_nbr = 1">Modifier</button>
+          <button class="btn red OneLine" @click="deleteTraiteur(index); isModifying = false; idButtonModify = ''">Supprimer</button>
         </div>
       </li>
     </ul>
@@ -198,7 +197,14 @@ export default {
     },
     addElement(main_index, index, text) {
       if (this.to_push[main_index][index].length >= 0 || this.to_push[main_index][index] >= 0) {
-        this.to_complete[main_index][index].push(text);
+        try {
+          this.to_complete[main_index][index].push(text);
+        }
+        catch (e) {
+          this.to_complete[main_index][index] = [];
+          this.to_complete[main_index][index].push(text);
+          console.log(this.to_complete[main_index][index])
+        }
         this.to_push[main_index][index] = '';
       }
     },
