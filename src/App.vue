@@ -19,7 +19,6 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable */
 import {defineComponent} from "vue";
 import UploadFiles from "@/components/UploadFiles.vue";
 import download from '@/functions/Savedata'
@@ -29,7 +28,7 @@ import MainComponent from "@/components/MainComponent.vue";
 
 export default defineComponent({
   name: 'App',
-  components: {MainComponent, Footer,UploadFiles},
+  components: {MainComponent, Footer, UploadFiles},
   data() {
     return {
       setting_tab: {},

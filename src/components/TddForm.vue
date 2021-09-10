@@ -12,7 +12,7 @@
         <button :id="'ButtonTddModify' + index" class="btn orange" @click="disabledButton('ButtonTddModify' + index); tdd_nbr = 0;
         isModifying = false; modifyTabs=listOfFillTabs(traiteurModif[index], false); indexes = index; modifyContent(index); hasClickedOnce = true; tdd_nbr = 1">{{ tdd.libelle }} | {{ tdd.codeJournal }} | {{ tdd.direction }} | {{ tdd.compte }}</button>
         <div v-if="idButtonModify === ('ButtonTddModify' + index)">
-          <button class="btn red OneLine" @click="deleteTraiteur(index); isModifying = false; idButtonModify = ''">Supprimer</button>
+          <button class="btn red OneLine" @click="deleteTraiteur(index); isModifying = false; idButtonModify = ''; hasClickedOnce = false">Supprimer</button>
         </div>
       </li>
     </ul>
@@ -317,7 +317,6 @@ export default {
         }
         console.log()
       }
-      console.log(list)
       return list;
     },
     listItemTabs(item) {
@@ -325,7 +324,6 @@ export default {
       for (const obj of this.traiteurModif[this.indexes][item]) {
         list.push(obj);
       }
-      console.log(list)
       return list;
     },
     disabledButton(id) {
