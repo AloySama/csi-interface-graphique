@@ -203,7 +203,6 @@ export default {
         catch (e) {
           this.to_complete[main_index][index] = [];
           this.to_complete[main_index][index].push(text);
-          console.log(this.to_complete[main_index][index])
         }
         this.to_push[main_index][index] = '';
       }
