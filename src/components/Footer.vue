@@ -1,7 +1,5 @@
 <template>
-  <transition name="bounce">
-    <settings v-if="settings_" @settings_value="SetSettings">{{settings_}}</settings>
-  </transition>
+  <settings v-if="settings_" @settings_value="SetSettings">{{settings_}}</settings>
   <div id="container-bis" class="sticky-footer">
     <div id="contacts">
       <div id="contacts--contact">
@@ -113,23 +111,5 @@ export default {
   top: 100%;
   margin-bottom: -50px;
   margin-top: 58vh;
-}
-
-.bounce-enter-active {
-  animation: bounce-in 1s;
-}
-.bounce-leave-active {
-  animation: bounce-in 1s reverse;
-}
-@keyframes bounce-in {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1.5);
-  }
-  100% {
-    transform: scale(1);
-  }
 }
 </style>

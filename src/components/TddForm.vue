@@ -1,22 +1,22 @@
 <template>
-  <div>
+  <div v-if="traiteurModif==null">
     <button :disabled="isModifying===true" class="btn blue" @click="AddFormTdd2x">+2</button>
     <button :disabled="isModifying===true" class="btn blue" @click="AddFormTdd">+</button>
     <b>{{ tdd_nbr }}</b>
     <button :disabled="isModifying===true" class="btn blue" @click="RemoveFormTdd">-</button>
     <button :disabled="isModifying===true" class="btn blue" @click="RemoveFormTdd2x">-2</button>
   </div>
-  <div v-if="traiteurModif != null && traiteurModif.length > 0">
-    <ul>
-      <li id="traiteurListe" v-for="(tdd, index) in traiteurModif" :key="tdd">
-        <button :id="'ButtonTddModify' + index" class="btn orange" @click="disabledButton('ButtonTddModify' + index); tdd_nbr = 0;
-        isModifying = false; modifyTabs=listOfFillTabs(traiteurModif[index], false); indexes = index; modifyContent(index); hasClickedOnce = true; tdd_nbr = 1">{{ tdd.libelle }} | {{ tdd.codeJournal }} | {{ tdd.direction }} | {{ tdd.compte }}</button>
-        <div v-if="idButtonModify === ('ButtonTddModify' + index)">
-          <button class="btn red OneLine" @click="deleteTraiteur(index); isModifying = false; idButtonModify = ''; hasClickedOnce = false">Supprimer</button>
-        </div>
-      </li>
-    </ul>
-  </div>
+<!--  <div v-if="traiteurModif != null && traiteurModif.length > 0">-->
+<!--    <ul>-->
+<!--      <li id="traiteurListe" v-for="(tdd, index) in traiteurModif" :key="tdd">-->
+<!--        <button :id="'ButtonTddModify' + index" class="btn orange" @click="disabledButton('ButtonTddModify' + index); tdd_nbr = 0;-->
+<!--        isModifying = false; modifyTabs=listOfFillTabs(traiteurModif[index], false); indexes = index; modifyContent(index); hasClickedOnce = true; tdd_nbr = 1">{{ tdd.libelle }} | {{ tdd.codeJournal }} | {{ tdd.direction }} | {{ tdd.compte }}</button>-->
+<!--        <div v-if="idButtonModify === ('ButtonTddModify' + index)">-->
+<!--          <button class="btn red OneLine" @click="deleteTraiteur(index); isModifying = false; idButtonModify = ''; hasClickedOnce = false">Supprimer</button>-->
+<!--        </div>-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--  </div>-->
   <div v-if="tdd_nbr >= values.min">
     <div v-for="(number, main_index) in parseInt(tdd_nbr)" :key="parseInt(number)">
       <form @submit.prevent="" class="top">
@@ -98,7 +98,11 @@
 <script>
 export default {
   created() {
-    if (this.traiteurModif != null) this.isModify = true;
+    if (this.traiteurModif != null) {
+      this.to_complete[0] = Object.assign({}, this.traiteurModif)
+      this.tdd_nbr = 1
+      this.isModify = true;
+    }
   },
   emits: ['tdd_form'],
   name: "TddForm",
@@ -170,14 +174,7 @@ export default {
   },
   methods: {
     SubmitForm() {
-      if (this.modifyTdd.length !== 0) {
-        this.to_complete = []
-        for (const fill of this.modifyTdd) {
-          fill.obj.filtration = this.listOfFillTabs(fill.obj, true);
-          this.traiteurModif[fill.index] = fill.obj;
-        }
-      }
-      else {
+      if (this.traiteurModif == null) {
         for (const complete of this.to_complete) {
           try {
             complete.filtration = this.listOfFillTabs(complete, true);

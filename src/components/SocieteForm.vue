@@ -42,7 +42,9 @@
             <span class="checkbox-button__control"></span>
           </label>
         </div>
-        <tdd-form v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
+<!--        <tdd-form v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>-->
+<!--        <tdd-form v-else-if="bool.add_tdd" @tdd_form="CompleteTDD"/>-->
+        <ListTraiteurConfig v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @list-tdd="completeList"/>
         <tdd-form v-else-if="bool.add_tdd" @tdd_form="CompleteTDD"/>
       </div>
       <input class="btn green" type="submit" :disabled="!to_complete.code" @click="isSubmitted">
@@ -58,6 +60,7 @@ import EditSociete from "@/functions/EditElements";
 import {FindAnID, Reinitialize, isIDCorrect} from '@/functions/CheckID'
 import {FindIDTC} from "@/functions/CheckID";
 import {checkIDTC} from "@/functions/CheckID";
+import ListTraiteurConfig from "@/components/ListTraiteurConfig";
 
 export default {
   created() {
@@ -79,7 +82,7 @@ export default {
       required: false
     }
   },
-  components: {EtablissementForm, TddForm},
+  components: {ListTraiteurConfig, EtablissementForm, TddForm},
   computed: {
     CodeIsValid() {
       return !!this.to_complete.code;
@@ -133,6 +136,11 @@ export default {
       this.to_complete.code = null;
       this.to_complete.etablissements = [];
       this.to_complete.traiteursConfigs = [];
+    },
+    completeList(tab) {
+      // this.to_complete.traiteursConfigs[tab.index] = tab.tdd;
+      // console.log(this.to_complete.traiteursConfigs[tab.index])
+      this.to_complete.traiteursConfigs[tab.index] = tab.tdd
     },
     CompleteTDD(tdd) {
       if (tdd.modify === false) {

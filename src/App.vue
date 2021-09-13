@@ -64,7 +64,6 @@ export default defineComponent({
         }
         catch (error) {
           alert('Erreur sur le Json !')
-          console.error("Erreur: le ficher json envoyé n'est pas bien structuré : json mit à null")
           this.json = null;
         }
       }
