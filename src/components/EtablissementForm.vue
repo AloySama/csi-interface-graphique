@@ -39,7 +39,7 @@
             <span class="checkbox-button__control"></span>
           </label>
         </div>
-        <tdd-form v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
+        <ListTraiteurConfig v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @list-tdd="completeList"/>
         <tdd-form v-else-if="bool.add_tdd" @tdd_form="CompleteTDD"/>
       </div><input class="btn green" type="submit" :disabled="!to_complete.code||to_complete.id < 0" @click="IsSubmitted">
     </form>
@@ -55,6 +55,7 @@ import {Reinitialize} from "@/functions/CheckID";
 import {EditEtab} from "@/functions/EditElements";
 import {FindAnID, isIDCorrect} from "@/functions/CheckID";
 import {FindIDTC, checkIDTC} from "@/functions/CheckID";
+import ListTraiteurConfig from "@/components/ListTraiteurConfig";
 
 export default {
   created() {
@@ -79,7 +80,7 @@ export default {
       return !!this.to_complete.code;
     }
   },
-  components: {TddForm},
+  components: {TddForm, ListTraiteurConfig},
   emits : ['edit_value', 'json_value', 'to_complete'],
   name: "EtablissementForm",
   data() {
@@ -115,6 +116,9 @@ export default {
       }
       if (checkIDTC(this.to_complete.traiteursConfigs)) this.to_complete.traiteursConfigs = FindIDTC(this.to_complete.traiteursConfigs);
       this.bool.add_tdd = false;
+    },
+    completeList(tab) {
+      this.to_complete.traiteursConfigs[tab.index] = tab.tdd
     },
     disabledButton(i, bool, id) {
       this.societe = i;

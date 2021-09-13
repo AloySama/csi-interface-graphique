@@ -40,8 +40,9 @@
             <span class="checkbox-button__control"></span>
           </label>
         </div>
-        <tdd-form v-if="bool.AddTdd&&modify!=null"
-                  :traiteur-modification="to_complete[to_complete.length-1].traiteursConfigs" @tdd_form="completeTDD"/>
+<!--        <tdd-form v-if="bool.AddTdd&&modify!=null"-->
+<!--                  :traiteur-modification="to_complete[to_complete.length-1].traiteursConfigs" @tdd_form="completeTDD"/>-->
+        <ListTraiteurConfig v-if="bool.AddTdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @list-tdd="completeList"/>
         <tdd-form v-else-if="bool.AddTdd" @tdd_form="completeTDD"/>
       </div>
     </form>
@@ -60,6 +61,7 @@ import ParseEtablissement from "@/functions/ParseEtablissement";
 import TddForm from "@/components/TddForm";
 import {EditRestaurant} from "@/functions/EditElements";
 import {FindIDRes, checkIDTC, isIDCorrectRes, FindIDTC} from "@/functions/CheckID";
+import ListTraiteurConfig from "@/components/ListTraiteurConfig";
 
 export default {
   created() {
@@ -80,7 +82,7 @@ export default {
       required: true
     }
   },
-  components: {TddForm},
+  components: {TddForm, ListTraiteurConfig},
   emits: ['edit_value', 'to_complete'],
   data() {
     return {
@@ -121,6 +123,9 @@ export default {
         restaurantId: null,
         traiteursConfigs: []
       })
+    },
+    completeList(tab) {
+      this.to_complete.traiteursConfigs[tab.index] = tab.tdd
     },
     completeTDD(tdd) {
       if (tdd.modify === false) {

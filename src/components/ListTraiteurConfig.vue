@@ -61,6 +61,10 @@ export default {
     },
     CompleteTDD(tdd) {
       this.$emit('listTdd', {index: this.buttonIndex, tdd: tdd.tdd[0]})
+      this.idButtonModify = ''
+    },
+    deleteTraiteur(index) {
+      this.traiteurModif.splice(index, 1);
     }
   }
 }
@@ -68,4 +72,8 @@ export default {
 
 <style scoped>
 
+#traiteurListe {
+  margin: auto;
+  text-align: left;
+}
 </style>

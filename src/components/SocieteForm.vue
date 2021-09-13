@@ -42,10 +42,10 @@
             <span class="checkbox-button__control"></span>
           </label>
         </div>
-<!--        <tdd-form v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>-->
-<!--        <tdd-form v-else-if="bool.add_tdd" @tdd_form="CompleteTDD"/>-->
-        <ListTraiteurConfig v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @list-tdd="completeList"/>
-        <tdd-form v-else-if="bool.add_tdd" @tdd_form="CompleteTDD"/>
+        <div class="set-marge">
+          <ListTraiteurConfig v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @list-tdd="completeList"/>
+          <tdd-form v-else-if="bool.add_tdd" @tdd_form="CompleteTDD"/>
+        </div>
       </div>
       <input class="btn green" type="submit" :disabled="!to_complete.code" @click="isSubmitted">
     </form>
@@ -138,8 +138,6 @@ export default {
       this.to_complete.traiteursConfigs = [];
     },
     completeList(tab) {
-      // this.to_complete.traiteursConfigs[tab.index] = tab.tdd;
-      // console.log(this.to_complete.traiteursConfigs[tab.index])
       this.to_complete.traiteursConfigs[tab.index] = tab.tdd
     },
     CompleteTDD(tdd) {
@@ -175,5 +173,9 @@ export default {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
+}
+
+.set-marge {
+  margin: auto;
 }
 </style>
