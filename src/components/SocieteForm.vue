@@ -36,7 +36,7 @@
         <div class="col-25">
           <label >Ajouter Traiteur config ?</label>
         </div>
-        <div class="col-75">
+        <div class="col-75 set-marge">
           <label class="checkbox-button">
             <input type="checkbox" class="checkbox-button__input" name="choice1" v-model="bool.add_tdd">
             <span class="checkbox-button__control"></span>

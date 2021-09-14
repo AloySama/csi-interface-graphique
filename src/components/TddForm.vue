@@ -309,9 +309,8 @@ export default {
     },
     listItemTabs(item) {
       const list = [];
-      for (const obj of this.to_complete[0][item])
-        list.push(obj)
 
+      for (const obj of this.to_complete[0][item]) list.push(obj)
       return list;
     },
     disabledButton(id) {

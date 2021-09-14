@@ -40,9 +40,7 @@
             <span class="checkbox-button__control"></span>
           </label>
         </div>
-<!--        <tdd-form v-if="bool.AddTdd&&modify!=null"-->
-<!--                  :traiteur-modification="to_complete[to_complete.length-1].traiteursConfigs" @tdd_form="completeTDD"/>-->
-        <ListTraiteurConfig v-if="bool.AddTdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @list-tdd="completeList"/>
+        <ListTraiteurConfig v-if="bool.AddTdd&&modify!=null" :traiteur-modification="to_complete[1].traiteursConfigs" @list-tdd="completeList"/>
         <tdd-form v-else-if="bool.AddTdd" @tdd_form="completeTDD"/>
       </div>
     </form>
@@ -125,7 +123,8 @@ export default {
       })
     },
     completeList(tab) {
-      this.to_complete.traiteursConfigs[tab.index] = tab.tdd
+      // this.to_complete.traiteursConfigs[tab.index] = tab.tdd
+      console.log(this.to_complete[1].traiteursConfigs[tab.index] = tab.tdd)
     },
     completeTDD(tdd) {
       if (tdd.modify === false) {
