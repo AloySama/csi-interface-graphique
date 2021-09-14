@@ -47,11 +47,9 @@
     <input class="btn green" type="submit" @click="isSubmitted"
            :disabled="!to_complete[to_complete.length-1].etab_code">
   </div>
-  <button class="btn yellow" @click="ReinitializeRes(json)">Reinitialiser ID</button>
 </template>
 
 <script>
-import {ReinitializeRes} from '@/functions/CheckID';
 import Etablissement from './EtablissementForm'
 import App from "@/App";
 import ParseSociete from "../functions/ParseSociete";
@@ -86,7 +84,6 @@ export default {
     return {
       ParseSociete,
       ParseEtablissement,
-      ReinitializeRes,
       Etablissement,
       App,
       numberOfZeros: 3,
@@ -132,7 +129,8 @@ export default {
     completeTDD(tdd) {
       if (tdd.modify === false) {
         if (checkIDTC(tdd.tdd)) tdd.tdd = FindIDTC(tdd.tdd)
-        this.to_complete[this.to_complete.length - 1].traiteursConfigs = tdd.tdd
+        this.to_complete[this.to_complete.length - 1].traiteursConfigs = tdd.tdd;
+        this.bool.AddTdd = false;
       }
       else {
         for (const tddElement of tdd.tdd) {
@@ -140,7 +138,6 @@ export default {
         }
       }
       if (checkIDTC(this.to_complete[this.to_complete.length - 1].traiteursConfigs)) this.to_complete[this.to_complete.length - 1].traiteursConfigs = FindIDTC(this.to_complete[this.to_complete.length - 1].traiteursConfigs);
-
       this.bool.AddTdd = false;
     },
     lengthNumber(number) {

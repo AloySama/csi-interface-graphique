@@ -44,14 +44,12 @@
       </div><input class="btn green" type="submit" :disabled="!to_complete.code||to_complete.id < 0" @click="IsSubmitted">
     </form>
   </div>
-  <button v-if="id_societe!=null" class="btn yellow" @click="Reinitialize(json[id_societe].etablissements)">Réinitialiser les ID</button>
 </template>
 
 <script>
 import ParseSociete from "../functions/ParseSociete";
 import App from '../App'
 import TddForm from "@/components/TddForm";
-import {Reinitialize} from "@/functions/CheckID";
 import {EditEtab} from "@/functions/EditElements";
 import {FindAnID, isIDCorrect} from "@/functions/CheckID";
 import {FindIDTC, checkIDTC} from "@/functions/CheckID";
@@ -87,7 +85,6 @@ export default {
     return {
       App,
       ParseSociete,
-      Reinitialize,
       idSoc: this.id_societe,
       json: this.jsonFile,
       modify: this.etabModify,
@@ -106,19 +103,15 @@ export default {
   },
   methods: {
     completeList(tab) {
-      if (tab.modify) {
-        this.to_complete.traiteursConfigs[tab.index] = tab.tdd[0]
-      }
+      if (tab.modify) this.to_complete.traiteursConfigs[tab.index] = tab.tdd[0]
       else {
         for (const tdd of tab.tdd)
           this.to_complete.traiteursConfigs.push(tdd);
       }
+      this.bool.add_tdd = false;
     },
     CompleteTDD(tdd) {
-      console.log(tdd)
-      if (tdd.modify === false) {
-        this.to_complete.traiteursConfigs = tdd.tdd;
-      }
+      if (tdd.modify === false) this.to_complete.traiteursConfigs = tdd.tdd;
       else {
         for (const tddElement of tdd.tdd) {
           this.to_complete.traiteursConfigs.push(tddElement)

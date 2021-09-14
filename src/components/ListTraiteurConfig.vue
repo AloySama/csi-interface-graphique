@@ -44,7 +44,8 @@ export default {
         if (doc == null) return;
         // @ts-ignore
         doc.disabled = true;
-      } else {
+      }
+      else {
         const doc_old = document.getElementById(this.idButtonModify);
         this.idButtonModify = current;
         const doc_current = document.getElementById(current);

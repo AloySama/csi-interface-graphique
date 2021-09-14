@@ -18,12 +18,6 @@ export function FindAnID(json: Record<string, unknown>) {
     return i;
 }
 
-export function Reinitialize(json: Record<string, any>) {
-    let i = 0;
-    // @ts-ignore
-    for (const soc of json) soc.id = i++;
-}
-
 export function isIDCorrect(json: Record<string, any>, id: number, except: number) {
     if (checkID(json, id, except) || id < 0) {
         alert('Problème sur l\'id, nombre automatique attribué')
@@ -54,18 +48,6 @@ export function FindIDRes(json: Record<string, any>, bool: boolean, _id: number,
     }
     if (bool) return false;
     return id;
-}
-
-export function ReinitializeRes(json: Record<string, any>) {
-    let id = 0;
-    // @ts-ignore
-    for (const societe of json) {
-        for (const etablissement of societe.etablissements) {
-            for (const restaurant of etablissement.restaurants) {
-                restaurant.matricule = id++;
-            }
-        }
-    }
 }
 
 export function isIDCorrectRes(json: Record<string, any>, id: number, except: number) {

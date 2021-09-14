@@ -28,7 +28,6 @@ export default {
   name: "UploadFiles",
   methods: {
     loadTextFromFile(ev) {
-
       const file = ev.target.files[0];
       const reader = new FileReader();
 

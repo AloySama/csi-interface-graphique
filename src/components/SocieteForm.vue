@@ -50,14 +50,13 @@
       <input class="btn green" type="submit" :disabled="!to_complete.code" @click="isSubmitted">
     </form>
   </div>
-  <button class="btn yellow" @click="Reinitialize(json)">Réinitialiser les ID</button>
 </template>
 
 <script>
 import TddForm from "@/components/TddForm";
 import EtablissementForm from "@/components/EtablissementForm";
 import EditSociete from "@/functions/EditElements";
-import {FindAnID, Reinitialize, isIDCorrect} from '@/functions/CheckID'
+import {FindAnID, isIDCorrect} from '@/functions/CheckID';
 import {FindIDTC} from "@/functions/CheckID";
 import {checkIDTC} from "@/functions/CheckID";
 import ListTraiteurConfig from "@/components/ListTraiteurConfig";
@@ -105,8 +104,7 @@ export default {
       tdd_nbr: 1,
       json: this.jsonFile,
       modify: this.modifyContent,
-      idSoc: this.id_societe,
-      Reinitialize
+      idSoc: this.id_societe
     }
   },
   methods: {
@@ -143,6 +141,7 @@ export default {
         for (const tdd of tab.tdd)
           this.to_complete.traiteursConfigs.push(tdd);
       }
+      this.bool.add_tdd = false;
     },
     CompleteTDD(tdd) {
       if (tdd.modify === false) {
