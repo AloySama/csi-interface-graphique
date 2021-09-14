@@ -123,14 +123,18 @@ export default {
       })
     },
     completeList(tab) {
-      // this.to_complete.traiteursConfigs[tab.index] = tab.tdd
-      console.log(this.to_complete[1].traiteursConfigs[tab.index] = tab.tdd)
+      if (tab.modify) this.to_complete[1].traiteursConfigs[tab.index] = tab.tdd[0];
+      else {
+        for (const tdd of tab.tdd)
+          this.to_complete[1].traiteursConfigs.push(tdd);
+      }
     },
     completeTDD(tdd) {
       if (tdd.modify === false) {
         if (checkIDTC(tdd.tdd)) tdd.tdd = FindIDTC(tdd.tdd)
         this.to_complete[this.to_complete.length - 1].traiteursConfigs = tdd.tdd
-      } else {
+      }
+      else {
         for (const tddElement of tdd.tdd) {
           this.to_complete[this.to_complete.length - 1].traiteursConfigs.push(tddElement);
         }

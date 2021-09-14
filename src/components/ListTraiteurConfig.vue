@@ -11,10 +11,11 @@
       </li>
     </ul>
   </div>
+  <tdd-form @tdd_form="CompleteTDD"/>
 </template>
 
 <script>
-import TddForm from "@/components/TddForm";
+import TddForm from "@/components/TddForm"
 
 export default {
   components: {TddForm},
@@ -60,8 +61,10 @@ export default {
       }
     },
     CompleteTDD(tdd) {
-      this.$emit('listTdd', {index: this.buttonIndex, tdd: tdd.tdd[0]})
-      this.idButtonModify = ''
+      const doc = document.getElementById(this.idButtonModify);
+      if (doc != null) doc.disabled = false;
+      this.$emit('listTdd', {index: this.buttonIndex, tdd: tdd.tdd, modify: tdd.modify});
+      this.idButtonModify = '';
     },
     deleteTraiteur(index) {
       this.traiteurModif.splice(index, 1);

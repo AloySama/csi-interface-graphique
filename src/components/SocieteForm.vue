@@ -118,7 +118,7 @@ export default {
       if (this.modify != null) {
         this.to_complete.id = this.to_complete.id !== null ? isIDCorrect(this.json, this.to_complete.id, this.to_complete.id) : FindAnID(this.json);
         this.$emit('to_complete', this.to_complete);
-        this.to_complete = []
+        this.to_complete = [];
         return;
       }
       this.to_complete.id = this.to_complete.id !== null ? isIDCorrect(this.json, this.to_complete.id, -1) : FindAnID(this.json);
@@ -138,7 +138,11 @@ export default {
       this.to_complete.traiteursConfigs = [];
     },
     completeList(tab) {
-      this.to_complete.traiteursConfigs[tab.index] = tab.tdd
+      if (tab.modify) this.to_complete.traiteursConfigs[tab.index] = tab.tdd[0];
+      else {
+        for (const tdd of tab.tdd)
+          this.to_complete.traiteursConfigs.push(tdd);
+      }
     },
     CompleteTDD(tdd) {
       if (tdd.modify === false) {

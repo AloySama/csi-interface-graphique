@@ -105,7 +105,17 @@ export default {
     }
   },
   methods: {
+    completeList(tab) {
+      if (tab.modify) {
+        this.to_complete.traiteursConfigs[tab.index] = tab.tdd[0]
+      }
+      else {
+        for (const tdd of tab.tdd)
+          this.to_complete.traiteursConfigs.push(tdd);
+      }
+    },
     CompleteTDD(tdd) {
+      console.log(tdd)
       if (tdd.modify === false) {
         this.to_complete.traiteursConfigs = tdd.tdd;
       }
@@ -116,9 +126,6 @@ export default {
       }
       if (checkIDTC(this.to_complete.traiteursConfigs)) this.to_complete.traiteursConfigs = FindIDTC(this.to_complete.traiteursConfigs);
       this.bool.add_tdd = false;
-    },
-    completeList(tab) {
-      this.to_complete.traiteursConfigs[tab.index] = tab.tdd
     },
     disabledButton(i, bool, id) {
       this.societe = i;
