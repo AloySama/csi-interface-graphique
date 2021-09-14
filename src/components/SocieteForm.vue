@@ -42,7 +42,7 @@
             <span class="checkbox-button__control"></span>
           </label>
         </div>
-        <div class="set-marge">
+        <div>
           <ListTraiteurConfig v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @list-tdd="completeList"/>
           <tdd-form v-else-if="bool.add_tdd" @tdd_form="CompleteTDD"/>
         </div>
@@ -175,7 +175,4 @@ export default {
   padding: 20px;
 }
 
-.set-marge {
-  margin: auto;
-}
 </style>
