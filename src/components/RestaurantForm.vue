@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import Etablissement from './EtablissementForm'
+import Etablissement from './EtablissementForm';
 import App from "@/App";
 import ParseSociete from "../functions/ParseSociete";
 import ParseEtablissement from "@/functions/ParseEtablissement";
@@ -98,6 +98,7 @@ export default {
       to_complete: [{
         compteAuxiliaire: '',
         etab_code: '',
+        code_societe: '',
         reference_config_compensation: 0,
         auxiliaireCreditClient: '',
         matricule: null,
@@ -112,6 +113,7 @@ export default {
       this.to_complete.push({
         compteAuxiliaire: '',
         etab_code: '',
+        code_societe: '',
         reference_config_compensation: 0,
         auxiliaireCreditClient: '',
         matricule: null,
@@ -173,6 +175,7 @@ export default {
       this.to_complete.push({
         compteAuxiliaire: this.modify.compteAuxiliaire,
         etab_code: this.modify.etab_code,
+        code_societe: this.modify.code_societe,
         reference_config_compensation: this.modify.reference_config_compensation,
         auxiliaireCreditClient: this.modify.auxiliaireCreditClient,
         matricule: this.modify.matricule,
