@@ -1,5 +1,5 @@
 #buttons {
-    padding-top: 50px;
+    padding-top: 30px;
     text-align: center;
 }
 
@@ -7,7 +7,7 @@
 
     border: none;
     border-radius: 5px;
-    padding: 15px 25px;
+    padding: 12px 20px;
     font-size: 22px;
     font-weight: bold;
     text-decoration: none;
