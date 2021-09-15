@@ -2,11 +2,10 @@
   <div v-if="json.length !== 0">
     <ul>
       <li class="OneLine" v-for="(societe, index) in functions.ParseSociete(json)" :key="societe">
-        <button :id="'ButtonSociete' + index" class="btn orange" @click="disabledButton('societe', index, 'ButtonSociete' + index); bool.addEtablissement=false">{{societe}}</button>
+        <button :id="'ButtonSociete' + index" class="btn orange" @click="disabledButton('societe', index, 'ButtonSociete' + index); bool.addEtablissement=false; setBool('modS')">{{societe}}</button>
       </li>
       <li class="OneLine">
         <button class="btn green" @click="addSocieteJson()">Ajouter</button>
-        <button class="btn blue" v-if="tab.societe !== -1" @click="setBool('modS')">Modifier</button>
         <ul>
           <button class="btn red" @click="removeObjSociete()" :disabled="tab.societe===-1">Supprimer</button>
         </ul>
@@ -19,11 +18,10 @@
   <div v-if="tab.societe !== -1 && json[tab.societe].etablissements.length !== 0">
     <ul>
       <li class="OneLine" v-for="(etablissement, index) in functions.ParseEtablissement(json, tab.societe)" :key="etablissement">
-        <button :id="'ButtonEtablissement' + index" class="btn orange" @click="disabledButton('etablissement', index, 'ButtonEtablissement' + index); bool.addRestaurant = false; ">{{etablissement}}</button>
+        <button :id="'ButtonEtablissement' + index" :class="{btn: true, orange:true}" @click="disabledButton('etablissement', index, 'ButtonEtablissement' + index); bool.addRestaurant = false; setBool('modE')">{{etablissement}}</button>
       </li>
       <li class="OneLine">
         <button class="btn green" @click="addEtabJson()">Ajouter</button>
-        <button class="btn blue" v-if="tab.etablissement !== -1" @click="setBool('modE')">Modifier</button>
         <ul>
           <button class="btn red" @click="removeObjEtab()" :disabled="tab.etablissement===-1">Supprimer</button>
         </ul>
@@ -36,11 +34,10 @@
   <div v-if="tab.societe!==-1 && tab.etablissement !== -1 && json[tab.societe].etablissements[tab.etablissement].restaurants.length !== 0 ">
     <ul>
       <li class="OneLine" v-for="(restaurant, index) in functions.ParseRestaurant(json, tab.societe, tab.etablissement)" :key="restaurant">
-        <button :id="'ButtonRestaurant' + index" class="btn orange" @click="disabledButton('restaurant', index, 'ButtonRestaurant' + index)">{{restaurant}}</button>
+        <button :id="'ButtonRestaurant' + index" class="btn orange" @click="disabledButton('restaurant', index, 'ButtonRestaurant' + index); setBool('modR')">{{restaurant}}</button>
       </li>
       <li class="OneLine">
         <button class="btn green" @click="addRestJson()">Ajouter</button>
-        <button class="btn blue" v-if="tab.restaurant !== -1" @click="setBool('modR')">Modifier</button>
         <ul>
           <button class="btn red" @click="removeObjRest()" :disabled="tab.restaurant===-1">Supprimer</button>
         </ul>

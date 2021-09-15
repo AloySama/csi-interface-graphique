@@ -33,28 +33,27 @@
       </div>
       <div class="row">
         <div class="col-25"><label>Ajouter Traiteur config ?</label></div>
-        <div class="col-75">
+        <div class="col-75 set-marge">
           <label class="checkbox-button">
             <input type="checkbox" class="checkbox-button__input" name="choice1" v-model="bool.add_tdd">
             <span class="checkbox-button__control"></span>
           </label>
         </div>
-        <tdd-form v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
+        <ListTraiteurConfig v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @list-tdd="completeList"/>
         <tdd-form v-else-if="bool.add_tdd" @tdd_form="CompleteTDD"/>
       </div><input class="btn green" type="submit" :disabled="!to_complete.code||to_complete.id < 0" @click="IsSubmitted">
     </form>
   </div>
-  <button v-if="id_societe!=null" class="btn yellow" @click="Reinitialize(json[id_societe].etablissements)">Réinitialiser les ID</button>
 </template>
 
 <script>
 import ParseSociete from "../functions/ParseSociete";
 import App from '../App'
 import TddForm from "@/components/TddForm";
-import {Reinitialize} from "@/functions/CheckID";
 import {EditEtab} from "@/functions/EditElements";
 import {FindAnID, isIDCorrect} from "@/functions/CheckID";
 import {FindIDTC, checkIDTC} from "@/functions/CheckID";
+import ListTraiteurConfig from "@/components/ListTraiteurConfig";
 
 export default {
   created() {
@@ -79,14 +78,13 @@ export default {
       return !!this.to_complete.code;
     }
   },
-  components: {TddForm},
+  components: {TddForm, ListTraiteurConfig},
   emits : ['edit_value', 'json_value', 'to_complete'],
   name: "EtablissementForm",
   data() {
     return {
       App,
       ParseSociete,
-      Reinitialize,
       idSoc: this.id_societe,
       json: this.jsonFile,
       modify: this.etabModify,
@@ -104,10 +102,16 @@ export default {
     }
   },
   methods: {
-    CompleteTDD(tdd) {
-      if (tdd.modify === false) {
-        this.to_complete.traiteursConfigs = tdd.tdd;
+    completeList(tab) {
+      if (tab.modify) this.to_complete.traiteursConfigs[tab.index] = tab.tdd[0]
+      else {
+        for (const tdd of tab.tdd)
+          this.to_complete.traiteursConfigs.push(tdd);
       }
+      this.bool.add_tdd = false;
+    },
+    CompleteTDD(tdd) {
+      if (tdd.modify === false) this.to_complete.traiteursConfigs = tdd.tdd;
       else {
         for (const tddElement of tdd.tdd) {
           this.to_complete.traiteursConfigs.push(tddElement)

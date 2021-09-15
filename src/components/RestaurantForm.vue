@@ -34,32 +34,30 @@
         <div class="col-25">
           <label>Ajouter TraiteurConfigs ?</label>
         </div>
-        <div class="col-75">
+        <div class="col-75 set-marge">
           <label class="checkbox-button">
             <input type="checkbox" class="checkbox-button__input" name="choice1" v-model="bool.AddTdd">
             <span class="checkbox-button__control"></span>
           </label>
         </div>
-        <tdd-form v-if="bool.AddTdd&&modify!=null"
-                  :traiteur-modification="to_complete[to_complete.length-1].traiteursConfigs" @tdd_form="completeTDD"/>
+        <ListTraiteurConfig v-if="bool.AddTdd&&modify!=null" :traiteur-modification="to_complete[1].traiteursConfigs" @list-tdd="completeList"/>
         <tdd-form v-else-if="bool.AddTdd" @tdd_form="completeTDD"/>
       </div>
     </form>
     <input class="btn green" type="submit" @click="isSubmitted"
            :disabled="!to_complete[to_complete.length-1].etab_code">
   </div>
-  <button class="btn yellow" @click="ReinitializeRes(json)">Reinitialiser ID</button>
 </template>
 
 <script>
-import {ReinitializeRes} from '@/functions/CheckID';
-import Etablissement from './EtablissementForm'
+import Etablissement from './EtablissementForm';
 import App from "@/App";
 import ParseSociete from "../functions/ParseSociete";
 import ParseEtablissement from "@/functions/ParseEtablissement";
 import TddForm from "@/components/TddForm";
 import {EditRestaurant} from "@/functions/EditElements";
 import {FindIDRes, checkIDTC, isIDCorrectRes, FindIDTC} from "@/functions/CheckID";
+import ListTraiteurConfig from "@/components/ListTraiteurConfig";
 
 export default {
   created() {
@@ -80,13 +78,12 @@ export default {
       required: true
     }
   },
-  components: {TddForm},
+  components: {TddForm, ListTraiteurConfig},
   emits: ['edit_value', 'to_complete'],
   data() {
     return {
       ParseSociete,
       ParseEtablissement,
-      ReinitializeRes,
       Etablissement,
       App,
       numberOfZeros: 3,
@@ -101,6 +98,7 @@ export default {
       to_complete: [{
         compteAuxiliaire: '',
         etab_code: '',
+        code_societe: '',
         reference_config_compensation: 0,
         auxiliaireCreditClient: '',
         matricule: null,
@@ -115,6 +113,7 @@ export default {
       this.to_complete.push({
         compteAuxiliaire: '',
         etab_code: '',
+        code_societe: '',
         reference_config_compensation: 0,
         auxiliaireCreditClient: '',
         matricule: null,
@@ -122,17 +121,25 @@ export default {
         traiteursConfigs: []
       })
     },
+    completeList(tab) {
+      if (tab.modify) this.to_complete[1].traiteursConfigs[tab.index] = tab.tdd[0];
+      else {
+        for (const tdd of tab.tdd)
+          this.to_complete[1].traiteursConfigs.push(tdd);
+      }
+    },
     completeTDD(tdd) {
       if (tdd.modify === false) {
         if (checkIDTC(tdd.tdd)) tdd.tdd = FindIDTC(tdd.tdd)
-        this.to_complete[this.to_complete.length - 1].traiteursConfigs = tdd.tdd
-      } else {
+        this.to_complete[this.to_complete.length - 1].traiteursConfigs = tdd.tdd;
+        this.bool.AddTdd = false;
+      }
+      else {
         for (const tddElement of tdd.tdd) {
           this.to_complete[this.to_complete.length - 1].traiteursConfigs.push(tddElement);
         }
       }
       if (checkIDTC(this.to_complete[this.to_complete.length - 1].traiteursConfigs)) this.to_complete[this.to_complete.length - 1].traiteursConfigs = FindIDTC(this.to_complete[this.to_complete.length - 1].traiteursConfigs);
-
       this.bool.AddTdd = false;
     },
     lengthNumber(number) {
@@ -168,6 +175,7 @@ export default {
       this.to_complete.push({
         compteAuxiliaire: this.modify.compteAuxiliaire,
         etab_code: this.modify.etab_code,
+        code_societe: this.modify.code_societe,
         reference_config_compensation: this.modify.reference_config_compensation,
         auxiliaireCreditClient: this.modify.auxiliaireCreditClient,
         matricule: this.modify.matricule,

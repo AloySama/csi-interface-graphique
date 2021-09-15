@@ -112,5 +112,4 @@ export default {
   margin-bottom: -50px;
   margin-top: 58vh;
 }
-
 </style>

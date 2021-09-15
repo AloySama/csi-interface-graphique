@@ -6,7 +6,7 @@
         <label class="btn purple" for="UploadFiles"><font-awesome-icon :icon="['fas', 'search']" /> Parcourir ...</label> &nbsp;
       </div>
     </form>
-  <div class="overflow" id="container" style="height: 500px; min-width: 500px">Aperçu du fichier json ici</div>
+  <div class="overflow" id="container" style="height: 340px; min-width: 500px">Aperçu du fichier json ici</div>
   <input type="submit" class="btn green" @click="upload">
   <div >
     <div class="black">OU</div>
@@ -28,7 +28,6 @@ export default {
   name: "UploadFiles",
   methods: {
     loadTextFromFile(ev) {
-
       const file = ev.target.files[0];
       const reader = new FileReader();
 

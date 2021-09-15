@@ -36,28 +36,30 @@
         <div class="col-25">
           <label >Ajouter Traiteur config ?</label>
         </div>
-        <div class="col-75">
+        <div class="col-75 set-marge">
           <label class="checkbox-button">
             <input type="checkbox" class="checkbox-button__input" name="choice1" v-model="bool.add_tdd">
             <span class="checkbox-button__control"></span>
           </label>
         </div>
-        <tdd-form v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @tdd_form="CompleteTDD"/>
-        <tdd-form v-else-if="bool.add_tdd" @tdd_form="CompleteTDD"/>
+        <div>
+          <ListTraiteurConfig v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @list-tdd="completeList"/>
+          <tdd-form v-else-if="bool.add_tdd" @tdd_form="CompleteTDD"/>
+        </div>
       </div>
       <input class="btn green" type="submit" :disabled="!to_complete.code" @click="isSubmitted">
     </form>
   </div>
-  <button class="btn yellow" @click="Reinitialize(json)">Réinitialiser les ID</button>
 </template>
 
 <script>
 import TddForm from "@/components/TddForm";
 import EtablissementForm from "@/components/EtablissementForm";
 import EditSociete from "@/functions/EditElements";
-import {FindAnID, Reinitialize, isIDCorrect} from '@/functions/CheckID'
+import {FindAnID, isIDCorrect} from '@/functions/CheckID';
 import {FindIDTC} from "@/functions/CheckID";
 import {checkIDTC} from "@/functions/CheckID";
+import ListTraiteurConfig from "@/components/ListTraiteurConfig";
 
 export default {
   created() {
@@ -79,7 +81,7 @@ export default {
       required: false
     }
   },
-  components: {EtablissementForm, TddForm},
+  components: {ListTraiteurConfig, EtablissementForm, TddForm},
   computed: {
     CodeIsValid() {
       return !!this.to_complete.code;
@@ -102,8 +104,7 @@ export default {
       tdd_nbr: 1,
       json: this.jsonFile,
       modify: this.modifyContent,
-      idSoc: this.id_societe,
-      Reinitialize
+      idSoc: this.id_societe
     }
   },
   methods: {
@@ -115,7 +116,7 @@ export default {
       if (this.modify != null) {
         this.to_complete.id = this.to_complete.id !== null ? isIDCorrect(this.json, this.to_complete.id, this.to_complete.id) : FindAnID(this.json);
         this.$emit('to_complete', this.to_complete);
-        this.to_complete = []
+        this.to_complete = [];
         return;
       }
       this.to_complete.id = this.to_complete.id !== null ? isIDCorrect(this.json, this.to_complete.id, -1) : FindAnID(this.json);
@@ -133,6 +134,14 @@ export default {
       this.to_complete.code = null;
       this.to_complete.etablissements = [];
       this.to_complete.traiteursConfigs = [];
+    },
+    completeList(tab) {
+      if (tab.modify) this.to_complete.traiteursConfigs[tab.index] = tab.tdd[0];
+      else {
+        for (const tdd of tab.tdd)
+          this.to_complete.traiteursConfigs.push(tdd);
+      }
+      this.bool.add_tdd = false;
     },
     CompleteTDD(tdd) {
       if (tdd.modify === false) {
@@ -168,4 +177,5 @@ export default {
   background-color: #f2f2f2;
   padding: 20px;
 }
+
 </style>

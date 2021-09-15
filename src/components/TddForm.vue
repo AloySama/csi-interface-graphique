@@ -1,24 +1,10 @@
 <template>
-  <div>
-    <button :disabled="isModifying===true" class="btn blue" @click="AddFormTdd2x">+2</button>
+  <div v-if="traiteurModif==null">
     <button :disabled="isModifying===true" class="btn blue" @click="AddFormTdd">+</button>
     <b>{{ tdd_nbr }}</b>
     <button :disabled="isModifying===true" class="btn blue" @click="RemoveFormTdd">-</button>
-    <button :disabled="isModifying===true" class="btn blue" @click="RemoveFormTdd2x">-2</button>
   </div>
-  <div v-if="traiteurModif != null && traiteurModif.length > 0">
-    <ul>
-      <li id="traiteurListe" v-for="(tdd, index) in traiteurModif" :key="tdd">
-        <button :id="'ButtonTddModify' + index" class="btn orange" @click="disabledButton('ButtonTddModify' + index); tdd_nbr = 0;
-        isModifying = false; modifyTabs=listOfFillTabs(traiteurModif[index]); indexes = index; hasClickedOnce = false">{{ tdd.libelle }} | {{ tdd.codeJournal }} | {{ tdd.direction }} | {{ tdd.compte }}</button>
-        <div v-if="idButtonModify === ('ButtonTddModify' + index)">
-          <button class="btn red" @click="deleteTraiteur(index); isModifying = false; idButtonModify = ''">Supprimer</button>
-          <button v-if="!hasClickedOnce" class="btn blue" @click="modifyContent(index); hasClickedOnce = true; tdd_nbr = 1">Modifier</button>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <div v-if="tdd_nbr >= values.min">
+  <div v-if="tdd_nbr >= values.min" class="middle">
     <div v-for="(number, main_index) in parseInt(tdd_nbr)" :key="parseInt(number)">
       <form @submit.prevent="" class="top">
         <ol>
@@ -82,24 +68,32 @@
       </form>
     </div>
   </div>
-  <button class="btn green" @click="SubmitForm">Valider TraiteurConfig</button>
-  <p class="error-message">Cliquer sur <u>valider TraiteurConfig</u> ou les données ne seront pas sauvegardé.</p>
-  <form v-if="hasClickedOnce" @submit.prevent="">
+  <form @submit.prevent="" v-if="modifyTabs.length !== 0" class="middle">
     <b>Cliquer pour éditer les tableaux</b>
     <div>
-      <button class="btn orange" v-for="item in modifyTabs" :key="item" @click="deleteTabs=listItemTabs(item); tabName=item">{{item}}</button>
+      <button class="btn orange" v-for="key in modifyTabs" :key="key" @click="deleteTabs=listItemTabs(key.value); tabName=key.value">{{key.key}}</button>
     </div>
     <div v-if="deleteTabs != null">
-      <b>Cliquez sur un élément pour le supprimer</b><br>
+      <b>Cliquer sur un élément pour le <span class="error-message">supprimer</span></b><br>
       <button class="btn orange" v-for="(item, index) in deleteTabs" :key="item" @click="deleteItemTabs(index)">{{item}}</button>
     </div>
   </form>
+  <button class="btn green" @click="SubmitForm">Valider TraiteurConfig</button>
+  <p class="error-message">Cliquer sur <u>valider TraiteurConfig</u> ou les données ne seront pas sauvegardé.</p>
 </template>
 
 <script>
 export default {
   created() {
-    if (this.traiteurModif != null) this.isModify = true;
+    if (this.traiteurModif != null) {
+      this.to_complete[0] = Object.assign({}, this.traiteurModif)
+      this.to_complete[0] = this.addTab(this.to_complete[0])
+      this.tdd_nbr = 1;
+      this.isModify = true;
+      this.toPush();
+      this.edit = true
+      this.modifyTabs = this.listOfFillTabs(this.to_complete[0], false);
+    }
   },
   emits: ['tdd_form'],
   name: "TddForm",
@@ -111,16 +105,13 @@ export default {
   },
   data() {
     return {
-      hasClickedOnce: false,
+      edit: false,
       isModifying: false,
       idButtonModify: '',
-      modifyTdd: [],
       isModify: false,
       modifyTabs: [],
-      modifyClick: false,
       deleteTabs: null,
       tabName: '',
-      indexes: -1,
       traiteurModif: this.traiteurModification,
       values: {min: 0},
       tdd_nbr: 0,
@@ -171,17 +162,10 @@ export default {
   },
   methods: {
     SubmitForm() {
-      if (this.modifyTdd.length !== 0) {
-        this.to_complete = []
-        for (const fill of this.modifyTdd) {
-          fill.obj.filtration = this.listOfFillTabs(fill.obj);
-          this.traiteurModif[fill.index] = fill.obj;
-        }
-      }
-      else {
+      if (this.traiteurModif == null) {
         for (const complete of this.to_complete) {
           try {
-            complete.filtration = this.listOfFillTabs(complete);
+            complete.filtration = this.listOfFillTabs(complete, true);
           } catch (e) {
             continue;
           }
@@ -191,6 +175,7 @@ export default {
           }
         }
       }
+      else this.to_complete[0].filtration = this.listOfFillTabs(this.to_complete[0], true);
       this.FormTdd.tdd = this.to_complete;
       this.$emit('tdd_form', {tdd: this.FormTdd.tdd, modify: this.isModify});
       this.tdd_nbr = 0;
@@ -198,11 +183,24 @@ export default {
     },
     addElement(main_index, index, text) {
       if (this.to_push[main_index][index].length >= 0 || this.to_push[main_index][index] >= 0) {
-        this.to_complete[main_index][index].push(text);
+        try {
+          this.to_complete[main_index][index].push(text);
+        }
+        catch (e) {
+          this.to_complete[main_index][index] = [];
+          this.to_complete[main_index][index].push(text);
+        }
         this.to_push[main_index][index] = '';
       }
     },
-    ToComplete() {
+    addTab(traiteur) {
+      for (const property in this.array.filtration) {
+        if (traiteur[this.array.filtration[property]] == null || typeof traiteur[this.array.filtration[property]] === 'undefined')
+          traiteur[property] = []
+      }
+      return traiteur;
+    },
+    toComplete() {
       this.to_complete.push({
         auxiliaire: null,
         compteAnalytique1: null,
@@ -244,7 +242,7 @@ export default {
         transactionCBD: false
       })
     },
-    ToPush() {
+    toPush() {
       this.to_push.push({
         familles: '',
         groupes: '',
@@ -261,16 +259,9 @@ export default {
       });
     },
     AddFormTdd() {
-      this.ToComplete();
-      this.ToPush();
+      this.toComplete();
+      this.toPush();
       this.tdd_nbr++;
-    },
-    AddFormTdd2x() {
-      this.ToComplete();
-      this.ToComplete();
-      this.ToPush();
-      this.ToPush();
-      this.tdd_nbr += 2;
     },
     RemoveFormTdd() {
       if (this.tdd_nbr <= this.values.min) return;
@@ -278,33 +269,13 @@ export default {
       this.to_push.pop();
       this.tdd_nbr--;
     },
-    RemoveFormTdd2x() {
-      if (this.tdd_nbr - 2 < this.values.min) {
-        this.RemoveFormTdd();
-        return;
-      }
-      this.to_complete.pop();
-      this.to_complete.pop();
-      this.to_push.pop();
-      this.to_push.pop();
-      this.tdd_nbr -= 2;
-    },
-    modifyContent(index) {
-      this.isModifying = true;
-      const obj = Object.assign({}, this.traiteurModif[index]);
-      this.to_complete[0] = obj;
-      this.AddFormTdd();
-      this.modifyTdd.push({index: index, obj: obj, len: this.to_complete.length-1});
-    },
-    deleteTraiteur(index) {
-      this.traiteurModif.splice(index, 1);
-    },
-    listOfFillTabs(tdd) {
+    listOfFillTabs(tdd, filtration) {
       const list = [];
 
-      for (const value in this.array.filtration) {
+      for (const key in this.array.filtration) {
         try {
-          if (tdd[this.array.filtration[value]].length > 0) list.push(value)
+          if (tdd[this.array.filtration[key]].length > 0 && filtration === false) list.push({value: this.array.filtration[key], key: key})
+          else if (tdd[this.array.filtration[key]].length > 0) list.push(key)
         }
         catch (e) {
           continue;
@@ -315,9 +286,8 @@ export default {
     },
     listItemTabs(item) {
       const list = [];
-      for (const obj of this.traiteurModif[this.indexes][item]) {
-        list.push(obj);
-      }
+
+      for (const obj of this.to_complete[0][item]) list.push(obj)
       return list;
     },
     disabledButton(id) {
@@ -346,11 +316,8 @@ export default {
       }
     },
     deleteItemTabs(id) {
-      this.traiteurModif[this.indexes][this.tabName].splice(id, 1)
+      this.to_complete[0][this.tabName].splice(id, 1);
       this.deleteTabs = this.listItemTabs(this.tabName);
-      for (const c of this.traiteurModif) {
-        c.filtration = this.listOfFillTabs(c);
-      }
     }
   }
 }
@@ -390,16 +357,16 @@ b {
   line-height: 60px;
 }
 
-#traiteurListe {
-  text-align: left;
-}
-
 .red-text {
   color: red;
 }
 
 .set-margin {
   margin-right: 50%;
+}
+
+.middle {
+  text-align: center;
 }
 
 </style>
