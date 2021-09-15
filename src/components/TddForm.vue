@@ -1,10 +1,8 @@
 <template>
   <div v-if="traiteurModif==null">
-    <button :disabled="isModifying===true" class="btn blue" @click="AddFormTdd2x">+2</button>
     <button :disabled="isModifying===true" class="btn blue" @click="AddFormTdd">+</button>
     <b>{{ tdd_nbr }}</b>
     <button :disabled="isModifying===true" class="btn blue" @click="RemoveFormTdd">-</button>
-    <button :disabled="isModifying===true" class="btn blue" @click="RemoveFormTdd2x">-2</button>
   </div>
   <div v-if="tdd_nbr >= values.min" class="middle">
     <div v-for="(number, main_index) in parseInt(tdd_nbr)" :key="parseInt(number)">
@@ -70,18 +68,18 @@
       </form>
     </div>
   </div>
-  <button class="btn green" @click="SubmitForm">Valider TraiteurConfig</button>
-  <p class="error-message">Cliquer sur <u>valider TraiteurConfig</u> ou les données ne seront pas sauvegardé.</p>
-  <form @submit.prevent="">
+  <form @submit.prevent="" v-if="modifyTabs.length !== 0" class="middle">
     <b>Cliquer pour éditer les tableaux</b>
     <div>
       <button class="btn orange" v-for="key in modifyTabs" :key="key" @click="deleteTabs=listItemTabs(key.value); tabName=key.value">{{key.key}}</button>
     </div>
     <div v-if="deleteTabs != null">
-      <b>Cliquez sur un élément pour le supprimer</b><br>
+      <b>Cliquer sur un élément pour le <span class="error-message">supprimer</span></b><br>
       <button class="btn orange" v-for="(item, index) in deleteTabs" :key="item" @click="deleteItemTabs(index)">{{item}}</button>
     </div>
   </form>
+  <button class="btn green" @click="SubmitForm">Valider TraiteurConfig</button>
+  <p class="error-message">Cliquer sur <u>valider TraiteurConfig</u> ou les données ne seront pas sauvegardé.</p>
 </template>
 
 <script>
@@ -92,7 +90,7 @@ export default {
       this.to_complete[0] = this.addTab(this.to_complete[0])
       this.tdd_nbr = 1;
       this.isModify = true;
-      this.ToPush();
+      this.toPush();
       this.edit = true
       this.modifyTabs = this.listOfFillTabs(this.to_complete[0], false);
     }
@@ -202,7 +200,7 @@ export default {
       }
       return traiteur;
     },
-    ToComplete() {
+    toComplete() {
       this.to_complete.push({
         auxiliaire: null,
         compteAnalytique1: null,
@@ -244,7 +242,7 @@ export default {
         transactionCBD: false
       })
     },
-    ToPush() {
+    toPush() {
       this.to_push.push({
         familles: '',
         groupes: '',
@@ -261,33 +259,15 @@ export default {
       });
     },
     AddFormTdd() {
-      this.ToComplete();
-      this.ToPush();
+      this.toComplete();
+      this.toPush();
       this.tdd_nbr++;
-    },
-    AddFormTdd2x() {
-      this.ToComplete();
-      this.ToComplete();
-      this.ToPush();
-      this.ToPush();
-      this.tdd_nbr += 2;
     },
     RemoveFormTdd() {
       if (this.tdd_nbr <= this.values.min) return;
       this.to_complete.pop();
       this.to_push.pop();
       this.tdd_nbr--;
-    },
-    RemoveFormTdd2x() {
-      if (this.tdd_nbr - 2 < this.values.min) {
-        this.RemoveFormTdd();
-        return;
-      }
-      this.to_complete.pop();
-      this.to_complete.pop();
-      this.to_push.pop();
-      this.to_push.pop();
-      this.tdd_nbr -= 2;
     },
     listOfFillTabs(tdd, filtration) {
       const list = [];

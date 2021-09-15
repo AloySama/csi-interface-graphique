@@ -1,14 +1,14 @@
 <template>
   <div v-if="traiteurModif != null && traiteurModif.length > 0">
-    <ul>
-      <li id="traiteurListe" v-for="(tdd, index) in traiteurModif" :key="tdd">
+    <ul v-for="(tdd, index) in traiteurModif" :key="tdd">
+      <li id="traiteurListe" >
         <button :id="'ButtonTddModify' + index" class="btn orange" @click="disabledButton('ButtonTddModify' + index); tdd_nbr = 0;
         buttonIndex = index;">{{ tdd.libelle }} | {{ tdd.codeJournal }} | {{ tdd.direction }} | {{ tdd.compte }}</button>
-        <div v-if="idButtonModify === ('ButtonTddModify' + index)">
-          <button class="btn red OneLine" @click="deleteTraiteur(index); isModifying = false; idButtonModify = ''">Supprimer</button>
-        </div>
-        <tdd-form v-if="idButtonModify === 'ButtonTddModify' + index" :traiteur-modification="traiteurModif[index]" @tdd_form="CompleteTDD"/>
       </li>
+      <li class="OneLine"><div v-if="idButtonModify === ('ButtonTddModify' + index)">
+        <button class="btn red OneLine" @click="deleteTraiteur(index); isModifying = false; idButtonModify = ''">Supprimer</button>
+      </div></li>
+      <li><tdd-form v-if="idButtonModify === 'ButtonTddModify' + index" :traiteur-modification="traiteurModif[index]" @tdd_form="CompleteTDD"/></li>
     </ul>
   </div>
   <tdd-form @tdd_form="CompleteTDD"/>
