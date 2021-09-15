@@ -1,6 +1,5 @@
 <template>
   <div v-if="FillTab['societe'] >= 0 && FillTab['etablissement'] >= 0" class="container">
-    <strong>Attention : le matricule d'un restaurant est unique dans tout le fichier json</strong>
     <form @submit.prevent="">
       <div class="row" v-for="(value, key) of string" :key="value">
         <div class="col-25">
@@ -155,18 +154,6 @@ export default {
 
       for (let i = 0; i < (this.numberOfZeros - length); i++) text += '0'
       return text += IDRes;
-    },
-    disabledButton(ElementId, i, bool) {
-      document.getElementById(ElementId + i).disabled = bool;
-      for (let j = 0; j < this.json.length; j++) {
-        if (j === i) continue;
-        try {
-          document.getElementById(ElementId + j).disabled = !bool;
-        } catch (e) {
-          console.error(e);
-          return;
-        }
-      }
     },
     isModifyContent() {
       this.FillTab.societe = this.ids.soc;

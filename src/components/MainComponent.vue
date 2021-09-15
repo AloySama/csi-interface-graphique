@@ -22,6 +22,8 @@
       </li>
       <li class="OneLine">
         <button class="btn green" @click="addEtabJson()">Ajouter</button>
+        <button class="btn yellow" :disabled="tab.etablissement===-1" @click="cutContent('etablissement')">Couper</button>
+        <button class="btn yellow" v-if="cut.etablissement != null" @click="pasteContent('etablissement')">Coller</button>
         <ul>
           <button class="btn red" @click="removeObjEtab()" :disabled="tab.etablissement===-1">Supprimer</button>
         </ul>
@@ -30,6 +32,7 @@
   </div>
   <div v-else-if="tab.societe!==-1">
     <button class="btn green" @click="addEtabJson()">Ajouter Établissement</button>
+    <button class="btn yellow" v-if="cut.etablissement != null" @click="pasteContent('etablissement')">Coller</button>
   </div>
   <div v-if="tab.societe!==-1 && tab.etablissement !== -1 && json[tab.societe].etablissements[tab.etablissement].restaurants.length !== 0 ">
     <ul>
@@ -38,6 +41,8 @@
       </li>
       <li class="OneLine">
         <button class="btn green" @click="addRestJson()">Ajouter</button>
+        <button class="btn yellow" :disabled="tab.restaurant===-1" @click="cutContent('restaurant')">Couper</button>
+        <button class="btn yellow" v-if="cut.restaurant != null" @click="pasteContent('restaurant')">Coller</button>
         <ul>
           <button class="btn red" @click="removeObjRest()" :disabled="tab.restaurant===-1">Supprimer</button>
         </ul>
@@ -46,6 +51,7 @@
   </div>
   <div v-else-if="tab.societe!==-1 && tab.etablissement !== -1">
     <button class="btn green" @click="addRestJson()">Ajouter restaurant</button>
+    <button class="btn yellow" v-if="cut.restaurant != null" @click="pasteContent('restaurant')">Coller</button>
   </div>
   <societe-form v-if="bool.addSociete" :json-file="json"/>
   <societe-form v-else-if="bool.modifySociete" :json-file="json" :modify-content="json[tab.societe]" :id_societe="tab.societe" @to_complete="setCompleteSoc"/>
@@ -83,6 +89,11 @@ export default {
         modifySociete: false,
         modifyEtablissement: false,
         modifyRestaurant: false,
+      },
+      cut: {
+        societe: null,
+        etablissement: null,
+        restaurant: null
       },
       functions: {
         ParseSociete,
@@ -198,6 +209,32 @@ export default {
         this.bool.modifyEtablissement = 'modE' === str;
         this.bool.modifyRestaurant = 'modR' === str;
       }, 0);
+    },
+    cutContent(string) {
+      if (string === 'restaurant') {
+        if (this.tab.restaurant !== -1) {
+          this.cut.restaurant = this.json[this.tab.societe].etablissements[this.tab.etablissement].restaurants[this.tab.restaurant];
+          this.removeObjRest();
+        }
+      }
+      else if (string === 'etablissement') {
+        if (this.tab.etablissement !== -1) {
+          this.cut.etablissement = this.json[this.tab.societe].etablissements[this.tab.etablissement];
+          this.removeObjEtab();
+        }
+      }
+    },
+    pasteContent(string) {
+      if (string === 'restaurant') {
+        if (this.cut.restaurant != null) {
+          this.json[this.tab.societe].etablissements[this.tab.etablissement].restaurants.push(this.cut.restaurant);
+        }
+      }
+      else if (string === 'etablissement') {
+        if (this.cut.etablissement != null) {
+          this.json[this.tab.societe].etablissements.push(this.cut.etablissement);
+        }
+      }
     }
   }
 }

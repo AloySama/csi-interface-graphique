@@ -120,14 +120,6 @@ export default {
       if (checkIDTC(this.to_complete.traiteursConfigs)) this.to_complete.traiteursConfigs = FindIDTC(this.to_complete.traiteursConfigs);
       this.bool.add_tdd = false;
     },
-    disabledButton(i, bool, id) {
-      this.societe = i;
-      document.getElementById(id + i).disabled = bool;
-      for(let j = 0; j < ParseSociete(this.json).length; j++) {
-          if (j === i) continue;
-          document.getElementById(id + j).disabled = false;
-      }
-    },
     IsSubmitted() {
       if (typeof this.to_complete.id === 'string') this.to_complete.id = null;
       if (this.modify != null) {

@@ -21,7 +21,7 @@
 <script lang="ts">
 import {defineComponent} from "vue";
 import UploadFiles from "@/components/UploadFiles.vue";
-import download from '@/functions/Savedata'
+import download from '@/functions/Savedata';
 import Footer from "@/components/Footer.vue";
 import TabType from "@/functions/TabType";
 import MainComponent from "@/components/MainComponent.vue";
@@ -61,6 +61,9 @@ export default defineComponent({
         try {
           if (typeof json != 'object') this.json = JSON.parse(json);
           else this.json = json;
+          this.bool.Modify = true;
+          this.bool.ChooseFile = false;
+          this.disabledButtons('modify', 'old_edit');
         }
         catch (error) {
           alert('Erreur sur le Json !')
