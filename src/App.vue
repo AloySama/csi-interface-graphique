@@ -8,7 +8,7 @@
       <div class="order" id="buttons">
         <button id="parcourir" :title="message['parcours']" class="btn blue"
                 @click="bool.ChooseFile=true; bool.Modify = false; disabledButtons('parcourir', 'old_edit');"><font-awesome-icon :icon="['fas', 'upload']" /> Charger un fichier</button>
-        <button id="modify" :title="message['edit']" class="btn blue" :disabled="json==null" @click="bool.Modify = true; bool.ChooseFile = false; disabledButtons('modify', 'old_edit');"><font-awesome-icon :icon="['fas', 'edit']" /> Modifier éléments</button>
+        <button disabled id="modify" :title="message['edit']" class="btn blue" @click="bool.Modify = true; bool.ChooseFile = false; disabledButtons('modify', 'old_edit');"><font-awesome-icon :icon="['fas', 'edit']" /> Modifier éléments</button>
         <button class="btn purple" @click="DownloadFile" :disabled="json==null" :title="message['save']"><font-awesome-icon :icon="['fas', 'download']" /> Enregistrer</button>
       </div>
     </header>
@@ -21,7 +21,7 @@
 <script lang="ts">
 import {defineComponent} from "vue";
 import UploadFiles from "@/components/UploadFiles.vue";
-import download from '@/functions/Savedata'
+import download from '@/functions/Savedata';
 import Footer from "@/components/Footer.vue";
 import TabType from "@/functions/TabType";
 import MainComponent from "@/components/MainComponent.vue";
@@ -61,9 +61,17 @@ export default defineComponent({
         try {
           if (typeof json != 'object') this.json = JSON.parse(json);
           else this.json = json;
+          this.bool.Modify = true;
+          this.bool.ChooseFile = false;
+          this.disabledButtons('modify', 'old_edit');
         }
         catch (error) {
           alert('Erreur sur le Json !')
+          const doc = document.getElementById('modify');
+          if (doc != null) {
+            // @ts-ignore
+            doc.disabled = true;
+          }
           this.json = null;
         }
       }
