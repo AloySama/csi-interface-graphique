@@ -67,6 +67,11 @@ export default defineComponent({
         }
         catch (error) {
           alert('Erreur sur le Json !')
+          const doc = document.getElementById('modify');
+          if (doc != null) {
+            // @ts-ignore
+            doc.disabled = true;
+          }
           this.json = null;
         }
       }
