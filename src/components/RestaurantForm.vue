@@ -141,7 +141,7 @@ export default {
       this.bool.add_tdd = false;
     },
     lengthNumber(number) {
-      if (number === 1 || number === 0) return 1;
+      if (number >= 0 && number <= 9) return 1;
       let i = 0;
 
       for (; number > 1; i++) number /= 10;

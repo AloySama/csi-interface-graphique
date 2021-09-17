@@ -1,5 +1,5 @@
 <template>
-  <div class="container settings">
+  <div class="container settings marge">
   <form @submit.prevent="">
     <div class="row">
       <div class="col-25">
@@ -45,3 +45,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.marge {
+  margin-top: 65px;
+}
+</style>
