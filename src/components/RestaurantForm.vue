@@ -23,10 +23,10 @@
         </div>
         <div class="col-75">
           <label class="checkbox-button">
-            <input type="checkbox" class="checkbox-button__input" name="choice1" v-model="bool.AddMatricule">
+            <input type="checkbox" class="checkbox-button__input" name="choice1" v-model="bool.add_matricule">
             <span class="checkbox-button__control"></span>
           </label>
-          <input v-if="bool.AddMatricule" type="number" min="0" v-model.number="to_complete[to_complete.length-1].matricule" required>
+          <input v-if="bool.add_matricule" type="number" min="0" v-model.number="to_complete[to_complete.length-1].matricule" required>
         </div>
       </div>
       <div class="row">
@@ -35,12 +35,12 @@
         </div>
         <div class="col-75 set-marge">
           <label class="checkbox-button">
-            <input type="checkbox" class="checkbox-button__input" name="choice1" v-model="bool.AddTdd">
+            <input type="checkbox" class="checkbox-button__input" name="choice1" v-model="bool.add_tdd">
             <span class="checkbox-button__control"></span>
           </label>
         </div>
-        <ListTraiteurConfig v-if="bool.AddTdd&&modify!=null" :traiteur-modification="to_complete[1].traiteursConfigs" @list-tdd="completeList"/>
-        <tdd-form v-else-if="bool.AddTdd" @tdd_form="completeTDD"/>
+        <ListTraiteurConfig v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete[1].traiteursConfigs" @list-tdd="completeList"/>
+        <tdd-form v-else-if="bool.add_tdd" @tdd_form="completeTDD"/>
       </div>
     </form>
     <input class="btn green" type="submit" @click="isSubmitted"
@@ -91,8 +91,8 @@ export default {
       json: this.jsonFile,
       FillTab: {'societe': this.idTab.soc, 'etablissement': this.idTab.eta},
       bool: {
-        AddMatricule: false,
-        AddTdd: false
+        add_matricule: false,
+        add_tdd: false
       },
       to_complete: [{
         compteAuxiliaire: '',
@@ -131,15 +131,14 @@ export default {
       if (tdd.modify === false) {
         if (checkIDTC(tdd.tdd)) tdd.tdd = FindIDTC(tdd.tdd)
         this.to_complete[this.to_complete.length - 1].traiteursConfigs = tdd.tdd;
-        this.bool.AddTdd = false;
-      }
-      else {
+        this.bool.add_tdd = false;
+      } else {
         for (const tddElement of tdd.tdd) {
           this.to_complete[this.to_complete.length - 1].traiteursConfigs.push(tddElement);
         }
       }
       if (checkIDTC(this.to_complete[this.to_complete.length - 1].traiteursConfigs)) this.to_complete[this.to_complete.length - 1].traiteursConfigs = FindIDTC(this.to_complete[this.to_complete.length - 1].traiteursConfigs);
-      this.bool.AddTdd = false;
+      this.bool.add_tdd = false;
     },
     lengthNumber(number) {
       if (number === 1 || number === 0) return 1;
@@ -169,7 +168,7 @@ export default {
         restaurantId: this.modify.restaurantId,
         traiteursConfigs: this.modify.traiteursConfigs
       })
-      if (this.modify.traiteursConfigs.length!==0) this.bool.AddTdd = true;
+      if (this.modify.traiteursConfigs.length!==0) this.bool.add_tdd = true;
     },
     isSubmitted() {
       const length = this.to_complete.length - 1;
@@ -177,20 +176,20 @@ export default {
       this.to_complete[length].compteAuxiliaire = this.setAuxiliaire('REST', this.to_complete[length].matricule);
       this.to_complete[length].auxiliaireCreditClient = this.setAuxiliaire('C950', this.to_complete[length].matricule);
       if (this.modify != null) {
-        this.bool.AddTdd = false;
+        this.bool.add_tdd = false;
         this.to_complete[length].matricule = this.to_complete[length].matricule !== null ? isIDCorrectRes(this.json, this.to_complete[length].matricule, this.to_complete[length].matricule) :
             FindIDRes(this.json, false, 0, this.to_complete[length].matricule);
         this.to_complete[length].restaurantId = this.to_complete[length].matricule;
         this.$emit('to_complete', this.to_complete[length]);
         return;
       }
-      this.to_complete[length].matricule = this.to_complete[length].matricule !== null ? isIDCorrectRes(this.json, this.to_complete[length].matricule,-1) :
-          FindIDRes(this.json, false, 0,-1);
+      this.to_complete[length].matricule = this.to_complete[length].matricule !== null ? isIDCorrectRes(this.json, this.to_complete[length].matricule, -1) :
+          FindIDRes(this.json, false, 0, -1);
       this.to_complete[length].restaurantId = this.to_complete[length].matricule;
       this.to_complete[length].traiteursConfigs = checkIDTC(this.to_complete[length].traiteursConfigs) ?
           FindIDTC(this.to_complete[length].traiteursConfigs) : this.to_complete[length].traiteursConfigs;
       this.json = EditRestaurant(this.json, this.to_complete[length], this.FillTab);
-      this.bool.AddTdd = false;
+      this.bool.add_tdd = false;
       this.addToComplete();
     }
   }
