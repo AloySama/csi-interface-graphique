@@ -12,7 +12,7 @@
       </div>
       <div class="row">
         <div class="col-25">
-          <label>Ajouter un id personnalisé ?</label>
+          <label>Ajouter un id ?</label>
         </div>
         <div class="col-75">
           <label class="checkbox-button">
@@ -34,7 +34,7 @@
         </div>
       <div class="row">
         <div class="col-25">
-          <label >Ajouter Traiteur config ?</label>
+          <label >Ajouter TraiteurConfig ?</label>
         </div>
         <div class="col-75 set-marge">
           <label class="checkbox-button">

@@ -91,7 +91,6 @@ export default {
         modifyRestaurant: false,
       },
       cut: {
-        societe: null,
         etablissement: null,
         restaurant: null
       },

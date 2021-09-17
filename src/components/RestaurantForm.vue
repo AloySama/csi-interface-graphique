@@ -19,7 +19,7 @@
       </div>
       <div class="row">
         <div class="col-25">
-          <label>Matricule personnalisé ?</label>
+          <label>Matricule ?</label>
         </div>
         <div class="col-75">
           <label class="checkbox-button">
@@ -174,6 +174,8 @@ export default {
     isSubmitted() {
       const length = this.to_complete.length - 1;
       if (typeof this.to_complete[length].matricule === 'string') this.to_complete[length].matricule = null;
+      this.to_complete[length].compteAuxiliaire = this.setAuxiliaire('REST', this.to_complete[length].matricule);
+      this.to_complete[length].auxiliaireCreditClient = this.setAuxiliaire('C950', this.to_complete[length].matricule);
       if (this.modify != null) {
         this.bool.AddTdd = false;
         this.to_complete[length].matricule = this.to_complete[length].matricule !== null ? isIDCorrectRes(this.json, this.to_complete[length].matricule, this.to_complete[length].matricule) :
@@ -185,8 +187,6 @@ export default {
       this.to_complete[length].matricule = this.to_complete[length].matricule !== null ? isIDCorrectRes(this.json, this.to_complete[length].matricule,-1) :
           FindIDRes(this.json, false, 0,-1);
       this.to_complete[length].restaurantId = this.to_complete[length].matricule;
-      this.to_complete[length].compteAuxiliaire = this.setAuxiliaire('REST', this.to_complete[length].matricule);
-      this.to_complete[length].auxiliaireCreditClient = this.setAuxiliaire('C950', this.to_complete[length].matricule);
       this.to_complete[length].traiteursConfigs = checkIDTC(this.to_complete[length].traiteursConfigs) ?
           FindIDTC(this.to_complete[length].traiteursConfigs) : this.to_complete[length].traiteursConfigs;
       this.json = EditRestaurant(this.json, this.to_complete[length], this.FillTab);

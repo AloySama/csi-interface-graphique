@@ -12,7 +12,7 @@
       </div>
       <div class="row">
         <div class="col-25">
-          <label>Id personnalisé ?</label>
+          <label>Ajouter un id ?</label>
         </div>
         <div class="col-75">
           <label class="checkbox-button">
@@ -32,7 +32,7 @@
         </form>
       </div>
       <div class="row">
-        <div class="col-25"><label>Ajouter Traiteur config ?</label></div>
+        <div class="col-25"><label>Ajouter TraiteurConfig ?</label></div>
         <div class="col-75 set-marge">
           <label class="checkbox-button">
             <input type="checkbox" class="checkbox-button__input" name="choice1" v-model="bool.add_tdd">
