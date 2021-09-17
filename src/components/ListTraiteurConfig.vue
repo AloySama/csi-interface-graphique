@@ -11,6 +11,7 @@
       <li><tdd-form v-if="idButtonModify === 'ButtonTddModify' + index" :traiteur-modification="traiteurModif[index]" @tdd_form="CompleteTDD"/></li>
     </ul>
   </div>
+  <div class="vl"></div>
   <tdd-form @tdd_form="CompleteTDD"/>
 </template>
 
@@ -79,5 +80,10 @@ export default {
 #traiteurListe {
   margin: auto;
   text-align: left;
+}
+
+.vl {
+  border: 6px solid green;
+  width: 100%;
 }
 </style>

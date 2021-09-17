@@ -78,7 +78,7 @@
       <button class="btn orange" v-for="(item, index) in deleteTabs" :key="item" @click="deleteItemTabs(index)">{{item}}</button>
     </div>
   </form>
-  <button class="btn green" @click="SubmitForm">Valider TraiteurConfig</button>
+  <button class="btn green" @click="SubmitForm" :disabled="tdd_nbr <= 0">Valider TraiteurConfig</button>
   <p class="error-message">Cliquer sur <u>valider TraiteurConfig</u> ou les données ne seront pas sauvegardé.</p>
 </template>
 
