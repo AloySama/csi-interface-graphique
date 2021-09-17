@@ -173,6 +173,7 @@ export default {
             const text = 'compteAnalytique' + i;
             if (typeof complete[text] === 'string' && complete[text].length === 0) complete[text] = null;
           }
+          if (typeof complete.auxiliaire === 'string' && complete.auxiliaire.length === 0) complete.auxiliaire = null;
         }
       }
       else this.to_complete[0].filtration = this.listOfFillTabs(this.to_complete[0], true);

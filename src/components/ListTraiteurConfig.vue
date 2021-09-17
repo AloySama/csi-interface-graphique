@@ -10,8 +10,8 @@
       </div></li>
       <li><tdd-form v-if="idButtonModify === 'ButtonTddModify' + index" :traiteur-modification="traiteurModif[index]" @tdd_form="CompleteTDD"/></li>
     </ul>
+    <div class="hl"></div>
   </div>
-  <div class="vl"></div>
   <tdd-form @tdd_form="CompleteTDD"/>
 </template>
 
@@ -82,7 +82,7 @@ export default {
   text-align: left;
 }
 
-.vl {
+.hl {
   border: 6px solid green;
   width: 100%;
 }
