@@ -22,7 +22,8 @@
       </li>
       <li class="OneLine">
         <button class="btn green" @click="addEtabJson()">Ajouter</button>
-        <button class="btn yellow" :disabled="tab.etablissement===-1" @click="cutContent('etablissement')">Couper</button>
+        <button class="btn yellow" v-if="tab.etablissement !== -1" @click="copyContent('etablissement', true)">Couper</button>
+        <button class="btn yellow" v-if="tab.etablissement !== -1" @click="copyContent('etablissement', false)">Copier</button>
         <button class="btn yellow" v-if="cut.etablissement != null" @click="pasteContent('etablissement')">Coller</button>
         <ul>
           <button class="btn red" @click="removeObjEtab()" :disabled="tab.etablissement===-1">Supprimer</button>
@@ -41,7 +42,8 @@
       </li>
       <li class="OneLine">
         <button class="btn green" @click="addRestJson()">Ajouter</button>
-        <button class="btn yellow" :disabled="tab.restaurant===-1" @click="cutContent('restaurant')">Couper</button>
+        <button class="btn yellow" v-if="tab.restaurant !== -1" :disabled="tab.restaurant===-1" @click="copyContent('restaurant', true)">Couper</button>
+        <button class="btn yellow" v-if="tab.restaurant !== -1" :disabled="tab.restaurant===-1" @click="copyContent('restaurant', false)">Copier</button>
         <button class="btn yellow" v-if="cut.restaurant != null" @click="pasteContent('restaurant')">Coller</button>
         <ul>
           <button class="btn red" @click="removeObjRest()" :disabled="tab.restaurant===-1">Supprimer</button>
@@ -103,14 +105,12 @@ export default {
   },
   methods: {
     disabledButton(index, i, id) {
-      // if (index === 'societe' && this.tab[index] !== i) {
-      //     this.tab.etablissement = -1;
-      //     this.tab.restaurant = -1;
-      // }
-      // else if (index === 'etablissement' && this.tab[index] !== i) {
-      //     this.tab.restaurant = -1;
-      //     this.bool.addSociete = false;
-      // }
+      if (index === 'etablissement') {
+        this.tab.restaurant = -1;
+      }
+      if (index === ('societe')) {
+        this.tab.etablissement = -1;
+      }
       this.tab[index] = i;
       const current = id;
       if (this.old_ids.length === 0) {
@@ -218,17 +218,17 @@ export default {
         this.bool.modifyRestaurant = 'modR' === str;
       }, 0);
     },
-    cutContent(string) {
+    copyContent(string, cutContent) {
       if (string === 'restaurant') {
         if (this.tab.restaurant !== -1) {
           this.cut.restaurant = this.json[this.tab.societe].etablissements[this.tab.etablissement].restaurants[this.tab.restaurant];
-          this.removeObjRest();
+          if (cutContent) this.removeObjRest();
         }
       }
       else if (string === 'etablissement') {
         if (this.tab.etablissement !== -1) {
           this.cut.etablissement = this.json[this.tab.societe].etablissements[this.tab.etablissement];
-          this.removeObjEtab();
+          if (cutContent) this.removeObjEtab();
         }
       }
     },

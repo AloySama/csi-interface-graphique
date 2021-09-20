@@ -14,7 +14,7 @@
       </div>
     </div>
     <div id="mentions">
-      <p>{{ mention }} Auteur: Aloïs BRENGARD<br>{{date}}</p>
+      <p>{{ mention }} | Auteur: Aloïs BRENGARD<br>{{date}}</p>
     </div>
   </div>
 </template>
@@ -30,8 +30,8 @@ export default {
       settings_: false,
       industrie : 'Cash Systemes Industrie',
       phone : '04.98.11.45.90',
-      mention : new Date().getFullYear() +' | ',
-      date: 'Vous avez affiché cette page le ' + new Date().toLocaleString(),
+      mention : new Date().getFullYear(),
+      date: 'Vous avez affiché cette page le ' + new Date().toLocaleString().split(',')[0] + ' à' + new Date().toLocaleString().split(',')[1],
       twitter: 'https://twitter.com/cashsystemes',
       twitter_title: 'Twitter de CSI',
       facebook: 'https://www.facebook.com/cashsystemes/',

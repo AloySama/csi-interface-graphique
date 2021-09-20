@@ -80,12 +80,6 @@
     background-color: #FFDE29;
 }
 
-.btn:disabled {
-    background-color: grey;
-    box-shadow: 0 5px 0 0 grey;
-    cursor: default;
-}
-
 .checkbox-button {
     cursor: pointer;
 }
@@ -139,4 +133,16 @@ input {
 
 .checkbox-button__control {
     transform: scale(0.75);
+}
+
+.btn:disabled {
+    background-color: grey;
+    box-shadow: 0 5px 0 0 grey;
+    cursor: default;
+}
+
+input[type='submit']:disabled {
+    background-color: grey;
+    box-shadow: 0 5px 0 0 grey;
+    cursor: default;
 }
