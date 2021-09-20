@@ -17,16 +17,8 @@
         <ol>
           <li v-for="item in string" :key="item">
             <div :id="item" class="col-25"><label>{{ item }}</label></div>
-            <div :id="item + 'input'" class="col-75">
+            <div :id="item + 'input'" :class="{'col-75': true, 'set-margin': item === 'type'}">
               <input type="text" v-model="to_complete[main_index][item]" maxlength="30"></div>
-          </li>
-        </ol>
-        <ol>
-          <li v-for="item in rsd" :key="item">
-            <select :id="item+'input'" class="select-css top" v-model="to_complete[main_index][item]">
-              <option :value="values" v-for="values in array[item]" :key="values">{{ values }}</option>
-            </select>
-            <label :for="item"><b>{{ item }}</b></label>
           </li>
         </ol>
         <div class="container0 place-icons">
@@ -37,6 +29,14 @@
             </li>
           </ul>
         </div>
+        <ol>
+          <li class="left" v-for="item in rsd" :key="item">
+            <label :for="item" class="right-margin"><b>{{ item }}</b></label>
+            <select :id="item+'input'" class="select-css top" v-model="to_complete[main_index][item]">
+              <option :value="values" v-for="values in array[item]" :key="values">{{ values }}</option>
+            </select>
+          </li>
+        </ol>
         <div>
           <select class="select-css" id="select" v-model="select" multiple>
             <option :value="value" v-for="(value, item) in array['filtration']" :key="item">{{ item }}</option>
@@ -368,6 +368,16 @@ b {
 
 .middle {
   text-align: center;
+}
+
+.left {
+  margin-left: 70px;
+  margin-bottom: 20px;
+  float: left;
+}
+
+.right-margin {
+  margin-right: 10px;
 }
 
 </style>
