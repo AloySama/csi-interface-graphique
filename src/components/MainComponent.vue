@@ -80,7 +80,7 @@ export default {
   data() {
     return {
       json: this.jsonFile,
-      old_ids: {societe: '', etablissement: '', restaurant: ''},
+      old_ids: '',
       tab: {societe: -1, etablissement: -1, restaurant: -1},
       bool : {
         addSociete: false,
@@ -103,25 +103,25 @@ export default {
   },
   methods: {
     disabledButton(index, i, id) {
-      if (index === 'societe' && this.tab[index] !== i) {
-          this.tab.etablissement = -1;
-          this.tab.restaurant = -1;
-      }
-      else if (index === 'etablissement' && this.tab[index] !== i) {
-          this.tab.restaurant = -1;
-          this.bool.addSociete = false;
-      }
+      // if (index === 'societe' && this.tab[index] !== i) {
+      //     this.tab.etablissement = -1;
+      //     this.tab.restaurant = -1;
+      // }
+      // else if (index === 'etablissement' && this.tab[index] !== i) {
+      //     this.tab.restaurant = -1;
+      //     this.bool.addSociete = false;
+      // }
       this.tab[index] = i;
       const current = id;
-      if (this.old_ids[index].length === 0) {
-        this.old_ids[index] = current;
-        const doc = document.getElementById(this.old_ids[index]);
+      if (this.old_ids.length === 0) {
+        this.old_ids = current;
+        const doc = document.getElementById(this.old_ids);
         if (doc == null) return;
         // @ts-ignore
         doc.disabled = true;
       } else {
-        const doc_old = document.getElementById(this.old_ids[index]);
-        this.old_ids[index] = current;
+        const doc_old = document.getElementById(this.old_ids);
+        this.old_ids = current;
         const doc_current = document.getElementById(current);
         if (doc_current == null) {
           console.error('Une erreur est survenue.')
@@ -161,13 +161,22 @@ export default {
       this.tab.etablissement = -1;
       this.tab.restaurant = -1;
       this.setBool('addS');
+      this.enableButton();
+    },
+    enableButton() {
+      const doc = document.getElementById(this.old_ids);
+      if (doc != null) {
+        doc.disabled = false;
+      }
     },
     addEtabJson() {
       this.tab.restaurant = -1;
-      this.setBool('addE')
+      this.setBool('addE');
+      this.enableButton();
     },
     addRestJson() {
-      this.setBool('addR')
+      this.setBool('addR');
+      this.enableButton();
     },
     setCompleteSoc(complete) {
       this.json[this.tab.societe] = complete;
