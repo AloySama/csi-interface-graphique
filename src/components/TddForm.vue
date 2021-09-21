@@ -32,11 +32,23 @@
         <ol>
           <li class="left" v-for="item in rsd" :key="item">
             <label :for="item" class="right-margin"><b>{{ item }}</b></label>
-            <select :id="item+'input'" class="select-css top" v-model="to_complete[main_index][item]">
+            <select :id="item+'input'" class="select-css top" v-model="to_complete[main_index][item]" @change="addForm(item, to_complete[main_index][item])">
               <option :value="values" v-for="values in array[item]" :key="values">{{ values }}</option>
             </select>
           </li>
         </ol>
+        <div v-if="others.recuperation"> <!-- todo: en faire un composant réutilisable-->
+          <div class="col-25"><label >recuperation</label></div>
+          <div class="col-75"><input type="text" v-model="to_complete[main_index].recuperation"></div>
+        </div>
+        <div v-if="others.specialite">
+          <div class="col-25"><label >recuperation</label></div>
+          <div class="col-75"><input type="text" v-model="to_complete[main_index].specialite"></div>
+        </div>
+        <div v-if="others.direction">
+          <div class="col-25"><label >recuperation</label></div>
+          <div class="col-75"><input type="text" v-model="to_complete[main_index].direction"></div>
+        </div>
         <div>
           <select class="select-css" id="select" v-model="select" multiple>
             <option :value="value" v-for="(value, item) in array['filtration']" :key="item">{{ item }}</option>
@@ -80,6 +92,7 @@
   </form>
   <button class="btn green" @click="SubmitForm" :disabled="tdd_nbr <= 0">Valider TraiteurConfig</button>
   <p class="error-message">Cliquer sur <u>valider TraiteurConfig</u> ou les données ne seront pas sauvegardé.</p>
+
 </template>
 
 <script>
@@ -105,6 +118,11 @@ export default {
   },
   data() {
     return {
+      others: {
+        recuperation: false,
+        specialite: false,
+        direction: false
+      },
       edit: false,
       isModifying: false,
       idButtonModify: '',
@@ -148,9 +166,9 @@ export default {
         profits: [],
         sousfamilles: [],
         tags: [],
-        direction: ['DEBIT', 'CREDIT'],
-        recuperation: ['QUANTITE', 'UNITAIRE', 'TOTAL', 'HT', 'TVA', 'SERVICE', 'REEL', 'THEORIQUE', 'DELTA', 'MONTANT0', 'MONTANT1', 'MONTANT2'],
-        specialite: ['ARTICLE', 'TVA', 'STATISTIQUE', 'OFFERT', 'TIROIR_PREFERMENT', 'REGLEMENT', 'TIROIR_REGLEMENT', 'RECU', 'DESACTIVE', 'TICKET', 'TIROIR_REMISE']
+        direction: ['autre ...', 'DEBIT', 'CREDIT'],
+        recuperation: ['autre ...', 'QUANTITE', 'UNITAIRE', 'TOTAL', 'HT', 'TVA', 'SERVICE', 'REEL', 'THEORIQUE', 'DELTA', 'MONTANT0', 'MONTANT1', 'MONTANT2'],
+        specialite: ['autre ...', 'ARTICLE', 'TVA', 'STATISTIQUE', 'OFFERT', 'TIROIR_PREFERMENT', 'REGLEMENT', 'TIROIR_REGLEMENT', 'RECU', 'DESACTIVE', 'TICKET', 'TIROIR_REMISE']
       },
       string: ["auxiliaire", "compteAnalytique1", "compteAnalytique2", "compteAnalytique3", "tax_code", "transaction", 'libelle', 'type'],
       to_complete: [],
@@ -177,6 +195,11 @@ export default {
         }
       }
       else this.to_complete[0].filtration = this.listOfFillTabs(this.to_complete[0], true);
+      for (const item of this.to_complete) {
+        if (item.recuperation === 'autre ...') item.recuperation = "";
+        if (item.specialite === 'autre ...') item.recuperation = "";
+        if (item.direction === 'autre ...') item.recuperation = "";
+      }
       this.FormTdd.tdd = this.to_complete;
       this.$emit('tdd_form', {tdd: this.FormTdd.tdd, modify: this.isModify});
       this.tdd_nbr = 0;
@@ -319,6 +342,9 @@ export default {
     deleteItemTabs(id) {
       this.to_complete[0][this.tabName].splice(id, 1);
       this.deleteTabs = this.listItemTabs(this.tabName);
+    },
+    addForm(rsd, string) {
+      this.others[rsd] = string === 'autre ...';
     }
   }
 }
