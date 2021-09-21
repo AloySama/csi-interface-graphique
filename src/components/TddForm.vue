@@ -71,8 +71,8 @@
               <div v-else>
                 <input v-if="tabNumber.includes(item)" type="number" v-model.number="to_push[main_index][item]" min="0">
                 <input v-else type="text" v-model="to_push[main_index][item]">
-                <button class="btn green" @click="addElement(main_index, item, to_push[main_index][item])"
-                        :disabled="to_push[main_index][item].length < 1">Ajouter</button>
+                <button class="btn green" @click="addElement(main_index, item, to_push[main_index][item]); modifyTab()"
+                        :disabled="to_push[main_index][item].length < 1">Ajouter {{editTab}}</button>
               </div>
             </div>
           </li>
@@ -80,8 +80,7 @@
       </form>
     </div>
   </div>
-  <form @submit.prevent="" v-if="modifyTabs.length !== 0" class="middle">
-    <b>Cliquer pour éditer les tableaux</b>
+  <form @submit.prevent="" v-if="editTab" class="middle">
     <div>
       <button class="btn orange" v-for="key in modifyTabs" :key="key" @click="deleteTabs=listItemTabs(key.value); tabName=key.value">{{key.key}}</button>
     </div>
@@ -106,6 +105,7 @@ export default {
       this.toPush();
       this.edit = true
       this.modifyTabs = this.listOfFillTabs(this.to_complete[0], false);
+      if (this.modifyTabs.length > 0) this.editTab = true
     }
   },
   emits: ['tdd_form'],
@@ -123,6 +123,7 @@ export default {
         specialite: false,
         direction: false
       },
+      editTab: false,
       edit: false,
       isModifying: false,
       idButtonModify: '',
@@ -179,6 +180,11 @@ export default {
     }
   },
   methods: {
+    modifyTab() {
+      this.editTab = false;
+      this.modifyTabs = this.listOfFillTabs(this.to_complete[0], false);
+      setTimeout(() => {this.editTab = true;}, 0);
+    },
     SubmitForm() {
       if (this.traiteurModif == null) {
         for (const complete of this.to_complete) {
@@ -342,6 +348,8 @@ export default {
     deleteItemTabs(id) {
       this.to_complete[0][this.tabName].splice(id, 1);
       this.deleteTabs = this.listItemTabs(this.tabName);
+      this.modifyTabs = this.listOfFillTabs(this.to_complete[0], false);
+      if (this.modifyTabs.length === 0) this.editTab = false;
     },
     addForm(rsd, string) {
       this.others[rsd] = string === 'autre ...';
