@@ -86,7 +86,13 @@
     </div>
     <div v-if="deleteTabs != null">
       <b>Cliquer sur un élément pour le <span class="error-message">supprimer</span></b><br>
-      <button class="btn orange" v-for="(item, index) in deleteTabs" :key="item" @click="deleteItemTabs(index)">{{item}}</button>
+      <div v-for="(item, index) in deleteTabs" :key="index">
+        <button class="btn orange" :id="'TabButton' + index"  @click="tabButtonId = 'TabButton' + index; modifyTabContent = false">{{item}}</button>
+        <button class="btn orange" v-if="tabButtonId === 'TabButton' + index" @click="deleteItemTabs(index)">Supprimer</button>
+<!--        <button class="btn orange" v-if="tabButtonId === 'TabButton' + index" @click="modifyTabContent = !modifyTabContent">Modifier</button>-->
+        <input type="text" v-if="tabButtonId === 'TabButton' + index && modifyTabContent" v-model="tab[0]">
+        <input type="submit" @click="deleteTabs[index] = tab[0]">
+      </div>
     </div>
   </form>
   <button class="btn green" @click="SubmitForm" :disabled="tdd_nbr <= 0">Valider TraiteurConfig</button>
@@ -123,6 +129,8 @@ export default {
         specialite: false,
         direction: false
       },
+      modifyTabContent: false,
+      tabButtonId: '',
       editTab: false,
       edit: false,
       isModifying: false,
@@ -134,6 +142,7 @@ export default {
       traiteurModif: this.traiteurModification,
       values: {min: 0},
       tdd_nbr: 0,
+      tab: [],
       tdd: [],
       rsd: ['recuperation', 'specialite', 'direction'],
       select: [],
@@ -206,6 +215,7 @@ export default {
         if (item.specialite === 'autre ...') item.recuperation = "";
         if (item.direction === 'autre ...') item.recuperation = "";
       }
+      console.log(this.deleteTabs);
       this.FormTdd.tdd = this.to_complete;
       this.$emit('tdd_form', {tdd: this.FormTdd.tdd, modify: this.isModify});
       this.tdd_nbr = 0;
