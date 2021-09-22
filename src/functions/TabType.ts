@@ -1,3 +1,3 @@
-type TabType = 'old' | 'old_edit' | 'delete';
+type TabType = 'old' | 'old_edit';
 
 export default TabType;

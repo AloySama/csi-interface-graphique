@@ -15,7 +15,13 @@
   </div>
   <main-component  v-if="bool.Modify" :json-file="json"/>
   <UploadFiles v-if="bool.ChooseFile" @upload-json="SetJson"/>
-  <Footer @setting_value="SetSettings"/>
+  <Footer @setting_value="SetSettings">
+    <template #social-media="slotProps">
+      <div id="twitter"><a :href="slotProps.twitter" target="_blank"><font-awesome-icon :icon="['fab', 'twitter']" class="place-icons"/></a></div>
+      <div id="facebook"><a :href="slotProps.facebook" target="_blank"><font-awesome-icon :icon="['fab', 'facebook']" class="place-icons"/></a></div>
+      <div id="linkedin"><a :href="slotProps.linkedin" target="_blank"><font-awesome-icon :icon="['fab', 'linkedin']" class="place-icons"/></a></div>
+    </template>
+  </Footer>
 </template>
 
 <script lang="ts">
@@ -39,9 +45,8 @@ export default defineComponent({
         ChooseFile: false,
         Editing: false,
       },
-      tab: {old: "", old_edit: "", delete: ""},
+      tab: {old: "", old_edit: ""},
       message: {
-        'retour': 'Quitter l\'édition',
         'edit': 'Éditer le fichier',
         'parcours': 'Parcourir un fichier sur le pc',
         'save': 'Enregistrer le fichier sur votre pc',
@@ -50,6 +55,9 @@ export default defineComponent({
     }
   },
   methods: {
+    test() {
+      alert('working')
+    },
     SetSettings(setting: []) {
       this.setting_tab = setting
     },
@@ -76,15 +84,6 @@ export default defineComponent({
         }
       }
       else alert("Le json est null !");
-    },
-    doEdit(editing: boolean, ids: string[]) {
-      for (const id of ids) {
-        if (id !== 'parcourir') if (this.json == null) continue;
-        const d = document.getElementById(id);
-        if (d == null) continue;
-        // @ts-ignore
-        d.disabled = editing;
-      }
     },
     disabledButtons(id: string, tab_str: TabType) {
       const current = id;
@@ -119,3 +118,23 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+.place-icons {
+  margin-top: 8px;
+  margin-left: 1px;
+  font-size: 35px;
+}
+
+#twitter {
+  color: #007BB5;
+}
+
+#linkedin {
+  color: #007BB5;
+}
+
+#facebook {
+  color: #3b5998;
+}
+</style>
