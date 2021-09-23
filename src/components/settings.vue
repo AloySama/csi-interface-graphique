@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<script>
+<script type="ts">
 import InputForm from "@/components/FormSlots/InputForm";
 export default {
   components: {InputForm},

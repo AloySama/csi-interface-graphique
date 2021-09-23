@@ -63,7 +63,7 @@
   <restaurant-form v-else-if="bool.modifyRestaurant" :json-file="json" :rest-modify="json[tab.societe].etablissements[tab.etablissement].restaurants[tab.restaurant]" :id-tab="{soc: tab.societe, eta: tab.etablissement}" @to_complete="setCompleteRes"/>
 </template>
 
-<script>
+<script type="ts">
 import ParseSociete from "@/functions/ParseSociete";
 import ParseEtablissement from "@/functions/ParseEtablissement";
 import ParseRestaurant from "@/functions/ParseRestaurant";
@@ -117,7 +117,6 @@ export default {
         this.old_ids = current;
         const doc = document.getElementById(this.old_ids);
         if (doc == null) return;
-        // @ts-ignore
         doc.disabled = true;
       } else {
         const doc_old = document.getElementById(this.old_ids);
@@ -127,11 +126,7 @@ export default {
           console.error('Une erreur est survenue.')
           return;
         }
-        if (doc_old) {
-          // @ts-ignore
-          doc_old.disabled = false;
-        }
-        // @ts-ignore
+        if (doc_old) doc_old.disabled = false;
         doc_current.disabled = true;
       }
     },
@@ -165,9 +160,7 @@ export default {
     },
     enableButton() {
       const doc = document.getElementById(this.old_ids);
-      if (doc != null) {
-        doc.disabled = false;
-      }
+      if (doc != null) doc.disabled = false;
     },
     addEtabJson() {
       this.tab.restaurant = -1;
@@ -206,12 +199,6 @@ export default {
       return value;
     },
     setBool(str) {
-      this.bool.addSociete = false;
-      this.bool.addEtablissement = false;
-      this.bool.addRestaurant = false;
-      this.bool.modifySociete = false;
-      this.bool.modifyEtablissement = false;
-      this.bool.modifyRestaurant = false;
       setTimeout(() => {
         this.bool.addSociete = 'addS' === str;
         this.bool.addEtablissement = 'addE' === str;
@@ -236,15 +223,11 @@ export default {
       }
     },
     pasteContent(string) {
-      if (string === 'restaurant') {
-        if (this.cut.restaurant != null) {
-          this.json[this.tab.societe].etablissements[this.tab.etablissement].restaurants.push(this.cut.restaurant);
-        }
+      if (string === 'restaurant' && this.cut.restaurant != null) {
+        this.json[this.tab.societe].etablissements[this.tab.etablissement].restaurants.push(this.cut.restaurant);
       }
-      else if (string === 'etablissement') {
-        if (this.cut.etablissement != null) {
-          this.json[this.tab.societe].etablissements.push(this.cut.etablissement);
-        }
+      else if (string === 'etablissement' && this.cut.etablissement != null) {
+        this.json[this.tab.societe].etablissements.push(this.cut.etablissement);
       }
     }
   }

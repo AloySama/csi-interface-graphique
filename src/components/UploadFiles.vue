@@ -9,13 +9,13 @@
   <div class="overflow" id="container" style="height: 340px; min-width: 500px">Aperçu du fichier json ici</div>
   <input type="submit" class="btn green" @click="upload">
   <div >
-    <div class="black">OU</div>
-    <div class="black">Créer un nouveau fichier json vide</div>
+<!--    <div class="black">OU</div>-->
+    <div class="black top-marge">Créer un nouveau fichier json vide</div>
     <button class="btn green" @click="SetJson">Créer</button>
   </div>
 </template>
 
-<script>
+<script type="ts">
 
 export default {
   emits: ['upload-json'],
@@ -58,5 +58,9 @@ export default {
   color: black;
   font-weight: bold;
   font-size: 50px;
+}
+.top-marge {
+  margin-top: 50px;
+  margin-left: 120px;
 }
 </style>

@@ -12,7 +12,7 @@
   </div>
 </template>
 
-<script>
+<script type="ts">
 import ParseSociete from "../functions/ParseSociete";
 import App from '../App'
 import TddForm from "@/components/TddForm";
@@ -72,6 +72,7 @@ export default {
   },
   methods: {
     attribution(value, to_complete) {
+      if (to_complete === 'id' && value.length === 0) value = null;
       this.to_complete[to_complete] = value;
       return null;
     },
@@ -99,7 +100,7 @@ export default {
       this.bool.add_tdd = false;
     },
     IsSubmitted() {
-      if (typeof this.to_complete.id === 'string') this.to_complete.id = null;
+
       if (this.modify != null) {
         this.bool.add_eta = false;
         this.bool.add_tdd = false;

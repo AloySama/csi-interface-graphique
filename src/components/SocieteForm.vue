@@ -14,7 +14,7 @@
   </div>
 </template>
 
-<script>
+<script type="ts">
 import TddForm from "@/components/TddForm";
 import EtablissementForm from "@/components/EtablissementForm";
 import EditSociete from "@/functions/EditElements";
@@ -73,6 +73,7 @@ export default {
   },
   methods: {
     attribution(label, to_compete_value) {
+      if (to_compete_value === 'id' && label.length === 0 ) label = null;
       this.to_complete[to_compete_value] = label;
       return null;
     },
@@ -84,7 +85,6 @@ export default {
     isSubmitted() {
       this.bool.add_eta = false;
       this.bool.add_tdd = false;
-      if (typeof this.to_complete.id === 'string') this.to_complete.id = null;
       if (this.to_complete.code.length === 0) this.to_complete.code = 'Défaut';
       if (this.modify != null) {
         this.to_complete.id = this.to_complete.id !== null ? isIDCorrect(this.json, this.to_complete.id, this.to_complete.id) : FindAnID(this.json);

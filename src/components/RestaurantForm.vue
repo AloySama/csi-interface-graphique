@@ -87,18 +87,6 @@ export default {
       this.bool[to_complete] = value;
       return null;
     },
-    addToComplete() {
-      this.to_complete.push({
-        compteAuxiliaire: '',
-        etab_code: '',
-        code_societe: '',
-        reference_config_compensation: 0,
-        auxiliaireCreditClient: '',
-        matricule: null,
-        restaurantId: null,
-        traiteursConfigs: []
-      })
-    },
     completeList(tab) {
       if (tab.modify) this.to_complete[1].traiteursConfigs[tab.index] = tab.tdd[0];
       else {

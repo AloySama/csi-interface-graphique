@@ -15,7 +15,7 @@
   </div>
 </template>
 
-<script>
+<script type="ts">
 import Settings from "@/components/settings";
 export default {
   name: "FooterPage",
