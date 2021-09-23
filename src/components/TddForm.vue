@@ -37,22 +37,13 @@
             </select>
           </li>
         </ol>
-        <div v-if="others.recuperation"> <!-- todo: en faire un composant réutilisable-->
-          <div class="col-25"><label >recuperation</label></div>
-          <div class="col-75"><input type="text" v-model="to_complete[main_index].recuperation"></div>
-        </div>
-        <div v-if="others.specialite">
-          <div class="col-25"><label >recuperation</label></div>
-          <div class="col-75"><input type="text" v-model="to_complete[main_index].specialite"></div>
-        </div>
-        <div v-if="others.direction">
-          <div class="col-25"><label >recuperation</label></div>
-          <div class="col-75"><input type="text" v-model="to_complete[main_index].direction"></div>
-        </div>
         <div>
           <select class="select-css" id="select" v-model="select" multiple>
             <option :value="value" v-for="(value, item) in array['filtration']" :key="item">{{ item }}</option>
           </select>
+        </div>
+        <div v-for="item in ['recuperation', 'specialite', 'direction']" :key="item">
+          <input-form :type="'text'"  v-slot="slotProp" v-if="others[item]">{{attribution(slotProp.tab, item, main_index)}} {{item}}</input-form>
         </div>
         <ol>
           <li v-for="item in select" :key="item">
@@ -72,7 +63,7 @@
                 <input v-if="tabNumber.includes(item)" type="number" v-model.number="to_push[main_index][item]" min="0">
                 <input v-else type="text" v-model="to_push[main_index][item]">
                 <button class="btn green" @click="addElement(main_index, item, to_push[main_index][item]); modifyTab()"
-                        :disabled="to_push[main_index][item].length < 1">Ajouter {{editTab}}</button>
+                        :disabled="to_push[main_index][item].length < 1">Ajouter</button>
               </div>
             </div>
           </li>
@@ -95,6 +86,8 @@
 </template>
 
 <script>
+import InputForm from "@/components/FormSlots/InputForm";
+
 export default {
   created() {
     if (this.traiteurModif != null) {
@@ -108,6 +101,7 @@ export default {
       if (this.modifyTabs.length > 0) this.editTab = true
     }
   },
+  components: {InputForm},
   emits: ['tdd_form'],
   name: "TddForm",
   props: {
@@ -180,6 +174,10 @@ export default {
     }
   },
   methods: {
+    attribution(value, to_complete, main) {
+      this.to_complete[main][to_complete] = value;
+      return null;
+    },
     modifyTab() {
       this.editTab = false;
       this.modifyTabs = this.listOfFillTabs(this.to_complete[0], false);

@@ -27,7 +27,7 @@ export default {
   methods: {
     attribution(label, setting_prop) {
       this.settings[setting_prop] = label
-      return true;
+      return null;
     }
   }
 }

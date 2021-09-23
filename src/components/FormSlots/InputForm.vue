@@ -7,14 +7,19 @@
         </label>
       </div>
       <div class="col-75">
-        <input :type="type" min="0" :max="max" v-model.number="tab" > <!-- @change="$parent.$emit('form-input', tab)" -->
+        <input :type="type" :min="0" :max="max" v-model.number="tab">
       </div>
     </div>
   </form>
 </template>
 
-<script>
+<script type="ts">
 export default {
+  created() {
+    if (this.modify != null) {
+      this.tab = this.modify;
+    }
+  },
   name: "input-form",
   props: {
     type: {
@@ -24,15 +29,16 @@ export default {
     max: {
       required: false,
       default: 50
+    },
+    modify: {
+      required: false,
+      default: null
     }
-  },
-  emits: ['form-input'],
-  render() {
-    return this.$slots.default;
   },
   data() {
     return {
-      tab: ''
+      tab: '',
+      to_complete: {}
     }
   }
 }
