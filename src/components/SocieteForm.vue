@@ -93,15 +93,10 @@ export default {
         return;
       }
       this.to_complete.id = this.to_complete.id !== null ? isIDCorrect(this.json, this.to_complete.id, -1) : FindAnID(this.json);
-      const new_array = {
-        id: this.to_complete.id,
-        code: this.to_complete.code,
-        traiteursConfigs: this.to_complete.traiteursConfigs,
-        etablissements: this.to_complete.etablissements
-      };
+      const new_array = Object.assign({}, this.to_complete);
       this.form.push(new_array);
       this.json = EditSociete(this.json, new_array);
-      this.$emit('json_value', this.json);
+      this.$emit('to_complete', false);
       setTimeout(() => {
         this.to_complete = []
       }, 0);

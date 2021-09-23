@@ -4,9 +4,9 @@
       <div v-for="(value, key) of string" :key="value">
         <input-form :type="'text'" :modify="to_complete[to_complete.length-1][value]" v-slot="slotProp">{{attribution(slotProp.tab, value)}} {{key}}</input-form>
       </div>
-      <input-form :type="'number'" :modify="to_complete[to_complete.length-1].reference_config_compensation">reference_config_compensation</input-form>
+      <input-form :type="'number'" :modify="to_complete[to_complete.length-1].reference_config_compensation" v-slot="slotProp">{{attribution(slotProp.tab, 'reference_config_compensation')}} reference_config_compensation</input-form>
       <input-checkbox v-slot="slotProp">{{attrCheckbox(slotProp.bool, 'add_matricule')}} Matricule ?</input-checkbox>
-      <input-form v-if="bool.add_matricule" :type="'number'">Matricule</input-form>
+      <input-form v-if="bool.add_matricule" :type="'number'" v-slot="slotProp" :modify="to_complete[to_complete.length-1].matricule">{{ attribution(slotProp.tab, 'matricule')}} Matricule</input-form>
       <input-checkbox :modify="bool.add_tdd" v-slot="slotProp">{{attrCheckbox(slotProp.bool, 'add_tdd')}} Ajouter TraiteurConfig ?</input-checkbox>
         <ListTraiteurConfig v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete[1].traiteursConfigs" @list-tdd="completeList"/>
         <tdd-form v-else-if="bool.add_tdd" @tdd_form="completeTDD"/>
@@ -169,7 +169,7 @@ export default {
           FindIDTC(this.to_complete[length].traiteursConfigs) : this.to_complete[length].traiteursConfigs;
       this.json = EditRestaurant(this.json, this.to_complete[length], this.FillTab);
       this.bool.add_tdd = false;
-      this.addToComplete();
+      this.$emit('to_complete', false);
     }
   }
 }

@@ -28,7 +28,7 @@ export default {
     },
     max: {
       required: false,
-      default: 50
+      default: 100000
     },
     modify: {
       required: false,

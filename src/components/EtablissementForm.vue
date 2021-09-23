@@ -115,7 +115,7 @@ export default {
         restaurants: this.to_complete.restaurants
       };
       this.json = EditEtab(this.json, new_array, this.societe);
-      this.$emit('json_value', this.json);
+      this.$emit('to_complete', false);
       this.AllNull();
     },
     AllNull() {
