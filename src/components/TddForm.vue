@@ -77,7 +77,12 @@
     </div>
     <div v-if="deleteTabs != null">
       <b>Cliquer sur un élément pour le <span class="error-message">supprimer</span></b><br>
-      <button class="btn orange" v-for="(item, index) in deleteTabs" :key="item" @click="deleteItemTabs(index)">{{item}}</button>
+      <div v-for="(item, index) in deleteTabs" :key="index">
+        <button class="btn orange" :id="'TabButton' + index"  @click="tabButtonId = 'TabButton' + index; modifyTabContent = false">{{item}}</button>
+        <button class="btn orange" v-if="tabButtonId === 'TabButton' + index" @click="deleteItemTabs(index)">Supprimer</button>
+        <button class="btn orange" v-if="tabButtonId === 'TabButton' + index" @click="modifyTabContent = !modifyTabContent">modifier</button>
+        <input-form v-if="modifyTabContent" :type="'text'" v-slot="slotProp">{{setText(index, slotProp.tab)}} {{deleteTabs}} Modifier</input-form>
+      </div>
     </div>
   </form>
   <button class="btn green" @click="SubmitForm" :disabled="tdd_nbr <= 0">Valider TraiteurConfig</button>
@@ -117,6 +122,7 @@ export default {
         specialite: false,
         direction: false
       },
+      modifyTabContent: false,
       editTab: false,
       edit: false,
       isModifying: false,
@@ -129,6 +135,7 @@ export default {
       values: {min: 0},
       tdd_nbr: 0,
       tdd: [],
+      tabButtonId: '',
       rsd: ['recuperation', 'specialite', 'direction'],
       select: [],
       ints: ['codeJournal', 'compte', 'ordre'],
@@ -174,6 +181,10 @@ export default {
     }
   },
   methods: {
+    setText(id, string) {
+      this.deleteTabs[id] = string;
+      return null;
+    },
     attribution(value, to_complete, main) {
       this.to_complete[main][to_complete] = value;
       return null;
@@ -348,6 +359,9 @@ export default {
       this.deleteTabs = this.listItemTabs(this.tabName);
       this.modifyTabs = this.listOfFillTabs(this.to_complete[0], false);
       if (this.modifyTabs.length === 0) this.editTab = false;
+    },
+    modifyItemTabs(id, replace_with) {
+      this.to_complete[0][this.tabName] = replace_with;
     },
     addForm(rsd, string) {
       this.others[rsd] = string === 'autre ...';
