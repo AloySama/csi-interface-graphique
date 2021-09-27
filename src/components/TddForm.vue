@@ -79,7 +79,7 @@
               <button class="btn red" v-if="tabButtonId === 'TabButton' + index" @click="deleteItemTabs(main_index, index)">Supprimer</button>
               <div v-if="modifyTabContent && tabButtonId === 'TabButton' + index">
                 <input-form :type="'text'" v-slot="slotProp">{{modifyItemTabs(main_index, index, slotProp.tab)}} Modifier</input-form>
-                <input type="submit" @click="to_complete[main_index][tabName[main_index]][index] = editContentTab; deleteTabs[main_index]=listItemTabs(main_index, tabName[main_index]);tabButtonId = ''">
+                <input type="submit" @click="submitEditTab(main_index, index)">
               </div>
             </div>
           </div>
@@ -192,6 +192,12 @@ export default {
     modifyTab(index) {
       this.modifyTabs[index] = this.listOfFillTabs(this.to_complete[index], false);
       this.editTab = false;
+      try {
+        this.deleteTabs[index] = this.listItemTabs(index, this.tabName[index]);
+      }
+      catch (e) {
+        console.log('TabName n\'existe pas')
+      }
       setTimeout(() => {this.editTab = true}, 0);
     },
     SubmitForm() {
@@ -367,6 +373,14 @@ export default {
     },
     addForm(rsd, string) {
       this.others[rsd] = string === 'autre ...';
+    },
+    submitEditTab(main_index, id) {
+      this.to_complete[main_index][this.tabName[main_index]][id] = this.editContentTab;
+      this.deleteTabs[main_index] = this.listItemTabs(main_index, this.tabName[main_index]);
+      this.tabButtonId = '';
+      if (this.editContentTab.length === 0) {
+        this.deleteItemTabs(main_index, id);
+      }
     }
   }
 }
