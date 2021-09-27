@@ -1,9 +1,9 @@
 <template>
   <div class="container marge">
   <form @submit.prevent="">
-    <input-form :type="'text'" v-slot="string"> {{attribution(string.tab, 'name')}} Nom fichier arcole</input-form>
-    <input-form :type="'number'" :max="10" v-slot="number"> {{attribution(number.tab, 'space')}} Nombre d'espace</input-form>
-    <input-form :type="'checkbox'" v-slot="number"> {{attribution(number.tab, 'stringify')}} Stringify</input-form>
+    <input-form :type="'text'" v-slot="string" modify="arcole.json"> {{attribution(string.tab, 'name')}} Nom fichier arcole</input-form>
+    <input-form :type="'number'" :max="10" v-slot="number" :modify="2"> {{attribution(number.tab, 'space')}} Nombre d'espace</input-form>
+    <input-form :type="'checkbox'" v-slot="number" :modify="true"> {{attribution(number.tab, 'stringify')}} Stringify</input-form>
     <input class="btn green" type="submit" @click="$emit('settings_value', settings)">
   </form>
   </div>
