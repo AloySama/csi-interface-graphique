@@ -18,6 +18,10 @@
 <script type="ts">
 import Settings from "@/components/settings";
 export default {
+  created() {
+    const date = new Date().toLocaleString().split(',')
+    this.date = 'Vous avez affiché cette page le ' + date[0] + ' à' + date[1]
+  },
   name: "FooterPage",
   emits: ['setting_value'],
   components: {Settings},
@@ -27,7 +31,7 @@ export default {
       industrie : 'Cash Systemes Industrie',
       phone : '04.98.11.45.90',
       mention : new Date().getFullYear(),
-      date: 'Vous avez affiché cette page le ' + new Date().toLocaleString().split(',')[0] + ' à' + new Date().toLocaleString().split(',')[1],
+      date: '',
       twitter: 'https://twitter.com/cashsystemes',
       facebook: 'https://www.facebook.com/cashsystemes/',
       linkedin: 'https://www.linkedin.com/company/cashsystemesindustrie?trk=public_profile_topcard_current_company&originalSubdomain=fr',
