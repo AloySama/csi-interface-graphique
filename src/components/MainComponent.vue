@@ -190,8 +190,7 @@ export default {
       else this.json[this.tab.societe].etablissements[this.tab.etablissement].restaurants[this.tab.restaurant] = complete;
       setTimeout(() => {this.tab.restaurant = -1; this.bool.modifyRestaurant = false; this.bool.addRestaurant = false}, 0);
       const doc = document.getElementById(this.old_ids);
-      if (doc == null) return;
-      doc.disabled = false;
+      if (doc) doc.disabled = false;
     },
     returnEtab() {
       const value = this.json[this.tab.societe].etablissements[this.tab.etablissement];

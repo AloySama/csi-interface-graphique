@@ -17,7 +17,7 @@
         <ol>
           <li v-for="item in string" :key="item">
             <div :id="item" class="col-25"><label>{{ item }}</label></div>
-            <div :id="item + 'input'" :class="{'col-75': true, 'set-margin': item === 'type'}">
+            <div :id="item + 'input'" :class="{'col-75': true, 'set-margin': item === string[string.length-1] && string.length % 2 === 0}">
               <input type="text" v-model="to_complete[main_index][item]" maxlength="30"></div>
           </li>
         </ol>
@@ -156,7 +156,8 @@ export default {
           DOCUMENT: 'documents',
           LOCALISATION: 'localisations',
           PROFIT: 'profits',
-          COMPTE: 'comptes'
+          COMPTE: 'comptes',
+          VALEURS0: 'valeurs0'
         },
         comptes: [],
         rules: [],
@@ -169,6 +170,7 @@ export default {
         localisations: [],
         profits: [],
         sousfamilles: [],
+        valeurs0: [],
         tags: [],
         direction: ['autre ...', 'DEBIT', 'CREDIT'],
         recuperation: ['autre ...', 'QUANTITE', 'UNITAIRE', 'TOTAL', 'HT', 'TVA', 'SERVICE', 'REEL', 'THEORIQUE', 'DELTA', 'MONTANT0', 'MONTANT1', 'MONTANT2'],
@@ -266,6 +268,7 @@ export default {
         profits: [],
         sousfamilles: [],
         tags: [],
+        valeurs0: [],
         recuperation: 'TOTAL',
         specialite: 'ARTICLE',
         direction: 'CREDIT',
@@ -298,7 +301,8 @@ export default {
         profits: '',
         comptes: 0,
         tvas: '',
-        rules: 0
+        rules: 0,
+        valeurs0: ''
       });
     },
     changeValue() {
@@ -408,7 +412,7 @@ b {
 }
 
 .set-left {
-  margin-left: 75px;
+  margin-left: 3.5%;
 }
 
 #localisation {
