@@ -77,7 +77,7 @@
               <button class="btn orange" :id="'TabButton' + index"  @click="tabButtonId = 'TabButton' + index; modifyTabContent = true">{{item}}</button>
               <button class="btn red" v-if="tabButtonId === 'TabButton' + index" @click="deleteItemTabs(main_index, index); modifyTabContent = false">Supprimer</button>
               <div v-if="modifyTabContent && tabButtonId === 'TabButton' + index">
-                <input-form :type="'text'" v-slot="slotProp">{{modifyItemTabs(main_index, index, slotProp.tab)}} Modifier</input-form>
+                <input-form :type="'text'" v-slot="slotProp" :modify="to_complete[main_index][tabName[main_index]][index]">{{modifyItemTabs(main_index, index, slotProp.tab)}} Modifier</input-form>
                 <input type="submit" @click="submitEditTab(main_index, index)">
               </div>
             </div>
