@@ -74,9 +74,8 @@
           </div>
           <div v-if="deleteTabs[main_index].length > 0">
             <div v-for="(item, index) in deleteTabs[main_index]" :key="index">
-              <button class="btn orange" :id="'TabButton' + index"  @click="tabButtonId = 'TabButton' + index; modifyTabContent = false">{{item}}</button>
-              <button class="btn blue" v-if="tabButtonId === 'TabButton' + index" @click="modifyTabContent = !modifyTabContent">modifier</button>
-              <button class="btn red" v-if="tabButtonId === 'TabButton' + index" @click="deleteItemTabs(main_index, index)">Supprimer</button>
+              <button class="btn orange" :id="'TabButton' + index"  @click="tabButtonId = 'TabButton' + index; modifyTabContent = true">{{item}}</button>
+              <button class="btn red" v-if="tabButtonId === 'TabButton' + index" @click="deleteItemTabs(main_index, index); modifyTabContent = false">Supprimer</button>
               <div v-if="modifyTabContent && tabButtonId === 'TabButton' + index">
                 <input-form :type="'text'" v-slot="slotProp">{{modifyItemTabs(main_index, index, slotProp.tab)}} Modifier</input-form>
                 <input type="submit" @click="submitEditTab(main_index, index)">
@@ -89,7 +88,6 @@
   </div>
   <button class="btn green" @click="SubmitForm" :disabled="tdd_nbr <= 0">Valider TraiteurConfig</button>
   <p class="error-message">Cliquer sur <u>valider TraiteurConfig</u> ou les données ne seront pas sauvegardé.</p>
-
 </template>
 
 <script>

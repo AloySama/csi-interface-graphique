@@ -7,7 +7,12 @@
         </label>
       </div>
       <div class="col-75">
-        <input :type="type" :min="0" :max="max" v-model.number="tab">
+        <div v-if="type!=='number'">
+          <input :type="type" v-model="tab">
+        </div>
+        <div v-else>
+          <input :type="type" :min="0" :max="max" v-model.number="tab">
+        </div>
       </div>
     </div>
   </form>

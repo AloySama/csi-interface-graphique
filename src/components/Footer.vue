@@ -19,8 +19,8 @@
 import Settings from "@/components/settings";
 export default {
   created() {
-    const date = new Date().toLocaleString().split(',')
-    this.date = 'Vous avez affiché cette page le ' + date[0] + ' à' + date[1]
+    const date = new Date().toLocaleString().split(',');
+    this.date = 'Vous avez affiché cette page le ' + date[0] + ' à' + date[1];
   },
   name: "FooterPage",
   emits: ['setting_value'],
