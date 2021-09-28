@@ -174,22 +174,22 @@ export default {
     setCompleteSoc(complete) {
       if (!complete) this.bool.addSociete = false;
       else this.json[this.tab.societe] = complete;
-      setTimeout(() => {this.tab.societe = -1; this.bool.modifySociete = false}, 0);
-      const doc = document.getElementById(this.old_ids.societe);
+      setTimeout(() => {this.tab.societe = -1; this.bool.modifySociete = false;}, 0);
+      const doc = document.getElementById(this.old_ids);
       if (doc) doc.disabled = false;
     },
     setCompleteEta(complete) {
       if (!complete) this.bool.addSociete = false;
       else this.json[this.tab.societe].etablissements[this.tab.etablissement] = complete;
       setTimeout(() => {this.tab.etab = -1; this.bool.modifyEtablissement = false}, 0);
-      const doc = document.getElementById(this.old_ids.etablissement);
+      const doc = document.getElementById(this.old_ids);
       if (doc) doc.disabled = false;
     },
     setCompleteRes(complete) {
       if (!complete) this.bool.addSociete = false;
       else this.json[this.tab.societe].etablissements[this.tab.etablissement].restaurants[this.tab.restaurant] = complete;
       setTimeout(() => {this.tab.restaurant = -1; this.bool.modifyRestaurant = false; this.bool.addRestaurant = false}, 0);
-      const doc = document.getElementById(this.old_ids.restaurant);
+      const doc = document.getElementById(this.old_ids);
       if (doc == null) return;
       doc.disabled = false;
     },

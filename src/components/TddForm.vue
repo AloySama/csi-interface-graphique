@@ -70,11 +70,11 @@
         </ol>
         <form @submit.prevent="" v-if="modifyTabs[main_index].length > 0" class="middle">
           <div>
-            <button class="btn orange" v-for="key in modifyTabs[main_index]" :key="key" @click="deleteTabs[main_index]=listItemTabs(main_index, key.value); tabName[main_index]=key.value">{{key.key}}</button>
+            <button class="btn orange set-left" v-for="key in modifyTabs[main_index]" :key="key" @click="deleteTabs[main_index]=listItemTabs(main_index, key.value); tabName[main_index]=key.value">{{key.key}}</button>
           </div>
-          <div v-if="deleteTabs[main_index].length > 0">
+          <div v-if="deleteTabs[main_index].length > 0" class="set-left">
             <div v-for="(item, index) in deleteTabs[main_index]" :key="index">
-              <button class="btn orange" :id="'TabButton' + index"  @click="tabButtonId = 'TabButton' + index; modifyTabContent = true">{{item}}</button>
+              <button class="btn orange" :id="'TabButton' + index"  @click="tabButtonId = 'TabButton' + index; changeValue();">{{item}}</button>
               <button class="btn red" v-if="tabButtonId === 'TabButton' + index" @click="deleteItemTabs(main_index, index); modifyTabContent = false">Supprimer</button>
               <div v-if="modifyTabContent && tabButtonId === 'TabButton' + index">
                 <input-form :type="'text'" v-slot="slotProp" :modify="to_complete[main_index][tabName[main_index]][index]">{{modifyItemTabs(main_index, index, slotProp.tab)}} Modifier</input-form>
@@ -301,6 +301,10 @@ export default {
         rules: 0
       });
     },
+    changeValue() {
+      this.modifyTabContent = false;
+      setTimeout(() => {this.modifyTabContent = true}, 0);
+    },
     AddFormTdd() {
       this.toComplete();
       this.toPush();
@@ -401,6 +405,10 @@ b {
 
 .top {
   margin-top: 2em;
+}
+
+.set-left {
+  margin-left: 75px;
 }
 
 #localisation {

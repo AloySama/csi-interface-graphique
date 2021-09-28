@@ -9,7 +9,6 @@
     <title>CSI export ARCOLE</title>
 </head>
 <body>
-
 <div id="bg"></div>
 <div v-cloak>
     <button onclick="topFunction()" class="red" id="myBtn" title="Monter la page">🠕</button>
@@ -19,7 +18,6 @@
         relancer la page Web.</strong>
 </noscript>
 <div id="app"></div>
-<!--<script type="text/x-template" id="other-button"></script>-->
 </body>
 </html>
 
@@ -30,12 +28,8 @@
     };
 
     function scrollFunction() {
-        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-            myButton.style.display = "block";
-        }
-        else {
-            myButton.style.display = "none";
-        }
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) myButton.style.display = "block";
+        else myButton.style.display = "none";
     }
 
     function topFunction() {
