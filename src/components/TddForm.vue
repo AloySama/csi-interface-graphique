@@ -37,22 +37,13 @@
             </select>
           </li>
         </ol>
-        <div v-if="others.recuperation"> <!-- todo: en faire un composant réutilisable-->
-          <div class="col-25"><label >recuperation</label></div>
-          <div class="col-75"><input type="text" v-model="to_complete[main_index].recuperation"></div>
-        </div>
-        <div v-if="others.specialite">
-          <div class="col-25"><label >recuperation</label></div>
-          <div class="col-75"><input type="text" v-model="to_complete[main_index].specialite"></div>
-        </div>
-        <div v-if="others.direction">
-          <div class="col-25"><label >recuperation</label></div>
-          <div class="col-75"><input type="text" v-model="to_complete[main_index].direction"></div>
-        </div>
         <div>
           <select class="select-css" id="select" v-model="select" multiple>
             <option :value="value" v-for="(value, item) in array['filtration']" :key="item">{{ item }}</option>
           </select>
+        </div>
+        <div v-for="item in ['recuperation', 'specialite', 'direction']" :key="item">
+          <input-form :type="'text'"  v-slot="slotProp" v-if="others[item]">{{attribution(slotProp.tab, item, main_index)}} {{item}}</input-form> <!-- revoir  -->
         </div>
         <ol>
           <li v-for="item in select" :key="item">
@@ -71,49 +62,52 @@
               <div v-else>
                 <input v-if="tabNumber.includes(item)" type="number" v-model.number="to_push[main_index][item]" min="0">
                 <input v-else type="text" v-model="to_push[main_index][item]">
-                <button class="btn green" @click="addElement(main_index, item, to_push[main_index][item]); modifyTab()"
-                        :disabled="to_push[main_index][item].length < 1">Ajouter {{editTab}}</button>
+                <button class="btn green" @click="addElement(main_index, item, to_push[main_index][item]); modifyTab(main_index)"
+                        :disabled="to_push[main_index][item].length < 1">Ajouter</button>
               </div>
             </div>
           </li>
         </ol>
+        <form @submit.prevent="" v-if="modifyTabs[main_index].length > 0" class="middle">
+          <div>
+            <button class="btn orange" v-for="key in modifyTabs[main_index]" :key="key" @click="deleteTabs[main_index]=listItemTabs(main_index, key.value); tabName[main_index]=key.value">{{key.key}}</button>
+          </div>
+          <div v-if="deleteTabs[main_index].length > 0">
+            <div v-for="(item, index) in deleteTabs[main_index]" :key="index">
+              <button class="btn orange" :id="'TabButton' + index"  @click="tabButtonId = 'TabButton' + index; modifyTabContent = true">{{item}}</button>
+              <button class="btn red" v-if="tabButtonId === 'TabButton' + index" @click="deleteItemTabs(main_index, index); modifyTabContent = false">Supprimer</button>
+              <div v-if="modifyTabContent && tabButtonId === 'TabButton' + index">
+                <input-form :type="'text'" v-slot="slotProp" :modify="to_complete[main_index][tabName[main_index]][index]">{{modifyItemTabs(main_index, index, slotProp.tab)}} Modifier</input-form>
+                <input type="submit" @click="submitEditTab(main_index, index)">
+              </div>
+            </div>
+          </div>
+        </form>
       </form>
     </div>
   </div>
-  <form @submit.prevent="" v-if="editTab" class="middle">
-    <div>
-      <button class="btn orange" v-for="key in modifyTabs" :key="key" @click="deleteTabs=listItemTabs(key.value); tabName=key.value">{{key.key}}</button>
-    </div>
-    <div v-if="deleteTabs != null">
-      <b>Cliquer sur un élément pour le <span class="error-message">supprimer</span></b><br>
-      <div v-for="(item, index) in deleteTabs" :key="index">
-        <button class="btn orange" :id="'TabButton' + index"  @click="tabButtonId = 'TabButton' + index; modifyTabContent = false">{{item}}</button>
-        <button class="btn orange" v-if="tabButtonId === 'TabButton' + index" @click="deleteItemTabs(index)">Supprimer</button>
-<!--        <button class="btn orange" v-if="tabButtonId === 'TabButton' + index" @click="modifyTabContent = !modifyTabContent">Modifier</button>-->
-        <input type="text" v-if="tabButtonId === 'TabButton' + index && modifyTabContent" v-model="tab[0]">
-        <input type="submit" @click="deleteTabs[index] = tab[0]">
-      </div>
-    </div>
-  </form>
   <button class="btn green" @click="SubmitForm" :disabled="tdd_nbr <= 0">Valider TraiteurConfig</button>
   <p class="error-message">Cliquer sur <u>valider TraiteurConfig</u> ou les données ne seront pas sauvegardé.</p>
-
 </template>
 
 <script>
+import InputForm from "@/components/FormSlots/InputForm";
+
 export default {
   created() {
     if (this.traiteurModif != null) {
-      this.to_complete[0] = Object.assign({}, this.traiteurModif)
-      this.to_complete[0] = this.addTab(this.to_complete[0])
+      this.to_complete[0] = Object.assign({}, this.traiteurModif);
+      this.to_complete[0] = this.addTab(this.to_complete[0]);
       this.tdd_nbr = 1;
       this.isModify = true;
       this.toPush();
-      this.edit = true
-      this.modifyTabs = this.listOfFillTabs(this.to_complete[0], false);
-      if (this.modifyTabs.length > 0) this.editTab = true
+      this.edit = true;
+      this.modifyTabs[0] = this.listOfFillTabs(this.to_complete[0], false);
+      this.deleteTabs.push([]);
+      if (this.modifyTabs[0].length > 0) this.editTab = true;
     }
   },
+  components: {InputForm},
   emits: ['tdd_form'],
   name: "TddForm",
   props: {
@@ -130,20 +124,20 @@ export default {
         direction: false
       },
       modifyTabContent: false,
-      tabButtonId: '',
+      isModifying: false,
+      editContentTab: '',
       editTab: false,
       edit: false,
-      isModifying: false,
       idButtonModify: '',
       isModify: false,
       modifyTabs: [],
-      deleteTabs: null,
-      tabName: '',
+      deleteTabs: [],
+      tabName: [],
       traiteurModif: this.traiteurModification,
       values: {min: 0},
       tdd_nbr: 0,
-      tab: [],
       tdd: [],
+      tabButtonId: '',
       rsd: ['recuperation', 'specialite', 'direction'],
       select: [],
       ints: ['codeJournal', 'compte', 'ordre'],
@@ -189,10 +183,20 @@ export default {
     }
   },
   methods: {
-    modifyTab() {
+    attribution(value, to_complete, main) {
+      this.to_complete[main][to_complete] = value;
+      return null;
+    },
+    modifyTab(index) {
+      this.modifyTabs[index] = this.listOfFillTabs(this.to_complete[index], false);
       this.editTab = false;
-      this.modifyTabs = this.listOfFillTabs(this.to_complete[0], false);
-      setTimeout(() => {this.editTab = true;}, 0);
+      try {
+        this.deleteTabs[index] = this.listItemTabs(index, this.tabName[index]);
+      }
+      catch (e) {
+        console.log('TabName n\'existe pas')
+      }
+      setTimeout(() => {this.editTab = true}, 0);
     },
     SubmitForm() {
       if (this.traiteurModif == null) {
@@ -215,7 +219,6 @@ export default {
         if (item.specialite === 'autre ...') item.recuperation = "";
         if (item.direction === 'autre ...') item.recuperation = "";
       }
-      console.log(this.deleteTabs);
       this.FormTdd.tdd = this.to_complete;
       this.$emit('tdd_form', {tdd: this.FormTdd.tdd, modify: this.isModify});
       this.tdd_nbr = 0;
@@ -302,19 +305,25 @@ export default {
       this.toComplete();
       this.toPush();
       this.tdd_nbr++;
+      this.modifyTabs.push([]);
+      this.deleteTabs.push([]);
+      this.tabName.push([]);
     },
     RemoveFormTdd() {
       if (this.tdd_nbr <= this.values.min) return;
       this.to_complete.pop();
       this.to_push.pop();
       this.tdd_nbr--;
+      this.modifyTabs.pop();
+      this.deleteTabs.pop();
     },
     listOfFillTabs(tdd, filtration) {
       const list = [];
+      console.log(tdd);
 
       for (const key in this.array.filtration) {
         try {
-          if (tdd[this.array.filtration[key]].length > 0 && filtration === false) list.push({value: this.array.filtration[key], key: key})
+          if (tdd[this.array.filtration[key]].length > 0 && !filtration) list.push({value: this.array.filtration[key], key: key})
           else if (tdd[this.array.filtration[key]].length > 0) list.push(key)
         }
         catch (e) {
@@ -324,10 +333,10 @@ export default {
       }
       return list;
     },
-    listItemTabs(item) {
+    listItemTabs(index, item) {
       const list = [];
 
-      for (const obj of this.to_complete[0][item]) list.push(obj)
+      for (const obj of this.to_complete[index][item]) list.push(obj);
       return list;
     },
     disabledButton(id) {
@@ -337,7 +346,6 @@ export default {
         this.idButtonModify = current;
         const doc = document.getElementById(this.idButtonModify);
         if (doc == null) return;
-        // @ts-ignore
         doc.disabled = true;
       } else {
         const doc_old = document.getElementById(this.idButtonModify);
@@ -347,22 +355,30 @@ export default {
           console.error('Une erreur est survenue.')
           return;
         }
-        if (doc_old) {
-          // @ts-ignore
-          doc_old.disabled = false;
-        }
-        // @ts-ignore
+        if (doc_old) doc_old.disabled = false;
         doc_current.disabled = true;
       }
     },
-    deleteItemTabs(id) {
-      this.to_complete[0][this.tabName].splice(id, 1);
-      this.deleteTabs = this.listItemTabs(this.tabName);
-      this.modifyTabs = this.listOfFillTabs(this.to_complete[0], false);
-      if (this.modifyTabs.length === 0) this.editTab = false;
+    deleteItemTabs(main_index, id) {
+      this.to_complete[main_index][this.tabName[main_index]].splice(id, 1);
+      this.deleteTabs[main_index] = this.listItemTabs(main_index, this.tabName[main_index]);
+      this.modifyTabs[main_index] = this.listOfFillTabs(this.to_complete[main_index], false);
+      if (this.modifyTabs[main_index].length === 0) this.editTab = false;
+    },
+    modifyItemTabs(main_index, id, replace_with) {
+      this.editContentTab = replace_with;
+      return null;
     },
     addForm(rsd, string) {
       this.others[rsd] = string === 'autre ...';
+    },
+    submitEditTab(main_index, id) {
+      this.to_complete[main_index][this.tabName[main_index]][id] = this.editContentTab;
+      this.deleteTabs[main_index] = this.listItemTabs(main_index, this.tabName[main_index]);
+      this.tabButtonId = '';
+      if (this.editContentTab.length === 0) {
+        this.deleteItemTabs(main_index, id);
+      }
     }
   }
 }

@@ -15,7 +15,7 @@
   <tdd-form @tdd_form="CompleteTDD"/>
 </template>
 
-<script>
+<script type="ts">
 import TddForm from "@/components/TddForm"
 
 export default {
@@ -43,7 +43,6 @@ export default {
         this.idButtonModify = current;
         const doc = document.getElementById(this.idButtonModify);
         if (doc == null) return;
-        // @ts-ignore
         doc.disabled = true;
       }
       else {
@@ -54,11 +53,7 @@ export default {
           console.error('Une erreur est survenue.')
           return;
         }
-        if (doc_old) {
-          // @ts-ignore
-          doc_old.disabled = false;
-        }
-        // @ts-ignore
+        if (doc_old) doc_old.disabled = false;
         doc_current.disabled = true;
       }
     },

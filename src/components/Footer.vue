@@ -7,11 +7,7 @@
         <p>{{phone}}</p>
         <p :class="{gear: true, 'red-gear': settings_}"><a @click="OnClickButton"> <font-awesome-icon :icon="['fas', 'cog']"/></a></p>
       </div>
-      <div id="contacts--social">
-        <div id="twitter"><a :href="twitter" target="_blank"><font-awesome-icon :icon="['fab', 'twitter']" class="place-icons" :title="twitter_title"/></a></div>
-        <div id="facebook"><a :href="facebook" target="_blank"><font-awesome-icon :icon="['fab', 'facebook']" class="place-icons" :title="facebook_title" /></a></div>
-        <div id="linkedin"><a :href="linkedin" target="_blank"><font-awesome-icon :icon="['fab', 'linkedin']" class="place-icons" :title="linkedin_title"/></a></div>
-      </div>
+      <div id="contacts--social"><slot name="social-media" :twitter="twitter" :facebook="facebook" :linkedin="linkedin"></slot></div>
     </div>
     <div id="mentions">
       <p>{{ mention }} | Auteur: Aloïs BRENGARD<br>{{date}}</p>
@@ -19,9 +15,13 @@
   </div>
 </template>
 
-<script>
+<script type="ts">
 import Settings from "@/components/settings";
 export default {
+  created() {
+    const date = new Date().toLocaleString().split(',');
+    this.date = 'Vous avez affiché cette page le ' + date[0] + ' à' + date[1];
+  },
   name: "FooterPage",
   emits: ['setting_value'],
   components: {Settings},
@@ -31,13 +31,10 @@ export default {
       industrie : 'Cash Systemes Industrie',
       phone : '04.98.11.45.90',
       mention : new Date().getFullYear(),
-      date: 'Vous avez affiché cette page le ' + new Date().toLocaleString().split(',')[0] + ' à' + new Date().toLocaleString().split(',')[1],
+      date: '',
       twitter: 'https://twitter.com/cashsystemes',
-      twitter_title: 'Twitter de CSI',
       facebook: 'https://www.facebook.com/cashsystemes/',
-      facebook_title: 'Facebook de CSI',
       linkedin: 'https://www.linkedin.com/company/cashsystemesindustrie?trk=public_profile_topcard_current_company&originalSubdomain=fr',
-      linkedin_title: 'LinkedIn de CSI'
     }
   },
   methods: {
@@ -54,56 +51,43 @@ export default {
 
 <style scoped>
 
-.place-icons {
-  margin-top: 8px;
-  margin-left: 1px;
-  font-size: 35px;
-}
-
-#twitter {
-  color: #007BB5;
-}
-
-#linkedin {
-  color: #007BB5;
-}
-
-#facebook {
-  color: #3b5998;
-}
-
-#container-bis{
-  padding-top:20px;
-  width:100vw;
+#container-bis {
+  padding-top: 20px;
+  width: 100vw;
   margin-left: -10px;
-  color:white;
-  background-color:#292354;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+  color: white;
+  background-color: #1e1e24;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-#contacts{
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  width:100%;
+
+#contacts {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
 }
-#contacts--contact{
-  text-align:right;
+
+#contacts--contact {
+  text-align: right;
 }
-#contacts--social{
-  width:20%;
-  display : flex;
-  justify-content : space-between;
+
+#contacts--social {
+  width: 20%;
+  display: flex;
+  justify-content: space-between;
 }
-#contacts--social div{
-  height:50px;
-  width:50px;
-  background-color:white;
-  border-radius:50%;
+
+#contacts--social div {
+  height: 50px;
+  width: 50px;
+  background-color: white;
+  border-radius: 50%;
 }
+
 #mentions p {
-  font-size:.75em;
+  font-size: .75em;
 }
 
 .sticky-footer {

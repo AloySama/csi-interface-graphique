@@ -1,47 +1,15 @@
 <template>
   <div v-if="FillTab['societe'] >= 0 && FillTab['etablissement'] >= 0" class="container">
     <form @submit.prevent="">
-      <div class="row" v-for="(value, key) of string" :key="value">
-        <div class="col-25">
-          <label>{{key}}</label>
-        </div>
-        <div class="col-75">
-          <input type="text" v-model="to_complete[to_complete.length-1][value]" maxlength="30">
-        </div>
+      <div v-for="(value, key) of string" :key="value">
+        <input-form :type="'text'" :modify="to_complete[to_complete.length-1][value]" v-slot="slotProp">{{attribution(slotProp.tab, value)}} {{key}}</input-form>
       </div>
-      <div class="row">
-        <div class="col-25">
-          <label>reference_config_compensation</label>
-        </div>
-        <div class="col-75">
-          <input type="number" v-model.number="to_complete[to_complete.length-1].reference_config_compensation">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-25">
-          <label>Matricule ?</label>
-        </div>
-        <div class="col-75">
-          <label class="checkbox-button">
-            <input type="checkbox" class="checkbox-button__input" name="choice1" v-model="bool.add_matricule">
-            <span class="checkbox-button__control"></span>
-          </label>
-          <input v-if="bool.add_matricule" type="number" min="0" v-model.number="to_complete[to_complete.length-1].matricule" required>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-25">
-          <label>Ajouter TraiteurConfigs ?</label>
-        </div>
-        <div class="col-75 set-marge">
-          <label class="checkbox-button">
-            <input type="checkbox" class="checkbox-button__input" name="choice1" v-model="bool.add_tdd">
-            <span class="checkbox-button__control"></span>
-          </label>
-        </div>
+      <input-form :type="'number'" :modify="to_complete[to_complete.length-1].reference_config_compensation" v-slot="slotProp">{{attribution(slotProp.tab, 'reference_config_compensation')}} reference_config_compensation</input-form>
+      <input-checkbox v-slot="slotProp">{{attrCheckbox(slotProp.bool, 'add_matricule')}} Matricule ?</input-checkbox>
+      <input-form v-if="bool.add_matricule" :type="'number'" v-slot="slotProp" :modify="to_complete[to_complete.length-1].matricule">{{ attribution(slotProp.tab, 'matricule')}} Matricule</input-form>
+      <input-checkbox :modify="bool.add_tdd" v-slot="slotProp">{{attrCheckbox(slotProp.bool, 'add_tdd')}} Ajouter TraiteurConfig ?</input-checkbox>
         <ListTraiteurConfig v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete[1].traiteursConfigs" @list-tdd="completeList"/>
         <tdd-form v-else-if="bool.add_tdd" @tdd_form="completeTDD"/>
-      </div>
     </form>
     <input class="btn green" type="submit" @click="isSubmitted"
            :disabled="!to_complete[to_complete.length-1].etab_code">
@@ -57,6 +25,8 @@ import TddForm from "@/components/TddForm";
 import {EditRestaurant} from "@/functions/EditElements";
 import {FindIDRes, checkIDTC, isIDCorrectRes, FindIDTC} from "@/functions/CheckID";
 import ListTraiteurConfig from "@/components/ListTraiteurConfig";
+import InputForm from "@/components/FormSlots/InputForm";
+import InputCheckbox from "@/components/FormSlots/InputCheckboxes";
 
 export default {
   created() {
@@ -77,7 +47,7 @@ export default {
       required: true
     }
   },
-  components: {TddForm, ListTraiteurConfig},
+  components: {TddForm, ListTraiteurConfig, InputForm, InputCheckbox},
   emits: ['edit_value', 'to_complete'],
   data() {
     return {
@@ -108,17 +78,14 @@ export default {
     }
   },
   methods: {
-    addToComplete() {
-      this.to_complete.push({
-        compteAuxiliaire: '',
-        etab_code: '',
-        code_societe: '',
-        reference_config_compensation: 0,
-        auxiliaireCreditClient: '',
-        matricule: null,
-        restaurantId: null,
-        traiteursConfigs: []
-      })
+    attribution(value, to_complete) {
+      this.to_complete[this.to_complete.length-1][to_complete] = value;
+      return null;
+    },
+    attrCheckbox(value, to_complete) {
+      if (typeof value === 'function') return;
+      this.bool[to_complete] = value;
+      return null;
     },
     completeList(tab) {
       if (tab.modify) this.to_complete[1].traiteursConfigs[tab.index] = tab.tdd[0];
@@ -190,7 +157,7 @@ export default {
           FindIDTC(this.to_complete[length].traiteursConfigs) : this.to_complete[length].traiteursConfigs;
       this.json = EditRestaurant(this.json, this.to_complete[length], this.FillTab);
       this.bool.add_tdd = false;
-      this.addToComplete();
+      this.$emit('to_complete', false);
     }
   }
 }

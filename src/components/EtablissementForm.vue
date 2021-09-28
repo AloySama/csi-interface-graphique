@@ -1,52 +1,18 @@
 <template>
   <div v-if="societe >= 0" class="container">
     <form @submit.prevent="">
-      <div class="row">
-        <div class="col-25">
-          <label>Code</label>
-        </div>
-        <div class="col-75">
-          <input type="text" required v-model="to_complete.code" maxlength="30">
-          <p v-if="!CodeIsValid" class="error-message">Le code est requis</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-25">
-          <label>Ajouter un id ?</label>
-        </div>
-        <div class="col-75">
-          <label class="checkbox-button">
-            <input type="checkbox" class="checkbox-button__input" name="choice1" v-model="bool.add_id">
-            <span class="checkbox-button__control"></span>
-          </label>
-        </div>
-      </div>
-      <div class="row" v-if="bool.add_id">
-        <form @submit.prevent="">
-          <div class="col-25">
-            <label>id</label>
-          </div>
-          <div class="col-75">
-            <input type="number" placeholder="id" v-model.number="to_complete.id" :min="0" :required="bool.add_id">
-          </div>
-        </form>
-      </div>
-      <div class="row">
-        <div class="col-25"><label>Ajouter TraiteurConfig ?</label></div>
-        <div class="col-75 set-marge">
-          <label class="checkbox-button">
-            <input type="checkbox" class="checkbox-button__input" name="choice1" v-model="bool.add_tdd">
-            <span class="checkbox-button__control"></span>
-          </label>
-        </div>
+      <input-form :type="'text'" v-slot="slotProp" :modify="to_complete.code">{{ attribution(slotProp.tab, 'code') }} Code</input-form>
+      <input-checkbox v-slot="slotProp">{{ attrCheckbox(slotProp.bool, 'add_id') }} Ajouter un id ?</input-checkbox>
+      <input-form v-if="bool.add_id" :type="'number'" v-slot="slotProp" :modify="to_complete.id">{{ attribution(slotProp.tab, 'id') }} id</input-form>
+      <input-checkbox :modify="bool.add_tdd" v-slot="slotProp">{{ attrCheckbox(slotProp.bool, 'add_tdd') }} Ajouter TraiteurConfig</input-checkbox>
         <ListTraiteurConfig v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete.traiteursConfigs" @list-tdd="completeList"/>
         <tdd-form v-else-if="bool.add_tdd" @tdd_form="CompleteTDD"/>
-      </div><input class="btn green" type="submit" :disabled="!to_complete.code||to_complete.id < 0" @click="IsSubmitted">
+      <input class="btn green" type="submit" :disabled="!to_complete.code || to_complete.id < 0" @click="IsSubmitted">
     </form>
   </div>
 </template>
 
-<script>
+<script type="ts">
 import ParseSociete from "../functions/ParseSociete";
 import App from '../App'
 import TddForm from "@/components/TddForm";
@@ -54,6 +20,9 @@ import {EditEtab} from "@/functions/EditElements";
 import {FindAnID, isIDCorrect} from "@/functions/CheckID";
 import {FindIDTC, checkIDTC} from "@/functions/CheckID";
 import ListTraiteurConfig from "@/components/ListTraiteurConfig";
+import InputForm from "@/components/FormSlots/InputForm";
+import InputCheckbox from "@/components/FormSlots/InputCheckboxes";
+import Societe from '@/components/SocieteForm';
 
 export default {
   created() {
@@ -78,7 +47,7 @@ export default {
       return !!this.to_complete.code;
     }
   },
-  components: {TddForm, ListTraiteurConfig},
+  components: {TddForm, ListTraiteurConfig, InputForm, InputCheckbox, Societe},
   emits : ['edit_value', 'json_value', 'to_complete'],
   name: "EtablissementForm",
   data() {
@@ -98,10 +67,20 @@ export default {
         code: '',
         traiteursConfigs: [],
         restaurants: []
-      }
+      },
     }
   },
   methods: {
+    attribution(value, to_complete) {
+      if (to_complete === 'id' && value.length === 0) value = null;
+      this.to_complete[to_complete] = value;
+      return null;
+    },
+    attrCheckbox(value, to_complete) {
+      if (typeof value === 'function') return;
+      this.bool[to_complete] = value;
+      return null;
+    },
     completeList(tab) {
       if (tab.modify) this.to_complete.traiteursConfigs[tab.index] = tab.tdd[0]
       else {
@@ -121,7 +100,7 @@ export default {
       this.bool.add_tdd = false;
     },
     IsSubmitted() {
-      if (typeof this.to_complete.id === 'string') this.to_complete.id = null;
+
       if (this.modify != null) {
         this.bool.add_eta = false;
         this.bool.add_tdd = false;
@@ -137,7 +116,7 @@ export default {
         restaurants: this.to_complete.restaurants
       };
       this.json = EditEtab(this.json, new_array, this.societe);
-      this.$emit('json_value', this.json);
+      this.$emit('to_complete', false);
       this.AllNull();
     },
     AllNull() {
