@@ -1,8 +1,8 @@
 <template>
   <div v-if="traiteurModif==null">
-    <button :disabled="isModifying===true" class="btn blue" @click="AddFormTdd">+</button>
+    <button class="btn blue" @click="AddFormTdd">+</button>
     <b>{{ tdd_nbr }}</b>
-    <button :disabled="isModifying===true" class="btn blue" @click="RemoveFormTdd">-</button>
+    <button class="btn blue" @click="RemoveFormTdd">-</button>
   </div>
   <div v-if="tdd_nbr >= values.min" class="middle">
     <div v-for="(number, main_index) in parseInt(tdd_nbr)" :key="parseInt(number)">
@@ -17,7 +17,7 @@
         <ol>
           <li v-for="item in string" :key="item">
             <div :id="item" class="col-25"><label>{{ item }}</label></div>
-            <div :id="item + 'input'" :class="{'col-75': true, 'set-margin': item === string[string.length-1] && string.length % 2 === 0}">
+            <div :id="item + 'input'" :class="{'col-75': true}">
               <input type="text" v-model="to_complete[main_index][item]" maxlength="30"></div>
           </li>
         </ol>
@@ -43,7 +43,7 @@
           </select>
         </div>
         <div v-for="item in ['recuperation', 'specialite', 'direction']" :key="item">
-          <input-form :type="'text'"  v-slot="slotProp" v-if="others[item]">{{attribution(slotProp.tab, item, main_index)}} {{item}}</input-form> <!-- revoir  -->
+          <input-form :type="'text'" v-slot="slotProp" v-if="others[item]">{{attribution(slotProp.tab, item, main_index)}} {{item}}</input-form>
         </div>
         <ol>
           <li v-for="item in select" :key="item">
@@ -101,7 +101,6 @@ export default {
       this.tdd_nbr = 1;
       this.isModify = true;
       this.toPush();
-      this.edit = true;
       this.modifyTabs[0] = this.listOfFillTabs(this.to_complete[0], false);
       this.deleteTabs.push([]);
       if (this.modifyTabs[0].length > 0) this.editTab = true;
@@ -124,10 +123,8 @@ export default {
         direction: false
       },
       modifyTabContent: false,
-      isModifying: false,
       editContentTab: '',
       editTab: false,
-      edit: false,
       idButtonModify: '',
       isModify: false,
       modifyTabs: [],
