@@ -38,7 +38,7 @@ export default defineComponent({
   data() {
     return {
       setting_tab: {},
-      img: require('@/assets/images/csi.png'),
+      img: require('@/assets/images/csiDL.png'),
       json: null,
       bool: {
         Modify: false,
