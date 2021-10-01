@@ -6,6 +6,17 @@ import installExtension, {VUEJS3_DEVTOOLS} from 'electron-devtools-installer'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
+let icon: string;
+
+switch (process.platform) {
+    case 'darwin':
+        icon = '@build/icon.icns'
+        break
+    case 'win32':
+        icon = '@/build/icon.ico';
+        break
+}
+
 protocol.registerSchemesAsPrivileged([
     {scheme: 'app', privileges: {secure: true, standard: true}}
 ])
@@ -16,7 +27,7 @@ async function createWindow() {
         height: 1080,
         minHeight: 800,
         minWidth: 1000,
-        icon: '@/build/icon.ico',
+        icon: icon,
         webPreferences: {
             nodeIntegration: (process.env
                 .ELECTRON_NODE_INTEGRATION as unknown) as boolean,
