@@ -2,7 +2,7 @@
   <div class="app">
     <header>
       <div class="title">
-        <a href="https://www.cashsystemes.eu/"><img :src="img" alt="logo CSI" title="https://www.cashsystemes.eu/"></a>
+        <img :src="img" alt="logo CSI">
         <h1>ARCOLE<br>export</h1>
       </div>
       <div class="order" id="buttons">
