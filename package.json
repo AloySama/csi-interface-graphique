@@ -3,6 +3,11 @@
     "name": "Cash Systemes Industrie",
     "url": "https://www.cashsystemes.eu/"
   },
+  "readme": "README.md",
+  "repository": {
+    "url": "https://github.com/AloySama/csi-interface-graphique",
+    "type": "git"
+  },
   "license": "Cash Systemes Industrie",
   "description": "Créer un json de l'export comptable",
   "files": ["**/*", "build/*.ico"],
