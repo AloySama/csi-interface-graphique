@@ -9,7 +9,8 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 let icon: string;
 
 switch (process.platform) {
-    case 'darwin' || 'linux':
+    case 'darwin':
+    case 'linux':
         icon = '@build/icon.icns';
         break
     case 'win32':
