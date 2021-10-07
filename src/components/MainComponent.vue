@@ -172,21 +172,19 @@ export default {
       this.enableButton();
     },
     setCompleteSoc(complete) {
-      if (!complete) this.bool.addSociete = false;
-      else this.json[this.tab.societe] = complete;
-      setTimeout(() => {this.tab.societe = -1; this.bool.modifySociete = false;}, 0);
+      if (complete) this.json[this.tab.societe] = complete;
+      setTimeout(() => {this.tab.societe = -1; this.bool.modifySociete = false; this.bool.addSociete = false}, 0);
       const doc = document.getElementById(this.old_ids);
       if (doc) doc.disabled = false;
     },
     setCompleteEta(complete) {
       if (complete) this.json[this.tab.societe].etablissements[this.tab.etablissement] = complete;
-      setTimeout(() => {this.tab.etab = -1; this.bool.modifyEtablissement = false; this.bool.addEtablissement = 0}, 0);
+      setTimeout(() => {this.tab.etab = -1; this.bool.modifyEtablissement = false; this.bool.addEtablissement = false}, 0);
       const doc = document.getElementById(this.old_ids);
       if (doc) doc.disabled = false;
     },
     setCompleteRes(complete) {
-      if (!complete) this.bool.addSociete = false;
-      else this.json[this.tab.societe].etablissements[this.tab.etablissement].restaurants[this.tab.restaurant] = complete;
+      if (complete) this.json[this.tab.societe].etablissements[this.tab.etablissement].restaurants[this.tab.restaurant] = complete;
       setTimeout(() => {this.tab.restaurant = -1; this.bool.modifyRestaurant = false; this.bool.addRestaurant = false}, 0);
       const doc = document.getElementById(this.old_ids);
       if (doc) doc.disabled = false;
