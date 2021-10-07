@@ -179,9 +179,8 @@ export default {
       if (doc) doc.disabled = false;
     },
     setCompleteEta(complete) {
-      if (!complete) this.bool.addSociete = false;
-      else this.json[this.tab.societe].etablissements[this.tab.etablissement] = complete;
-      setTimeout(() => {this.tab.etab = -1; this.bool.modifyEtablissement = false}, 0);
+      if (complete) this.json[this.tab.societe].etablissements[this.tab.etablissement] = complete;
+      setTimeout(() => {this.tab.etab = -1; this.bool.modifyEtablissement = false; this.bool.addEtablissement = 0}, 0);
       const doc = document.getElementById(this.old_ids);
       if (doc) doc.disabled = false;
     },

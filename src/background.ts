@@ -35,7 +35,6 @@ async function createWindow() {
             contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION
         }
     })
-
     if (process.env.WEBPACK_DEV_SERVER_URL) {
         await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL as string)
         if (!process.env.IS_TEST) win.webContents.openDevTools()
@@ -57,7 +56,6 @@ app.on('activate', () => {
 
 app.on('ready', async () => {
     if (isDevelopment && !process.env.IS_TEST) {
-        // Install Vue Devtools
         try {
             await installExtension(VUEJS3_DEVTOOLS)
         } catch (e) {
