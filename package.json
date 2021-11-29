@@ -10,7 +10,10 @@
   },
   "license": "Cash Systemes Industrie",
   "description": "Créer un json de l'export comptable",
-  "files": ["**/*", "build/*.ico"],
+  "files": [
+    "**/*",
+    "build/*.ico"
+  ],
   "name": "interface_web",
   "version": "0.1.0",
   "private": true,
