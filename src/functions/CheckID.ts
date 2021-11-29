@@ -26,7 +26,7 @@ export function isIDCorrect(json: Record<string, any>, id: number, except: numbe
     return id;
 }
 
-export function FindIDRes(json: Record<string, any>, bool: boolean, _id: number, except: number) {
+export function FindIDRes(json: never, bool: boolean, _id: number, except: number, label: string) {
     let id = 0;
     let last_id = 0;
     let once = 0;
@@ -37,9 +37,9 @@ export function FindIDRes(json: Record<string, any>, bool: boolean, _id: number,
         for (const societe of json) {
             for (const etablissement of societe.etablissements) {
                 for (const restaurant of etablissement.restaurants) {
-                    if (restaurant.matricule === except && once === 0) once++;
-                    else if (bool && restaurant.matricule === _id) return true;
-                    else if (restaurant.matricule === id) ++id;
+                    if (restaurant[label] === except && once === 0) once++;
+                    else if (bool && restaurant[label] === _id) return true;
+                    else if (restaurant[label] === id) ++id;
                 }
             }
         }

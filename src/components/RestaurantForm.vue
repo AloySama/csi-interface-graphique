@@ -7,9 +7,11 @@
       <input-form :type="'number'" :modify="to_complete[to_complete.length-1].reference_config_compensation" v-slot="slotProp">{{attribution(slotProp.tab, 'reference_config_compensation')}} reference_config_compensation</input-form>
       <input-checkbox v-slot="slotProp">{{attrCheckbox(slotProp.bool, 'add_matricule')}} Matricule ?</input-checkbox>
       <input-form v-if="bool.add_matricule" :type="'number'" v-slot="slotProp" :modify="to_complete[to_complete.length-1].matricule">{{ attribution(slotProp.tab, 'matricule')}} Matricule</input-form>
+      <input-checkbox :modify="bool.add_restID" v-slot="slotProp">{{attrCheckbox(slotProp.bool, 'add_restID')}} Ajouter RestaurantID ?</input-checkbox>
+      <input-form v-if="bool.add_restID" type="number" v-slot="slotProp" :modify="to_complete[to_complete.length-1].restaurantId">{{ attribution(slotProp.tab, 'restaurantId')}} RestaurantID</input-form>
       <input-checkbox :modify="bool.add_tdd" v-slot="slotProp">{{attrCheckbox(slotProp.bool, 'add_tdd')}} Ajouter TraiteurConfig ?</input-checkbox>
-        <ListTraiteurConfig v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete[1].traiteursConfigs" @list-tdd="completeList"/>
-        <tdd-form v-else-if="bool.add_tdd" @tdd_form="completeTDD"/>
+      <ListTraiteurConfig v-if="bool.add_tdd&&modify!=null" :traiteur-modification="to_complete[1].traiteursConfigs" @list-tdd="completeList"/>
+      <tdd-form v-else-if="bool.add_tdd" @tdd_form="completeTDD"/>
     </form>
     <input class="btn green" type="submit" @click="isSubmitted"
            :disabled="!to_complete[to_complete.length-1].etab_code">
@@ -62,6 +64,7 @@ export default {
       FillTab: {'societe': this.idTab.soc, 'etablissement': this.idTab.eta},
       bool: {
         add_matricule: false,
+        add_restID: false,
         add_tdd: false
       },
       to_complete: [{
@@ -140,19 +143,21 @@ export default {
     isSubmitted() {
       const length = this.to_complete.length - 1;
       if (typeof this.to_complete[length].matricule === 'string') this.to_complete[length].matricule = null;
-      this.to_complete[length].compteAuxiliaire = this.setAuxiliaire('REST', this.to_complete[length].matricule);
-      this.to_complete[length].auxiliaireCreditClient = this.setAuxiliaire('C950', this.to_complete[length].matricule);
       if (this.modify != null) {
         this.bool.add_tdd = false;
         this.to_complete[length].matricule = this.to_complete[length].matricule !== null ? isIDCorrectRes(this.json, this.to_complete[length].matricule, this.to_complete[length].matricule) :
-            FindIDRes(this.json, false, 0, this.to_complete[length].matricule);
+            FindIDRes(this.json, false, 0, this.to_complete[length].matricule, 'matricule');
         this.to_complete[length].restaurantId = this.to_complete[length].matricule;
         this.$emit('to_complete', this.to_complete[length]);
         return;
       }
+      console.log("restaurantID = " + this.to_complete[length].restaurantId)
       this.to_complete[length].matricule = this.to_complete[length].matricule !== null ? isIDCorrectRes(this.json, this.to_complete[length].matricule, -1) :
-          FindIDRes(this.json, false, 0, -1);
-      this.to_complete[length].restaurantId = this.to_complete[length].matricule;
+          FindIDRes(this.json, false, 0, -1, 'matricule');
+      this.to_complete[length].restaurantId = this.to_complete[length].restaurantId === null ? this.to_complete[length].matricule : isIDCorrectRes(this.json, this.to_complete[length].restaurantId, -1) ? this.to_complete[length].restaurantId : FindIDRes(this.json, false, 0, -1, 'restaurantId');
+      console.log("restaurantID = " + this.to_complete[length].restaurantId)
+      this.to_complete[length].compteAuxiliaire = this.setAuxiliaire('REST', this.to_complete[length].restaurantId);
+      this.to_complete[length].auxiliaireCreditClient = this.setAuxiliaire('C950', this.to_complete[length].restaurantId);
       this.to_complete[length].traiteursConfigs = checkIDTC(this.to_complete[length].traiteursConfigs) ?
           FindIDTC(this.to_complete[length].traiteursConfigs) : this.to_complete[length].traiteursConfigs;
       this.json = EditRestaurant(this.json, this.to_complete[length], this.FillTab);
